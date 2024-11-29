@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.2",
+    "prettier": "^3.3.3"
+  },
+  "name": "craft-blocksmith",
+  "version": "1.0.0",
+  "description": "Enhances Matrix fields in Craft CMS with block previews and an intuitive block selection interface.",
+  "keywords": [
+    "craftcms",
+    "matrix",
+    "block preview",
+    "UX",
+    "plugin"
+  ],
+  "license": "https://craftcms.github.io/license/",
+  "scripts": {
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mediakreativ/craft-blocksmith.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mediakreativ/craft-blocksmith/issues"
+  },
+  "homepage": "https://github.com/mediakreativ/craft-blocksmith",
+  "changelog": "https://raw.githubusercontent.com/mediakreativ/craft-blocksmith/master/CHANGELOG.md"
+}

@@ -1,0 +1,104 @@
+.blocksmith-menu-item.menu-item::before {
+  margin-bottom: 2px;
+}
+.blocksmith-add-btn.btn.icon.add::before {
+  margin-bottom: -1px;
+}
+
+body .blocksmith-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* Priorisierte Breite und Höhe */
+  width: 90% !important;
+  max-width: 1100px !important;
+  height: 90% !important;
+  max-height: 90% !important;
+  overflow: auto;
+}
+
+.blocksmith-modal-content {
+  text-align: center;
+  height: 100%; /* Inhalt soll die gesamte Höhe füllen */
+  padding: 20px;
+}
+
+.blocksmith-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Halbtransparentes Overlay */
+  z-index: 1000; /* Unter dem Modal */
+}
+
+.footer.blocksmith-modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Buttons rechts ausrichten */
+  align-items: center;
+  padding-block: 6px;
+  padding-inline: var(--pane-padding, var(--xl));
+  background-color: var(--gray-100);
+  position: sticky;
+  bottom: 0; /* Footer bleibt am unteren Rand des Modals */
+  border-radius: 0 0 var(--large-border-radius) var(--large-border-radius);
+  box-shadow: inset 0 1px 0 var(--hairline-color);
+}
+
+.blocksmith-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px; /* Abstand zwischen den Blöcken */
+  justify-items: center; /* Zentriert die Blöcke horizontal */
+  align-items: start; /* Richtet die Blöcke oben aus */
+  margin-top: 20px; /* Optional: Abstand vom Titel */
+}
+
+.blocksmith-block {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+  max-width: 500px; /* Optional: maximale Breite für die Blöcke */
+}
+
+@media (max-width: 800px) {
+  .blocksmith-blocks {
+    grid-template-columns: 1fr; /* Eine Spalte */
+    gap: 15px; /* Etwas kleinerer Abstand zwischen den Blöcken */
+  }
+
+  .blocksmith-block {
+    max-width: 100%; /* Volle Breite innerhalb der Spalte */
+  }
+}
+
+.blocksmith-block img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px; /* Abstand zwischen Bild und Text */
+}
+
+.blocksmith-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.2);
+}
+
+.blocksmith-block span {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
