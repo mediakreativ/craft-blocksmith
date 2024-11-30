@@ -12,6 +12,7 @@ return [
     "Search" => "Suchen",
     "Clear search" => "Suche löschen",
     "Cancel" => "Abbrechen",
+    "Add new block" => "Neuer Block",
     "Add block above" => "Block oberhalb einfügen",
     "You reached the maximum number of entries" =>
         "Sie haben die maximale Anzahl an Einträgen erreicht.",
@@ -27,4 +28,6 @@ return [
         "Geben Sie einen optionalen Unterordner innerhalb des ausgewählten Volumes für die Speicherung der Bilder an.",
     "Custom Settings" => "Benutzerdefinierte Einstellungen",
     "Will be added soon." => "Coming soon.",
+    "Add a PNG file named {fileName} to the configured asset volume." =>
+        "Fügen Sie eine PNG-Datei mit dem Namen {fileName} in das konfigurierte Asset-Volume ein.",
 ];

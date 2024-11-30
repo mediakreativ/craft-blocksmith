@@ -137,10 +137,24 @@
 
         const $block = $(`
           <div class="blocksmith-block" data-type="${blockType.handle}">
-              <img src="${previewImage}" alt="${blockType.name}" onerror="this.src='${this.placeholderImage}'">
-              <span>${blockType.name}</span>
+              <img src="${previewImage}" alt="${blockType.name}" onerror="
+                  this.src='${this.placeholderImage}'; 
+                  const hint = this.closest('.blocksmith-block').querySelector('.blocksmith-hint');
+                  if (hint) {
+                    hint.style.display = 'block';
+                  }">
+              <div class="blocksmith-footer">
+                  <span>${blockType.name}</span>
+                  <div class="blocksmith-hint" style="display: none;">
+                      ${Craft.t(
+                        "blocksmith",
+                        "Add a PNG file named {fileName} to the configured asset volume.",
+                        { fileName: `${blockType.handle}.png` },
+                      )}
+                  </div>
+              </div>
           </div>
-        `);
+      `);
 
         $block.on("click", () => {
           this.onBlockSelected(blockType);

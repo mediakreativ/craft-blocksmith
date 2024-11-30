@@ -129,8 +129,9 @@
         this.$addEntryMenuBtn.hide();
 
         const $newAddButton = $(
-          '<button class="blocksmith-add-btn btn add icon dashed">Add new block</button>',
+          `<button class="blocksmith-add-btn btn add icon dashed">${Craft.t("blocksmith", "Add new block")}</button>`
         );
+
         this.$addEntryMenuBtn.after($newAddButton);
 
         $newAddButton.on("click", (event) => {

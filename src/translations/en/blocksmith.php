@@ -12,6 +12,7 @@ return [
     "Search" => "Search",
     "Clear search" => "Clear search",
     "Cancel" => "Cancel",
+    "Add new block" => "Add new block",
     "Add block above" => "Add block above",
     "You reached the maximum number of entries" =>
         "You reached the maximum number of entries.",
@@ -27,4 +28,6 @@ return [
         "Specify an optional subfolder within the selected volume for storing images.",
     "Custom Settings" => "Custom Settings",
     "Will be added soon." => "Coming soon.",
+    "Add a PNG file named {fileName} to the configured asset volume." =>
+        "Add a PNG file named {fileName} to the configured asset volume.",
 ];
