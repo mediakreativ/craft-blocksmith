@@ -179,19 +179,42 @@
      * @param {Object} matrix - The current MatrixInput instance.
      */
     addMenuToContextMenu: function ($container, typeId, entry, matrix) {
-      const $menu = $('<ul class="blocksmith"></ul>');
+      const $deleteList = $container
+        .find('button[data-action="delete"]')
+        .closest("ul");
 
-      this.addNewBlockBtnToDisclosureMenu($menu, typeId, entry, matrix);
-      this.verifyExistence($menu, matrix);
+      if ($deleteList.length) {
+        const $newList = $('<ul class="blocksmith"></ul>');
+        const $addNewBlockButton = $(`
+          <li>
+            <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
+              <span class="menu-item-label">
+                ${Craft.t("blocksmith", "Add block above")}
+              </span>
+            </button>
+          </li>
+        `);
 
-      const $addButtonContainer = $container
-        .find('[data-action="add"]')
-        .parent()
-        .parent();
-      $addButtonContainer.prev().remove();
-      $addButtonContainer.remove();
+        $newList.append($addNewBlockButton);
+        $deleteList.before($newList);
+        $newList.after('<hr class="padded">');
 
-      $menu.insertBefore($container.find("ul").eq(0));
+        $addNewBlockButton.on("click", () => {
+          openBlocksmithModal(matrix, matrix.$addEntryMenuBtn, this.settings);
+        });
+
+        const $addButtonContainer = $container
+          .find('[data-action="add"]')
+          .parent()
+          .parent();
+        $addButtonContainer.prev().remove();
+        $addButtonContainer.remove();
+      } else {
+        const $menu = $('<ul class="blocksmith"></ul>');
+        $container.append($menu);
+        this.addNewBlockBtnToDisclosureMenu($menu, typeId, entry, matrix);
+        $menu.after('<hr class="padded">');
+      }
     },
 
     /**
