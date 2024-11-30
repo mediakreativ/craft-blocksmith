@@ -5,18 +5,28 @@
   },
   "name": "craft-blocksmith",
   "version": "1.0.0",
-  "description": "Enhances Matrix fields in Craft CMS with block previews and an intuitive block selection interface.",
+  "description": "Enhances Craft CMS Matrix fields with block previews and a user-friendly block selection modal.",
+  "author": {
+    "name": "Christian Schindler",
+    "email": "plugins@mediakreativ.de",
+    "url": "https://mediakreativ.de"
+  },
   "keywords": [
     "craftcms",
+    "craft",
     "matrix",
-    "block preview",
+    "matrix fields",
+    "block previews",
+    "blocksmith",
+    "plugin",
     "UX",
-    "plugin"
+    "modal"
   ],
-  "license": "https://craftcms.github.io/license/",
+  "license": "proprietary",
   "scripts": {
     "format": "prettier --write .",
-    "check-format": "prettier --check ."
+    "check-format": "prettier --check .",
+    "fix-format": "prettier --write . --loglevel warn"
   },
   "engines": {
     "node": ">=18.0.0"
