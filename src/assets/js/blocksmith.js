@@ -18,78 +18,7 @@
    * @license https://craftcms.github.io/license/ Craft License
    *
    * @see https://github.com/craftcms/cms/blob/5.x/src/web/assets/matrix/src/MatrixInput.js
-   * This plugin extends the native MatrixInput functionality by modifying its UI and behavior.
    */
-
-  /**
-   * Extracts block types from the Matrix add entry button.
-   *
-   * @param {jQuery} $addEntryMenuBtn - The jQuery object representing the "Add entry" menu button.
-   * @param {string} previewImageVolume - The base path for preview images.
-   * @param {string} previewImageSubfolder - The optional subfolder for preview images.
-   * @returns {Array<Object>} An array of block type objects with handle, name, and previewImage.
-   */
-  function getBlockTypes(
-    $addEntryMenuBtn,
-    previewImageVolume,
-    previewImageSubfolder,
-  ) {
-    const blockTypes = [];
-    const $buttons = $addEntryMenuBtn
-      .data("disclosureMenu")
-      .$container.find("button");
-
-    $buttons.each(function () {
-      const $button = $(this);
-      const blockHandle = $button.data("type");
-
-      const previewImagePath = `${previewImageVolume}/${previewImageSubfolder ? previewImageSubfolder + "/" : ""}${blockHandle}.png`;
-
-      blockTypes.push({
-        handle: blockHandle,
-        name: $button.find(".menu-item-label").text(),
-        previewImage: previewImagePath,
-      });
-    });
-
-    return blockTypes;
-  }
-
-  /**
-   * Opens the Blocksmith modal to select a block type.
-   *
-   * @param {Object} matrixInstance - The current MatrixInput instance.
-   * @param {jQuery} $addEntryMenuBtn - The jQuery object representing the "Add entry" menu button.
-   * @param {Object} settings - The Blocksmith settings object.
-   */
-  function openBlocksmithModal(matrixInstance, $addEntryMenuBtn, settings) {
-    const blockTypes = getBlockTypes(
-      $addEntryMenuBtn,
-      settings.previewImageVolume,
-      settings.previewImageSubfolder,
-    );
-
-    const modal = new BlocksmithModal(blockTypes, async (selectedBlock) => {
-      try {
-        const $button = $addEntryMenuBtn
-          .data("disclosureMenu")
-          .$container.find("button")
-          .filter((_, el) => $(el).data("type") === selectedBlock.handle);
-
-        if (!$button.length) {
-          throw new Error(
-            `No button found for block type: ${selectedBlock.handle}`,
-          );
-        }
-
-        $button.trigger("activate");
-      } catch (error) {
-        console.error("Error adding block:", error);
-      }
-    });
-
-    modal.show();
-  }
 
   Craft.Blocksmith = Garnish.Base.extend({
     settings: {},
@@ -103,40 +32,105 @@
       const self = this;
       this.settings = config.settings || {};
 
+      // Ensure required dependencies are available
       if (!Garnish.DisclosureMenu || !Craft.MatrixInput) {
         return;
       }
 
-      // Modify the context menu to add custom menu items
+      // Extend the context menu functionality to include Blocksmith logic
       const modifyContextMenu = Garnish.DisclosureMenu.prototype.show;
       Garnish.DisclosureMenu.prototype.show = function (...args) {
-        self.initializeContextMenu(this);
+        self.initiateContextMenu(this);
         modifyContextMenu.apply(this, args);
       };
 
-      // Hook into the Matrix "Add entry" button update
+      // Extend the MatrixInput's "Add entry" button update logic
       const originalUpdateAddEntryBtn =
         Craft.MatrixInput.prototype.updateAddEntryBtn;
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
+        // Call the original logic to ensure native behavior
         originalUpdateAddEntryBtn.apply(this, args);
 
         if (!this.$addEntryMenuBtn) return;
 
-        if (this.$addEntryMenuBtn.siblings(".blocksmith-add-btn").length > 0) {
-          return;
-        }
+        // Remove existing Blocksmith buttons to avoid duplicates
+        this.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
 
+        // Hide the native "Add entry" button as it is replaced
         this.$addEntryMenuBtn.hide();
 
+        // Create and append the custom "Add new block" button
         const $newAddButton = $(
-          `<button class="blocksmith-add-btn btn add icon dashed">${Craft.t("blocksmith", "Add new block")}</button>`
+          '<button class="blocksmith-add-btn btn add icon dashed">Add new block</button>',
         );
-
         this.$addEntryMenuBtn.after($newAddButton);
 
+        // Disable the custom button if the maximum block limit is reached
+        if (!this.canAddMoreEntries()) {
+          $newAddButton.prop("disabled", true).addClass("disabled");
+          $newAddButton.attr(
+            "title",
+            Craft.t("blocksmith", "Maximum number of blocks reached."),
+          );
+        }
+
+        // Attach click event to the custom button to open the Blocksmith modal
         $newAddButton.on("click", (event) => {
           event.preventDefault();
-          openBlocksmithModal(this, this.$addEntryMenuBtn, config.settings);
+
+          // Prevent action if the maximum block limit is reached
+          if (!this.canAddMoreEntries()) {
+            console.warn("Cannot add more blocks, limit reached.");
+            return;
+          }
+
+          // Collect block types from the native menu
+          const blockTypes = [];
+          const $buttons = this.$addEntryMenuBtn
+            .data("disclosureMenu")
+            .$container.find("button");
+
+          $buttons.each(function () {
+            const $button = $(this);
+            const blockHandle = $button.data("type");
+
+            // Construct the preview image path based on settings
+            const previewImagePath = `${config.settings.previewImageVolume}/${config.settings.previewImageSubfolder ? config.settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
+
+            blockTypes.push({
+              handle: blockHandle,
+              name: $button.find(".menu-item-label").text(),
+              previewImage: previewImagePath,
+            });
+          });
+
+          // Open the Blocksmith modal and handle block selection
+          const modal = new BlocksmithModal(
+            blockTypes,
+            async (selectedBlock) => {
+              try {
+                // Trigger the native "activate" event for the selected block type
+                const $button = this.$addEntryMenuBtn
+                  .data("disclosureMenu")
+                  .$container.find("button")
+                  .filter(
+                    (_, el) => $(el).data("type") === selectedBlock.handle,
+                  );
+
+                if (!$button.length) {
+                  throw new Error(
+                    `No button found for block type: ${selectedBlock.handle}`,
+                  );
+                }
+
+                $button.trigger("activate");
+              } catch (error) {
+                console.error("Error adding block:", error);
+              }
+            },
+          );
+
+          modal.show();
         });
       };
     },
@@ -146,75 +140,129 @@
      *
      * @param {Object} disclosureMenu - The Garnish DisclosureMenu instance.
      */
-    initializeContextMenu(disclosureMenu) {
+    initiateContextMenu: function (disclosureMenu) {
       const { $trigger, $container } = disclosureMenu;
-      if (!$trigger?.hasClass("action-btn") || !$container) {
-        return;
+
+      // Ensure the disclosure menu is triggered from a valid context
+      if (!$trigger || !$container || !$trigger.hasClass("action-btn")) {
+        return; // Exit if the menu is not valid or not from an action button
       }
 
+      // Locate the parent Matrix block element
       const $element = $trigger.closest(".actions").parent(".matrixblock");
       if (!$element.length) {
-        return;
+        return; // Exit if the menu is not part of a Matrix block
       }
 
+      // Extract block data from the Matrix block
       const { typeId, entry } = $element.data();
-      if (!typeId || !entry || !entry.matrix) {
-        return;
+      if (!typeId || !entry) {
+        return; // Exit if block type ID or entry data is missing
       }
 
+      // Retrieve the MatrixInput instance managing the field
+      const matrix = entry.matrix;
+      if (!matrix) {
+        return; // Exit if no MatrixInput instance is associated with the entry
+      }
+
+      // Prevent re-initializing the menu if it is already customized
       if (disclosureMenu._menuInitialized) {
-        this.verifyExistence($container, entry.matrix);
+        this.verifyExistance($container, matrix); // Ensure buttons are correctly enabled/disabled
         return;
       }
-
       disclosureMenu._menuInitialized = true;
-      this.addMenuToContextMenu($container, typeId, entry, entry.matrix);
+
+      // Add custom menu items and verify their state
+      this.addMenuToContextMenu($container, typeId, entry, matrix);
+      this.verifyExistance($container, matrix);
     },
 
     /**
      * Adds custom menu items to the context menu.
      *
      * @param {jQuery} $container - The jQuery object representing the menu container.
-     * @param {string} typeId - The block type ID.
-     * @param {Object} entry - The current entry object.
-     * @param {Object} matrix - The current MatrixInput instance.
+     * @param {string} typeId - The block type ID (e.g., "text", "image").
+     * @param {Object} entry - The current entry object, containing data about the Matrix block.
+     * @param {Craft.MatrixInput} matrix - The current MatrixInput instance managing the Matrix field.
      */
     addMenuToContextMenu: function ($container, typeId, entry, matrix) {
+      // Locate and remove the existing "Add" button container
+      const $addButtonContainer = $container
+        .find('[data-action="add"]')
+        .parent()
+        .parent();
+      $addButtonContainer.prev().remove(); // Remove separator above
+      $addButtonContainer.remove(); // Remove the "Add" button itself
+
+      // Locate the list containing the "Delete" button to insert new items before it
       const $deleteList = $container
         .find('button[data-action="delete"]')
         .closest("ul");
 
       if ($deleteList.length) {
+        // Create a new list for Blocksmith menu items
         const $newList = $('<ul class="blocksmith"></ul>');
+
+        // Create the custom "Add block above" button
         const $addNewBlockButton = $(`
-          <li>
-            <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
-              <span class="menu-item-label">
-                ${Craft.t("blocksmith", "Add block above")}
-              </span>
-            </button>
-          </li>
-        `);
+      <li>
+        <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
+          <span class="menu-item-label">
+            ${Craft.t("blocksmith", "Add block above")}
+          </span>
+        </button>
+      </li>
+    `);
 
+        // Append the custom button to the new list
         $newList.append($addNewBlockButton);
-        $deleteList.before($newList);
-        $newList.after('<hr class="padded">');
 
-        $addNewBlockButton.on("click", () => {
-          openBlocksmithModal(matrix, matrix.$addEntryMenuBtn, this.settings);
+        // Add click event to open the Blocksmith modal
+        $addNewBlockButton.find("button").on("click", () => {
+          const blockTypes = [];
+          const $buttons = matrix.$addEntryMenuBtn
+            .data("disclosureMenu")
+            .$container.find("button");
+
+          const settings = this.settings;
+
+          // Collect block types and their preview images
+          $buttons.each(function () {
+            const $button = $(this);
+            const blockHandle = $button.data("type");
+
+            const previewImagePath = `${settings.previewImageVolume}/${settings.previewImageSubfolder ? settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
+
+            blockTypes.push({
+              handle: blockHandle,
+              name: $button.find(".menu-item-label").text(),
+              previewImage: previewImagePath,
+            });
+          });
+
+          // Open the modal for block selection
+          const modal = new BlocksmithModal(
+            blockTypes,
+            async (selectedBlock) => {
+              try {
+                // Add the selected block above the current block
+                await matrix.addEntry(selectedBlock.handle, entry.$container);
+              } catch (error) {
+                console.error("Error adding block:", error);
+              }
+            },
+          );
+
+          modal.show();
         });
 
-        const $addButtonContainer = $container
-          .find('[data-action="add"]')
-          .parent()
-          .parent();
-        $addButtonContainer.prev().remove();
-        $addButtonContainer.remove();
+        // Insert the new list before the delete list and add a separator
+        $deleteList.before($newList);
+        $newList.after('<hr class="padded">');
       } else {
-        const $menu = $('<ul class="blocksmith"></ul>');
-        $container.append($menu);
-        this.addNewBlockBtnToDisclosureMenu($menu, typeId, entry, matrix);
-        $menu.after('<hr class="padded">');
+        // Log an error if the "Delete" button list is not found
+        console.error("Delete button not found in context menu.");
       }
     },
 
@@ -227,47 +275,90 @@
      * @param {Object} matrix - The current MatrixInput instance.
      */
     addNewBlockBtnToDisclosureMenu: function ($menu, _, entry, matrix) {
-      if (!matrix.$addEntryMenuBtn.length) {
-        return;
+      // Ensure the MatrixInput has valid buttons for adding new blocks
+      if (!matrix.$addEntryMenuBtn.length && !matrix.$addEntryBtn.length) {
+        return; // Exit if no valid add-entry buttons exist
       }
 
+      // Create the custom "Add block above" button
       const $addNewBlockButton = $(`
-        <li>
-          <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
-            <span class="menu-item-label">
-              ${Craft.t("blocksmith", "Add block above")}
-            </span>
-          </button>
-        </li>
-      `);
+    <li>
+      <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
+        <span class="menu-item-label">
+          ${Craft.t("blocksmith", "Add block above")}
+        </span>
+      </button>
+    </li>
+  `);
 
+      // Append the custom button to the menu
       $menu.append($addNewBlockButton);
 
-      $addNewBlockButton.on("click", () => {
-        openBlocksmithModal(matrix, matrix.$addEntryMenuBtn, this.settings);
+      // Attach click event to open the Blocksmith modal
+      $addNewBlockButton.find("button").on("click", () => {
+        const blockTypes = [];
+        const $buttons = matrix.$addEntryMenuBtn
+          .data("disclosureMenu")
+          .$container.find("button");
+
+        const settings = this.settings;
+
+        // Collect block types and their preview images
+        $buttons.each(function () {
+          const $button = $(this);
+          const blockHandle = $button.data("type");
+
+          const previewImagePath = `${settings.previewImageVolume}/${settings.previewImageSubfolder ? settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
+
+          blockTypes.push({
+            handle: blockHandle,
+            name: $button.find(".menu-item-label").text(),
+            previewImage: previewImagePath,
+          });
+        });
+
+        // Open the modal for block selection
+        const modal = new BlocksmithModal(blockTypes, async (selectedBlock) => {
+          try {
+            // Add the selected block above the current block
+            await matrix.addEntry(selectedBlock.handle, entry.$container);
+          } catch (error) {
+            console.error("Error adding block:", error);
+          }
+        });
+
+        modal.show();
       });
     },
 
     /**
-     * Verifies the existence of menu items and enables them if necessary.
+     * Verifies the existence of menu items and enables or disables them based on the Matrix field's state.
      *
      * @param {jQuery} $container - The jQuery object representing the menu container.
      * @param {Object} matrix - The current MatrixInput instance.
      */
-    verifyExistence: function ($container, matrix) {
+    verifyExistance: function ($container, matrix) {
+      // Locate the custom "Add block above" button
       const $addButton = $container.find('button[data-action="add-block"]');
+
+      // Disable the button by default
       $addButton.disable();
+
+      // Clear any existing title attribute to avoid confusion
       const $parent = $addButton.parent();
       $parent.attr("title", "");
 
+      // Check if the Matrix field can accommodate more blocks
       if (!matrix.canAddMoreEntries()) {
+        // Add a tooltip indicating the block limit has been reached
         $parent.attr(
           "title",
           Craft.t("blocksmith", "You reached the maximum number of entries."),
         );
-        return;
+        return; // Exit early as the button remains disabled
       }
 
+      // Enable the button if the block limit is not reached
       $addButton.enable();
     },
   });
