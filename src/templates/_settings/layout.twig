@@ -1,0 +1,24 @@
+{# src/templates/_settings/layout.twig #}
+
+<aside class="sidebar">
+	<nav>
+		<ul>
+			<li class="{{ craft.app.request.getSegment(4) == 'general' ? 'sel' }}">
+				<a href="{{ url('admin/settings/plugins/blocksmith/general') }}">General</a>
+			</li>
+			<li class="{{ craft.app.request.getSegment(4) == 'categories' ? 'sel' }}">
+				<a href="{{ url('admin/settings/plugins/blocksmith/categories') }}">Categories</a>
+			</li>
+			<li class="{{ craft.app.request.getSegment(4) == 'previews' ? 'sel' }}">
+				<a href="{{ url('admin/settings/plugins/blocksmith/previews') }}">Previews</a>
+			</li>
+		</ul>
+	</nav>
+</aside>
+
+<section class="content">
+	{% block body %}
+		{# Placeholder if no body is defined #}
+	{% endblock %}
+
+</section>
