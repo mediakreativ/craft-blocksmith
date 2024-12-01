@@ -18,3 +18,11 @@
 ### Updated
 
 - Additional optimizations and refactoring of the blocksmith.js file for better maintainability and performance.
+
+## [1.0.2-beta] - 2024-12-01
+
+Small optimizations in CHANGELOG.md and README.md. Added skeleton for settings page.
+
+## [1.0.3-beta] - 2024-12-01
+
+Removed obsolete _settings folder
