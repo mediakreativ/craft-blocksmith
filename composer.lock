@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa922e3cf3a03fdc37538ff17854aa23",
+    "content-hash": "cec7dc817dc3e839dd85c5c790e68975",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -331,16 +331,16 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "5.5.3",
+            "version": "5.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craftcms/cms.git",
-                "reference": "20199c5340825146f2354d0a29fb694b7d86e400"
+                "reference": "c89aea32f0ec77d4e32d5c1cdf282ef917d60aa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/20199c5340825146f2354d0a29fb694b7d86e400",
-                "reference": "20199c5340825146f2354d0a29fb694b7d86e400",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/c89aea32f0ec77d4e32d5c1cdf282ef917d60aa9",
+                "reference": "c89aea32f0ec77d4e32d5c1cdf282ef917d60aa9",
                 "shasum": ""
             },
             "require": {
@@ -454,7 +454,7 @@
                 "rss": "https://github.com/craftcms/cms/releases.atom",
                 "source": "https://github.com/craftcms/cms"
             },
-            "time": "2024-11-22T23:29:45+00:00"
+            "time": "2024-12-02T19:37:31+00:00"
         },
         {
             "name": "craftcms/plugin-installer",

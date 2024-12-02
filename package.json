@@ -4,7 +4,7 @@
     "prettier": "^3.3.3"
   },
   "name": "craft-blocksmith",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "Enhances Craft CMS Matrix fields with block previews and a user-friendly block selection modal.",
   "author": {
     "name": "Christian Schindler",
