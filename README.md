@@ -36,7 +36,7 @@ If you're new to Composer, follow these steps:
 2. Run the commands below:
 
 ```bash
-composer require mediakreativ/blocksmith
+composer require mediakreativ/craft-blocksmith
 ./craft plugin/install blocksmith
 ```
 
