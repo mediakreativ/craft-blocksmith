@@ -26,3 +26,7 @@ Small optimizations in CHANGELOG.md and README.md. Added skeleton for settings p
 ## [1.0.3-beta] - 2024-12-01
 
 Removed obsolete _settings folder
+
+## [1.0.4-beta] - 2024-12-02
+
+Adjusted CSS to display blocks in a two-column grid layout
