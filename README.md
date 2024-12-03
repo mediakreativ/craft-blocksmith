@@ -45,3 +45,62 @@ composer require mediakreativ/craft-blocksmith
 Your feedback helps us improve!
 For feature requests or bug reports, please submit an [issue on GitHub](https://github.com/mediakreativ/craft-blocksmith/issues).
 You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plugins@mediakreativ.de).
+
+
+## **Roadmap**
+
+### **Short-Term**
+
+1. **Flexible Image Upload for Previews**
+   - Currently, preview images must be named after the Entry Type handle to be recognized. This feature will allow uploading preview images independently of Entry Type handles, providing more flexibility in managing block previews.
+
+2. **Categorization and Favorites Settings**
+   - Setting for categorization of block types and defining favorites.
+   - By default, the favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
+
+3. **Individual Settings for Each Matrix Field**
+   - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
+   - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
+
+---
+
+### **Mid-Term**
+
+1. **Optimizations for Multi-Site Setups**
+   - Ensure that previews and settings work correctly in multi-site environments.
+   - Example: Preview images and categories should be configurable per site.
+
+2. **More Complex Block Scenarios**
+   - Support for nested Matrix fields and dependencies between block types.
+   - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
+
+3. **Copy-/Paste-/Clone Functionality**
+   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
+
+---
+
+### **Long-Term**
+
+1. **Enhanced Cards and Element Index Support**
+   - Integrate Blocksmith with the "Cards" view mode of Matrix fields.
+   - Expand cards to display additional block information, such as live status or specific block content.
+   - Add an option to enable/disable blocks directly within the card.
+   - Improve the Element Index view to allow seamless modal integration and better information display.
+
+2. **Integration with Third-Party Plugins**
+   - Ensure compatibility with popular Craft plugins like Neo and Matrix Extended.
+   - Aim for seamless integration and support of extended Matrix field functionality.
+
+---
+
+### **Completed Features**
+
+- **Masonry.js Integration for Flexible Previews**
+  - Implemented a flexible grid layout using Masonry.js, allowing seamless display of blocks with varying preview dimensions (e.g., for very long content).
+
+---
+
+### **Note on the Roadmap**
+
+This roadmap provides an overview of planned and completed features. Priorities may shift based on user feedback or new requirements. For suggestions or inquiries, feel free to open an issue on GitHub.
+
