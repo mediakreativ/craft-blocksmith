@@ -34,3 +34,12 @@ Adjusted CSS to display blocks in a two-column grid layout
 ## [1.0.5-beta] - 2024-12-02
 
 Update button label logic to use Matrix field settings or default to 'New Entry'
+
+## [1.0.6-beta] - 2024-12-03
+### Added
+- Masonry.js integration for flexible previews.
+- Improved block layout in the preview modal.
+- Switched to local asset loading for Masonry.js and imagesLoaded.js.
+
+### Fixed
+- Minor performance optimizations.
