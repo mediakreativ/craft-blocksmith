@@ -56,13 +56,19 @@
         // Remove existing Blocksmith buttons to avoid duplicates
         this.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
 
+        // Extract the label from the native "Add entry" button
+        const newBlockLabel =
+          this.$addEntryMenuBtn.find(".label").text() ||
+          Craft.t("blocksmith", "New Entry");
+
         // Hide the native "Add entry" button as it is replaced
         this.$addEntryMenuBtn.hide();
 
         // Create and append the custom "Add new block" button
         const $newAddButton = $(
-          '<button class="blocksmith-add-btn btn add icon dashed">Add new block</button>',
+          `<button class="blocksmith-add-btn btn add icon dashed">${newBlockLabel}</button>`,
         );
+
         this.$addEntryMenuBtn.after($newAddButton);
 
         // Disable the custom button if the maximum block limit is reached
