@@ -25,7 +25,12 @@ class BlocksmithAsset extends AssetBundle
     {
         $this->sourcePath = "@mediakreativ/blocksmith/assets";
 
-        $this->js = ["js/blocksmith.js", "js/blocksmithModal.js"];
+        $this->js = [
+            "js/masonry.pkgd.min.js",
+            "js/imagesloaded.pkgd.min.js",
+            "js/blocksmith.js",
+            "js/blocksmithModal.js",
+        ];
         $this->css = ["css/blocksmith.css"];
         $this->depends = [CpAsset::class, MatrixAsset::class];
 

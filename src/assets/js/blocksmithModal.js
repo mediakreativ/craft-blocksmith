@@ -61,6 +61,18 @@
      * Removes the modal and overlay from the DOM and resets references.
      */
     hide() {
+      // Reset Masonry-Instance, if exists
+      if (this.masonryInstance) {
+        this.masonryInstance.destroy();
+        this.masonryInstance = null;
+      }
+
+      // Empty Modal Content
+      if (this.$modal) {
+        this.$modal.find(".blocksmith-blocks").empty();
+      }
+
+      // Remove Modal and Overlay
       this.$overlay.removeClass("open").remove();
       this.$modal.removeClass("open").remove();
       this.$overlay = null;
@@ -162,6 +174,20 @@
         });
 
         $blocksContainer.append($block);
+      });
+
+      // Initialize Masonry if all images are loaded
+      imagesLoaded($blocksContainer[0], () => {
+        if (!this.masonryInstance) {
+          this.masonryInstance = new Masonry($blocksContainer[0], {
+            itemSelector: ".blocksmith-block",
+            percentPosition: true,
+            gutter: 20,
+          });
+        } else {
+          this.masonryInstance.reloadItems();
+          this.masonryInstance.layout();
+        }
       });
     }
 

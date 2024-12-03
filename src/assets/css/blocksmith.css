@@ -16,7 +16,6 @@ body .blocksmith-modal {
   background: white;
   border-radius: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
   width: 90% !important;
   max-width: 1100px !important;
   height: 90% !important;
@@ -24,11 +23,17 @@ body .blocksmith-modal {
   overflow: auto;
 }
 
+@media (max-width: 1177px) {
+  body .blocksmith-modal {
+    max-width: 800px !important
+  }
+}
+
 .blocksmith-modal-content {
   text-align: center;
-  height: calc(100% - 60px); /* Platz für den fixierten Footer */
+  height: calc(100% - 60px);
   padding: 20px;
-  overflow-y: auto; /* Ermöglicht Scrollen im Inhalt */
+  overflow-y: auto;
 }
 
 .blocksmith-modal-overlay {
@@ -48,21 +53,17 @@ body .blocksmith-modal {
   padding-block: 6px;
   padding-inline: var(--pane-padding, var(--xl));
   background-color: var(--gray-100);
-  position: fixed; /* Fixiert den Footer */
-  bottom: 0; /* Immer am unteren Rand */
+  position: fixed;
+  bottom: 0;
   left: 0;
-  width: 100%; /* Nimmt die volle Breite des Modals ein */
+  width: 100%;
   border-radius: 0 0 var(--large-border-radius) var(--large-border-radius);
   box-shadow: inset 0 1px 0 var(--hairline-color);
-  z-index: 1002; /* Über den Scroll-Inhalt */
+  z-index: 1002;
 }
 
 .blocksmith-blocks {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Genau 2 Spalten */
-  gap: 20px;
-  justify-items: center;
-  align-items: start;
+  display: block;
   margin-top: 20px;
 }
 
@@ -71,6 +72,7 @@ body .blocksmith-modal {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 15px;
+  margin-bottom: 20px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition:
@@ -80,12 +82,7 @@ body .blocksmith-modal {
   max-width: 500px;
 }
 
-@media (max-width: 800px) {
-  .blocksmith-blocks {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
+@media (max-width: 1177px) {
   .blocksmith-block {
     max-width: 100%;
   }
@@ -94,6 +91,7 @@ body .blocksmith-modal {
 .blocksmith-block img {
   max-width: 100%;
   height: auto;
+  object-fit: cover;
   margin-bottom: 10px;
 }
 
