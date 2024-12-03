@@ -30,3 +30,7 @@ Removed obsolete _settings folder
 ## [1.0.4-beta] - 2024-12-02
 
 Adjusted CSS to display blocks in a two-column grid layout
+
+## [1.0.5-beta] - 2024-12-02
+
+Update button label logic to use Matrix field settings or default to 'New Entry'
