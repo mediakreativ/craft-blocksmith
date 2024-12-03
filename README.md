@@ -6,7 +6,7 @@ This is the **beta release** of the Blocksmith plugin. While it is fully functio
 
 ## Features
 
-- **Intuitive modal for block/entry type selection**: Replace the native "New Entry" dropdown with a streamlined "Add new block" button that opens a modal featuring block previews for quick and easy selection.
+- **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface, which also supports tall content types for better previews.
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
 - **Flexible preview settings**: Configure where preview images are stored, including support for asset volumes and optional subfolders.
 - **Language support**: Currently available in English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, and Ukrainian.  
@@ -95,7 +95,6 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 - **Masonry.js Integration for Flexible Previews**
   - Implemented a flexible grid layout using Masonry.js, allowing seamless display of blocks with varying preview dimensions (e.g., for very long content).
 
----
 
 ### **Note on the Roadmap**
 
