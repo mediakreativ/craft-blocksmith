@@ -99,5 +99,5 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### **Note on the Roadmap**
 
-This roadmap provides an overview of planned and completed features. Priorities may shift based on user feedback or new requirements. For suggestions or inquiries, feel free to open an issue on GitHub.
+This roadmap provides an overview of planned and completed features. Priorities may shift based on user feedback or new requirements. For suggestions or inquiries, feel free to open an [issue on GitHub](https://github.com/mediakreativ/craft-blocksmith/issues).
 
