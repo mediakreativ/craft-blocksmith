@@ -62,7 +62,6 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
    - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
    - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 
----
 
 ### **Mid-Term**
 
@@ -77,7 +76,6 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 3. **Copy-/Paste-/Clone Functionality**
    - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
 
----
 
 ### **Long-Term**
 
@@ -88,10 +86,9 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
    - Improve the Element Index view to allow seamless modal integration and better information display.
 
 2. **Integration with Third-Party Plugins**
-   - Ensure compatibility with popular Craft plugins like Neo and Matrix Extended.
+   - Ensure compatibility with popular Craft plugins (e.g. Neo).
    - Aim for seamless integration and support of extended Matrix field functionality.
 
----
 
 ### **Completed Features**
 
