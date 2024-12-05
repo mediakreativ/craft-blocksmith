@@ -1,0 +1,58 @@
+{# src/templates/_settings/general.twig #}
+
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% import 'blocksmith/_includes/macros.twig' as macros %}
+
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    },
+    {
+        label: "Blogsmith"|t('blocksmith'),
+        url: url('admin/blocksmith/settings/general')
+    }
+] %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+	<input type="hidden" name="pluginHandle" value="blocksmith">
+	{# <input type="hidden" name="action" value="plugins/save-plugin-settings"> #}
+	<input type="hidden" name="action" value="blocksmith/blocksmith/save-settings">
+	<div class="settings-wrapper">
+		<div class="settings-content">
+			<h1>{{ "General Settings"|t('blocksmith') }}</h1>
+
+			{{ forms.selectField({
+                label: 'Preview Image Volume'|t('blocksmith'),
+                name: 'previewImageVolume',
+                id: 'previewImageVolume',
+                instructions: 'Choose the volume where preview images will be stored.'|t('blocksmith'),
+                options: volumeOptions,
+                value: settings.previewImageVolume,
+                disabled: 'previewImageVolume' in overrides,
+                warning: 'previewImageVolume' in overrides ? macros.configWarning('previewImageVolume'),
+            }) }}
+
+			{{ forms.textField({
+                label: 'Subfolder (optional)'|t('blocksmith'),
+                name: 'previewImageSubfolder',
+                id: 'previewImageSubfolder',
+                instructions: 'Specify an optional subfolder within the selected volume for storing images.'|t('blocksmith'),
+                value: settings.previewImageSubfolder,
+                disabled: 'previewImageSubfolder' in overrides,
+                warning: 'previewImageSubfolder' in overrides ? macros.configWarning('previewImageSubfolder'),
+            }) }}
+		</div>
+	</div>
+{% endblock %}

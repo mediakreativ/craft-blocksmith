@@ -7,6 +7,21 @@
   margin-bottom: -1px;
 }
 
+/* Plugin Settings
+
+/* Settings Wrapper Layout */
+.settings-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+/* Content Styling */
+.settings-content {
+  flex: 1; /* Content nimmt den verbleibenden Platz ein */
+  padding: 20px;
+}
+
+/* Previews Modal */
 body .blocksmith-modal {
   position: fixed;
   top: 50%;
@@ -25,7 +40,7 @@ body .blocksmith-modal {
 
 @media (max-width: 1177px) {
   body .blocksmith-modal {
-    max-width: 800px !important
+    max-width: 800px !important;
   }
 }
 

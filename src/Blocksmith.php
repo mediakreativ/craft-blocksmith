@@ -6,6 +6,10 @@ namespace mediakreativ\blocksmith;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
+use craft\web\UrlManager;
+use craft\web\View;
+use craft\helpers\UrlHelper;
+use yii\base\Event;
 use mediakreativ\blocksmith\services\BlocksmithService;
 use mediakreativ\blocksmith\assets\BlocksmithAsset;
 use mediakreativ\blocksmith\models\BlocksmithSettings;
@@ -30,13 +34,12 @@ use mediakreativ\blocksmith\models\BlocksmithSettings;
 class Blocksmith extends Plugin
 {
     public const TRANSLATION_CATEGORY = "blocksmith";
-    private const SETTINGS_TEMPLATE = "blocksmith/_settings.twig";
 
     public string $schemaVersion = "1.0.0";
     public bool $hasCpSettings = true;
 
     /**
-     * Initializes the plugin, setting up default settings and event handlers.
+     * Initializes the plugin, setting up default settings, routes, event handlers, and assets.
      *
      * @return void
      */
@@ -46,6 +49,41 @@ class Blocksmith extends Plugin
 
         // Log initialization message
         Craft::info("Blocksmith plugin initialized.", __METHOD__);
+
+        /**
+         * Handles the `EVENT_REGISTER_CP_URL_RULES` event to define
+         * routes for the plugin's settings pages. Each route maps a URL pattern to a specific
+         * controller action.
+         *
+         * @param \craft\events\RegisterUrlRulesEvent $event The event object containing URL rules.
+         * @return void
+         */
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_CP_URL_RULES,
+            function (\craft\events\RegisterUrlRulesEvent $event) {
+                // Log the event for debugging purposes
+                Craft::info(
+                    "Registering custom routes for Blocksmith settings pages.",
+                    __METHOD__
+                );
+
+                // Route for the "General Settings" page
+                $event->rules["blocksmith/settings/general"] =
+                    "blocksmith/blocksmith/general";
+
+                // Route for the "Categories Settings" page
+                $event->rules["blocksmith/settings/categories"] =
+                    "blocksmith/blocksmith/categories";
+
+                // Route for the "Blocks Settings" page
+                $event->rules["blocksmith/settings/blocks"] =
+                    "blocksmith/blocksmith/blocks";
+
+                $event->rules["blocksmith/settings/save"] =
+                    "blocksmith/blocksmith/save-settings";
+            }
+        );
 
         // Ensure a default volume is set for preview images, if not configured
         if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
@@ -90,8 +128,8 @@ class Blocksmith extends Plugin
     /**
      * Publishes plugin assets to the web directory.
      *
-     * Copies all files from the plugin's `src/web` directory into the
-     * Craft project's public web directory (`web/blocksmith`) to make them
+     * Copies all files from the plugin's src/web directory into the
+     * Craft project's public web directory (web/blocksmith) to make them
      * publicly accessible.
      *
      * @return void
@@ -217,7 +255,15 @@ class Blocksmith extends Plugin
      */
     protected function createSettingsModel(): ?Model
     {
-        return new BlocksmithSettings();
+        $settings = new BlocksmithSettings();
+
+        Craft::info("Creating settings model for Blocksmith.", __METHOD__);
+        Craft::debug(
+            "Current settings: " . json_encode($settings->toArray()),
+            __METHOD__
+        );
+
+        return $settings;
     }
 
     /**
@@ -228,42 +274,19 @@ class Blocksmith extends Plugin
      *
      * @return string|null The rendered HTML for the settings page, or null if the rendering fails.
      */
-    protected function settingsHtml(): ?string
-    {
-        return $this->renderSettingsTemplate();
-    }
-
-    /**
-     * Renders the Control Panel settings template.
-     *
-     * @return string The rendered HTML for the settings page.
-     */
-    private function renderSettingsTemplate(): string
+    public function settingsHtml(): ?string
     {
         $settings = $this->getSettings();
-        $settings->validate();
-
-        $overrides = Craft::$app
-            ->getConfig()
-            ->getConfigFromFile(strtolower($this->handle));
-
-        // Prepare available volumes for selection
-        $volumes = Craft::$app->volumes->getAllVolumes();
-        $volumeOptions = array_map(
-            fn($volume) => [
-                "label" => $volume->name,
-                "value" => $volume->uid,
-            ],
-            $volumes
-        );
-
-        return Craft::$app->view->renderTemplate(self::SETTINGS_TEMPLATE, [
-            "plugin" => $this,
-            "overrides" => array_keys($overrides),
-            "settings" => $settings,
-            "volumeOptions" => $volumeOptions,
-            "translationCategory" => self::TRANSLATION_CATEGORY,
-        ]);
+        if (!$settings->validate()) {
+            Craft::error(
+                "Validation failed: " . json_encode($settings->getErrors()),
+                __METHOD__
+            );
+        }
+        return Craft::$app
+            ->getResponse()
+            ->redirect(UrlHelper::cpUrl("blocksmith/settings/general"))
+            ->send();
     }
 
     /**

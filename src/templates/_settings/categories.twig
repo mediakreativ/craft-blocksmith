@@ -1,0 +1,37 @@
+{# src/templates/_settings/categories.twig #}
+
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% import 'blocksmith/_includes/macros.twig' as macros %}
+
+{% set fullPageForm = true %}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    },
+    {
+        label: "Blogsmith"|t('blocksmith'),
+        url: url('admin/blocksmith/settings/general')
+    },
+    {
+        label: "Categories"|t('blocksmith'),
+        url: url('admin/blocksmith/settings/categories')
+    }
+] %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="content">
+		<h1>{{ "Categories"|t('blocksmith') }}</h1>
+		<p>Coming soon.</p>
+	</div>
+{% endblock %}

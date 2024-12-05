@@ -33,7 +33,7 @@ class BlocksmithSettings extends Model
      *
      * @return array Validation rules for settings attributes.
      */
-    public function defineRules(): array
+    public function rules(): array
     {
         return [
             [

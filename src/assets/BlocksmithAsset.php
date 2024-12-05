@@ -53,23 +53,26 @@ class BlocksmithAsset extends AssetBundle
     }
 
     /**
-     * Registers translation keys used in the plugin.
+     * Registers translation keys used by the plugin.
      *
-     * @param View $view The current view.
+     * Adds translations for both PHP and JavaScript usage to ensure consistency
+     * across the Control Panel and client-side scripts.
+     *
+     * @param View $view The current view object.
+     * @return void
      */
     private function registerTranslations(View $view): void
     {
-        // Log the current language Craft is using
         $translations = $this->getTranslationKeysWithFallback();
 
         if (!empty($translations)) {
-            // Register PHP translations for use with Craft::t()
+            // Register PHP translations for Craft::t()
             $view->registerTranslations(
                 Blocksmith::TRANSLATION_CATEGORY,
                 array_keys($translations)
             );
 
-            // Register JavaScript translations for client-side usage
+            // Register JavaScript translations for use in client-side scripts
             $view->registerJs(
                 "window.BlocksmithTranslations = " .
                     Json::encode($translations),
@@ -79,9 +82,9 @@ class BlocksmithAsset extends AssetBundle
     }
 
     /**
-     * Retrieves all translation keys and values from translation files.
+     * Retrieves all translation keys and their values, with a fallback to English.
      *
-     * @return array Translation keys and their values.
+     * @return array Translation keys and their respective values.
      */
     private function getTranslationKeysWithFallback(): array
     {
@@ -93,7 +96,7 @@ class BlocksmithAsset extends AssetBundle
         $allTranslations = [];
 
         if (is_dir($translationsDir)) {
-            // Lade die Übersetzungen der aktuellen Sprache (falls vorhanden)
+            // Load translations for the current language, if available
             $currentLanguageFile =
                 $translationsDir . "/{$currentLanguage}/blocksmith.php";
             if (file_exists($currentLanguageFile)) {
@@ -109,13 +112,12 @@ class BlocksmithAsset extends AssetBundle
                 }
             }
 
-            // Lade die Fallback-Übersetzungen (englisch)
+            // Load fallback translations (English)
             $defaultFile =
                 $translationsDir . "/{$defaultLanguage}/blocksmith.php";
             if (file_exists($defaultFile)) {
                 $fallbackTranslations = include $defaultFile;
                 if (is_array($fallbackTranslations)) {
-                    // Füge nur Schlüssel hinzu, die noch nicht existieren
                     foreach ($fallbackTranslations as $key => $value) {
                         if (!isset($allTranslations[$key])) {
                             $allTranslations[$key] = $value;
@@ -138,9 +140,12 @@ class BlocksmithAsset extends AssetBundle
     }
 
     /**
-     * Registers Blocksmith JavaScript configuration.
+     * Registers JavaScript configuration for the Blocksmith plugin.
      *
-     * @param View $view The current view.
+     * This includes initialization logic for the client-side plugin functionality.
+     *
+     * @param View $view The current view object.
+     * @return void
      */
     private function registerPluginJs(View $view): void
     {
@@ -163,9 +168,9 @@ JS;
     }
 
     /**
-     * Retrieves the Blocksmith configuration.
+     * Retrieves the configuration data for Blocksmith.
      *
-     * @return array The configuration data.
+     * @return array The configuration data to be passed to client-side scripts.
      */
     private function getBlocksmithConfig(): array
     {
@@ -183,10 +188,10 @@ JS;
     }
 
     /**
-     * Constructs the volume path based on the settings.
+     * Constructs the volume path based on the plugin settings.
      *
      * @param \mediakreativ\blocksmith\models\BlocksmithSettings $settings The plugin settings.
-     * @return string|null The resolved volume path or null if not set.
+     * @return string|null The resolved volume path or null if not configured.
      */
     private function getVolumePath($settings): ?string
     {
