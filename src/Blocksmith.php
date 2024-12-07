@@ -205,13 +205,13 @@ class Blocksmith extends Plugin
      *
      * @return void
      */
-    public function afterInstall(): void
-    {
-        parent::afterInstall();
+    // public function afterInstall(): void
+    // {
+    //     parent::afterInstall();
 
-        // Run migrations after installation
-        $this->runMigrations();
-    }
+    //     // Run migrations after installation
+    //     $this->runMigrations();
+    // }
 
     /**
      * Publishes plugin assets to the web directory.
