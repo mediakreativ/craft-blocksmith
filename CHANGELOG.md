@@ -1,13 +1,23 @@
+## [1.0.7-beta] - 2024-12-07
+
+### Added
+- Added a preview version of the Block Settings page, laying the groundwork for upcoming features.
+- Full functionality will be introduced in a future release within the next few days.
+- Prepared the structure for database migrations to support future features and enhancements.
+- These migrations are currently inactive and will be rolled out in subsequent updates.
+
+### Improvements
+- Refactored the settings structure to support **multi-page settings views**.
+- Minor code improvements for better readability and maintainability.
+
 ## [1.0.6-beta] - 2024-12-03
 
 ### Added
-
 - Masonry.js integration for flexible previews.
 - Improved block layout in the preview modal.
 - Switched to local asset loading for Masonry.js and imagesLoaded.js.
 
-### Fixed
-
+## Fixed
 - Minor performance optimizations.
 
 ## [1.0.5-beta] - 2024-12-02
@@ -29,17 +39,14 @@ Small optimizations in CHANGELOG.md and README.md. Added skeleton for settings p
 ## [1.0.1-beta] - 2024-12-01
 
 ### Fixed
-
 - Fixed an issue where the "Add block above" button in the context menu was occasionally not disabled when the maximum number of entries was reached.
 
 ### Updated
-
 - Additional optimizations and refactoring of the blocksmith.js file for better maintainability and performance.
 
 ## [1.0.0-beta] - 2024-11-30
 
 ## Initial beta release with:
-
 - **Intuitive block selection via modal**: Effortlessly browse and add blocks with an easy-to-use modal interface, replacing Craft's default dropdown.
 - **Enhanced block selection via context menu**: A dedicated "Add block above" button is available in the context menu, replacing native individual buttons for every entry type (e.g., "Add xyz above").
 - **Block previews with fallback support**: Displays preview images for blocks, with a placeholder for missing previews.
