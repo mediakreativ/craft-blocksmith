@@ -80,7 +80,6 @@ class BlocksmithController extends \craft\web\Controller
         $request = Craft::$app->getRequest();
         $settings = Blocksmith::getInstance()->getSettings();
 
-        // Laden der neuen Daten aus der POST-Anfrage
         $settings->previewImageVolume = $request->getBodyParam(
             "previewImageVolume"
         );
@@ -88,7 +87,7 @@ class BlocksmithController extends \craft\web\Controller
             "previewImageSubfolder"
         );
 
-        // Validierung und Speichern
+        // Validate settings
         if (!$settings->validate()) {
             Craft::$app->session->setError(
                 Craft::t("blocksmith", "Failed to save settings.")
@@ -96,7 +95,7 @@ class BlocksmithController extends \craft\web\Controller
             return $this->redirectToPostedUrl();
         }
 
-        // Speichern der Daten
+        // Save settings
         if (
             !Craft::$app->plugins->savePluginSettings(
                 Blocksmith::getInstance(),
@@ -131,7 +130,7 @@ class BlocksmithController extends \craft\web\Controller
         $description = $request->getBodyParam("description");
         $category = $request->getBodyParam("category");
 
-        // Asset-ID validieren
+        // Validate Asset-ID
         $previewImage = null;
         if ($previewImageId) {
             $previewImage = \craft\elements\Asset::find()
@@ -145,7 +144,7 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        // Speichern in der Datenbank
+        // Save data in the database
         $blockDataToSave = [
             "description" => $description,
             "category" => $category,
@@ -155,13 +154,11 @@ class BlocksmithController extends \craft\web\Controller
             $blockDataToSave["previewImageUrl"] = $previewImage->getUrl();
         }
 
-        // Daten speichern...
         Craft::$app->db
             ->createCommand()
             ->upsert("{{%blocksmith_blockdata}}", $blockDataToSave)
             ->execute();
 
-        // Erfolgsbenachrichtigung
         Craft::$app->session->setNotice(
             Craft::t("blocksmith", "Block settings saved successfully.")
         );
@@ -188,30 +185,30 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionBlocks()
     {
-        // Platzhalter-URL für Bilder (falls kein Vorschau-Bild vorhanden)
+        // Placeholder URL for images
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
 
-        // Abrufen aller Matrix-Felder
+        // Retrieve all fields
         $fieldsService = Craft::$app->fields;
         $allFields = $fieldsService->getAllFields();
 
-        // Filtern der Matrix-Felder
+        /// Filter Matrix fields
         $matrixFields = array_filter(
             $allFields,
             fn($field) => $field instanceof \craft\fields\Matrix
         );
 
-        // Sammeln der Matrix-Felder und ihrer Blocktypen
+        // Collect Matrix fields and their block types
         $matrixData = [];
         foreach ($matrixFields as $matrixField) {
             $blockTypes = [];
 
-            // Iteriere durch alle Blocktypen des Matrix-Feldes
+            // Iterate through all block types of the Matrix field
             foreach ($matrixField->getEntryTypes() as $blockType) {
                 // Vorschau-Bild-URL prüfen (falls implementiert)
                 $previewImageUrl = $blockType->previewImageUrl ?? null;
 
-                // Beschreibung und Kategorie der Blocktypen einfügen
+                // Add block type description and category
                 $blockTypes[] = [
                     "name" => $blockType->name,
                     "handle" => $blockType->handle,
@@ -220,11 +217,11 @@ class BlocksmithController extends \craft\web\Controller
                     // "description" => $blockType->description ?? null,
                     "description" =>
                         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-                    "category" => $blockType->category ?? null, // Falls Kategorien unterstützt werden
+                    "category" => $blockType->category ?? null,
                 ];
             }
 
-            // Matrix-Feld-Daten hinzufügen
+             // Add Matrix field data
             $matrixData[] = [
                 "name" => $matrixField->name,
                 "handle" => $matrixField->handle,
@@ -232,7 +229,7 @@ class BlocksmithController extends \craft\web\Controller
             ];
         }
 
-        // Rendern der Template-Datei mit den dynamischen Daten
+        // Render the template with dynamic data
         return $this->renderTemplate("blocksmith/_settings/blocks", [
             "plugin" => \mediakreativ\blocksmith\Blocksmith::getInstance(),
             "title" => Craft::t("blocksmith", "Blocksmith"),
@@ -255,7 +252,7 @@ class BlocksmithController extends \craft\web\Controller
     {
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
 
-        // Matrix-Feld und Blocktyp abrufen
+        // Retrieve the Matrix field and block type
         $fieldsService = Craft::$app->fields;
         $blockType = null;
         foreach ($fieldsService->getAllFields() as $field) {
@@ -269,7 +266,7 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        // Fehler ausgeben, wenn der Blocktyp nicht gefunden wird
+        // Show an error if the block type is not found
         if (!$blockType) {
             Craft::$app->session->setError(
                 Craft::t(
@@ -281,17 +278,17 @@ class BlocksmithController extends \craft\web\Controller
             return $this->redirect("blocksmith/settings/blocks");
         }
 
-        // Block-Daten laden
+        // Load block data
         $blockData = (new \yii\db\Query())
             ->select("*")
             ->from("{{%blocksmith_blockdata}}")
             ->where(["entryTypeId" => $blockType->id])
             ->one();
 
-        // Kategorien
+        // Categories
         $categories = ["Headers", "Media", "Content"];
 
-        // Daten des Blocktyps vorbereiten
+        // Prepare block type data
         $block = [
             "name" => $blockType->name,
             "handle" => $blockType->handle,
@@ -302,7 +299,7 @@ class BlocksmithController extends \craft\web\Controller
             "selectedCategory" => $blockData["category"] ?? null,
         ];
 
-        // Template rendern
+        // Render the template
         return $this->renderTemplate("blocksmith/_settings/edit-block", [
             "block" => $block,
             "title" => Craft::t("blocksmith", "Edit Block"),
