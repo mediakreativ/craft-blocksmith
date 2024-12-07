@@ -4,7 +4,7 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{% set fullPageForm = true %}
+{# {% set fullPageForm = true %} #}
 
 {% set crumbs = [
     {
@@ -14,14 +14,6 @@
     {
         label: "Plugins"|t('blocksmith'),
         url: url('admin/settings/plugins')
-    },
-    {
-        label: "Blogsmith"|t('blocksmith'),
-        url: url('admin/blocksmith/settings/general')
-    },
-    {
-        label: "Block Settings"|t('blocksmith'),
-        url: url('admin/blocksmith/settings/blocks')
     }
 ] %}
 
@@ -30,8 +22,67 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content">
-		<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
-        <p>Coming soon.</p>
+	<input type="hidden" name="pluginHandle" value="blocksmith">
+	{{ actionInput('blocksmith/blocksmith/save-settings') }}
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
+			<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
+
+			<div class="blocksmith-preview-hint">
+				{{ "This is a preview of the block overview (functionality will be added soon)."|t('blocksmith') }}
+			</div>
+
+			{% for matrixField in matrixFields %}
+				<section class="blocksmith-matrix-field-section">
+					<div class="blocksmith-section-header">
+						<h4>Matrix Field
+							<span>"{{ matrixField.name }}"</span>
+						</h4>
+						<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+							<span class="copytextbtn__value">{{ matrixField.handle }}</span>
+							<span class="visually-hidden">Copy to clipboard</span>
+							<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+						</div>
+
+					</div>
+					<div class="blocksmith-block-list">
+						{% for blockType in matrixField.blockTypes %}
+							<div class="blocksmith-block-card-horizontal">
+								<div class="blocksmith-block-image">
+									<img src="{{ blockType.previewImageUrl ?: placeholderImageUrl }}" alt="Preview image">
+								</div>
+								<div class="blocksmith-block-details">
+									<div class="blocksmith-blocktype-header">
+										<span class="blocksmith-blockname">{{ blockType.name }}</span>
+										<div class="block-handle">
+											<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+												<span class="copytextbtn__value">{{ blockType.handle }}</span>
+												<span class="visually-hidden">Copy to clipboard</span>
+												<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+											</div>
+										</div>
+										{% if blockType.category %}
+											<div class="blocksmith-badge blocksmith-category code light" role="button" title="Blocktype Category" tabindex="0">
+												<span>{{ blockType.category }}</span>
+											</div>
+										{% endif %}
+									</div>
+									<p class="block-description">
+										{% if blockType.description %}
+											{{ blockType.description }}</p>
+									{% endif %}
+
+								</div>
+								<div class="blocksmith-block-actions">
+									<a class="btn edit-btn" href="#">
+										{{ "Edit"|t('blocksmith') }}
+									</a>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}

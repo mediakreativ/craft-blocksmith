@@ -14,10 +14,6 @@
     {
         label: "Plugins"|t('blocksmith'),
         url: url('admin/settings/plugins')
-    },
-    {
-        label: "Blogsmith"|t('blocksmith'),
-        url: url('admin/blocksmith/settings/general')
     }
 ] %}
 
@@ -27,10 +23,9 @@
 
 {% block content %}
 	<input type="hidden" name="pluginHandle" value="blocksmith">
-	{# <input type="hidden" name="action" value="plugins/save-plugin-settings"> #}
-	<input type="hidden" name="action" value="blocksmith/blocksmith/save-settings">
-	<div class="settings-wrapper">
-		<div class="settings-content">
+     {{ actionInput('blocksmith/blocksmith/save-settings') }}
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
 			<h1>{{ "General Settings"|t('blocksmith') }}</h1>
 
 			{{ forms.selectField({

@@ -30,4 +30,7 @@ return [
     "Will be added soon." => "Скоро будет добавлено.",
     "Add a PNG file named {fileName} to the configured asset volume." =>
         "Добавьте файл PNG с именем {fileName} в настроенный том ресурсов.",
+    "Copied to clipboard." => "Скопировано в буфер обмена.",
+    "Failed to copy. Please try again." =>
+        "Не удалось скопировать. Пожалуйста, попробуйте снова.",
 ];

@@ -30,6 +30,7 @@ class BlocksmithAsset extends AssetBundle
             "js/imagesloaded.pkgd.min.js",
             "js/blocksmith.js",
             "js/blocksmithModal.js",
+            "js/blocksmithSettings.js",
         ];
         $this->css = ["css/blocksmith.css"];
         $this->depends = [CpAsset::class, MatrixAsset::class];

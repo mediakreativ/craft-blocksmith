@@ -30,4 +30,6 @@ return [
     "Will be added soon." => "Coming soon.",
     "Add a PNG file named {fileName} to the configured asset volume." =>
         "Add a PNG file named {fileName} to the configured asset volume.",
+    "Copied to clipboard." => "Copied to clipboard.",
+    "Failed to copy. Please try again." => "Failed to copy. Please try again.",
 ];

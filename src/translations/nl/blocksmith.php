@@ -30,4 +30,7 @@ return [
     "Will be added soon." => "Binnenkort beschikbaar.",
     "Add a PNG file named {fileName} to the configured asset volume." =>
         "Voeg een PNG-bestand genaamd {fileName} toe aan het geconfigureerde asset-volume.",
+    "Copied to clipboard." => "Gekopieerd naar klembord.",
+    "Failed to copy. Please try again." =>
+        "Kopiëren mislukt. Probeer het opnieuw.",
 ];

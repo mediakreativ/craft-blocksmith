@@ -67,6 +67,14 @@ class BlocksmithController extends \craft\web\Controller
         ]);
     }
 
+    /**
+     * Saves the plugin's general settings.
+     *
+     * This action processes data from the settings form in the Control Panel,
+     * validates it, and stores it in the database.
+     *
+     * @return \yii\web\Response Redirects to the posted URL after saving.
+     */
     public function actionSaveSettings(): Response
     {
         $request = Craft::$app->getRequest();
@@ -108,6 +116,59 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
+     * Saves settings for individual blocks.
+     *
+     * This action handles data for a specific block, including its description,
+     * category, and preview image. It validates the data and stores it in the
+     * database.
+     *
+     * @return \yii\web\Response Redirects to the posted URL after saving.
+     */
+    public function actionSaveBlockSettings(): Response
+    {
+        $request = Craft::$app->getRequest();
+        $previewImageId = $request->getBodyParam("previewImageId");
+        $description = $request->getBodyParam("description");
+        $category = $request->getBodyParam("category");
+
+        // Asset-ID validieren
+        $previewImage = null;
+        if ($previewImageId) {
+            $previewImage = \craft\elements\Asset::find()
+                ->id($previewImageId)
+                ->one();
+            if (!$previewImage) {
+                Craft::error(
+                    "Asset with ID {$previewImageId} not found.",
+                    __METHOD__
+                );
+            }
+        }
+
+        // Speichern in der Datenbank
+        $blockDataToSave = [
+            "description" => $description,
+            "category" => $category,
+        ];
+
+        if ($previewImage) {
+            $blockDataToSave["previewImageUrl"] = $previewImage->getUrl();
+        }
+
+        // Daten speichern...
+        Craft::$app->db
+            ->createCommand()
+            ->upsert("{{%blocksmith_blockdata}}", $blockDataToSave)
+            ->execute();
+
+        // Erfolgsbenachrichtigung
+        Craft::$app->session->setNotice(
+            Craft::t("blocksmith", "Block settings saved successfully.")
+        );
+        return $this->redirectToPostedUrl();
+    }
+
+    /**
      * Renders the Categories Settings page.
      *
      * @return \yii\web\Response The rendered template for the Categories Settings page.
@@ -127,16 +188,134 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionBlocks()
     {
+        // Platzhalter-URL für Bilder (falls kein Vorschau-Bild vorhanden)
+        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+
+        // Abrufen aller Matrix-Felder
+        $fieldsService = Craft::$app->fields;
+        $allFields = $fieldsService->getAllFields();
+
+        // Filtern der Matrix-Felder
+        $matrixFields = array_filter(
+            $allFields,
+            fn($field) => $field instanceof \craft\fields\Matrix
+        );
+
+        // Sammeln der Matrix-Felder und ihrer Blocktypen
+        $matrixData = [];
+        foreach ($matrixFields as $matrixField) {
+            $blockTypes = [];
+
+            // Iteriere durch alle Blocktypen des Matrix-Feldes
+            foreach ($matrixField->getEntryTypes() as $blockType) {
+                // Vorschau-Bild-URL prüfen (falls implementiert)
+                $previewImageUrl = $blockType->previewImageUrl ?? null;
+
+                // Beschreibung und Kategorie der Blocktypen einfügen
+                $blockTypes[] = [
+                    "name" => $blockType->name,
+                    "handle" => $blockType->handle,
+                    "previewImageUrl" =>
+                        $previewImageUrl ?: $placeholderImageUrl,
+                    // "description" => $blockType->description ?? null,
+                    "description" =>
+                        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+                    "category" => $blockType->category ?? null, // Falls Kategorien unterstützt werden
+                ];
+            }
+
+            // Matrix-Feld-Daten hinzufügen
+            $matrixData[] = [
+                "name" => $matrixField->name,
+                "handle" => $matrixField->handle,
+                "blockTypes" => $blockTypes,
+            ];
+        }
+
+        // Rendern der Template-Datei mit den dynamischen Daten
         return $this->renderTemplate("blocksmith/_settings/blocks", [
             "plugin" => \mediakreativ\blocksmith\Blocksmith::getInstance(),
             "title" => Craft::t("blocksmith", "Blocksmith"),
+            "matrixFields" => $matrixData,
+            "placeholderImageUrl" => $placeholderImageUrl,
         ]);
     }
 
     /**
-     * Retrieves all available volume options for the plugin settings.
+     * Edits the settings of a specific block type.
      *
-     * @return array An array of volumes with their names and UIDs.
+     * This action retrieves the details of a block type by its handle,
+     * prepares the data for editing, and renders the corresponding template.
+     * If the block type is not found, it redirects back to the blocks settings page.
+     *
+     * @param string $blockTypeHandle The handle of the block type to edit.
+     * @return \yii\web\Response The rendered edit block template or a redirection.
+     */
+    public function actionEditBlock(string $blockTypeHandle): Response
+    {
+        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+
+        // Matrix-Feld und Blocktyp abrufen
+        $fieldsService = Craft::$app->fields;
+        $blockType = null;
+        foreach ($fieldsService->getAllFields() as $field) {
+            if ($field instanceof \craft\fields\Matrix) {
+                foreach ($field->getEntryTypes() as $entryType) {
+                    if ($entryType->handle === $blockTypeHandle) {
+                        $blockType = $entryType;
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        // Fehler ausgeben, wenn der Blocktyp nicht gefunden wird
+        if (!$blockType) {
+            Craft::$app->session->setError(
+                Craft::t(
+                    "blocksmith",
+                    'Block with handle "{handle}" not found.',
+                    ["handle" => $blockTypeHandle]
+                )
+            );
+            return $this->redirect("blocksmith/settings/blocks");
+        }
+
+        // Block-Daten laden
+        $blockData = (new \yii\db\Query())
+            ->select("*")
+            ->from("{{%blocksmith_blockdata}}")
+            ->where(["entryTypeId" => $blockType->id])
+            ->one();
+
+        // Kategorien
+        $categories = ["Headers", "Media", "Content"];
+
+        // Daten des Blocktyps vorbereiten
+        $block = [
+            "name" => $blockType->name,
+            "handle" => $blockType->handle,
+            "description" => $blockData["description"] ?? "",
+            "previewImageUrl" =>
+                $blockData["previewImageUrl"] ?? $placeholderImageUrl,
+            "categories" => $categories,
+            "selectedCategory" => $blockData["category"] ?? null,
+        ];
+
+        // Template rendern
+        return $this->renderTemplate("blocksmith/_settings/edit-block", [
+            "block" => $block,
+            "title" => Craft::t("blocksmith", "Edit Block"),
+        ]);
+    }
+
+    /**
+     * Retrieves all available volume options for the plugin settings dropdown.
+     *
+     * This helper method fetches the names and UIDs of all volumes defined in Craft
+     * and returns them in a structured format.
+     *
+     * @return array An array of volumes with their labels and values.
      */
     public function getVolumesOptions(): array
     {
@@ -162,11 +341,14 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
-     * Ensures that requests are Control Panel requests and initializes settings.
+     * Verifies the request type and initializes settings before executing any action.
+     *
+     * This method ensures that the current request is a Control Panel request and
+     * loads the plugin's settings model for use in subsequent actions.
      *
      * @param \yii\base\Action $action The action being executed.
-     * @return bool Whether the action should continue to run.
-     * @throws \yii\web\ForbiddenHttpException if the request is not a Control Panel request.
+     * @return bool Whether the action should proceed.
+     * @throws \yii\web\ForbiddenHttpException if the request is not a CP request.
      */
     public function beforeAction($action): bool
     {
@@ -184,9 +366,12 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
-     * Returns a JSON response with available volume options.
+     * Returns a JSON response with all available volumes.
      *
-     * @return \yii\web\Response A JSON response containing the volume options or an error message.
+     * This action is used to dynamically fetch volume options for the plugin
+     * settings, providing an error message if no volumes are found.
+     *
+     * @return \yii\web\Response A JSON response with volume options or an error.
      */
     public function actionGetVolumeOptions(): Response
     {

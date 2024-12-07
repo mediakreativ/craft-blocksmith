@@ -7,21 +7,239 @@
   margin-bottom: -1px;
 }
 
-/* Plugin Settings
+/* ####################### */
+/* ### Plugin Settings ### */
+/* ####################### */
+
+.blocksmith-preview-hint {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border: 1px solid #A66000;
+  border-radius: 5px;
+  background-color: #FEFCE8;
+  color: #A66000;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
 
 /* Settings Wrapper Layout */
-.settings-wrapper {
+.blocksmith-settings-wrapper {
   display: flex;
   gap: 20px;
 }
 
 /* Content Styling */
-.settings-content {
-  flex: 1; /* Content nimmt den verbleibenden Platz ein */
+.blocksmith-settings-content {
+  flex: 1;
   padding: 20px;
 }
 
-/* Previews Modal */
+/* Block Settings Overview */
+.blocksmith-matrix-field-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.blocksmith-matrix-field-section h2 {
+  margin-bottom: 1rem;
+}
+
+.blocksmith-section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+.blocksmith-section-header h4 {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1rem;
+}
+
+.blocksmith-block-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 4rem;
+}
+
+.blocksmith-block-card-horizontal {
+  display: flex;
+  align-items: flex-start;
+  max-width: 800px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.blocksmith-block-image {
+  flex-shrink: 0;
+  height: 150px;
+  aspect-ratio: 4 / 3;
+  margin-right: 16px;
+  border: 1px solid #dcdcdc;
+}
+
+.blocksmith-block-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #f7f7f7;
+}
+
+.blocksmith-blocktype-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.blocksmith-block-details {
+  flex-grow: 1;
+}
+
+.blocksmith-block-details .blocksmith-blockname {
+  margin: 0px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.blocksmith-badge {
+  align-items: center;
+  border: 1px solid var(--hairline-color);
+  border-radius: var(--small-border-radius);
+  color: var(--medium-text-color);
+  cursor: pointer;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: var(--xs);
+  line-height: 1;
+  padding-block: var(--xs);
+  padding-inline: calc(var(--xs) + 1px);
+}
+
+.blocksmith-badge .copy-feedback {
+  margin-left: 8px;
+  font-size: 12px;
+  color: green;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.blocksmith-badge .copy-feedback-icon {
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blocksmith-copytextbtn__icon[data-icon="check"] {
+  color: green;
+  transition: color 0.3s ease-in-out;
+  width: 9.5px;
+  height: 12.5px;
+}
+
+.blocksmith-blocktype-header .blocksmith-badge.blocksmith-category {
+  background-color: #e5f4ff;
+}
+
+.blocksmith-block-details .block-description {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.blocksmith-block-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+@media only screen and (max-width: 800px) {
+  .blocksmith-block-card-horizontal {
+    display: flex;
+    flex-direction: column;
+  }
+  .blocksmith-block-image {
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    aspect-ratio: unset;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+  .blocksmith-block-actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    margin-left: 0;
+  }
+  .blocksmith-block-details {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Block Settings */
+.blocksmith-section-header.blocksmith-edit-block {
+  margin-block-end: 24px;
+}
+.blocksmith-section-header.blocksmith-edit-block h1 {
+  margin: 0;
+}
+.blocksmith-edit-wrapper .field {
+  margin-bottom: 1.5rem;
+}
+
+.blocksmith-edit-wrapper .field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.blocksmith-edit-wrapper .field input,
+.blocksmith-edit-wrapper .field textarea,
+.blocksmith-edit-wrapper .field select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.blocksmith-edit-wrapper .buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blocksmith-edit-wrapper .buttons .btn {
+  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+/* ##################### */
+/* ### Preview Modal ### */
+/* ##################### */
+
 body .blocksmith-modal {
   position: fixed;
   top: 50%;

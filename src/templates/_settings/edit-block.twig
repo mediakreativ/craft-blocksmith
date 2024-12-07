@@ -1,0 +1,88 @@
+{# src/templates/_settings/edit-block.twig #}
+
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% import 'blocksmith/_includes/macros.twig' as macros %}
+
+{% set fullPageForm = true %}
+
+{# {% block attr %}
+	{{ parent() }}
+	enctype="multipart/form-data"
+{% endblock %} #}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    },
+    {
+        label: "Configure Blocks"|t('blocksmith'),
+        url: url('blocksmith/settings/blocks')
+    }
+] %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+	<input type="hidden" name="blockTypeHandle" value="{{ block.handle }}">
+	{{ actionInput('blocksmith/blocksmith/save-block-settings') }}
+
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
+			<div class="blocksmith-section-header blocksmith-edit-block">
+				<h1>{{ "Edit Block"|t('blocksmith') }}
+					"{{ block.name }}"</h1>
+				<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+					<span class="copytextbtn__value">{{ block.handle }}</span>
+					<span class="visually-hidden">Copy to clipboard</span>
+					<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+				</div>
+			</div>
+
+			{{ forms.textareaField({
+                label: 'Description'|t('blocksmith'),
+                name: 'description',
+                id: 'description',
+                value: block.description,
+                rows: 4,
+                instructions: 'Provide a brief description for this block.'|t('blocksmith')
+            }) }}
+
+			{{ forms.selectField({
+                label: 'Category'|t('blocksmith'),
+                name: 'category',
+                id: 'category',
+                instructions: 'Select a category for this block.'|t('blocksmith'),
+                options: block.categories|map(category => { label: category, value: category }),
+                value: block.selectedCategory
+            }) }}
+
+			{# <div class="field">
+				<div class="heading">
+					<label for="previewImage">{{ "Preview Image"|t('blocksmith') }}</label>
+				</div>
+
+				<div id="previewImage-field" class="input">
+					<button type="button" id="previewImage-picker" class="btn" data-icon="image">
+						{{ "Select or upload an image"|t('blocksmith') }}
+					</button>
+
+					{% if block.previewImageUrl %}
+						<div class="preview-image">
+							<img src="{{ block.previewImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}" style="max-width: 200px; margin-top: 1rem;">
+						</div>
+					{% endif %}
+
+					<input type="hidden" name="previewImageId" id="previewImageId" value="{{ block.previewImageId ?? '' }}">
+				</div>
+			</div> #}
+		</div>
+	</div>
+{% endblock %}

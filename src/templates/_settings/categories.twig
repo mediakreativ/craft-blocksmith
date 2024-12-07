@@ -14,14 +14,6 @@
     {
         label: "Plugins"|t('blocksmith'),
         url: url('admin/settings/plugins')
-    },
-    {
-        label: "Blogsmith"|t('blocksmith'),
-        url: url('admin/blocksmith/settings/general')
-    },
-    {
-        label: "Categories"|t('blocksmith'),
-        url: url('admin/blocksmith/settings/categories')
     }
 ] %}
 
@@ -32,6 +24,8 @@
 {% block content %}
 	<div class="content">
 		<h1>{{ "Categories"|t('blocksmith') }}</h1>
-		<p>Coming soon.</p>
+		<div class="blocksmith-preview-hint">
+				{{ "Coming soon."|t('blocksmith') }}
+			</div>
 	</div>
 {% endblock %}
