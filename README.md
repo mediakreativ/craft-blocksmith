@@ -61,7 +61,10 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 3. **Individual Settings for Each Matrix Field**
    - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
    - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
-
+  
+4. **Individual Block Settings per Matrix Field**
+   - Add the ability to configure block-specific settings (e.g., descriptions, preview images) individually for each Matrix field where the block is used.
+   - Example Use Case: A block might need different preview images in different Matrix fields due to layout variations.
 
 ### **Mid-Term**
 
