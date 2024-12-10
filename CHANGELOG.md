@@ -1,28 +1,3 @@
-## [1.1.0-beta] - 2024-12-10
-
-### Highlights
-This release introduces the **flexible image upload for block previews** and makes the **Block Settings page** under "Configure Blocks" fully functional. Additionally, significant improvements to the user experience have been made, including the ability to choose between handle-based and uploaded preview images.
-
-### Added
-- **Flexible Preview Images for Blocks:**
-  - In addition to handle-based preview images, users can now upload custom preview images directly via the Craft File Browser.
-  - Both handle-based and custom preview images are supported, offering greater flexibility in managing block previews.
-- **Block Settings Page:**
-  - The "Configure Blocks" section is now fully functional, allowing users to manage block descriptions and, if handle-based previews are disabled, upload or modify preview images.
-- **Preview Modal Improvements:**
-  - Added an option to display 3 blocks per row in wide viewports (≥1178px). The default remains 2 blocks per row.
-
-### Improved
-- **Usability:**
-  - Automatic selection of a default volume for handle-based preview images prevents misconfigurations.
-  - Clear warnings and instructions inform users when handle-based previews are enabled, providing guidance on how to adjust the volume if needed.
-- **Performance:**
-  - Improved AJAX requests for fetching and displaying block data and preview images, ensuring a faster and more reliable experience.
-
-### Fixed
-- Minor UI issues on the Block Settings page have been addressed.
-
-
 ## [1.0.7-beta] - 2024-12-07
 
 ### Added
