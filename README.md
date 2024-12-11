@@ -92,7 +92,7 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 ### Completed Features
 
 1. **Flexible Image Upload for Previews**
-   - Users can now upload custom preview images directly via the Craft File Browser or continue using handle-based previews.
+   - Users can now upload custom preview images directly via the Craft File Browser or use handle-based previews.
 
 2. **Masonry.js Integration for Flexible Previews**
    - Implemented a flexible grid layout using Masonry.js, allowing seamless display of blocks with varying preview dimensions (e.g., for very long content).
