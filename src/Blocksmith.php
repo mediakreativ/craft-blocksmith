@@ -35,8 +35,8 @@ class Blocksmith extends Plugin
 {
     public const TRANSLATION_CATEGORY = "blocksmith";
 
-    public string $schemaVersion = "1.0.0";
-    public string $migrationNamespace = "mediakreativ\blocksmith\migrations";
+    public string $schemaVersion = "1.1.0";
+    public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
     public bool $hasCpSettings = true;
 
     /**
@@ -48,7 +48,16 @@ class Blocksmith extends Plugin
     {
         parent::init();
 
-        // Log initialization message
+        Craft::info(
+            "Migration Namespace: " . $this->migrationNamespace,
+            __METHOD__
+        );
+
+        Craft::info(
+            "Is Blocksmith installed? " . ($this->isInstalled ? "Yes" : "No"),
+            __METHOD__
+        );
+
         Craft::info("Blocksmith plugin initialized.", __METHOD__);
 
         /**
@@ -63,21 +72,17 @@ class Blocksmith extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (\craft\events\RegisterUrlRulesEvent $event) {
-                // Log the event for debugging purposes
                 Craft::info(
                     "Registering custom routes for Blocksmith settings pages.",
                     __METHOD__
                 );
 
-                // Route for the "General Settings" page
                 $event->rules["blocksmith/settings/general"] =
                     "blocksmith/blocksmith/general";
 
-                // Route for the "Categories Settings" page
                 $event->rules["blocksmith/settings/categories"] =
                     "blocksmith/blocksmith/categories";
 
-                // Route for the "Blocks Settings" page
                 $event->rules["blocksmith/settings/blocks"] =
                     "blocksmith/blocksmith/blocks";
 
@@ -87,13 +92,11 @@ class Blocksmith extends Plugin
                 $event->rules[
                     "blocksmith/settings/edit-block/<blockTypeHandle>"
                 ] = "blocksmith/blocksmith/edit-block";
+
+                $event->rules["blocksmith/get-block-types"] =
+                    "blocksmith/blocksmith/get-block-types";
             }
         );
-
-        // Automatic execution of migrations
-        // if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
-        //     $this->runMigrations();
-        // }
 
         // Ensure a default volume is set for preview images, if not configured
         if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
@@ -128,90 +131,11 @@ class Blocksmith extends Plugin
             }
         );
 
-        // Initialize core features
         $this->publishAssets();
         $this->initializeCoreFeatures();
         $this->initializeSiteFeatures();
         $this->initializeControlPanelFeatures();
     }
-
-    /**
-     * Runs migrations for the plugin.
-     *
-     * This method identifies and applies any new migrations located in
-     * the plugin's `migrations` folder.
-     *
-     * @return void
-     */
-    private function runMigrations(): void
-    {
-        // Path to the plugin's migration directory
-        $migrationPath = Craft::getAlias("@mediakreativ/blocksmith/migrations");
-
-        // Fetch a list of all migration files in the plugin directory
-        $migrations = glob($migrationPath . "/m*.php");
-
-        // Check if migrations are available
-        if (!$migrations) {
-            Craft::info("No migrations found for Blocksmith.", __METHOD__);
-            return;
-        }
-
-        foreach ($migrations as $migrationFile) {
-            $migrationName = pathinfo($migrationFile, PATHINFO_FILENAME);
-
-            // Check if the migration has already been applied
-            $appliedMigrations = (new \yii\db\Query())
-                ->select("name")
-                ->from("{{%migrations}}")
-                ->column();
-
-            if (in_array($migrationName, $appliedMigrations)) {
-                Craft::info(
-                    "Migration {$migrationName} already applied.",
-                    __METHOD__
-                );
-                continue;
-            }
-
-            // Execute the migration
-            require_once $migrationFile;
-            $migrationClass =
-                "\\mediakreativ\\blocksmith\\migrations\\" . $migrationName;
-            $migration = new $migrationClass();
-
-            Craft::info("Applying migration {$migrationName}.", __METHOD__);
-
-            if ($migration->safeUp() === false) {
-                Craft::error("Migration {$migrationName} failed.", __METHOD__);
-                return;
-            }
-
-            // Mark the migration as applied
-            Craft::$app->migrator->addAppliedMigration($migrationName);
-
-            Craft::info(
-                "Migration {$migrationName} applied successfully.",
-                __METHOD__
-            );
-        }
-    }
-
-    /**
-     * Handles post-installation logic.
-     *
-     * This method runs immediately after the plugin is installed. It ensures
-     * all migrations are applied and any required setup is completed.
-     *
-     * @return void
-     */
-    // public function afterInstall(): void
-    // {
-    //     parent::afterInstall();
-
-    //     // Run migrations after installation
-    //     $this->runMigrations();
-    // }
 
     /**
      * Publishes plugin assets to the web directory.

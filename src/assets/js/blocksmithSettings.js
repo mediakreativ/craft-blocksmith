@@ -40,41 +40,56 @@ document.addEventListener("click", function (event) {
   }
 });
 
-// document.getElementById('previewImage-picker').addEventListener('click', function () {
-//   const assetBrowserConfig = {
-//       resizable: true,
-//       storageKey: 'blocksmith.previewImage',
-//       sources: ['volume:blocksmith'],
-//       criteria: {
-//           kind: ['image'],
-//           status: null
-//       },
-//       multiSelect: false,
-//       onSelect: function (assets) {
-//           console.log('Selected assets:', assets);
-//           if (assets.length > 0) {
-//               const asset = assets[0];
-//               const imageField = document.getElementById('previewImageId');
-//               const previewImage = document.querySelector('.preview-image img');
+(function ($) {
+  Garnish.$doc.ready(function () {
+    $("#previewImage-picker").on("click", function () {
+      const assetModal = Craft.createElementSelectorModal(
+        "craft\\elements\\Asset",
+        {
+          sources: null,
+          multiSelect: false,
+          criteria: { kind: "image" },
+          onSelect: function (elements) {
+            if (elements.length) {
+              const asset = elements[0];
+              $("#previewImageId").val(asset.id);
 
-//               imageField.value = asset.id;
+              const previewContainer = $(".blocksmith-preview-image");
+              if (!previewContainer.length) {
+                $(
+                  '<div class="blocksmith-preview-image" style="margin-top: 1rem;"><img style="max-width: 200px;"></div>',
+                ).appendTo("#previewImage-field");
+              }
 
-//               if (previewImage) {
-//                   previewImage.src = asset.url;
-//               } else {
-//                   const container = document.querySelector('.preview-image');
-//                   container.innerHTML = `<img src="${asset.url}" alt="Preview Image" style="max-width: 200px; margin-top: 1rem;">`;
-//               }
-//           }
-//       },
-//       onCancel: function () {
-//           console.log('Asset modal cancelled');
-//       }
-//   };
+              $(".blocksmith-preview-image img").attr("src", asset.url);
+            }
+          },
+        },
+      );
+    });
 
-//   // Debugging: Log the configuration
-//   console.log('Asset Browser Config:', assetBrowserConfig);
+    $("#previewImage-delete").on("click", function () {
+      $("#previewImageId").val("");
+      $(".blocksmith-preview-image").remove();
+      $(this).remove();
+    });
+  });
+})(jQuery);
 
-//   // Open Craft-Asset-Browser
-//   Craft.createElementSelectorModal('craft\\elements\\Asset', assetBrowserConfig);
-// });
+
+
+function dismissNotice() {
+  const notice = document.getElementById("blocksmith-preview-image-notice");
+  notice.style.display = "none";
+
+  // AJAX-Anfrage an Craft senden, um die Einstellung für den Nutzer zu speichern
+  fetch(Craft.getActionUrl("blocksmith/dismiss-notice"), {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": Craft.csrfTokenValue,
+      },
+  }).catch((error) => {
+      console.error("Failed to dismiss notice:", error);
+  });
+}

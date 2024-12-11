@@ -1,12 +1,28 @@
 {# src/templates/_settings/sidebar.twig #}
 
 {% set currentItem = craft.app.request.getSegment(3)|default("general") %}
+{% set currentPath = craft.app.request.pathInfo %}
 {% block sidebar %}
 	<nav>
 		<ul>
-			<li><a href="{{ url('blocksmith/settings/general') }}"{% if craft.app.request.pathInfo == "blocksmith/settings/general" %} class="sel"{% endif %}>{{ "General Settings"|t("blocksmith")}}</a></li>
-			<li><a href="{{ url('blocksmith/settings/categories') }}"{% if currentItem == "categories" %} class="sel"{% endif %}>{{ "Categories"|t("blocksmith")}}</a></li>
-			<li><a href="{{ url('blocksmith/settings/blocks') }}"{% if currentItem == "blocks" %} class="sel"{% endif %}>{{ "Configure Blocks"|t("blocksmith")}}</a></li>
+			<li>
+				<a href="{{ url('blocksmith/settings/general') }}" 
+				   {% if currentPath == "blocksmith/settings/general" %} class="sel"{% endif %}>
+					{{ "General Settings"|t("blocksmith") }}
+				</a>
+			</li>
+			<li>
+				<a href="{{ url('blocksmith/settings/categories') }}" 
+				   {% if currentItem == "categories" %} class="sel"{% endif %}>
+					{{ "Categories"|t("blocksmith") }}
+				</a>
+			</li>
+			<li>
+				<a href="{{ url('blocksmith/settings/blocks') }}" 
+				   {% if currentPath starts with "blocksmith/settings/blocks" or currentPath starts with "blocksmith/settings/edit-block" %} class="sel"{% endif %}>
+					{{ "Configure Blocks"|t("blocksmith") }}
+				</a>
+			</li>
 		</ul>
 	</nav>
 {% endblock %}

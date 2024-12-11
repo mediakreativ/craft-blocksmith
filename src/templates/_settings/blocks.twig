@@ -27,62 +27,61 @@
 	<div class="blocksmith-settings-wrapper">
 		<div class="blocksmith-settings-content">
 			<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
-
-			<div class="blocksmith-preview-hint">
-				{{ "This is a preview of the block overview (functionality will be added soon)."|t('blocksmith') }}
-			</div>
-
-			{% for matrixField in matrixFields %}
-				<section class="blocksmith-matrix-field-section">
-					<div class="blocksmith-section-header">
-						<h4>Matrix Field
-							<span>"{{ matrixField.name }}"</span>
-						</h4>
-						<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
-							<span class="copytextbtn__value">{{ matrixField.handle }}</span>
-							<span class="visually-hidden">Copy to clipboard</span>
-							<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
-						</div>
-
-					</div>
-					<div class="blocksmith-block-list">
-						{% for blockType in matrixField.blockTypes %}
-							<div class="blocksmith-block-card-horizontal">
-								<div class="blocksmith-block-image">
-									<img src="{{ blockType.previewImageUrl ?: placeholderImageUrl }}" alt="Preview image">
-								</div>
-								<div class="blocksmith-block-details">
-									<div class="blocksmith-blocktype-header">
-										<span class="blocksmith-blockname">{{ blockType.name }}</span>
-										<div class="block-handle">
-											<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
-												<span class="copytextbtn__value">{{ blockType.handle }}</span>
-												<span class="visually-hidden">Copy to clipboard</span>
-												<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
-											</div>
-										</div>
-										{% if blockType.category %}
-											<div class="blocksmith-badge blocksmith-category code light" role="button" title="Blocktype Category" tabindex="0">
-												<span>{{ blockType.category }}</span>
-											</div>
-										{% endif %}
-									</div>
-									<p class="block-description">
-										{% if blockType.description %}
-											{{ blockType.description }}</p>
-									{% endif %}
-
-								</div>
-								<div class="blocksmith-block-actions">
-									<a class="btn edit-btn" href="#">
-										{{ "Edit"|t('blocksmith') }}
-									</a>
-								</div>
+			<div class="blocksmith-block-list">
+				{% for blockType in allBlockTypes %}
+					<div class="blocksmith-block-card-horizontal">
+						<div class="blocksmith-block-content">
+							<div class="blocksmith-block-image">
+								<img src="{{ blockType.previewImageUrl }}" alt="Preview Image" onerror="this.src='{{ placeholderImageUrl|e('js') }}';" loading="lazy">
 							</div>
-						{% endfor %}
+							<div class="blocksmith-block-details">
+								<div class="blocksmith-blocktype-header">
+									<span class="blocksmith-blockname">{{ blockType.name }}</span>
+									<div class="block-handle">
+										<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+											<span class="copytextbtn__value">{{ blockType.handle }}</span>
+											<span class="visually-hidden">Copy to clipboard</span>
+											<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+										</div>
+									</div>
+								</div>
+								<p class="block-description">
+									{{ blockType.description ?: "No description available." }}
+								</p>
+							</div>
+							<div class="block-actions">
+								<a class="btn edit-btn" href="{{ url('blocksmith/settings/edit-block/' ~ blockType.handle) }}">
+									{{ "Edit"|t('blocksmith') }}
+								</a>
+							</div>
+						</div>
+						<div class="blocksmith-card-footer">
+							{% if blockType.matrixFields|length > 0 %}
+								<div class="blocksmith-matrix-badges">
+									{% if blockType.matrixFields|length == 1 %}
+										<span class="badge-label">Matrix Field:</span>
+									{% else %}
+										<span class="badge-label">Matrix Fields:</span>
+									{% endif %}
+									{% for matrixField in blockType.matrixFields %}
+										<div class="blocksmith-badge blocksmith-matrix-field-badge code">
+											{{ matrixField.name }}
+										</div>
+									{% endfor %}
+								</div>
+							{% endif %}
+
+							{% if blockType.categories|length > 0 %}
+								<div class="blocksmith-category-badges">
+									<span class="blocksmith-badge-label">Categories:</span>
+									{% for category in blockType.categories %}
+										<span class="blocksmith-badge blocksmith-category-badge code">{{ category }}</span>
+									{% endfor %}
+								</div>
+							{% endif %}
+						</div>
 					</div>
-				</section>
-			{% endfor %}
+				{% endfor %}
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

@@ -49,7 +49,14 @@ class BlocksmithAsset extends AssetBundle
 
         if ($view instanceof View) {
             $this->registerTranslations($view);
-            $this->registerPluginJs($view);
+            $this->registerPluginJs($view); // Bestehende Funktion bleibt erhalten
+
+            // BlocksmithConfig ins JavaScript laden
+            $config = Json::encode($this->getBlocksmithConfig());
+            $view->registerJs(
+                "window.BlocksmithConfig = {$config};",
+                View::POS_HEAD
+            );
         }
     }
 
@@ -169,30 +176,31 @@ JS;
     }
 
     /**
-     * Retrieves the configuration data for Blocksmith.
+     * Retrieves the configuration data for Blocksmith
      *
-     * @return array The configuration data to be passed to client-side scripts.
+     * @return array The configuration data to be passed to client-side scripts
      */
     private function getBlocksmithConfig(): array
     {
         $settings = Blocksmith::getInstance()->getSettings();
 
-        // Retrieve volume and subfolder path
         $volumePath = $this->getVolumePath($settings);
 
         return [
             "settings" => [
+                "wideViewFourBlocks" => $settings->wideViewFourBlocks,
                 "previewImageVolume" => $volumePath,
                 "previewImageSubfolder" => $settings->previewImageSubfolder,
+                "useHandleBasedPreviews" => $settings->useHandleBasedPreviews,
             ],
         ];
     }
 
     /**
-     * Constructs the volume path based on the plugin settings.
+     * Constructs the volume path based on the plugin settings
      *
-     * @param \mediakreativ\blocksmith\models\BlocksmithSettings $settings The plugin settings.
-     * @return string|null The resolved volume path or null if not configured.
+     * @param \mediakreativ\blocksmith\models\BlocksmithSettings $settings The plugin settings
+     * @return string|null The resolved volume path or null if not configured
      */
     private function getVolumePath($settings): ?string
     {
