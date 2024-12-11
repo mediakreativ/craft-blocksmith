@@ -36,9 +36,8 @@ return [
     "General Settings" => "Общие настройки",
     "Use Handle-based Previews" =>
         "Использовать предварительный просмотр на основе handle",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Включите эту опцию для автоматического назначения изображений на основе handle типов записей. Изображения предварительного просмотра должны быть названы в соответствии с handle блока (например, textAndImage.png).",
-    "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Автоматически назначайте изображения предпросмотра на основе идентификаторов блоков вместо их ручной загрузки через браузер ресурсов. Для этого изображения предпросмотра должны быть названы в соответствии с их идентификатором блока (например, textAndImage.png).",
         "Модальное окно предпросмотра: показывать 3 блока в строке (по умолчанию 2) на широком экране",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
         "Включите эту опцию, чтобы отображать 3 блока в строке для ширины браузера 1178px и более.",

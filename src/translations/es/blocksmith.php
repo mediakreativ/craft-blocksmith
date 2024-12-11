@@ -36,8 +36,8 @@ return [
     "General Settings" => "Configuración general",
     "Use Handle-based Previews" =>
         "Usar vistas previas basadas en identificadores",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "El volumen de imágenes de vista previa se ha configurado en \"{{ defaultVolume.label ?? 'volumen predeterminado' }}\". Puedes actualizarlo aquí si es necesario.",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Asigna automáticamente imágenes de vista previa basadas en los identificadores de bloque en lugar de subirlas manualmente a través del navegador de activos. Para ello, las imágenes de vista previa deben llevar el nombre de su identificador de bloque (por ejemplo, textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Vista previa modal: Mostrar 3 bloques por fila (predeterminado 2) en pantallas anchas",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

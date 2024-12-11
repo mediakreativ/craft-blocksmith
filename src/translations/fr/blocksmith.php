@@ -35,8 +35,8 @@ return [
         "Échec de la copie. Veuillez réessayer.",
     "General Settings" => "Paramètres généraux",
     "Use Handle-based Previews" => "Utiliser les aperçus basés sur les handles",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Activez cette option pour attribuer automatiquement des images en fonction des handles des types d'entrée. Les images d'aperçu doivent être nommées d'après le handle du bloc (par exemple, textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Attribuez automatiquement des images de prévisualisation en fonction des identifiants des blocs au lieu de les télécharger manuellement via le navigateur de ressources. Pour ce faire, les images de prévisualisation doivent être nommées d'après leur identifiant de bloc (par exemple, textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Fenêtre d'aperçu : Afficher 3 blocs par ligne (par défaut 2) sur une large vue",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

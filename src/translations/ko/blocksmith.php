@@ -33,8 +33,8 @@ return [
         "복사에 실패했습니다. 다시 시도하세요.",
     "General Settings" => "일반 설정",
     "Use Handle-based Previews" => "핸들 기반 미리보기 사용",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "엔트리 타입 핸들을 기반으로 이미지 자동 할당을 사용하려면 이 옵션을 활성화하세요. 미리보기 이미지는 블록 핸들 이름에 따라 명명되어야 합니다(예: textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "애셋 브라우저를 통해 수동으로 업로드하는 대신 블록 핸들을 기준으로 미리보기 이미지를 자동으로 할당합니다. 이를 위해 미리보기 이미지는 블록 핸들 이름을 따라야 합니다(예: textAndImage.png).",
     "The Preview Image Volume has been set to \"{{ defaultVolume.label ?? 'default volume' }}\". You can update it here if necessary." =>
         "미리보기 이미지 볼륨이 \"{{ defaultVolume.label ?? '기본 볼륨' }}\"으로 설정되었습니다. 필요하면 여기에서 업데이트하세요.",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>

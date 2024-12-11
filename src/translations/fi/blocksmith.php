@@ -35,8 +35,8 @@ return [
         "Kopiointi epäonnistui. Yritä uudelleen.",
     "General Settings" => "Yleiset asetukset",
     "Use Handle-based Previews" => "Käytä Handle-pohjaisia esikatseluja",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Ota tämä asetus käyttöön, jotta kuvat voidaan määrittää automaattisesti merkintätyyppien handle-arvojen perusteella. Esikatselukuvat on nimettävä lohkon handle-arvon mukaan (esim. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Määritä esikatselukuvat automaattisesti lohkokahvojen perusteella sen sijaan, että lataat ne manuaalisesti Asset Browserin kautta. Tätä varten esikatselukuvat on nimettävä lohkokahvan mukaan (esim. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Esikatseluikkuna: Näytä 3 lohkoa per rivi (oletus 2) leveässä näkymässä",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

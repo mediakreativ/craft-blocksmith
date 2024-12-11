@@ -35,8 +35,8 @@ return [
         "コピーに失敗しました。もう一度お試しください。",
     "General Settings" => "一般設定",
     "Use Handle-based Previews" => "ハンドルベースのプレビューを使用",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "エントリータイプのハンドルに基づいて画像を自動的に割り当てるには、このオプションを有効にしてください。プレビュー画像はブロックハンドル名に基づいて命名する必要があります（例: textAndImage.png）。",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "アセットブラウザを介して手動でアップロードするのではなく、ブロックハンドルに基づいてプレビュー画像を自動的に割り当てます。このため、プレビュー画像はブロックハンドルにちなんで命名する必要があります（例: textAndImage.png）。",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "プレビューモーダル: 広いビューポートで1行に3つのブロックを表示（デフォルトは2つ）",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

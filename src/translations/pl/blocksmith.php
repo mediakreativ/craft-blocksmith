@@ -35,8 +35,8 @@ return [
         "Nie udało się skopiować. Spróbuj ponownie.",
     "General Settings" => "Ustawienia ogólne",
     "Use Handle-based Previews" => "Użyj podglądów opartych na uchwytach",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Włącz tę opcję, aby używać automatycznego przypisywania obrazów na podstawie uchwytów typów wpisów. Obrazy podglądu muszą być nazwane zgodnie z uchwytem bloku (np. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Automatycznie przypisuj obrazy podglądu na podstawie uchwytów bloków zamiast przesyłać je ręcznie za pomocą Przeglądarki Zasobów. Aby to zrobić, obrazy podglądu muszą być nazwane zgodnie z uchwytem bloku (np. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Okno podglądu: Wyświetlaj 3 bloki w wierszu (domyślnie 2) przy szerokim widoku",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

@@ -35,8 +35,8 @@ return [
         "Kopyalama başarısız oldu. Lütfen tekrar deneyin.",
     "General Settings" => "Genel Ayarlar",
     "Use Handle-based Previews" => "Handle Tabanlı Önizlemeleri Kullan",
-    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Giriş türü handle'larına dayalı otomatik görüntü ataması kullanmak için bu seçeneği etkinleştirin. Önizleme görüntüleri, blok handle'larına göre adlandırılmalıdır (ör. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Varlık Tarayıcı aracılığıyla elle yüklemek yerine, blok tutamaçlarına göre önizleme görüntülerini otomatik olarak atayın. Bunu yapmak için, önizleme görüntüleri blok tutamacına göre adlandırılmalıdır (ör. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Önizleme Modalı: Geniş Görünümde Sıra Başına 3 Blok Göster (Varsayılan 2)",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
