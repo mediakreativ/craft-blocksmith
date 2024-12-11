@@ -12,8 +12,7 @@ This is the **beta release** of the Blocksmith plugin. While it is fully functio
   - Choose where preview images are stored, including support for asset volumes and optional subfolders.
   - Upload custom preview images directly via the Craft File Browser or use handle-based preview images as an alternative if preferred.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
-- **Language support**: Available in English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, and Ukrainian.  
-  Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
+- **Language support**: Available in English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, and Ukrainian. Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
 
 
 ## Requirements
