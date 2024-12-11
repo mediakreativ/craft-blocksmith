@@ -59,9 +59,9 @@
 							{% if blockType.matrixFields|length > 0 %}
 								<div class="blocksmith-matrix-badges">
 									{% if blockType.matrixFields|length == 1 %}
-										<span class="badge-label">Matrix Field:</span>
+										<span class="badge-label">{{ 'Matrix Field'|t('blocksmith') }}:</span>
 									{% else %}
-										<span class="badge-label">Matrix Fields:</span>
+										<span class="badge-label">{{ 'Matrix Fields'|t('blocksmith') }}:</span>
 									{% endif %}
 									{% for matrixField in blockType.matrixFields %}
 										<div class="blocksmith-badge blocksmith-matrix-field-badge code">

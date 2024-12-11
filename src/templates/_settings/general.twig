@@ -39,14 +39,6 @@
             }) }}
 
 			{% if settings.useHandleBasedPreviews %}
-				{% if settings.previewImageVolume == defaultVolumeUid %}
-					<div class="blocksmith-hint">
-						<p>
-							{% set defaultVolume = volumeOptions|filter(v => v.value == settings.previewImageVolume)|first %}
-							The Preview Image Volume has been set to "{{ defaultVolume.label ?? 'default volume' }}". You can update it here if necessary.
-						</p>
-					</div>
-				{% endif %}
 
 				{{ forms.selectField({
                     label: 'Preview Image Volume'|t('blocksmith'),

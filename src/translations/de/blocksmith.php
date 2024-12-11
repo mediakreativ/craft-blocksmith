@@ -28,9 +28,40 @@ return [
         "Gib einen optionalen Unterordner im ausgewählten Volume an.",
     "Custom Settings" => "Benutzerdefinierte Einstellungen",
     "Will be added soon." => "Wird bald hinzugefügt.",
-    "Add a PNG file named {fileName} to the configured asset volume." =>
-        "Füge eine PNG-Datei mit dem Namen {fileName} zum konfigurierten Asset-Volume hinzu.",
+    "Add a PNG file named '{fileName}' to the configured asset volume." =>
+        "Füge eine PNG-Datei mit dem Namen '{fileName}' zum konfigurierten Asset-Volume hinzu.",
     "Copied to clipboard." => "In die Zwischenablage kopiert.",
     "Failed to copy. Please try again." =>
         "Kopieren fehlgeschlagen. Bitte versuche es erneut.",
+    "General Settings" => "Allgemeine Einstellungen",
+    "Use Handle-based Previews" => "Handle-basierte Vorschaubilder verwenden",
+    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Aktiviere diese Option, um Vorschaubilder automatisch basierend auf den Entry-Type-Handles zuzuweisen. Die Vorschau-Bilder müssen nach dem Block-Handle benannt sein (z. B. textAndImage.png).",
+    "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
+        "Vorschau-Modal: Zeige 3 Blöcke pro Zeile (Standard 2) bei breitem Viewport",
+    "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
+        "Aktiviere diese Option, um 3 Blöcke pro Zeile bei Browser-Breiten von 1178px oder mehr anzuzeigen.",
+    "Categories" => "Kategorien",
+    "Coming soon." => "Wird bald hinzugefügt.",
+    "Configure Blocks" => "Blöcke konfigurieren",
+    "Matrix Field" => "Matrix-Feld",
+    "Matrix Fields" => "Matrix-Felder",
+    "Category" => "Kategorie",
+    "Categories" => "Kategorien",
+    "Edit" => "Bearbeiten",
+    "Edit Block" => "Block bearbeiten",
+    "Description" => "Beschreibung",
+    "Provide a short description for this block." =>
+        "Gib eine kurze Beschreibung für diesen Block an.",
+    "No categories available. Please add categories first in the categories settings page." =>
+        "Keine Kategorien verfügbar. Bitte füge zuerst Kategorien auf der Kategorie-Einstellungsseite hinzu.",
+    "Preview Image" => "Vorschaubild",
+    "This block uses a handle-based preview image." =>
+        "Dieser Block verwendet ein handle-basiertes Vorschaubild.",
+    "Choose a preview image for this block. This image will be shown in the block selection modal." =>
+        "Wähle ein Vorschaubild für diesen Block. Dieses Bild wird im Blockauswahl-Modal angezeigt.",
+    "Select or upload an image" => "Ein Bild auswählen oder hochladen",
+    "Remove image" => "Bild entfernen",
+    "Settings" => "Einstellungen",
+    "Plugins" => "Plug-ins",
 ];

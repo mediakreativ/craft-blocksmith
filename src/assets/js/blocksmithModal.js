@@ -174,7 +174,7 @@
                       <div class="blocksmith-hint" style="display: none;">
                           ${Craft.t(
                             "blocksmith",
-                            "Add a PNG file named {fileName} to the configured asset volume.",
+                            "Add a PNG file named '{fileName}' to the configured asset volume.",
                             { fileName: `${blockType.handle}.png` },
                           )}
                       </div>

@@ -28,8 +28,39 @@ return [
         "Specify an optional subfolder within the selected volume for storing images.",
     "Custom Settings" => "Custom Settings",
     "Will be added soon." => "Coming soon.",
-    "Add a PNG file named {fileName} to the configured asset volume." =>
-        "Add a PNG file named {fileName} to the configured asset volume.",
+    "Add a PNG file named '{fileName}' to the configured asset volume." =>
+        "Add a PNG file named '{fileName}' to the configured asset volume.",
     "Copied to clipboard." => "Copied to clipboard.",
     "Failed to copy. Please try again." => "Failed to copy. Please try again.",
+    "General Settings" => "General Settings",
+    "Use Handle-based Previews" => "Use Handle-based Previews",
+    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png).",
+    "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
+        "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport",
+    "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
+        "Enable this option to display 3 blocks per row for browser widths of 1178px or more.",
+    "Categories" => "Categories",
+    "Coming soon." => "Coming soon.",
+    "Configure Blocks" => "Configure Blocks",
+    "Matrix Field" => "Matrix Field",
+    "Matrix Fields" => "Matrix Fields",
+    "Category" => "Category",
+    "Categories" => "Categories",
+    "Edit" => "Edit",
+    "Edit Block" => "Edit Block",
+    "Description" => "Description",
+    "Provide a short description for this block." =>
+        "Provide a short description for this block.",
+    "No categories available. Please add categories first in the categories settings page." =>
+        "No categories available. Please add categories first in the categories settings page.",
+    "Preview Image" => "Preview Image",
+    "This block uses a handle-based preview image." =>
+        "This block uses a handle-based preview image.",
+    "Choose a preview image for this block. This image will be shown in the block selection modal." =>
+        "Choose a preview image for this block. This image will be shown in the block selection modal.",
+    "Select or upload an image" => "Select or upload an image",
+    "Remove image" => "Remove image",
+    "Settings" => "Settings",
+    "Plugins" => "Plugins",
 ];

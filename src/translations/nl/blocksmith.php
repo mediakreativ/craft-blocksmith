@@ -28,9 +28,40 @@ return [
         "Geef een optionele submap op binnen het geselecteerde volume om afbeeldingen op te slaan.",
     "Custom Settings" => "Aangepaste instellingen",
     "Will be added soon." => "Binnenkort beschikbaar.",
-    "Add a PNG file named {fileName} to the configured asset volume." =>
-        "Voeg een PNG-bestand genaamd {fileName} toe aan het geconfigureerde asset-volume.",
+    "Add a PNG file named '{fileName}' to the configured asset volume." =>
+        "Voeg een PNG-bestand genaamd '{fileName}' toe aan het geconfigureerde asset-volume.",
     "Copied to clipboard." => "Gekopieerd naar klembord.",
     "Failed to copy. Please try again." =>
         "Kopiëren mislukt. Probeer het opnieuw.",
+    "General Settings" => "Algemene instellingen",
+    "Use Handle-based Previews" => "Gebruik op handles gebaseerde previews",
+    "Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+        "Schakel deze optie in om automatische toewijzing van afbeeldingen op basis van entry type handles te gebruiken. De preview-afbeeldingen moeten worden genoemd naar de block handle (bijv. textAndImage.png).",
+    "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
+        "Preview-modal: Toon 3 blokken per rij (standaard 2) bij breed viewport",
+    "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
+        "Schakel deze optie in om 3 blokken per rij weer te geven bij browserbreedtes van 1178px of meer.",
+    "Categories" => "Categorieën",
+    "Coming soon." => "Binnenkort beschikbaar.",
+    "Configure Blocks" => "Blokken configureren",
+    "Matrix Field" => "Matrixveld",
+    "Matrix Fields" => "Matrix-velden",
+    "Category" => "Categorie",
+    "Categories" => "Categorieën",
+    "Edit" => "Bewerken",
+    "Edit Block" => "Blok bewerken",
+    "Description" => "Beschrijving",
+    "Provide a short description for this block." =>
+        "Geef een korte beschrijving voor dit blok.",
+    "No categories available. Please add categories first in the categories settings page." =>
+        "Geen categorieën beschikbaar. Voeg eerst categorieën toe in de categorie-instellingenpagina.",
+    "Preview Image" => "Preview-afbeelding",
+    "This block uses a handle-based preview image." =>
+        "Dit blok gebruikt een op handles gebaseerde preview-afbeelding.",
+    "Choose a preview image for this block. This image will be shown in the block selection modal." =>
+        "Kies een preview-afbeelding voor dit blok. Deze afbeelding wordt weergegeven in de block-selectiemodal.",
+    "Select or upload an image" => "Selecteer of upload een afbeelding",
+    "Remove image" => "Afbeelding verwijderen",
+    "Settings" => "Instellingen",
+    "Plugins" => "Plugins",
 ];
