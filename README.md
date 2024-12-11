@@ -10,7 +10,7 @@ This is the **beta release** of the Blocksmith plugin. While it is fully functio
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
 - **Flexible preview settings**: 
   - Choose where preview images are stored, including support for asset volumes and optional subfolders.
-  - Upload custom preview images directly via the Craft File Browser or continue using handle-based previews.
+  - Upload custom preview images directly via the Craft File Browser or use handle-based preview images as an alternative if preferred.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
 - **Language support**: Available in English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, and Ukrainian.  
   Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
@@ -96,6 +96,9 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 2. **Masonry.js Integration for Flexible Previews**
    - Implemented a flexible grid layout using Masonry.js, allowing seamless display of blocks with varying preview dimensions (e.g., for very long content).
+
+3. **Improved preview grid **  
+  - Option to display 3 blocks per row (Default: 2) in wide viewports.
 
 ## Note on the Roadmap
 
