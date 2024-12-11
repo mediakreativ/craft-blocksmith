@@ -1,3 +1,7 @@
+## [1.1.1-beta] - 2024-12-11
+
+Added support for new languages: ar, cs, da, el, fi, he, ja, ko, pl, sv, tr, zh
+
 ## [1.1.0-beta] - 2024-12-11
 
 ### Highlights
