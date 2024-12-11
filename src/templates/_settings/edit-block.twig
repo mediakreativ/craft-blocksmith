@@ -6,10 +6,10 @@
 
 {% set fullPageForm = true %}
 
-{# {% block attr %}
+{% block attr %}
 	{{ parent() }}
 	enctype="multipart/form-data"
-{% endblock %} #}
+{% endblock %}
 
 {% set crumbs = [
     {
@@ -32,6 +32,7 @@
 
 {% block content %}
 	<input type="hidden" name="blockTypeHandle" value="{{ block.handle }}">
+	<input type="hidden" name="entryTypeId" value="{{ block.entryTypeId }}">
 	{{ actionInput('blocksmith/blocksmith/save-block-settings') }}
 
 	<div class="blocksmith-settings-wrapper">
@@ -52,37 +53,73 @@
                 id: 'description',
                 value: block.description,
                 rows: 4,
-                instructions: 'Provide a brief description for this block.'|t('blocksmith')
+                instructions: 'Provide a short description for this block.'|t('blocksmith')
             }) }}
 
-			{{ forms.selectField({
-                label: 'Category'|t('blocksmith'),
-                name: 'category',
-                id: 'category',
-                instructions: 'Select a category for this block.'|t('blocksmith'),
-                options: block.categories|map(category => { label: category, value: category }),
-                value: block.selectedCategory
-            }) }}
+			{% if block.categories is not empty %}
+				{{ forms.checkboxSelectField({
+				label: 'Categories'|t('blocksmith'),
+				name: 'categories',
+				id: 'categories',
+				instructions: 'Select one or more categories for this block.'|t('blocksmith'),
+				options: block.categories|map(category => { label: category, value: category }),
+				values: block.selectedCategories
+			}) }}
+			{% else %}
+				<div class="field">
+					<div class="heading">
+						<label>{{ 'Categories'|t('blocksmith') }}</label>
+					</div>
+					<div class="instructions">
+						<p>{{ 'No categories available. Please add categories first in the categories settings page.'|t('blocksmith') }}</p>
+					</div>
+				</div>
+			{% endif %}
 
-			{# <div class="field">
+			<div class="field">
 				<div class="heading">
 					<label for="previewImage">{{ "Preview Image"|t('blocksmith') }}</label>
 				</div>
-
-				<div id="previewImage-field" class="input">
-					<button type="button" id="previewImage-picker" class="btn" data-icon="image">
-						{{ "Select or upload an image"|t('blocksmith') }}
-					</button>
-
-					{% if block.previewImageUrl %}
-						<div class="preview-image">
-							<img src="{{ block.previewImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}" style="max-width: 200px; margin-top: 1rem;">
+				{% if block.useHandleBasedPreviews %}
+					<div class="instructions">
+						<p>{{ "This block uses a handle-based preview image."|t('blocksmith') }}</p>
+					</div>
+					{% if not block.handleBasedImageUrl %}
+						<div class="blocksmith-hint">
+							{{ "Add a PNG file named {fileName} to the configured asset volume."|t('blocksmith', { fileName: block.handle ~ '.png' }) }}
 						</div>
 					{% endif %}
+					<div class="blocksmith-preview-image">
+						<img src="{{ block.handleBasedImageUrl ?? block.placeholderImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}">
+					</div>
+				{% else %}
+					<div class="instructions">
+						<p>{{ "Choose a preview image for this block. This image will be shown in the block selection modal."|t('blocksmith') }}</p>
+					</div>
 
-					<input type="hidden" name="previewImageId" id="previewImageId" value="{{ block.previewImageId ?? '' }}">
-				</div>
-			</div> #}
+					<div id="previewImage-field" class="input">
+						<button type="button" id="previewImage-picker" class="btn" data-icon="image">
+							{{ block.previewImageId ? "Change image"|t('blocksmith') : "Select or upload an image"|t('blocksmith') }}
+						</button>
+
+						{% if block.previewImageUrl %}
+							<div class="blocksmith-preview-image">
+								<img src="{{ block.previewImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}">
+							</div>
+						{% endif %}
+
+						<input type="hidden" name="previewImageId" id="previewImageId" value="{{ block.previewImageId ?? '' }}">
+
+						{% if block.previewImageId %}
+							<button type="button" id="previewImage-delete" class="btn" style="margin-top: 1rem;" data-icon="remove">
+								{{ "Remove image"|t('blocksmith') }}
+							</button>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+
+
 		</div>
 	</div>
 {% endblock %}

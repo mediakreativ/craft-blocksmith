@@ -9,41 +9,42 @@
   /**
    * BlocksmithModal Class
    *
-   * Provides a modal for selecting Matrix block types.
+   * Provides a modal for selecting Matrix block types
    */
   class BlocksmithModal {
     /**
-     * Constructor for BlocksmithModal.
+     * Constructor for BlocksmithModal
      *
-     * @param {Array} blockTypes - Array of available block types.
-     * @param {Function} onBlockSelected - Callback executed when a block is selected.
-     * @param {Object} config - Additional configuration options.
+     * @param {Array} blockTypes - Array of available block types
+     * @param {Function} onBlockSelected - Callback executed when a block is selected
+     * @param {Object} config - Additional configuration options
      */
     constructor(blockTypes, onBlockSelected, config) {
-      this.blockTypes = blockTypes; // List of available block types
-      this.onBlockSelected = onBlockSelected; // Callback for block selection
-      this.$overlay = null; // Overlay element
-      this.$modal = null; // Modal element
+      this.blockTypes = blockTypes;
+      this.onBlockSelected = onBlockSelected;
+      this.$overlay = null;
+      this.$modal = null;
 
       /**
        * Placeholder image for block previews.
-       *
-       * TODO: Update this logic once the backend provides either
-       * custom preview images or a standard placeholder.
        */
       this.placeholderImage =
         config?.settings?.placeholderImage ||
         "/blocksmith/images/placeholder.png";
 
-      // Access translations from the global scope
       this.translations = window.BlocksmithTranslations || {};
     }
 
+    loadBlockTypes() {
+      return $.ajax({
+        url: Craft.getCpUrl("blocksmith/get-block-types"),
+        method: "GET",
+        dataType: "json",
+      });
+    }
+
     /**
-     * Displays the modal.
-     *
-     * Creates the overlay and modal elements, attaches them to the DOM,
-     * and renders the block types.
+     * Displays the modal
      */
     show() {
       this.createOverlay();
@@ -51,28 +52,30 @@
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
 
-      // Load block types initially
-      this.renderBlockTypes("");
+      // Lade die Blockdaten und rendere sie
+      this.loadBlockTypes()
+        .done((blockTypes) => {
+          this.blockTypes = blockTypes;
+          this.renderBlockTypes("");
+        })
+        .fail((error) => {
+          console.error("Failed to load block types:", error);
+        });
     }
 
     /**
-     * Hides the modal.
-     *
-     * Removes the modal and overlay from the DOM and resets references.
+     * Hides the modal
      */
     hide() {
-      // Reset Masonry-Instance, if exists
       if (this.masonryInstance) {
         this.masonryInstance.destroy();
         this.masonryInstance = null;
       }
 
-      // Empty Modal Content
       if (this.$modal) {
         this.$modal.find(".blocksmith-blocks").empty();
       }
 
-      // Remove Modal and Overlay
       this.$overlay.removeClass("open").remove();
       this.$modal.removeClass("open").remove();
       this.$overlay = null;
@@ -80,7 +83,7 @@
     }
 
     /**
-     * Creates the overlay element.
+     * Creates the overlay element
      */
     createOverlay() {
       const $overlay = $(`
@@ -93,7 +96,7 @@
     }
 
     /**
-     * Creates the modal element with dynamic translations.
+     * Creates the modal element with dynamic translations
      */
     createModal() {
       const $modal = $(`
@@ -132,9 +135,9 @@
     }
 
     /**
-     * Renders the available block types into the modal.
+     * Renders the available block types into the modal
      *
-     * @param {string} searchValue - The search string for filtering block types.
+     * @param {string} searchValue - The search string for filtering block types
      */
     renderBlockTypes(searchValue) {
       const $blocksContainer = this.$modal.find(".blocksmith-blocks");
@@ -145,28 +148,40 @@
       });
 
       filteredBlockTypes.forEach((blockType) => {
-        const previewImage = blockType.previewImage || this.placeholderImage;
+        let previewImage = blockType.previewImage || this.placeholderImage;
+
+        if (window.BlocksmithConfig.settings.useHandleBasedPreviews) {
+          previewImage = `${window.BlocksmithConfig.settings.previewImageVolume}/${
+            window.BlocksmithConfig.settings.previewImageSubfolder
+              ? window.BlocksmithConfig.settings.previewImageSubfolder + "/"
+              : ""
+          }${blockType.handle}.png`;
+        }
+
+        const description =
+          blockType.description || "No description available.";
 
         const $block = $(`
-          <div class="blocksmith-block" data-type="${blockType.handle}">
-              <img src="${previewImage}" alt="${blockType.name}" onerror="
-                  this.src='${this.placeholderImage}'; 
-                  const hint = this.closest('.blocksmith-block').querySelector('.blocksmith-hint');
-                  if (hint) {
-                    hint.style.display = 'block';
-                  }">
-              <div class="blocksmith-footer">
-                  <span>${blockType.name}</span>
-                  <div class="blocksmith-hint" style="display: none;">
-                      ${Craft.t(
-                        "blocksmith",
-                        "Add a PNG file named {fileName} to the configured asset volume.",
-                        { fileName: `${blockType.handle}.png` },
-                      )}
+              <div class="blocksmith-block" data-type="${blockType.handle}">
+                  <img src="${previewImage}" alt="${blockType.name}" onerror="
+                      this.src='${this.placeholderImage}'; 
+                      const hint = this.closest('.blocksmith-block').querySelector('.blocksmith-hint');
+                      if (hint) {
+                          hint.style.display = 'block';
+                      }">
+                  <div class="blocksmith-footer">
+                      <span>${blockType.name}</span>
+                      <div class="blocksmith-hint" style="display: none;">
+                          ${Craft.t(
+                            "blocksmith",
+                            "Add a PNG file named {fileName} to the configured asset volume.",
+                            { fileName: `${blockType.handle}.png` },
+                          )}
+                      </div>
+                      <div class="blocksmith-block-description">${description}</div>
                   </div>
               </div>
-          </div>
-      `);
+          `);
 
         $block.on("click", () => {
           this.onBlockSelected(blockType);
@@ -176,19 +191,83 @@
         $blocksContainer.append($block);
       });
 
-      // Initialize Masonry if all images are loaded
-      imagesLoaded($blocksContainer[0], () => {
-        if (!this.masonryInstance) {
-          this.masonryInstance = new Masonry($blocksContainer[0], {
-            itemSelector: ".blocksmith-block",
-            percentPosition: true,
-            gutter: 20,
+      setTimeout(() => {
+        imagesLoaded($blocksContainer[0], () => {
+          requestAnimationFrame(() => {
+            this.initializeMasonry($blocksContainer[0]);
           });
+        });
+      }, 100);
+    }
+
+    // Masonry Initialization with Instance Check
+    initializeMasonry(container) {
+      if (!this.masonryInstance) {
+        this.masonryInstance = new Masonry(container, {
+          itemSelector: ".blocksmith-block",
+          columnWidth: ".blocksmith-block",
+          percentPosition: true,
+        });
+      } else {
+        this.masonryInstance.reloadItems();
+        this.masonryInstance.layout();
+      }
+    }
+
+    /**
+     * Initializes Masonry with dynamic settings
+     *
+     * @param {HTMLElement} container - The Masonry container
+     */
+    initializeMasonry(container) {
+      const masonryConfig = {
+        itemSelector: ".blocksmith-block",
+        percentPosition: true,
+        gutter: 20,
+      };
+
+      const applyColumnLogic = () => {
+        const modalWidth =
+          document.querySelector(".blocksmith-modal").offsetWidth;
+
+        let columns = 1;
+        let columnWidth = modalWidth;
+
+        if (modalWidth > 800) {
+          if (window.BlocksmithConfig?.settings?.wideViewFourBlocks) {
+            columns = 3;
+          } else {
+            columns = 2;
+          }
         } else {
+          columns = 2;
+        }
+
+        columnWidth = modalWidth / columns - 40;
+
+        const blockElements = container.querySelectorAll(
+          masonryConfig.itemSelector,
+        );
+        blockElements.forEach((block) => {
+          block.style.width = `${columnWidth}px`;
+        });
+
+        masonryConfig.columnWidth = columnWidth;
+
+        if (this.masonryInstance) {
           this.masonryInstance.reloadItems();
           this.masonryInstance.layout();
         }
-      });
+      };
+
+      // Initialize Masonry
+      if (!this.masonryInstance) {
+        this.masonryInstance = new Masonry(container, masonryConfig);
+      }
+
+      applyColumnLogic();
+
+      window.addEventListener("resize", applyColumnLogic);
     }
 
     /**

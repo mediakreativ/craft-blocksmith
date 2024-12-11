@@ -23,31 +23,62 @@
 
 {% block content %}
 	<input type="hidden" name="pluginHandle" value="blocksmith">
-     {{ actionInput('blocksmith/blocksmith/save-settings') }}
+	{{ actionInput('blocksmith/blocksmith/save-settings') }}
+
 	<div class="blocksmith-settings-wrapper">
 		<div class="blocksmith-settings-content">
+
 			<h1>{{ "General Settings"|t('blocksmith') }}</h1>
 
-			{{ forms.selectField({
-                label: 'Preview Image Volume'|t('blocksmith'),
-                name: 'previewImageVolume',
-                id: 'previewImageVolume',
-                instructions: 'Choose the volume where preview images will be stored.'|t('blocksmith'),
-                options: volumeOptions,
-                value: settings.previewImageVolume,
-                disabled: 'previewImageVolume' in overrides,
-                warning: 'previewImageVolume' in overrides ? macros.configWarning('previewImageVolume'),
+			{{ forms.lightswitchField({
+                label: 'Use Handle-based Previews'|t('blocksmith'),
+                name: 'useHandleBasedPreviews',
+                id: 'useHandleBasedPreviews',
+                instructions: 'Enable this option to use automatic image assignment based on entry type handles. The preview images need to be named after their block handle (e.g., textAndImage.png).'|t('blocksmith'),
+                on: settings.useHandleBasedPreviews,
             }) }}
 
-			{{ forms.textField({
-                label: 'Subfolder (optional)'|t('blocksmith'),
-                name: 'previewImageSubfolder',
-                id: 'previewImageSubfolder',
-                instructions: 'Specify an optional subfolder within the selected volume for storing images.'|t('blocksmith'),
-                value: settings.previewImageSubfolder,
-                disabled: 'previewImageSubfolder' in overrides,
-                warning: 'previewImageSubfolder' in overrides ? macros.configWarning('previewImageSubfolder'),
+			{% if settings.useHandleBasedPreviews %}
+				{% if settings.previewImageVolume == defaultVolumeUid %}
+					<div class="blocksmith-hint">
+						<p>
+							{% set defaultVolume = volumeOptions|filter(v => v.value == settings.previewImageVolume)|first %}
+							The Preview Image Volume has been set to "{{ defaultVolume.label ?? 'default volume' }}". You can update it here if necessary.
+						</p>
+					</div>
+				{% endif %}
+
+				{{ forms.selectField({
+                    label: 'Preview Image Volume'|t('blocksmith'),
+                    name: 'previewImageVolume',
+                    id: 'previewImageVolume',
+                    instructions: 'Choose the volume where preview images will be stored.'|t('blocksmith'),
+                    options: volumeOptions,
+                    value: settings.previewImageVolume,
+                    disabled: 'previewImageVolume' in overrides,
+                    warning: 'previewImageVolume' in overrides ? macros.configWarning('previewImageVolume'),
+                }) }}
+
+				{{ forms.textField({
+                    label: 'Subfolder (optional)'|t('blocksmith'),
+                    name: 'previewImageSubfolder',
+                    id: 'previewImageSubfolder',
+                    instructions: 'Specify an optional subfolder within the selected volume for storing images.'|t('blocksmith'),
+                    value: settings.previewImageSubfolder,
+                    disabled: 'previewImageSubfolder' in overrides,
+                    warning: 'previewImageSubfolder' in overrides ? macros.configWarning('previewImageSubfolder'),
+                }) }}
+			{% endif %}
+
+
+			{{ forms.lightswitchField({
+                label: 'Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport'|t('blocksmith'),
+                name: 'wideViewFourBlocks',
+                id: 'wideViewFourBlocks',
+                instructions: 'Enable this option to display 3 blocks per row for browser widths of 1178px or more.'|t('blocksmith'),
+                on: settings.wideViewFourBlocks,
             }) }}
+
 		</div>
 	</div>
 {% endblock %}
