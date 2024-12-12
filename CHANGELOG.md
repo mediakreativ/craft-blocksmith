@@ -8,7 +8,7 @@ Added support for new languages: ar, cs, da, el, fi, he, ja, ko, pl, sv, tr, zh
 This release introduces the **flexible image upload for block previews** and makes the **Block Settings page** under "Configure Blocks" fully functional. Additionally, significant improvements to the user experience have been made, including the ability to choose between handle-based and uploaded preview images.
 
 ### Added
-- **Flexible Preview Images for Blocks:**: In addition to handle-based preview images, users can now upload custom preview images directly via the Craft File Browser. Both handle-based and custom preview images are supported, offering greater flexibility in managing block previews.
+- **Flexible Preview Images for Blocks:**: In addition to handle-based preview images, users can now upload custom preview images directly via the Craft Asset Browser. Both handle-based and custom preview images are supported, offering greater flexibility in managing block previews.
 - **Block Settings Page:**: The "Configure Blocks" section is now fully functional, allowing users to manage block descriptions and, if handle-based previews are disabled, upload or modify preview images.
 - **Preview Modal Improvements:**: Added an option to display 3 blocks per row in wide viewports (≥1178px). The default remains 2 blocks per row.
 
