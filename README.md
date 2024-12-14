@@ -1,17 +1,15 @@
-# Blocksmith Plugin for Craft CMS (Beta)
+# Blocksmith Plugin for Craft CMS
 
-Blocksmith enhances the way you work with Craft CMS Matrix fields. Say goodbye to dropdown lists and hello to a sleek modal for block selection, complete with visual previews and intuitive options.
-
-This is the **beta release** of the Blocksmith plugin. While it is fully functional and tested, some features are still being finalized, and feedback is highly appreciated to further improve the plugin.
+**Blocksmith** redefines the way you work with Craft CMS Matrix fields. Forget long dropdown lists and experience a sleek, modern modal for block selection, enhanced by visual previews and intuitive controls. Whether you're adding a block via the "New entry" button or through the enhanced context menu, **Blocksmith** transforms block selection into a seamless and visually engaging experience.
 
 ## Features
 
 - **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface, which also supports tall content types for better previews.
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
-- **Flexible preview settings**: 
-  - Choose where preview images are stored, including support for asset volumes and optional subfolders.
-  - Upload custom preview images directly via the Craft Asset Browser or use handle-based preview images as an alternative if preferred.
+- **Flexible preview settings**: Upload custom preview images directly via the Craft Asset Browser or use handle-based preview images as an alternative if preferred.
+- **Enhanced layout and usability**: Masonry.js ensures a flexible and aesthetic grid layout, even for blocks with tall content previews.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
+- **Category and Favorite Management**: Organize blocks into categories and quickly filter or reset with the "All Categories" button.
 - **Language support**: Available in the following languages: English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, Ukrainian, Arabic, Czech, Danish, Greek, Finnish, Hebrew, Japanese, Korean, Polish, Swedish, Turkish, and Chinese. Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
 
 
@@ -51,8 +49,8 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### Short-Term
 
-1. **Categorization and Favorites Settings**
-   - Setting for categorization of block types and defining favorites.
+1. **Favorites Settings**
+   - Setting for defining favorites.
    - By default, favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
 
 2. **Individual Settings for Each Matrix Field**
@@ -65,16 +63,14 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### Mid-Term
 
-1. **Optimizations for Multi-Site Setups**
+1. **Copy-/Paste-/Clone Functionality**
+   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
+
+2. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
    - **Example:** Preview images and categories should be configurable per site.
 
-2. **More Complex Block Scenarios**
-   - Support for nested Matrix fields and dependencies between block types.
-   - **Aim:** Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
 
-3. **Copy-/Paste-/Clone Functionality**
-   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
 
 ### Long-Term
 
@@ -85,7 +81,7 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
    - Improve the Element Index view to allow seamless modal integration and better information display.
 
 2. **Integration with Third-Party Plugins**
-   - Ensure compatibility with popular Craft plugins (e.g. Neo).
+   - Add compatibility with popular Craft plugins (e.g. Neo).
    - **Aim:** Seamless integration and support of extended Matrix field functionality.
 
 ### Completed Features
@@ -96,8 +92,12 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 2. **Masonry.js Integration for Flexible Previews**
    - Implemented a flexible grid layout using Masonry.js, allowing seamless display of blocks with varying preview dimensions (e.g., for very long content).
 
-3. **Improved preview grid **  
-  - Option to display 3 blocks per row (Default: 2) in wide viewports.
+3. **Improved preview grid**
+   - Option to display 3 blocks per row (Default: 2) in wide viewports.
+
+6. **Categories for Blocks**
+   - Users can assign blocks to categories and filter by them in the preview modal.
+Includes a new "All Categories" button to reset filters.
 
 ## Note on the Roadmap
 
