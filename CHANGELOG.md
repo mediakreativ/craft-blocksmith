@@ -5,7 +5,6 @@ This marks the **end of the beta phase** for Blocksmith! With this stable releas
 
 ### Added
 - **Categories for Blocks:** Users can now assign and manage categories for block types. Categories appear in the preview modal, allowing for streamlined filtering and faster block selection.
-- **"All Categories" Button:** Quickly reset filters and view all block types in the modal.
 - **Improved Preview Modal:** Includes better category navigation and dynamic layouts powered by Masonry.js.
 - **Stability Improvements:** Finalized functionality and bug fixes to ensure a stable, production-ready release.
 
