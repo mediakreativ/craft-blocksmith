@@ -6,6 +6,21 @@
 
 {% set fullPageForm = true %}
 
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    },
+    {
+        label: "Categories"|t('blocksmith'),
+        url: url('blocksmith/settings/categories')
+    }
+] %}
+
 {% set title = category ? ("Edit Category" | t('blocksmith')) : ("New Category" | t('blocksmith')) %}
 
 {% block sidebar %}

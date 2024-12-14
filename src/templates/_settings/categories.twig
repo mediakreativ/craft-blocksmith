@@ -23,6 +23,10 @@
 {% set crumbs = [
     {
         label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
         url: url('admin/settings/plugins')
     }
 ] %}
@@ -61,12 +65,12 @@ new Craft.VueAdminTable({
     container: '#blocksmith-categories-vue-admin-table',
     deleteAction: 'blocksmith/blocksmith/delete-category',
     emptyMessage: Craft.t('blocksmith', 'No categories exist yet.'),
-    tableData: {{ tableData|json_encode|raw }},
+    tableData:
+{{ tableData|json_encode|raw }},
     slots: {
         title: (row) => {
             return `<a href="${row.url}">${row.title}</a>`;
-        },
-    },
-});
+	        },
+	    },
+	});
 {% endjs %}
-
