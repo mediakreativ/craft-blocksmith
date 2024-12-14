@@ -51,17 +51,30 @@ return [
     "Edit" => "Düzenle",
     "Edit Block" => "Bloğu Düzenle",
     "Description" => "Açıklama",
-    "Provide a short description for this block." =>
-        "Bu blok için kısa bir açıklama sağlayın.",
+
+    "Provide a short description for this block (optional)." =>
+        "Bu blok için kısa bir açıklama sağlayın (isteğe bağlı).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Mevcut kategori yok. Lütfen önce kategori ayarları sayfasında kategori ekleyin.",
-    "Preview Image" => "Önizleme Görüntüsü",
+        "Hiçbir kategori mevcut değil. Lütfen önce kategori ayarları sayfasında kategoriler ekleyin.",
+    "Select one or more categories for this block." =>
+        "Bu blok için bir veya daha fazla kategori seçin.",
+    "Preview Image" => "Önizleme Görseli",
     "This block uses a handle-based preview image." =>
-        "Bu blok, handle tabanlı bir önizleme görüntüsü kullanıyor.",
+        "Bu blok, tanımlayıcıya dayalı bir önizleme görseli kullanıyor.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Bu blok için bir önizleme görüntüsü seçin. Bu görüntü blok seçim modalında gösterilecektir.",
-    "Select or upload an image" => "Bir görüntü seçin veya yükleyin",
-    "Remove image" => "Görüntüyü kaldır",
+        "Bu blok için bir önizleme görseli seçin. Bu görsel, blok seçim modülünde görüntülenecek.",
+    "Select or upload an image" => "Bir görsel seçin veya yükleyin",
+    "Remove image" => "Görseli kaldır",
     "Settings" => "Ayarlar",
     "Plugins" => "Eklentiler",
+    "Edit Category" => "Kategoriyi Düzenle",
+    "Name" => "Ad",
+    "Description" => "Açıklama",
+    "Enter the name of the category." => "Kategori adını girin.",
+    "Provide a short description for this category (optional)." =>
+        "Bu kategori için kısa bir açıklama sağlayın (isteğe bağlı).",
+    "No categories exist yet." => "Henüz hiçbir kategori yok.",
+    "No categories assigned" => "Atanmış kategori yok.",
+    "All Categories" => "Tüm Kategoriler",
+    "New Category" => "Yeni kategori",
 ];

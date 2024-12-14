@@ -36,7 +36,7 @@ return [
     "General Settings" => "Загальні налаштування",
     "Use Handle-based Previews" =>
         "Використовувати попередній перегляд на основі handle",
-        "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
         "Автоматично призначайте зображення попереднього перегляду на основі ідентифікаторів блоків замість того, щоб завантажувати їх вручну через оглядач ресурсів. Для цього зображення попереднього перегляду повинні бути названі відповідно до ідентифікатора блоку (наприклад, textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Модальне вікно перегляду: показувати 3 блоки в рядку (за замовчуванням 2) на широкому екрані",
@@ -52,17 +52,30 @@ return [
     "Edit" => "Редагувати",
     "Edit Block" => "Редагувати блок",
     "Description" => "Опис",
-    "Provide a short description for this block." =>
-        "Надайте короткий опис для цього блоку.",
+
+    "Provide a short description for this block (optional)." =>
+        "Надайте короткий опис цього блоку (за бажанням).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Немає доступних категорій. Спочатку додайте категорії на сторінці налаштувань категорій.",
+        "Категорії відсутні. Спочатку додайте категорії на сторінці налаштувань категорій.",
+    "Select one or more categories for this block." =>
+        "Виберіть одну або кілька категорій для цього блоку.",
     "Preview Image" => "Зображення попереднього перегляду",
     "This block uses a handle-based preview image." =>
-        "Цей блок використовує зображення попереднього перегляду на основі handle.",
+        "Цей блок використовує зображення попереднього перегляду на основі ідентифікатора.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
         "Виберіть зображення попереднього перегляду для цього блоку. Це зображення буде показано в модальному вікні вибору блоку.",
-    "Select or upload an image" => "Вибрати або завантажити зображення",
+    "Select or upload an image" => "Виберіть або завантажте зображення",
     "Remove image" => "Видалити зображення",
     "Settings" => "Налаштування",
     "Plugins" => "Плагіни",
+    "Edit Category" => "Редагувати категорію",
+    "Name" => "Назва",
+    "Description" => "Опис",
+    "Enter the name of the category." => "Введіть назву категорії.",
+    "Provide a short description for this category (optional)." =>
+        "Надайте короткий опис цієї категорії (за бажанням).",
+    "No categories exist yet." => "Категорій поки що немає.",
+    "No categories assigned" => "Категорії не призначені.",
+    "All Categories" => "Усі категорії",
+    "New Category" => "Нова категорія",
 ];

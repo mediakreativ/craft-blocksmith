@@ -46,17 +46,30 @@ return [
     "Edit" => "编辑",
     "Edit Block" => "编辑区块",
     "Description" => "描述",
-    "Provide a short description for this block." =>
-        "为此区块提供一个简短的描述。",
+
+    "Provide a short description for this block (optional)." =>
+        "为此区块提供简短的描述（可选）。",
     "No categories available. Please add categories first in the categories settings page." =>
-        "没有可用的分类。请先在分类设置页面中添加分类。",
-    "Preview Image" => "预览图像",
+        "暂无可用类别。请先在类别设置页面中添加类别。",
+    "Select one or more categories for this block." =>
+        "为此区块选择一个或多个类别。",
+    "Preview Image" => "预览图片",
     "This block uses a handle-based preview image." =>
-        "此区块使用基于句柄的预览图像。",
+        "此区块使用基于句柄的预览图片。",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "为此区块选择一个预览图像。此图像将在区块选择模式中显示。",
-    "Select or upload an image" => "选择或上传图像",
-    "Remove image" => "移除图像",
+        "为此区块选择一个预览图片。该图片将在区块选择弹窗中显示。",
+    "Select or upload an image" => "选择或上传图片",
+    "Remove image" => "移除图片",
     "Settings" => "设置",
     "Plugins" => "插件",
+    "Edit Category" => "编辑类别",
+    "Name" => "名称",
+    "Description" => "描述",
+    "Enter the name of the category." => "输入类别名称。",
+    "Provide a short description for this category (optional)." =>
+        "为此类别提供简短的描述（可选）。",
+    "No categories exist yet." => "尚未存在任何类别。",
+    "No categories assigned" => "未分配类别。",
+    "All Categories" => "所有类别",
+    "New Category" => "新类别",
 ];

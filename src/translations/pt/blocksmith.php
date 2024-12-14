@@ -51,17 +51,30 @@ return [
     "Edit" => "Editar",
     "Edit Block" => "Editar Bloco",
     "Description" => "Descrição",
-    "Provide a short description for this block." =>
-        "Forneça uma breve descrição para este bloco.",
+
+    "Provide a short description for this block (optional)." =>
+        "Forneça uma breve descrição para este bloco (opcional).",
     "No categories available. Please add categories first in the categories settings page." =>
         "Nenhuma categoria disponível. Adicione categorias primeiro na página de configurações de categorias.",
-    "Preview Image" => "Imagem de Visualização",
+    "Select one or more categories for this block." =>
+        "Selecione uma ou mais categorias para este bloco.",
+    "Preview Image" => "Imagem de Pré-visualização",
     "This block uses a handle-based preview image." =>
-        "Este bloco usa uma imagem de visualização baseada em handle.",
+        "Este bloco utiliza uma imagem de pré-visualização baseada no identificador.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Escolha uma imagem de visualização para este bloco. Esta imagem será exibida no modal de seleção de blocos.",
-    "Select or upload an image" => "Selecione ou carregue uma imagem",
+        "Escolha uma imagem de pré-visualização para este bloco. Esta imagem será exibida no modal de seleção de blocos.",
+    "Select or upload an image" => "Selecione ou envie uma imagem",
     "Remove image" => "Remover imagem",
     "Settings" => "Configurações",
     "Plugins" => "Plugins",
+    "Edit Category" => "Editar Categoria",
+    "Name" => "Nome",
+    "Description" => "Descrição",
+    "Enter the name of the category." => "Insira o nome da categoria.",
+    "Provide a short description for this category (optional)." =>
+        "Forneça uma breve descrição para esta categoria (opcional).",
+    "No categories exist yet." => "Ainda não existem categorias.",
+    "No categories assigned" => "Nenhuma categoria atribuída.",
+    "All Categories" => "Todas as Categorias",
+    "New Category" => "Nova categoria",
 ];

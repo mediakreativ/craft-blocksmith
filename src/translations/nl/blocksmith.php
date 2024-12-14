@@ -51,17 +51,30 @@ return [
     "Edit" => "Bewerken",
     "Edit Block" => "Blok bewerken",
     "Description" => "Beschrijving",
-    "Provide a short description for this block." =>
-        "Geef een korte beschrijving voor dit blok.",
+
+    "Provide a short description for this block (optional)." =>
+        "Geef een korte beschrijving van dit blok (optioneel).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Geen categorieën beschikbaar. Voeg eerst categorieën toe in de categorie-instellingenpagina.",
-    "Preview Image" => "Preview-afbeelding",
+        "Geen categorieën beschikbaar. Voeg eerst categorieën toe op de categorie-instellingenpagina.",
+    "Select one or more categories for this block." =>
+        "Selecteer één of meer categorieën voor dit blok.",
+    "Preview Image" => "Voorbeeldafbeelding",
     "This block uses a handle-based preview image." =>
-        "Dit blok gebruikt een op handles gebaseerde preview-afbeelding.",
+        "Dit blok gebruikt een op handle gebaseerde voorbeeldafbeelding.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Kies een preview-afbeelding voor dit blok. Deze afbeelding wordt weergegeven in de block-selectiemodal.",
+        "Kies een voorbeeldafbeelding voor dit blok. Deze afbeelding wordt weergegeven in het blokselectiemodal.",
     "Select or upload an image" => "Selecteer of upload een afbeelding",
     "Remove image" => "Afbeelding verwijderen",
     "Settings" => "Instellingen",
-    "Plugins" => "Plugins",
+    "Plugins" => "Plug-ins",
+    "Edit Category" => "Categorie bewerken",
+    "Name" => "Naam",
+    "Description" => "Beschrijving",
+    "Enter the name of the category." => "Voer de naam van de categorie in.",
+    "Provide a short description for this category (optional)." =>
+        "Geef een korte beschrijving van deze categorie (optioneel).",
+    "No categories exist yet." => "Er bestaan nog geen categorieën.",
+    "No categories assigned" => "Geen categorieën toegewezen.",
+    "All Categories" => "Alle categorieën",
+    "New Category" => "Nieuwe categorie",
 ];

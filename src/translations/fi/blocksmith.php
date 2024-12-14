@@ -51,17 +51,30 @@ return [
     "Edit" => "Muokkaa",
     "Edit Block" => "Muokkaa lohkoa",
     "Description" => "Kuvaus",
-    "Provide a short description for this block." =>
-        "Anna lyhyt kuvaus tästä lohkosta.",
+
+    "Provide a short description for this block (optional)." =>
+        "Anna lyhyt kuvaus tälle lohkolle (valinnainen).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Kategorioita ei ole saatavilla. Lisää ensin kategoriat kategorioiden asetus-sivulla.",
+        "Ei kategorioita saatavilla. Lisää kategoriat ensin kategorioiden asetussivulla.",
+    "Select one or more categories for this block." =>
+        "Valitse yksi tai useampi kategoria tälle lohkolle.",
     "Preview Image" => "Esikatselukuva",
     "This block uses a handle-based preview image." =>
-        "Tämä lohko käyttää handle-pohjaista esikatselukuvaa.",
+        "Tämä lohko käyttää käsitteeseen perustuvaa esikatselukuvaa.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Valitse esikatselukuva tälle lohkolle. Tämä kuva näytetään lohkon valintaikkunassa.",
+        "Valitse esikatselukuva tälle lohkolle. Tämä kuva näkyy lohkon valintamodaalissa.",
     "Select or upload an image" => "Valitse tai lataa kuva",
     "Remove image" => "Poista kuva",
     "Settings" => "Asetukset",
-    "Plugins" => "Lisäosat",
+    "Plugins" => "Laajennukset",
+    "Edit Category" => "Muokkaa kategoriaa",
+    "Name" => "Nimi",
+    "Description" => "Kuvaus",
+    "Enter the name of the category." => "Anna kategorian nimi.",
+    "Provide a short description for this category (optional)." =>
+        "Anna lyhyt kuvaus tälle kategorialle (valinnainen).",
+    "No categories exist yet." => "Kategorioita ei ole vielä olemassa.",
+    "No categories assigned" => "Ei määritettyjä kategorioita.",
+    "All Categories" => "Kaikki kategoriat",
+    "New Category" => "Uusi kategoria",
 ];

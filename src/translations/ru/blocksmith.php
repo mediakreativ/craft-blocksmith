@@ -38,7 +38,7 @@ return [
         "Использовать предварительный просмотр на основе handle",
     "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
         "Автоматически назначайте изображения предпросмотра на основе идентификаторов блоков вместо их ручной загрузки через браузер ресурсов. Для этого изображения предпросмотра должны быть названы в соответствии с их идентификатором блока (например, textAndImage.png).",
-        "Модальное окно предпросмотра: показывать 3 блока в строке (по умолчанию 2) на широком экране",
+    "Модальное окно предпросмотра: показывать 3 блока в строке (по умолчанию 2) на широком экране",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
         "Включите эту опцию, чтобы отображать 3 блока в строке для ширины браузера 1178px и более.",
     "Categories" => "Категории",
@@ -51,17 +51,30 @@ return [
     "Edit" => "Редактировать",
     "Edit Block" => "Редактировать блок",
     "Description" => "Описание",
-    "Provide a short description for this block." =>
-        "Предоставьте краткое описание для этого блока.",
+
+    "Provide a short description for this block (optional)." =>
+        "Укажите краткое описание для этого блока (необязательно).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Нет доступных категорий. Сначала добавьте категории на странице настроек категорий.",
-    "Preview Image" => "Изображение предварительного просмотра",
+        "Категории отсутствуют. Сначала добавьте категории на странице настроек категорий.",
+    "Select one or more categories for this block." =>
+        "Выберите одну или несколько категорий для этого блока.",
+    "Preview Image" => "Изображение предпросмотра",
     "This block uses a handle-based preview image." =>
-        "Этот блок использует изображение предварительного просмотра на основе handle.",
+        "Этот блок использует изображение предпросмотра на основе идентификатора.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Выберите изображение предварительного просмотра для этого блока. Это изображение будет отображаться в модальном окне выбора блока.",
-    "Select or upload an image" => "Выбрать или загрузить изображение",
+        "Выберите изображение предпросмотра для этого блока. Это изображение будет отображаться в модальном окне выбора блока.",
+    "Select or upload an image" => "Выберите или загрузите изображение",
     "Remove image" => "Удалить изображение",
     "Settings" => "Настройки",
     "Plugins" => "Плагины",
+    "Edit Category" => "Редактировать категорию",
+    "Name" => "Имя",
+    "Description" => "Описание",
+    "Enter the name of the category." => "Введите название категории.",
+    "Provide a short description for this category (optional)." =>
+        "Укажите краткое описание для этой категории (необязательно).",
+    "No categories exist yet." => "Категории еще не созданы.",
+    "No categories assigned" => "Категории не назначены.",
+    "All Categories" => "Все категории",
+    "New Category" => "Новая категория",
 ];

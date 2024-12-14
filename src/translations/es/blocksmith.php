@@ -52,17 +52,30 @@ return [
     "Edit" => "Editar",
     "Edit Block" => "Editar bloque",
     "Description" => "Descripción",
-    "Provide a short description for this block." =>
-        "Proporciona una breve descripción para este bloque.",
+
+    "Provide a short description for this block (optional)." =>
+        "Proporciona una breve descripción para este bloque (opcional).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "No hay categorías disponibles. Por favor, agrega categorías primero en la página de configuración de categorías.",
-    "Preview Image" => "Imagen de vista previa",
+        "No hay categorías disponibles. Por favor, añade categorías primero en la página de configuración de categorías.",
+    "Select one or more categories for this block." =>
+        "Selecciona una o más categorías para este bloque.",
+    "Preview Image" => "Vista previa de la imagen",
     "This block uses a handle-based preview image." =>
-        "Este bloque utiliza una imagen de vista previa basada en su identificador.",
+        "Este bloque utiliza una imagen de vista previa basada en el identificador (handle).",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
         "Elige una imagen de vista previa para este bloque. Esta imagen se mostrará en el modal de selección de bloques.",
-    "Select or upload an image" => "Seleccionar o subir una imagen",
+    "Select or upload an image" => "Selecciona o sube una imagen",
     "Remove image" => "Eliminar imagen",
-    "Settings" => "Configuraciones",
-    "Plugins" => "Plugins",
+    "Settings" => "Configuración",
+    "Plugins" => "Complementos",
+    "Edit Category" => "Editar categoría",
+    "Name" => "Nombre",
+    "Description" => "Descripción",
+    "Enter the name of the category." => "Introduce el nombre de la categoría.",
+    "Provide a short description for this category (optional)." =>
+        "Proporciona una breve descripción para esta categoría (opcional).",
+    "No categories exist yet." => "Aún no existen categorías.",
+    "No categories assigned" => "No hay categorías asignadas.",
+    "All Categories" => "Todas las categorías",
+    "New Category" => "Nueva categoría",
 ];

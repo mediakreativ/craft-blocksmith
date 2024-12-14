@@ -71,14 +71,20 @@
 								</div>
 							{% endif %}
 
+							{% set categories = blockType.categories ?? [] %}
+
 							{% if blockType.categories|length > 0 %}
 								<div class="blocksmith-category-badges">
-									<span class="blocksmith-badge-label">Categories:</span>
-									{% for category in blockType.categories %}
-										<span class="blocksmith-badge blocksmith-category-badge code">{{ category }}</span>
+									<span class="blocksmith-badge-label">{{ "Categories"|t('blocksmith') }}:</span>
+									{% for categoryName in blockType.categories %}
+										<span class="blocksmith-badge blocksmith-category-badge code">{{ categoryName }}</span>
 									{% endfor %}
 								</div>
+							{% else %}
+								<span class="badge-label">{{ 'No categories assigned'|t('blocksmith') }}</span>
 							{% endif %}
+
+
 						</div>
 					</div>
 				{% endfor %}

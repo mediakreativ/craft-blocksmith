@@ -51,17 +51,30 @@ return [
     "Edit" => "Επεξεργασία",
     "Edit Block" => "Επεξεργασία Μπλοκ",
     "Description" => "Περιγραφή",
-    "Provide a short description for this block." =>
-        "Δώστε μια σύντομη περιγραφή για αυτό το μπλοκ.",
+
+    "Provide a short description for this block (optional)." =>
+        "Δώστε μια σύντομη περιγραφή για αυτό το μπλοκ (προαιρετικό).",
     "No categories available. Please add categories first in the categories settings page." =>
         "Δεν υπάρχουν διαθέσιμες κατηγορίες. Προσθέστε πρώτα κατηγορίες στη σελίδα ρυθμίσεων κατηγοριών.",
-    "Preview Image" => "Εικόνα Προεπισκόπησης",
+    "Select one or more categories for this block." =>
+        "Επιλέξτε μία ή περισσότερες κατηγορίες για αυτό το μπλοκ.",
+    "Preview Image" => "Προεπισκόπηση εικόνας",
     "This block uses a handle-based preview image." =>
-        "Αυτό το μπλοκ χρησιμοποιεί εικόνα προεπισκόπησης βάσει handle.",
+        "Αυτό το μπλοκ χρησιμοποιεί εικόνα προεπισκόπησης βασισμένη στη λαβή.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Επιλέξτε μια εικόνα προεπισκόπησης για αυτό το μπλοκ. Αυτή η εικόνα θα εμφανιστεί στο παράθυρο επιλογής μπλοκ.",
+        "Επιλέξτε μια εικόνα προεπισκόπησης για αυτό το μπλοκ. Αυτή η εικόνα θα εμφανίζεται στο modal επιλογής μπλοκ.",
     "Select or upload an image" => "Επιλέξτε ή ανεβάστε μια εικόνα",
     "Remove image" => "Αφαίρεση εικόνας",
     "Settings" => "Ρυθμίσεις",
     "Plugins" => "Πρόσθετα",
+    "Edit Category" => "Επεξεργασία κατηγορίας",
+    "Name" => "Όνομα",
+    "Description" => "Περιγραφή",
+    "Enter the name of the category." => "Εισάγετε το όνομα της κατηγορίας.",
+    "Provide a short description for this category (optional)." =>
+        "Δώστε μια σύντομη περιγραφή για αυτήν την κατηγορία (προαιρετικό).",
+    "No categories exist yet." => "Δεν υπάρχουν ακόμη κατηγορίες.",
+    "No categories assigned" => "Δεν έχουν εκχωρηθεί κατηγορίες.",
+    "All Categories" => "Όλες οι κατηγορίες",
+    "New Category" => "Νέα κατηγορία",
 ];

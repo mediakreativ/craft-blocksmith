@@ -50,17 +50,30 @@ return [
     "Edit" => "עריכה",
     "Edit Block" => "ערוך בלוק",
     "Description" => "תיאור",
-    "Provide a short description for this block." =>
-        "ספק תיאור קצר עבור הבלוק הזה.",
+
+    "Provide a short description for this block (optional)." =>
+        "ספק תיאור קצר עבור הבלוק הזה (אופציונלי).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "אין קטגוריות זמינות. אנא הוסף קטגוריות בעמוד הגדרות הקטגוריות.",
+        "אין קטגוריות זמינות. הוסף קטגוריות תחילה בדף הגדרות הקטגוריות.",
+    "Select one or more categories for this block." =>
+        "בחר קטגוריה אחת או יותר עבור הבלוק הזה.",
     "Preview Image" => "תמונת תצוגה מקדימה",
     "This block uses a handle-based preview image." =>
-        "בלוק זה משתמש בתמונת תצוגה מקדימה מבוססת מזהה.",
+        "בלוק זה משתמש בתמונת תצוגה מקדימה מבוססת הידית.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "בחר תמונת תצוגה מקדימה עבור הבלוק הזה. תמונה זו תוצג בחלון בחירת הבלוק.",
+        "בחר תמונת תצוגה מקדימה עבור הבלוק הזה. תמונה זו תוצג במודאל בחירת הבלוקים.",
     "Select or upload an image" => "בחר או העלה תמונה",
     "Remove image" => "הסר תמונה",
     "Settings" => "הגדרות",
     "Plugins" => "תוספים",
+    "Edit Category" => "ערוך קטגוריה",
+    "Name" => "שם",
+    "Description" => "תיאור",
+    "Enter the name of the category." => "הזן את שם הקטגוריה.",
+    "Provide a short description for this category (optional)." =>
+        "ספק תיאור קצר עבור הקטגוריה הזו (אופציונלי).",
+    "No categories exist yet." => "עדיין אין קטגוריות.",
+    "No categories assigned" => "לא הוקצו קטגוריות.",
+    "All Categories" => "כל הקטגוריות",
+    "New Category" => "קטגוריה חדשה",
 ];

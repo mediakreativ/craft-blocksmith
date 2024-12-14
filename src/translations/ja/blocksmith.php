@@ -51,17 +51,30 @@ return [
     "Edit" => "編集",
     "Edit Block" => "ブロックを編集",
     "Description" => "説明",
-    "Provide a short description for this block." =>
-        "このブロックの簡単な説明を入力してください。",
+
+    "Provide a short description for this block (optional)." =>
+        "このブロックの簡単な説明を入力してください（任意）。",
     "No categories available. Please add categories first in the categories settings page." =>
-        "利用可能なカテゴリーがありません。最初にカテゴリー設定ページでカテゴリーを追加してください。",
+        "カテゴリがありません。最初にカテゴリ設定ページでカテゴリを追加してください。",
+    "Select one or more categories for this block." =>
+        "このブロックに1つ以上のカテゴリを選択してください。",
     "Preview Image" => "プレビュー画像",
     "This block uses a handle-based preview image." =>
-        "このブロックはハンドルベースのプレビュー画像を使用しています。",
+        "このブロックはハンドルベースのプレビュー画像を使用します。",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "このブロックのプレビュー画像を選択してください。この画像はブロック選択モーダルで表示されます。",
+        "このブロックのプレビュー画像を選択してください。この画像はブロック選択モーダルに表示されます。",
     "Select or upload an image" => "画像を選択またはアップロード",
     "Remove image" => "画像を削除",
     "Settings" => "設定",
     "Plugins" => "プラグイン",
+    "Edit Category" => "カテゴリを編集",
+    "Name" => "名前",
+    "Description" => "説明",
+    "Enter the name of the category." => "カテゴリの名前を入力してください。",
+    "Provide a short description for this category (optional)." =>
+        "このカテゴリの簡単な説明を入力してください（任意）。",
+    "No categories exist yet." => "まだカテゴリが存在しません。",
+    "No categories assigned" => "割り当てられたカテゴリがありません。",
+    "All Categories" => "すべてのカテゴリ",
+    "New Category" => "新しいカテゴリー",
 ];

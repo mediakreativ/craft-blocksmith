@@ -51,10 +51,13 @@ return [
     "Edit" => "Bearbeiten",
     "Edit Block" => "Block bearbeiten",
     "Description" => "Beschreibung",
-    "Provide a short description for this block." =>
-        "Gib eine kurze Beschreibung für diesen Block an.",
+
+    "Provide a short description for this block (optional)." =>
+        "Gib eine kurze Beschreibung für diesen Block an (optional).",
     "No categories available. Please add categories first in the categories settings page." =>
         "Keine Kategorien verfügbar. Bitte füge zuerst Kategorien auf der Kategorie-Einstellungsseite hinzu.",
+    "Select one or more categories for this block." =>
+        "Wähle eine oder mehrere Kategorien für diesen Block aus.",
     "Preview Image" => "Vorschaubild",
     "This block uses a handle-based preview image." =>
         "Dieser Block verwendet ein handle-basiertes Vorschaubild.",
@@ -64,4 +67,14 @@ return [
     "Remove image" => "Bild entfernen",
     "Settings" => "Einstellungen",
     "Plugins" => "Plug-ins",
+    "Edit Category" => "Kategorie bearbeiten",
+    "Name" => "Name",
+    "Description" => "Beschreibung",
+    "Enter the name of the category." => "Gib den Namen der Kategorie ein.",
+    "Provide a short description for this category (optional)." =>
+        "Gib eine kurze Beschreibung für diese Kategorie an (optional).",
+    "No categories exist yet." => "Es existieren noch keine Kategorien.",
+    "No categories assigned" => "Keine Kategorien zugewiesen",
+    "All Categories" => "Alle Kategorien",
+    "New Category" => "Neue Kategorie",
 ];

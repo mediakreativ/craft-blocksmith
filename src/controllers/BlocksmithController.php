@@ -37,7 +37,7 @@ class BlocksmithController extends \craft\web\Controller
         $settings = Blocksmith::getInstance()->getSettings();
         $settings->validate();
 
-        $defaultVolume = Craft::$app->volumes->getVolumeByHandle("images"); // Passe den Handle an
+        $defaultVolume = Craft::$app->volumes->getVolumeByHandle("images");
         $defaultVolumeUid = $defaultVolume->uid ?? null;
         $defaultVolumeName = $defaultVolume->name ?? "Default Volume";
 
@@ -107,7 +107,7 @@ class BlocksmithController extends \craft\web\Controller
             empty($settings->previewImageVolume)
         ) {
             $volumes = Craft::$app->getVolumes()->getAllVolumes();
-            $settings->previewImageVolume = $volumes[0]->uid ?? null; // Nimm das erste verfügbare Volume
+            $settings->previewImageVolume = $volumes[0]->uid ?? null;
         }
 
         if (!$settings->validate()) {
@@ -153,17 +153,9 @@ class BlocksmithController extends \craft\web\Controller
         $previewImageId = $request->post("previewImageId");
         $previewImageUrl = null;
 
-        $categoriesJson = null;
-        if ($categories && is_array($categories)) {
-            $categoriesJson = json_encode($categories);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                Craft::error(
-                    "Failed to encode categories to JSON: " .
-                        json_last_error_msg(),
-                    __METHOD__
-                );
-                $categoriesJson = null;
-            }
+        $categoriesJson = [];
+        if (!empty($categories) && is_array($categories)) {
+            $categoriesJson = array_map("intval", $categories);
         }
 
         if ($previewImageId) {
@@ -181,7 +173,10 @@ class BlocksmithController extends \craft\web\Controller
         if (YII_DEBUG) {
             Craft::info("entryTypeId: " . $entryTypeId, __METHOD__);
             Craft::info("description: " . $description, __METHOD__);
-            Craft::info("categories: " . $categoriesJson, __METHOD__);
+            Craft::info(
+                "categories: " . json_encode($categoriesJson),
+                __METHOD__
+            );
             Craft::info("previewImageId: " . $previewImageId, __METHOD__);
             Craft::info("previewImageUrl: " . $previewImageUrl, __METHOD__);
         }
@@ -236,12 +231,163 @@ class BlocksmithController extends \craft\web\Controller
      *
      * @return \yii\web\Response The rendered template for the Categories Settings page
      */
-    public function actionCategories()
+    public function actionCategories(): Response
     {
+        $categories = (new \yii\db\Query())
+            ->select(["id", "name", "description"])
+            ->from("{{%blocksmith_categories}}")
+            ->all();
+
         return $this->renderTemplate("blocksmith/_settings/categories", [
-            "plugin" => \mediakreativ\blocksmith\Blocksmith::getInstance(),
-            "title" => Craft::t("blocksmith", "Blocksmith"),
+            "categories" => $categories,
+            "plugin" => Blocksmith::getInstance(),
+            "title" => Craft::t("blocksmith", "Categories"),
         ]);
+    }
+
+    public function actionEditCategory(int $id = null): Response
+    {
+        $category = null;
+
+        if ($id) {
+            $category = (new \yii\db\Query())
+                ->select(["id", "name", "description"])
+                ->from("{{%blocksmith_categories}}")
+                ->where(["id" => $id])
+                ->one();
+
+            if (!$category) {
+                Craft::$app->getSession()->setError("Category not found.");
+                return $this->redirect("blocksmith/settings/categories");
+            }
+        }
+
+        return $this->renderTemplate("blocksmith/_settings/edit-category", [
+            "category" => $category,
+        ]);
+    }
+
+    public function actionSaveCategory(): Response
+    {
+        $this->requirePostRequest();
+
+        $request = Craft::$app->getRequest();
+        $id = $request->getBodyParam("id");
+        $name = $request->getBodyParam("name");
+        $description = $request->getBodyParam("description");
+
+        if (!$name) {
+            Craft::$app->getSession()->setError("Category name is required.");
+            return $this->redirectToPostedUrl();
+        }
+
+        $data = [
+            "name" => $name,
+            "description" => $description ?: null,
+            "dateUpdated" => new \yii\db\Expression("NOW()"),
+        ];
+
+        try {
+            if ($id) {
+                Craft::$app->db
+                    ->createCommand()
+                    ->update("{{%blocksmith_categories}}", $data, ["id" => $id])
+                    ->execute();
+            } else {
+                $data["dateCreated"] = new \yii\db\Expression("NOW()");
+                Craft::$app->db
+                    ->createCommand()
+                    ->insert("{{%blocksmith_categories}}", $data)
+                    ->execute();
+            }
+
+            Craft::$app
+                ->getSession()
+                ->setNotice("Category saved successfully.");
+        } catch (\Throwable $e) {
+            Craft::error(
+                "Failed to save category: " . $e->getMessage(),
+                __METHOD__
+            );
+            Craft::$app->getSession()->setError("Failed to save category.");
+        }
+
+        return $this->redirect("blocksmith/settings/categories");
+    }
+
+    public function actionDeleteCategory(): Response
+    {
+        $this->requirePostRequest();
+
+        $request = Craft::$app->getRequest();
+        $id = $request->getBodyParam("id");
+
+        if (!$id) {
+            return $this->asJson([
+                "success" => false,
+                "error" => "Category ID is required.",
+            ]);
+        }
+
+        $transaction = Craft::$app->db->beginTransaction();
+        try {
+            // Lösche die Kategorie aus der Tabelle `blocksmith_categories`
+            $deleted = Craft::$app->db
+                ->createCommand()
+                ->delete("{{%blocksmith_categories}}", ["id" => $id])
+                ->execute();
+
+            if ($deleted) {
+                // Entferne die Kategorie aus der `categories` Spalte in der `blocksmith_blockdata`-Tabelle
+                $blockData = (new \yii\db\Query())
+                    ->select(["id", "categories"])
+                    ->from("{{%blocksmith_blockdata}}")
+                    ->all();
+
+                foreach ($blockData as $block) {
+                    $categories = json_decode($block["categories"], true) ?: [];
+                    if (
+                        ($key = array_search((int) $id, $categories)) !== false
+                    ) {
+                        unset($categories[$key]);
+                        // Update der `categories`-Spalte
+                        Craft::$app->db
+                            ->createCommand()
+                            ->update(
+                                "{{%blocksmith_blockdata}}",
+                                [
+                                    // Stelle sicher, dass das Ergebnis ein echtes JSON-Array ist
+                                    "categories" => empty($categories)
+                                        ? null
+                                        : $categories,
+                                ],
+                                ["id" => $block["id"]]
+                            )
+                            ->execute();
+                    }
+                }
+
+                $transaction->commit();
+                return $this->asJson(["success" => true]);
+            }
+
+            $transaction->rollBack();
+            return $this->asJson([
+                "success" => false,
+                "error" => "Failed to delete category.",
+            ]);
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            Craft::error(
+                "Failed to delete category: " . $e->getMessage(),
+                __METHOD__
+            );
+            return $this->asJson([
+                "success" => false,
+                "error" =>
+                    "An error occurred while trying to delete the category.",
+            ]);
+        }
     }
 
     /**
@@ -255,7 +401,6 @@ class BlocksmithController extends \craft\web\Controller
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
-        // Zusammengefasste Abfrage: Block-Daten basierend auf EntryTypeId
         $blockData = (new \yii\db\Query())
             ->select([
                 "entryTypeId",
@@ -265,6 +410,12 @@ class BlocksmithController extends \craft\web\Controller
             ])
             ->from("{{%blocksmith_blockdata}}")
             ->indexBy("entryTypeId")
+            ->all();
+
+        $categories = (new \yii\db\Query())
+            ->select(["id", "name"])
+            ->from("{{%blocksmith_categories}}")
+            ->indexBy("id")
             ->all();
 
         $matrixFields = array_filter(
@@ -280,15 +431,40 @@ class BlocksmithController extends \craft\web\Controller
                 $entryTypeId = $blockType->id;
 
                 $data = $blockData[$entryTypeId] ?? null;
-                $categories =
-                    $data && isset($data["categories"])
-                        ? json_decode($data["categories"], true) ?? []
-                        : [];
+
+                $categoryIds = [];
+                if (isset($data["categories"])) {
+                    $decodedCategories = json_decode($data["categories"], true);
+                    if (
+                        json_last_error() === JSON_ERROR_NONE &&
+                        is_array($decodedCategories)
+                    ) {
+                        $categoryIds = $decodedCategories;
+                    } else {
+                        Craft::warning(
+                            "Failed to decode categories for entryTypeId {$entryTypeId}. Raw value: {$data["categories"]}",
+                            __METHOD__
+                        );
+                    }
+                }
+
+                $categoryNames = [];
+                if (!empty($categories)) {
+                    foreach ($categoryIds as $id) {
+                        if (isset($categories[$id])) {
+                            $categoryNames[] = $categories[$id]["name"];
+                        } else {
+                            Craft::warning(
+                                "Category ID {$id} not found in categories table.",
+                                __METHOD__
+                            );
+                        }
+                    }
+                }
 
                 $previewImageUrl =
                     $data["previewImageUrl"] ?? $placeholderImageUrl;
 
-                // Handle-basierte Vorschaubilder (nur URL-Zusammenstellung, keine HTTP-Anfragen)
                 if ($useHandleBasedPreviews && $settings->previewImageVolume) {
                     $volume = Craft::$app->volumes->getVolumeByUid(
                         $settings->previewImageVolume
@@ -299,9 +475,6 @@ class BlocksmithController extends \craft\web\Controller
                             ? "/" . trim($settings->previewImageSubfolder, "/")
                             : "";
                         $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockHandle}.png";
-                        Craft::info("potentialImageUrl: " . $potentialImageUrl, __METHOD__);
-                        
-
                         $previewImageUrl =
                             $potentialImageUrl ?: $placeholderImageUrl;
                     }
@@ -312,7 +485,7 @@ class BlocksmithController extends \craft\web\Controller
                         "name" => $blockType->name,
                         "handle" => $blockHandle,
                         "description" => $data["description"] ?? null,
-                        "categories" => $categories,
+                        "categories" => $categoryNames,
                         "previewImageUrl" => $previewImageUrl,
                         "matrixFields" => [],
                     ];
@@ -366,7 +539,6 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        // Prüfe auf handle-basierte Vorschaubilder
         if ($useHandleBasedPreviews && $settings->previewImageVolume) {
             $volume = Craft::$app->volumes->getVolumeByUid(
                 $settings->previewImageVolume
@@ -482,7 +654,6 @@ class BlocksmithController extends \craft\web\Controller
         foreach ($fieldsService->getAllFields() as $field) {
             if ($field instanceof \craft\fields\Matrix) {
                 foreach ($field->getEntryTypes() as $entryType) {
-                    // Verhindere doppelte Verarbeitung desselben Entry Types
                     if (in_array($entryType->id, $processedEntryTypes, true)) {
                         continue;
                     }
@@ -516,6 +687,16 @@ class BlocksmithController extends \craft\web\Controller
         return $this->asJson($blockTypes);
     }
 
+    public function actionGetCategories(): Response
+    {
+        $categories = (new \yii\db\Query())
+            ->select(["id", "name"])
+            ->from("{{%blocksmith_categories}}")
+            ->all();
+
+        return $this->asJson($categories);
+    }
+
     /**
      * Retrieves all available volume options for the plugin settings dropdown.
      *
@@ -536,7 +717,6 @@ class BlocksmithController extends \craft\web\Controller
             ];
         }
 
-        // Log a warning if no volumes are available
         if (empty($options)) {
             Craft::warning(
                 "No volumes found for the plugin settings.",

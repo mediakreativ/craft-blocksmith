@@ -1,31 +1,72 @@
 {# src/templates/_settings/categories.twig #}
 
 {% extends '_layouts/cp' %}
-{% import '_includes/forms' as forms %}
-{% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{% set fullPageForm = true %}
-
-{% set crumbs = [
-    {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
-    }
-] %}
+{% set title = "Categories" | t('blocksmith') %}
 
 {% block sidebar %}
 	{% include 'blocksmith/_settings/sidebar.twig' %}
 {% endblock %}
 
-{% block content %}
-	<div class="content">
-		<h1>{{ "Categories"|t('blocksmith') }}</h1>
-		<div class="blocksmith-hint">
-				{{ "Coming soon."|t('blocksmith') }}
-			</div>
-	</div>
+{% do view.registerAssetBundle('craft\\web\\assets\\admintable\\AdminTableAsset') %}
+
+{% do view.registerTranslations('blocksmith', [
+    "Categories",
+    "New Category",
+    "No categories exist yet.",
+]) %}
+
+{% block actionButton %}
+	<a href="{{ url('blocksmith/settings/categories/new') }}" class="btn submit add icon">{{ "New Category"|t('blocksmith') }}</a>
 {% endblock %}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    }
+] %}
+
+{% block content %}
+	<div id="blocksmith-categories-vue-admin-table"></div>
+{% endblock %}
+
+
+{% set tableData = [] %}
+{% for category in categories %}
+	{% set truncatedDescription = category.description is not empty and category.description|length > 100
+        ? category.description|slice(0, 100) ~ '…'
+        : category.description %}
+	{% set tableData = tableData|merge([{
+        id: category.id,
+        title: category.name,
+        description: truncatedDescription,
+        url: url('blocksmith/settings/categories/edit/' ~ category.id),
+    }]) %}
+{% endfor %}
+
+
+{% js %}
+new Craft.VueAdminTable({
+    columns: [
+        {
+            name: '__slot:title',
+            title: Craft.t('blocksmith', 'Name'),
+        },
+        {
+            name: 'description',
+            title: Craft.t('blocksmith', 'Description'),
+        },
+    ],
+    container: '#blocksmith-categories-vue-admin-table',
+    deleteAction: 'blocksmith/blocksmith/delete-category',
+    emptyMessage: Craft.t('blocksmith', 'No categories exist yet.'),
+    tableData: {{ tableData|json_encode|raw }},
+    slots: {
+        title: (row) => {
+            return `<a href="${row.url}">${row.title}</a>`;
+        },
+    },
+});
+{% endjs %}
+

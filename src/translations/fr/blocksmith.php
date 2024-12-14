@@ -51,17 +51,30 @@ return [
     "Edit" => "Éditer",
     "Edit Block" => "Éditer le bloc",
     "Description" => "Description",
-    "Provide a short description for this block." =>
-        "Fournissez une courte description pour ce bloc.",
+
+    "Provide a short description for this block (optional)." =>
+        "Fournissez une courte description pour ce bloc (optionnel).",
     "No categories available. Please add categories first in the categories settings page." =>
         "Aucune catégorie disponible. Veuillez d'abord ajouter des catégories dans la page des paramètres des catégories.",
+    "Select one or more categories for this block." =>
+        "Sélectionnez une ou plusieurs catégories pour ce bloc.",
     "Preview Image" => "Image d'aperçu",
     "This block uses a handle-based preview image." =>
         "Ce bloc utilise une image d'aperçu basée sur le handle.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Choisissez une image d'aperçu pour ce bloc. Cette image sera affichée dans la fenêtre de sélection de blocs.",
-    "Select or upload an image" => "Sélectionnez ou téléchargez une image",
+        "Choisissez une image d'aperçu pour ce bloc. Cette image sera affichée dans le modal de sélection des blocs.",
+    "Select or upload an image" => "Sélectionner ou télécharger une image",
     "Remove image" => "Supprimer l'image",
     "Settings" => "Paramètres",
-    "Plugins" => "Plugins",
+    "Plugins" => "Extensions",
+    "Edit Category" => "Modifier la catégorie",
+    "Name" => "Nom",
+    "Description" => "Description",
+    "Enter the name of the category." => "Saisissez le nom de la catégorie.",
+    "Provide a short description for this category (optional)." =>
+        "Fournissez une courte description pour cette catégorie (optionnel).",
+    "No categories exist yet." => "Aucune catégorie n'existe encore.",
+    "No categories assigned" => "Aucune catégorie attribuée.",
+    "All Categories" => "Toutes les catégories",
+    "New Category" => "Nouvelle catégorie",
 ];

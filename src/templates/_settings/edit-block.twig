@@ -53,18 +53,19 @@
                 id: 'description',
                 value: block.description,
                 rows: 4,
-                instructions: 'Provide a short description for this block.'|t('blocksmith')
+                instructions: 'Provide a short description for this block (optional).'|t('blocksmith')
             }) }}
 
 			{% if block.categories is not empty %}
 				{{ forms.checkboxSelectField({
-				label: 'Categories'|t('blocksmith'),
-				name: 'categories',
-				id: 'categories',
-				instructions: 'Select one or more categories for this block.'|t('blocksmith'),
-				options: block.categories|map(category => { label: category, value: category }),
-				values: block.selectedCategories
-			}) }}
+					label: 'Categories'|t('blocksmith'),
+					name: 'categories',
+					id: 'categories',
+					instructions: 'Select one or more categories for this block.'|t('blocksmith'),
+					options: block.categories|map(category => { label: category.name, value: category.id }),
+					values: block.selectedCategories
+				}) }}
+
 			{% else %}
 				<div class="field">
 					<div class="heading">

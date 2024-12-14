@@ -50,17 +50,30 @@ return [
     "Edit" => "تعديل",
     "Edit Block" => "تعديل الكتلة",
     "Description" => "الوصف",
-    "Provide a short description for this block." =>
-        "قدم وصفًا قصيرًا لهذه الكتلة.",
+
+    "Provide a short description for this block (optional)." =>
+        "قدم وصفًا قصيرًا لهذا البلوك (اختياري).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "لا توجد تصنيفات متاحة. يرجى إضافة التصنيفات أولاً في صفحة إعدادات التصنيفات.",
+        "لا توجد فئات متاحة. يرجى إضافة الفئات أولاً في صفحة إعدادات الفئات.",
+    "Select one or more categories for this block." =>
+        "اختر فئة أو أكثر لهذا البلوك.",
     "Preview Image" => "صورة المعاينة",
     "This block uses a handle-based preview image." =>
-        "تستخدم هذه الكتلة صورة معاينة تعتمد على المقبض.",
+        "يستخدم هذا البلوك صورة معاينة تعتمد على الـ Handle.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "اختر صورة معاينة لهذه الكتلة. سيتم عرض هذه الصورة في نافذة اختيار الكتلة.",
+        "اختر صورة معاينة لهذا البلوك. سيتم عرض هذه الصورة في نافذة اختيار البلوكات.",
     "Select or upload an image" => "اختر أو ارفع صورة",
     "Remove image" => "إزالة الصورة",
     "Settings" => "الإعدادات",
     "Plugins" => "الإضافات",
+    "Edit Category" => "تعديل الفئة",
+    "Name" => "الاسم",
+    "Description" => "الوصف",
+    "Enter the name of the category." => "أدخل اسم الفئة.",
+    "Provide a short description for this category (optional)." =>
+        "قدم وصفًا قصيرًا لهذه الفئة (اختياري).",
+    "No categories exist yet." => "لا توجد فئات حتى الآن.",
+    "No categories assigned" => "لم يتم تخصيص أي فئات.",
+    "All Categories" => "كل الفئات",
+    "New Category" => "Neue Kategorie",
 ];

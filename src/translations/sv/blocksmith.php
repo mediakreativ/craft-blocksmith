@@ -51,17 +51,30 @@ return [
     "Edit" => "Redigera",
     "Edit Block" => "Redigera block",
     "Description" => "Beskrivning",
-    "Provide a short description for this block." =>
-        "Ange en kort beskrivning för detta block.",
+
+    "Provide a short description for this block (optional)." =>
+        "Ange en kort beskrivning för detta block (valfritt).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Inga kategorier tillgängliga. Lägg först till kategorier på kategoriernas inställningssida.",
+        "Inga kategorier tillgängliga. Lägg till kategorier på kategorisidan först.",
+    "Select one or more categories for this block." =>
+        "Välj en eller flera kategorier för detta block.",
     "Preview Image" => "Förhandsgranskningsbild",
     "This block uses a handle-based preview image." =>
-        "Detta block använder en handtagsbaserad förhandsgranskningsbild.",
+        "Detta block använder en förhandsgranskningsbild baserad på handtaget.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Välj en förhandsgranskningsbild för detta block. Denna bild visas i blockvalmodalen.",
+        "Välj en förhandsgranskningsbild för detta block. Den här bilden visas i modalfönstret för blockval.",
     "Select or upload an image" => "Välj eller ladda upp en bild",
     "Remove image" => "Ta bort bild",
     "Settings" => "Inställningar",
-    "Plugins" => "Plugins",
+    "Plugins" => "Tillägg",
+    "Edit Category" => "Redigera kategori",
+    "Name" => "Namn",
+    "Description" => "Beskrivning",
+    "Enter the name of the category." => "Ange kategorins namn.",
+    "Provide a short description for this category (optional)." =>
+        "Ange en kort beskrivning för denna kategori (valfritt).",
+    "No categories exist yet." => "Inga kategorier finns ännu.",
+    "No categories assigned" => "Inga kategorier tilldelade.",
+    "All Categories" => "Alla kategorier",
+    "New Category" => "Ny kategori",
 ];

@@ -52,7 +52,6 @@
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
 
-      // Lade die Blockdaten und rendere sie
       this.loadBlockTypes()
         .done((blockTypes) => {
           this.blockTypes = blockTypes;
@@ -113,6 +112,9 @@
                       "Clear search",
                     )}"></button>
                 </div>
+                <div class="categories-container">
+                  <!-- Kategorien werden hier dynamisch eingefügt -->
+                </div>
                 <div class="blocksmith-blocks"></div>
             </div>
             <div class="footer blocksmith-modal-footer">
@@ -132,6 +134,64 @@
 
       $("body").append($modal);
       this.$modal = $modal;
+
+      this.loadCategories()
+        .done((categories) => {
+          this.renderCategories(categories);
+        })
+        .fail((error) => {
+          console.error("Failed to load categories:", error);
+        });
+    }
+
+    loadCategories() {
+      return $.ajax({
+        url: Craft.getCpUrl("blocksmith/get-categories"),
+        method: "GET",
+        dataType: "json",
+      });
+    }
+
+    renderCategories(categories) {
+      const $categoriesContainer = this.$modal.find(".categories-container");
+      $categoriesContainer.empty();
+
+      if (categories.length > 0) {
+        const setActiveCategory = ($selectedBadge) => {
+          $categoriesContainer
+            .find(".blocksmith-category-badge")
+            .removeClass("active");
+          $selectedBadge.addClass("active");
+        };
+
+        const $allCategoriesButton = $(`
+          <span class="blocksmith-badge blocksmith-category-badge all-categories active">
+            ${Craft.t("blocksmith", "All Categories")}
+          </span>
+        `);
+
+        $allCategoriesButton.on("click", () => {
+          setActiveCategory($allCategoriesButton);
+          this.renderBlockTypes("");
+        });
+
+        $categoriesContainer.append($allCategoriesButton);
+
+        categories.forEach((category) => {
+          const $badge = $(`
+            <span class="blocksmith-badge blocksmith-category-badge" data-category-id="${category.id}">
+              ${category.name}
+            </span>
+          `);
+
+          $badge.on("click", () => {
+            setActiveCategory($badge);
+            this.renderBlockTypes("", category.id);
+          });
+
+          $categoriesContainer.append($badge);
+        });
+      }
     }
 
     /**
@@ -139,12 +199,18 @@
      *
      * @param {string} searchValue - The search string for filtering block types
      */
-    renderBlockTypes(searchValue) {
+    renderBlockTypes(searchValue, categoryId = null) {
       const $blocksContainer = this.$modal.find(".blocksmith-blocks");
       $blocksContainer.empty();
 
       const filteredBlockTypes = this.blockTypes.filter((blockType) => {
-        return blockType.name.toLowerCase().includes(searchValue.toLowerCase());
+        const matchesSearch = blockType.name
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+        const matchesCategory = categoryId
+          ? blockType.categories.includes(categoryId)
+          : true;
+        return matchesSearch && matchesCategory;
       });
 
       filteredBlockTypes.forEach((blockType) => {
@@ -159,7 +225,8 @@
         }
 
         const description =
-          blockType.description || "No description available.";
+          blockType.description ||
+          Craft.t("blocksmith", "No description available.");
 
         const $block = $(`
               <div class="blocksmith-block" data-type="${blockType.handle}">
@@ -178,7 +245,7 @@
                             { fileName: `${blockType.handle}.png` },
                           )}
                       </div>
-                      <div class="blocksmith-block-description">${description}</div>
+                      ${blockType.description ? `<div class="blocksmith-block-description">${blockType.description}</div>` : ""}
                   </div>
               </div>
           `);
@@ -200,7 +267,6 @@
       }, 100);
     }
 
-    // Masonry Initialization with Instance Check
     initializeMasonry(container) {
       if (!this.masonryInstance) {
         this.masonryInstance = new Masonry(container, {
@@ -260,7 +326,6 @@
         }
       };
 
-      // Initialize Masonry
       if (!this.masonryInstance) {
         this.masonryInstance = new Masonry(container, masonryConfig);
       }
@@ -281,6 +346,5 @@
     }
   }
 
-  // Attach BlocksmithModal to the global window object
   window.BlocksmithModal = BlocksmithModal;
 })(window);

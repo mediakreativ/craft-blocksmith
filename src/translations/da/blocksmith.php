@@ -50,17 +50,30 @@ return [
     "Edit" => "Rediger",
     "Edit Block" => "Rediger blok",
     "Description" => "Beskrivelse",
-    "Provide a short description for this block." =>
-        "Angiv en kort beskrivelse af denne blok.",
+
+    "Provide a short description for this block (optional)." =>
+        "Giv en kort beskrivelse af denne blok (valgfrit).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "Ingen kategorier tilgængelige. Tilføj venligst kategorier først på kategoriernes indstillingsside.",
+        "Ingen kategorier tilgængelige. Tilføj først kategorier på siden med kategorier.",
+    "Select one or more categories for this block." =>
+        "Vælg en eller flere kategorier til denne blok.",
     "Preview Image" => "Forhåndsvisningsbillede",
     "This block uses a handle-based preview image." =>
-        "Denne blok bruger et håndtagsbaseret forhåndsvisningsbillede.",
+        "Denne blok bruger et handle-baseret forhåndsvisningsbillede.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
-        "Vælg et forhåndsvisningsbillede til denne blok. Dette billede vises i blokvalgsmodulet.",
+        "Vælg et forhåndsvisningsbillede til denne blok. Dette billede vises i blokvalgmodalen.",
     "Select or upload an image" => "Vælg eller upload et billede",
     "Remove image" => "Fjern billede",
     "Settings" => "Indstillinger",
     "Plugins" => "Plugins",
+    "Edit Category" => "Rediger kategori",
+    "Name" => "Navn",
+    "Description" => "Beskrivelse",
+    "Enter the name of the category." => "Indtast navnet på kategorien.",
+    "Provide a short description for this category (optional)." =>
+        "Giv en kort beskrivelse af denne kategori (valgfrit).",
+    "No categories exist yet." => "Der er endnu ingen kategorier.",
+    "No categories assigned" => "Ingen kategorier tildelt.",
+    "All Categories" => "Alle kategorier",
+    "New Category" => "Ny kategori",
 ];

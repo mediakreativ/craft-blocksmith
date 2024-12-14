@@ -51,17 +51,30 @@ return [
     "Edit" => "편집",
     "Edit Block" => "블록 편집",
     "Description" => "설명",
-    "Provide a short description for this block." =>
-        "이 블록에 대한 간단한 설명을 제공하세요.",
+
+    "Provide a short description for this block (optional)." =>
+        "이 블록에 대한 간단한 설명을 입력하세요 (선택 사항).",
     "No categories available. Please add categories first in the categories settings page." =>
-        "사용 가능한 카테고리가 없습니다. 먼저 카테고리 설정 페이지에서 카테고리를 추가하세요.",
+        "사용 가능한 카테고리가 없습니다. 카테고리 설정 페이지에서 먼저 카테고리를 추가하세요.",
+    "Select one or more categories for this block." =>
+        "이 블록에 대해 하나 이상의 카테고리를 선택하세요.",
     "Preview Image" => "미리보기 이미지",
     "This block uses a handle-based preview image." =>
         "이 블록은 핸들 기반 미리보기 이미지를 사용합니다.",
     "Choose a preview image for this block. This image will be shown in the block selection modal." =>
         "이 블록의 미리보기 이미지를 선택하세요. 이 이미지는 블록 선택 모달에 표시됩니다.",
-    "Select or upload an image" => "이미지 선택 또는 업로드",
+    "Select or upload an image" => "이미지를 선택하거나 업로드하세요",
     "Remove image" => "이미지 제거",
     "Settings" => "설정",
     "Plugins" => "플러그인",
+    "Edit Category" => "카테고리 편집",
+    "Name" => "이름",
+    "Description" => "설명",
+    "Enter the name of the category." => "카테고리 이름을 입력하세요.",
+    "Provide a short description for this category (optional)." =>
+        "이 카테고리에 대한 간단한 설명을 입력하세요 (선택 사항).",
+    "No categories exist yet." => "아직 카테고리가 없습니다.",
+    "No categories assigned" => "할당된 카테고리가 없습니다.",
+    "All Categories" => "모든 카테고리",
+    "New Category" => "새 카테고리",
 ];

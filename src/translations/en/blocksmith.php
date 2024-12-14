@@ -50,10 +50,13 @@ return [
     "Edit" => "Edit",
     "Edit Block" => "Edit Block",
     "Description" => "Description",
-    "Provide a short description for this block." =>
-        "Provide a short description for this block.",
+
+    "Provide a short description for this block (optional)." =>
+        "Provide a short description for this block (optional).",
     "No categories available. Please add categories first in the categories settings page." =>
         "No categories available. Please add categories first in the categories settings page.",
+    "Select one or more categories for this block." =>
+        "Select one or more categories for this block.",
     "Preview Image" => "Preview Image",
     "This block uses a handle-based preview image." =>
         "This block uses a handle-based preview image.",
@@ -63,4 +66,14 @@ return [
     "Remove image" => "Remove image",
     "Settings" => "Settings",
     "Plugins" => "Plugins",
+    "Edit Category" => "Edit Category",
+    "Name" => "Name",
+    "Description" => "Description",
+    "Enter the name of the category." => "Enter the name of the category.",
+    "Provide a short description for this category (optional)." =>
+        "Provide a short description for this category (optional).",
+    "No categories exist yet." => "No categories exist yet.",
+    "No categories assigned" => "No categories assigned.",
+    "All Categories" => "All Categories",
+    "New Category" => "New Category",
 ];

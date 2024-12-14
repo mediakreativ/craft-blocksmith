@@ -83,6 +83,18 @@ class Blocksmith extends Plugin
                 $event->rules["blocksmith/settings/categories"] =
                     "blocksmith/blocksmith/categories";
 
+                $event->rules["blocksmith/settings/categories/new"] =
+                    "blocksmith/blocksmith/edit-category";
+
+                $event->rules["blocksmith/settings/categories/edit/<id:\d+>"] =
+                    "blocksmith/blocksmith/edit-category";
+
+                $event->rules["blocksmith/settings/categories/save"] =
+                    "blocksmith/blocksmith/save-category";
+
+                $event->rules["blocksmith/settings/categories/delete"] =
+                    "blocksmith/blocksmith/delete-category";
+
                 $event->rules["blocksmith/settings/blocks"] =
                     "blocksmith/blocksmith/blocks";
 
@@ -95,6 +107,9 @@ class Blocksmith extends Plugin
 
                 $event->rules["blocksmith/get-block-types"] =
                     "blocksmith/blocksmith/get-block-types";
+
+                $event->rules["blocksmith/get-categories"] =
+                    "blocksmith/blocksmith/get-categories";
             }
         );
 
