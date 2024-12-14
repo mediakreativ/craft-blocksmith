@@ -69,7 +69,7 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 2. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
    - **Example:** Preview images and categories should be configurable per site.
-3. More Complex Block Scenarios
+3. **More Complex Block Scenarios**
    - Support for nested Matrix fields and dependencies between block types.
    - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
 
