@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Категории не назначены.",
     "All Categories" => "Все категории",
     "New Category" => "Новая категория",
+
+    "Handle" => "Дескриптор",
+    "Enable Preview" => "Включить предпросмотр",
+    "Configure Matrix Fields" => "Настроить поля Matrix",
 ];

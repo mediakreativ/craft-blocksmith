@@ -18,6 +18,12 @@
 				</a>
 			</li>
 			<li>
+				<a href="{{ url('blocksmith/settings/matrix-fields') }}"
+					{% if currentPath == "blocksmith/settings/matrix-fields" %} class="sel"{% endif %}>
+					{{ "Configure Matrix Fields"|t('blocksmith') }}
+				 </a>
+			</li>
+			<li>
 				<a href="{{ url('blocksmith/settings/blocks') }}" 
 				   {% if currentPath starts with "blocksmith/settings/blocks" or currentPath starts with "blocksmith/settings/edit-block" %} class="sel"{% endif %}>
 					{{ "Configure Blocks"|t("blocksmith") }}

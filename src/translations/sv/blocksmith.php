@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Inga kategorier tilldelade.",
     "All Categories" => "Alla kategorier",
     "New Category" => "Ny kategori",
+
+    "Handle" => "Hantera",
+    "Enable Preview" => "Aktivera förhandsvisning",
+    "Configure Matrix Fields" => "Konfigurera Matrix-fält",
 ];

@@ -1,3 +1,6 @@
+## [1.2.1] - 2024-12-15
+- **New Feature**: Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
+
 ## [1.2.0] - 2024-12-14
 
 ### Highlights

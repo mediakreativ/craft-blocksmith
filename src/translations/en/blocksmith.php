@@ -76,4 +76,8 @@ return [
     "No categories assigned" => "No categories assigned.",
     "All Categories" => "All Categories",
     "New Category" => "New Category",
+
+    "Handle" => "Handle",
+    "Enable Preview" => "ΕEnable Preview",
+    "Configure Matrix Fields" => "Configure Matrix Fields",
 ];

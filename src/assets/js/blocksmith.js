@@ -36,8 +36,40 @@
         return;
       }
 
+      // Fetch matrix field settings asynchronously
+      const matrixFieldSettings = {};
+      $.ajax({
+        url: Craft.getActionUrl(
+          "blocksmith/blocksmith/get-matrix-field-settings",
+        ),
+        method: "GET",
+        async: false,
+        success: function (response) {
+          Object.assign(matrixFieldSettings, response);
+        },
+        error: function () {
+          console.error("Failed to fetch Blocksmith matrix field settings.");
+        },
+      });
+
+      console.log(matrixFieldSettings);
+
       const modifyContextMenu = Garnish.DisclosureMenu.prototype.show;
       Garnish.DisclosureMenu.prototype.show = function (...args) {
+        const matrixBlock = this.$trigger.closest(".matrixblock");
+        const matrixContainer = matrixBlock.closest(".matrix-field");
+        const matrixFieldId = matrixContainer.attr("id");
+        const matrixFieldHandle = matrixFieldId?.replace("fields-", "");
+
+        // Skip modification if preview is disabled for this field
+        if (
+          matrixFieldHandle &&
+          matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+        ) {
+          modifyContextMenu.apply(this, args);
+          return;
+        }
+
         self.initiateContextMenu(this);
         modifyContextMenu.apply(this, args);
       };
@@ -46,6 +78,18 @@
         Craft.MatrixInput.prototype.updateAddEntryBtn;
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
         originalUpdateAddEntryBtn.apply(this, args);
+        const matrixContainer = this.$container.closest(".matrix-field");
+        const matrixFieldId = matrixContainer.attr("id"); // z.B. "fields-header"
+        const matrixFieldHandle = matrixFieldId?.replace("fields-", "");
+
+        // Skip modification if preview is disabled for this field
+        if (
+          matrixFieldHandle &&
+          matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+        ) {
+          originalUpdateAddEntryBtn.apply(this, args);
+          return;
+        }
 
         this.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
 

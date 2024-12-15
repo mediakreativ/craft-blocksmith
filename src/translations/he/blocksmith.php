@@ -76,4 +76,8 @@ return [
     "No categories assigned" => "לא הוקצו קטגוריות.",
     "All Categories" => "כל הקטגוריות",
     "New Category" => "קטגוריה חדשה",
+
+    "Handle" => "מזהה ייחודי",
+    "Enable Preview" => "הפעל תצוגה מקדימה",
+    "Configure Matrix Fields" => "הגדרת שדות מטריצה",
 ];

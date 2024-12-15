@@ -72,4 +72,8 @@ return [
     "No categories assigned" => "未分配类别。",
     "All Categories" => "所有类别",
     "New Category" => "新类别",
+
+    "Handle" => "句柄",
+    "Enable Preview" => "启用预览",
+    "Configure Matrix Fields" => "配置矩阵字段",
 ];

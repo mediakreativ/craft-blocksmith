@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Atanmış kategori yok.",
     "All Categories" => "Tüm Kategoriler",
     "New Category" => "Yeni kategori",
+
+    "Handle" => "Simge",
+    "Enable Preview" => "Önizlemeyi Etkinleştir",
+    "Configure Matrix Fields" => "Matrix Alanlarını Yapılandır",
 ];

@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Δεν έχουν εκχωρηθεί κατηγορίες.",
     "All Categories" => "Όλες οι κατηγορίες",
     "New Category" => "Νέα κατηγορία",
+
+    "Handle" => "Λαβή",
+    "Enable Preview" => "Ενεργοποίηση προεπισκόπησης",
+    "Configure Matrix Fields" => "Ρύθμιση πεδίων Matrix",
 ];

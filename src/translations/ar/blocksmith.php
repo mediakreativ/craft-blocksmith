@@ -75,5 +75,9 @@ return [
     "No categories exist yet." => "لا توجد فئات حتى الآن.",
     "No categories assigned" => "لم يتم تخصيص أي فئات.",
     "All Categories" => "كل الفئات",
-    "New Category" => "Neue Kategorie",
+    "New Category" => "فئة جديدة",
+
+    "Handle" => "المقبض",
+    "Enable Preview" => "تمكين المعاينة",
+    "Configure Matrix Fields" => "تكوين حقول المصفوفة",
 ];

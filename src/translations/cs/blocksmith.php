@@ -76,5 +76,9 @@ return [
     "No categories exist yet." => "Zatím neexistují žádné kategorie.",
     "No categories assigned" => "Žádné přiřazené kategorie.",
     "All Categories" => "Všechny kategorie",
-    "New Category" => "فئة جديدة",
+    "New Category" => "Nová kategorie",
+
+    "Handle" => "Identifikátor",
+    "Enable Preview" => "Povolit náhled",
+    "Configure Matrix Fields" => "Nastavit pole Matrix",
 ];

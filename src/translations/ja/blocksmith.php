@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "割り当てられたカテゴリがありません。",
     "All Categories" => "すべてのカテゴリ",
     "New Category" => "新しいカテゴリー",
+
+    "Handle" => "ハンドル",
+    "Enable Preview" => "プレビューを有効にする",
+    "Configure Matrix Fields" => "マトリックスフィールドを設定する",
 ];

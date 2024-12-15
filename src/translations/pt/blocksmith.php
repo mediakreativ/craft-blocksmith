@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Nenhuma categoria atribuída.",
     "All Categories" => "Todas as Categorias",
     "New Category" => "Nova categoria",
+
+    "Handle" => "Identificador",
+    "Enable Preview" => "Ativar pré-visualização",
+    "Configure Matrix Fields" => "Configurar campos Matrix",
 ];

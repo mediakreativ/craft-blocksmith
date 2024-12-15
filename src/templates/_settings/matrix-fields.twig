@@ -1,0 +1,49 @@
+{# src/templates/_settings/matrix-fields.twig #}
+
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+
+{% set fullPageForm = true %}
+
+{% set title = "Configure Matrix Fields"|t('blocksmith') %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+<input type="hidden" name="pluginHandle" value="blocksmith">
+{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
+	<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
+
+	<table class="data fullwidth">
+		<thead>
+			<tr>
+				<th>{{ "Matrix Field"|t('blocksmith') }}</th>
+				<th>{{ "Handle"|t('blocksmith') }}</th>
+				<th>{{ "Enable Preview"|t('blocksmith') }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for field in matrixFields %}
+				<tr>
+					<td>{{ field.name }}</td>
+					<td>
+						<code>{{ field.handle }}</code>
+					</td>
+					<td>
+						{{ forms.lightswitchField({
+                            name: 'enablePreview[' ~ field.handle ~ ']',
+                            id: 'enablePreview-' ~ field.handle,
+                            on: field.enablePreview,
+                            small: true,
+                            inputAttributes: {
+                                'data-handle': field.handle
+                            }
+                        }) }}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

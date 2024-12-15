@@ -6,6 +6,7 @@
 
 - **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface, which also supports tall content types for better previews.
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
+- **Enable or Disable Previews**: Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 - **Flexible preview settings**: Upload custom preview images directly via the Craft Asset Browser or use handle-based preview images as an alternative if preferred.
 - **Enhanced layout and usability**: Masonry.js ensures a flexible and aesthetic grid layout, even for blocks with tall content previews.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
@@ -53,9 +54,8 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
    - Setting for defining favorites.
    - By default, favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
 
-2. **Individual Settings for Each Matrix Field**
+2. **Individual Button Label Settings for Each Matrix Field**
    - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
-   - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 
 3. **Individual Block Settings per Matrix Field**
    - Add the ability to configure block-specific settings (e.g., descriptions, preview images) individually for each Matrix field where the block is used.
@@ -97,9 +97,13 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 3. **Improved preview grid**
    - Option to display 3 blocks per row (Default: 2) in wide viewports.
 
-6. **Categories for Blocks**
+4. **Categories for Blocks**
    - Users can assign blocks to categories and filter by them in the preview modal.
 Includes a new "All Categories" button to reset filters.
+
+4. **Enable or Disable Previews**
+   - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
+
 
 ## Note on the Roadmap
 

@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Geen categorieën toegewezen.",
     "All Categories" => "Alle categorieën",
     "New Category" => "Nieuwe categorie",
+
+    "Handle" => "Ingang",
+    "Enable Preview" => "Voorvertoning inschakelen",
+    "Configure Matrix Fields" => "Matrix-velden configureren",
 ];

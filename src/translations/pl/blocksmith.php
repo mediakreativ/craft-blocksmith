@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Brak przypisanych kategorii.",
     "All Categories" => "Wszystkie kategorie",
     "New Category" => "Nowa kategoria",
+
+    "Handle" => "Odnośnik",
+    "Enable Preview" => "Włącz podgląd",
+    "Configure Matrix Fields" => "Konfiguruj pola Matrix",
 ];

@@ -78,4 +78,8 @@ return [
     "No categories assigned" => "Категорії не призначені.",
     "All Categories" => "Усі категорії",
     "New Category" => "Нова категорія",
+
+    "Handle" => "Дескриптор",
+    "Enable Preview" => "Увімкнути попередній перегляд",
+    "Configure Matrix Fields" => "Налаштувати поля Matrix",
 ];

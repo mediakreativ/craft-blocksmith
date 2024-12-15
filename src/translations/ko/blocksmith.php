@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "할당된 카테고리가 없습니다.",
     "All Categories" => "모든 카테고리",
     "New Category" => "새 카테고리",
+
+    "Handle" => "핸들",
+    "Enable Preview" => "미리보기 활성화",
+    "Configure Matrix Fields" => "매트릭스 필드 구성",
 ];

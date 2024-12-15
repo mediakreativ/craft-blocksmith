@@ -77,4 +77,8 @@ return [
     "No categories assigned" => "Keine Kategorien zugewiesen",
     "All Categories" => "Alle Kategorien",
     "New Category" => "Neue Kategorie",
+
+    "Handle" => "Kurzname",
+    "Enable Preview" => "Vorschau aktivieren",
+    "Configure Matrix Fields" => "Matrix-Felder konfigurieren",
 ];

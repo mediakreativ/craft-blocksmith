@@ -35,7 +35,7 @@ class Blocksmith extends Plugin
 {
     public const TRANSLATION_CATEGORY = "blocksmith";
 
-    public string $schemaVersion = "1.1.0";
+    public string $schemaVersion = "1.1.1";
     public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
     public bool $hasCpSettings = true;
 
@@ -47,6 +47,11 @@ class Blocksmith extends Plugin
     public function init(): void
     {
         parent::init();
+
+        $this->setComponents([
+            "service" =>
+                \mediakreativ\blocksmith\services\BlocksmithService::class,
+        ]);
 
         Craft::info(
             "Migration Namespace: " . $this->migrationNamespace,
@@ -110,6 +115,9 @@ class Blocksmith extends Plugin
 
                 $event->rules["blocksmith/get-categories"] =
                     "blocksmith/blocksmith/get-categories";
+
+                $event->rules["blocksmith/settings/matrix-fields"] =
+                    "blocksmith/blocksmith/matrix-fields";
             }
         );
 

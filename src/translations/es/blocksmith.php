@@ -78,4 +78,8 @@ return [
     "No categories assigned" => "No hay categorías asignadas.",
     "All Categories" => "Todas las categorías",
     "New Category" => "Nueva categoría",
+
+    "Handle" => "Identificador",
+    "Enable Preview" => "Habilitar vista previa",
+    "Configure Matrix Fields" => "Configurar campos Matrix",
 ];

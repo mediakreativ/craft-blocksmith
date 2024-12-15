@@ -391,6 +391,83 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
+     * Renders the Matrix Settings page
+     *
+     * @return \yii\web\Response The rendered template for the Matrix Settings page
+     */
+    public function actionMatrixFields(): Response
+    {
+        $matrixFields = Blocksmith::getInstance()->service->getAllMatrixFields();
+
+        // Abrufen gespeicherter Einstellungen
+        $savedSettings = (new \yii\db\Query())
+            ->select(["fieldHandle", "enablePreview"])
+            ->from("{{%blocksmith_matrix_settings}}")
+            ->indexBy("fieldHandle")
+            ->all();
+
+        // Feld-Array aufbauen
+        $matrixFieldSettings = [];
+        foreach ($matrixFields as $field) {
+            $matrixFieldSettings[] = [
+                "name" => $field->name, // Feldname
+                "handle" => $field->handle, // Feld-Handle
+                "enablePreview" =>
+                    $savedSettings[$field->handle]["enablePreview"] ?? true, // enablePreview Wert
+            ];
+        }
+
+        return $this->renderTemplate("blocksmith/_settings/matrix-fields", [
+            "matrixFields" => $matrixFieldSettings,
+        ]);
+    }
+
+    /**
+     * Saves settings for Matrix fields
+     *
+     * @return \yii\web\Response Redirects to the posted URL after saving
+     */
+    public function actionSaveMatrixFieldSettings(): Response
+    {
+        $this->requirePostRequest();
+        $request = Craft::$app->getRequest();
+        $settings = $request->getBodyParam("enablePreview", []);
+
+        foreach ($settings as $fieldHandle => $enablePreview) {
+            Craft::$app->db
+                ->createCommand()
+                ->upsert(
+                    "{{%blocksmith_matrix_settings}}",
+                    [
+                        "fieldHandle" => $fieldHandle,
+                        "enablePreview" => (bool) $enablePreview,
+                    ],
+                    ["enablePreview" => (bool) $enablePreview]
+                )
+                ->execute();
+        }
+
+        Craft::$app->getSession()->setNotice("Matrix field settings saved.");
+        return $this->redirectToPostedUrl();
+    }
+
+    /**
+     * Outputs the Matrix Field settings as JSON.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionGetMatrixFieldSettings(): Response
+    {
+        $savedSettings = (new \yii\db\Query())
+            ->select(["fieldHandle", "enablePreview"])
+            ->from("{{%blocksmith_matrix_settings}}")
+            ->indexBy("fieldHandle")
+            ->all();
+
+        return $this->asJson($savedSettings);
+    }
+
+    /**
      * Renders the Blocks Settings page
      *
      * @return \yii\web\Response The rendered template for the Blocks Settings page
