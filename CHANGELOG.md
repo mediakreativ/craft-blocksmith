@@ -1,3 +1,6 @@
+## [1.2.2] - 2024-12-15
+- Fixed typo in translation.
+
 ## [1.2.1] - 2024-12-15
 - **New Feature**: Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 
