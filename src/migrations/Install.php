@@ -94,6 +94,7 @@ class Install extends Migration
     {
         $this->dropTableIfExists("{{%blocksmith_blockdata}}");
         $this->dropTableIfExists("{{%blocksmith_categories}}");
+        $this->dropTableIfExists("{{%blocksmith_matrix_settings}}");
 
         Craft::info("Blocksmith tables uninstalled successfully.", __METHOD__);
 
