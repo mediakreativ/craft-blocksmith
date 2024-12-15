@@ -99,8 +99,6 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 4. **Categories for Blocks**
    - Users can assign blocks to categories and filter by them in the preview modal.
-Includes a new "All Categories" button to reset filters.
-
 4. **Enable or Disable Previews**
    - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 
