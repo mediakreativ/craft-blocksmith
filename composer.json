@@ -2,7 +2,7 @@
   "name": "mediakreativ/craft-blocksmith",
   "description": "Enhances Craft's Matrix fields with block previews and a user-friendly block selection modal.",
   "type": "craft-plugin",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "keywords": [
     "craftcms",
     "craft",
