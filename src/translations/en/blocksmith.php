@@ -78,6 +78,6 @@ return [
     "New Category" => "New Category",
 
     "Handle" => "Handle",
-    "Enable Preview" => "ΕEnable Preview",
+    "Enable Preview" => "Εnable Preview",
     "Configure Matrix Fields" => "Configure Matrix Fields",
 ];
