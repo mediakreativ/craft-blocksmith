@@ -66,6 +66,20 @@
           matrixFieldHandle &&
           matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
         ) {
+          // Show Matrix Extended Context Menu if preview disabled
+          requestAnimationFrame(() => {
+            document.querySelectorAll("ul.matrix-extended").forEach((menu) => {
+              menu.classList.add("blocksmith-preview-disabled");
+
+              const addBlockButton = menu.querySelector(
+                'button[data-action="add-block"]',
+              );
+              if (addBlockButton) {
+                addBlockButton.focus();
+              }
+            });
+          });
+
           modifyContextMenu.apply(this, args);
           return;
         }
@@ -79,7 +93,7 @@
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
         originalUpdateAddEntryBtn.apply(this, args);
         const matrixContainer = this.$container.closest(".matrix-field");
-        const matrixFieldId = matrixContainer.attr("id"); // z.B. "fields-header"
+        const matrixFieldId = matrixContainer.attr("id");
         const matrixFieldHandle = matrixFieldId?.replace("fields-", "");
 
         // Skip modification if preview is disabled for this field
@@ -87,6 +101,15 @@
           matrixFieldHandle &&
           matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
         ) {
+          // Show Matrix Extended Button Group if preview disabled
+          requestAnimationFrame(() => {
+            matrixContainer[0]
+              .querySelectorAll(".matrix-extended-buttons")
+              .forEach((buttonGroup) => {
+                buttonGroup.classList.add("blocksmith-preview-disabled");
+              });
+          });
+
           originalUpdateAddEntryBtn.apply(this, args);
           return;
         }

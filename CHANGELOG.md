@@ -1,3 +1,8 @@
+## [1.2.3] - 2024-12-15
+
+### Added
+- **Compatibility with Matrix Extended**: Matrix Extended's context menu button and button group are displayed when preview modal is disabled for a Matrix field.
+
 ## [1.2.2] - 2024-12-15
 - Fixed typo in translation.
 

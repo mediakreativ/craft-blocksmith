@@ -475,3 +475,22 @@ body .blocksmith-modal {
   flex-direction: column;
   align-items: center;
 }
+
+/* ####################### */
+/* ### Matrix Extended ### */
+/* ####################### */
+
+.matrix-extended-buttons {
+  display: none !important;
+}
+
+.matrix-extended-buttons-above.matrix-extended-buttons, .matrix-extended-buttons.blocksmith-preview-disabled {
+  display: flex !important;
+}
+
+ul.matrix-extended > li > button[data-action="add-block"] {
+  display: none !important;
+}
+ul.matrix-extended.blocksmith-preview-disabled > li > button[data-action="add-block"] {
+  display: flex !important;
+}
