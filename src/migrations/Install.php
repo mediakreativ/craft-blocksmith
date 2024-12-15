@@ -22,14 +22,8 @@ class Install extends Migration
             "id" => $this->primaryKey(),
             "name" => $this->string()->notNull(),
             "description" => $this->text(),
-            "dateCreated" => $this->dateTime()
-                ->notNull()
-                ->defaultExpression("CURRENT_TIMESTAMP"),
-            "dateUpdated" => $this->dateTime()
-                ->notNull()
-                ->defaultExpression(
-                    "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-                ),
+            "dateCreated" => $this->dateTime()->notNull()->defaultExpression("CURRENT_TIMESTAMP"),
+            "dateUpdated" => $this->dateTime()->notNull()->defaultExpression("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
             "uid" => $this->char(36)->notNull(),
         ]);
 
@@ -39,46 +33,29 @@ class Install extends Migration
             "entryTypeId" => $this->integer()->notNull(),
             "description" => $this->text(),
             "categories" => $this->json(),
-            "previewImageId" => $this->integer(), // Neue Spalte hinzugefügt
+            "previewImageId" => $this->integer(),
             "previewImageUrl" => $this->string(),
-            "dateCreated" => $this->dateTime()
-                ->notNull()
-                ->defaultExpression("CURRENT_TIMESTAMP"),
-            "dateUpdated" => $this->dateTime()
-                ->notNull()
-                ->defaultExpression(
-                    "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-                ),
+            "dateCreated" => $this->dateTime()->notNull()->defaultExpression("CURRENT_TIMESTAMP"),
+            "dateUpdated" => $this->dateTime()->notNull()->defaultExpression("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
             "uid" => $this->char(36)->notNull(),
         ]);
 
         // Add a UNIQUE constraint on entryTypeId
-        $this->createIndex(
-            "blocksmith_blockdata_entryTypeId_unique",
-            "{{%blocksmith_blockdata}}",
-            "entryTypeId",
-            true
-        );
+        $this->createIndex("blocksmith_blockdata_entryTypeId_unique", "{{%blocksmith_blockdata}}", "entryTypeId", true);
 
-        // Add a foreign key to the blocksmith_blockdata table
-        $this->addForeignKey(
-            null,
-            "{{%blocksmith_blockdata}}",
-            "entryTypeId",
-            "{{%entrytypes}}",
-            "id",
-            "CASCADE"
-        );
+        // Add foreign keys
+        $this->addForeignKey(null, "{{%blocksmith_blockdata}}", "entryTypeId", "{{%entrytypes}}", "id", "CASCADE");
+        $this->addForeignKey(null, "{{%blocksmith_blockdata}}", "previewImageId", "{{%assets}}", "id", "SET NULL");
 
-        // Add a foreign key for previewImageId (Assets table)
-        $this->addForeignKey(
-            null,
-            "{{%blocksmith_blockdata}}",
-            "previewImageId",
-            "{{%assets}}",
-            "id",
-            "SET NULL"
-        );
+        // Create the blocksmith_matrix_settings table
+        $this->createTable('{{%blocksmith_matrix_settings}}', [
+            'id' => $this->primaryKey(),
+            'fieldHandle' => $this->string(255)->notNull()->unique(),
+            'enablePreview' => $this->boolean()->defaultValue(true),
+            'dateCreated' => $this->dateTime()->notNull(),
+            'dateUpdated' => $this->dateTime()->notNull(),
+            'uid' => $this->uid(),
+        ]);
 
         Craft::info("Blocksmith tables installed successfully.", __METHOD__);
 
@@ -92,9 +69,9 @@ class Install extends Migration
      */
     public function safeDown(): bool
     {
+        $this->dropTableIfExists("{{%blocksmith_matrix_settings}}");
         $this->dropTableIfExists("{{%blocksmith_blockdata}}");
         $this->dropTableIfExists("{{%blocksmith_categories}}");
-        $this->dropTableIfExists("{{%blocksmith_matrix_settings}}");
 
         Craft::info("Blocksmith tables uninstalled successfully.", __METHOD__);
 
