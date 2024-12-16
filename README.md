@@ -64,13 +64,10 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### Mid-Term
 
-1. **Copy-/Paste-/Clone Functionality**
-   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
-
-2. **Optimizations for Multi-Site Setups**
+1. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
    - **Example:** Preview images and categories should be configurable per site.
-3. **More Complex Block Scenarios**
+2. **More Complex Block Scenarios**
    - Support for nested Matrix fields and dependencies between block types.
    - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
 
@@ -86,6 +83,9 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 2. **Integration with Third-Party Plugins**
    - Add compatibility with popular Craft plugins (e.g. Neo, Matrix Extended).
    - **Aim:** Seamless integration and support of extended Matrix field functionality.
+
+3. **Copy-/Paste-/Clone Functionality**
+   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
 
 ### Completed Features
 
