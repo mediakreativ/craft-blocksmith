@@ -84,7 +84,7 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
    - Improve the Element Index view to allow seamless modal integration and better information display.
 
 2. **Integration with Third-Party Plugins**
-   - Add compatibility with popular Craft plugins (e.g. Neo).
+   - Add compatibility with popular Craft plugins (e.g. Neo, Matrix Extended).
    - **Aim:** Seamless integration and support of extended Matrix field functionality.
 
 ### Completed Features
