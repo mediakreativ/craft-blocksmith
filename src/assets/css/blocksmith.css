@@ -199,6 +199,12 @@
   }
 }
 
+@media only screen and (min-width: 800px) {
+  .blocksmith-wide-view .blocksmith-block{
+    width: 32%;
+  }
+}
+
 /* Block Settings */
 .blocksmith-section-header.blocksmith-edit-block {
   display: flex;
@@ -428,7 +434,25 @@ body .blocksmith-modal {
   margin-top: 20px;
 }
 
+.blocksmith-block-gutter{
+  width: 2%;
+}
+
+.blocksmith-block.blocksmith-block-hidden{
+  opacity: 0 !important;
+  height: 0 !important; /* Override Masonry's height */
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
 .blocksmith-block {
+  cursor: pointer;
+  max-width: 500px;
+  width: 49%;
+}
+
+.blocksmith-block-inner{
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -439,8 +463,6 @@ body .blocksmith-modal {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-  cursor: pointer;
-  max-width: 500px;
 }
 
 @media (max-width: 1177px) {
@@ -456,7 +478,7 @@ body .blocksmith-modal {
   margin-bottom: 10px;
 }
 
-.blocksmith-block:hover {
+.blocksmith-block:hover .blocksmith-block-inner {
   transform: translateY(-3px);
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.2);
 }
