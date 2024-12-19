@@ -478,6 +478,13 @@ class BlocksmithController extends \craft\web\Controller
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
+        $fieldsEnabled = (new \yii\db\Query())
+            ->select(["fieldHandle", "enablePreview"])
+            ->from("{{%blocksmith_matrix_settings}}")
+            ->indexBy("fieldHandle")
+            ->where(["enablePreview" => true])
+            ->all();
+
         $blockData = (new \yii\db\Query())
             ->select([
                 "entryTypeId",
@@ -503,75 +510,77 @@ class BlocksmithController extends \craft\web\Controller
         $allBlockTypes = [];
 
         foreach ($matrixFields as $matrixField) {
-            foreach ($matrixField->getEntryTypes() as $blockType) {
-                $blockHandle = $blockType->handle;
-                $entryTypeId = $blockType->id;
+            if(isset($fieldsEnabled[$matrixField->handle])) {
+                foreach ($matrixField->getEntryTypes() as $blockType) {
+                    $blockHandle = $blockType->handle;
+                    $entryTypeId = $blockType->id;
 
-                $data = $blockData[$entryTypeId] ?? null;
+                    $data = $blockData[$entryTypeId] ?? null;
 
-                $categoryIds = [];
-                if (isset($data["categories"])) {
-                    $decodedCategories = json_decode($data["categories"], true);
-                    if (
-                        json_last_error() === JSON_ERROR_NONE &&
-                        is_array($decodedCategories)
-                    ) {
-                        $categoryIds = $decodedCategories;
-                    } else {
-                        Craft::warning(
-                            "Failed to decode categories for entryTypeId {$entryTypeId}. Raw value: {$data["categories"]}",
-                            __METHOD__
-                        );
-                    }
-                }
-
-                $categoryNames = [];
-                if (!empty($categories)) {
-                    foreach ($categoryIds as $id) {
-                        if (isset($categories[$id])) {
-                            $categoryNames[] = $categories[$id]["name"];
+                    $categoryIds = [];
+                    if (isset($data["categories"])) {
+                        $decodedCategories = json_decode($data["categories"], true);
+                        if (
+                            json_last_error() === JSON_ERROR_NONE &&
+                            is_array($decodedCategories)
+                        ) {
+                            $categoryIds = $decodedCategories;
                         } else {
                             Craft::warning(
-                                "Category ID {$id} not found in categories table.",
+                                "Failed to decode categories for entryTypeId {$entryTypeId}. Raw value: {$data["categories"]}",
                                 __METHOD__
                             );
                         }
                     }
-                }
 
-                $previewImageUrl =
-                    $data["previewImageUrl"] ?? $placeholderImageUrl;
-
-                if ($useHandleBasedPreviews && $settings->previewImageVolume) {
-                    $volume = Craft::$app->volumes->getVolumeByUid(
-                        $settings->previewImageVolume
-                    );
-                    if ($volume) {
-                        $baseVolumeUrl = rtrim($volume->getRootUrl(), "/");
-                        $subfolder = $settings->previewImageSubfolder
-                            ? "/" . trim($settings->previewImageSubfolder, "/")
-                            : "";
-                        $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockHandle}.png";
-                        $previewImageUrl =
-                            $potentialImageUrl ?: $placeholderImageUrl;
+                    $categoryNames = [];
+                    if (!empty($categories)) {
+                        foreach ($categoryIds as $id) {
+                            if (isset($categories[$id])) {
+                                $categoryNames[] = $categories[$id]["name"];
+                            } else {
+                                Craft::warning(
+                                    "Category ID {$id} not found in categories table.",
+                                    __METHOD__
+                                );
+                            }
+                        }
                     }
-                }
 
-                if (!isset($allBlockTypes[$blockHandle])) {
-                    $allBlockTypes[$blockHandle] = [
-                        "name" => $blockType->name,
-                        "handle" => $blockHandle,
-                        "description" => $data["description"] ?? null,
-                        "categories" => $categoryNames,
-                        "previewImageUrl" => $previewImageUrl,
-                        "matrixFields" => [],
+                    $previewImageUrl =
+                        $data["previewImageUrl"] ?? $placeholderImageUrl;
+
+                    if ($useHandleBasedPreviews && $settings->previewImageVolume) {
+                        $volume = Craft::$app->volumes->getVolumeByUid(
+                            $settings->previewImageVolume
+                        );
+                        if ($volume) {
+                            $baseVolumeUrl = rtrim($volume->getRootUrl(), "/");
+                            $subfolder = $settings->previewImageSubfolder
+                                ? "/" . trim($settings->previewImageSubfolder, "/")
+                                : "";
+                            $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockHandle}.png";
+                            $previewImageUrl =
+                                $potentialImageUrl ?: $placeholderImageUrl;
+                        }
+                    }
+
+                    if (!isset($allBlockTypes[$blockHandle])) {
+                        $allBlockTypes[$blockHandle] = [
+                            "name" => $blockType->name,
+                            "handle" => $blockHandle,
+                            "description" => $data["description"] ?? null,
+                            "categories" => $categoryNames,
+                            "previewImageUrl" => $previewImageUrl,
+                            "matrixFields" => [],
+                        ];
+                    }
+
+                    $allBlockTypes[$blockHandle]["matrixFields"][] = [
+                        "name" => $matrixField->name,
+                        "handle" => $matrixField->handle,
                     ];
                 }
-
-                $allBlockTypes[$blockHandle]["matrixFields"][] = [
-                    "name" => $matrixField->name,
-                    "handle" => $matrixField->handle,
-                ];
             }
         }
 
@@ -728,8 +737,17 @@ class BlocksmithController extends \craft\web\Controller
         $blockTypes = [];
         $processedEntryTypes = [];
 
-        foreach ($fieldsService->getAllFields() as $field) {
-            if ($field instanceof \craft\fields\Matrix) {
+        $allFields = $fieldsService->getAllFields();
+
+        $fieldsEnabled = (new \yii\db\Query())
+            ->select(["fieldHandle", "enablePreview"])
+            ->from("{{%blocksmith_matrix_settings}}")
+            ->indexBy("fieldHandle")
+            ->where(["enablePreview" => true])
+            ->all();
+
+        foreach ($allFields as $field) {
+            if ($field instanceof \craft\fields\Matrix && isset($fieldsEnabled[$field->handle])) {
                 foreach ($field->getEntryTypes() as $entryType) {
                     if (in_array($entryType->id, $processedEntryTypes, true)) {
                         continue;
