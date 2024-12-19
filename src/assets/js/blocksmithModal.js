@@ -98,6 +98,11 @@
      * Creates the modal element with dynamic translations
      */
     createModal() {
+      let modalViewClass = 'blocksmith-regular-view';
+      if(window.BlocksmithConfig?.settings?.wideViewFourBlocks) {
+        modalViewClass = 'blocksmith-wide-view';
+      }
+
       const $modal = $(`
         <div class="blocksmith-modal">
             <div class="blocksmith-modal-content">
@@ -115,7 +120,9 @@
                 <div class="categories-container">
                   <!-- Kategorien werden hier dynamisch eingefügt -->
                 </div>
-                <div class="blocksmith-blocks"></div>
+                <div style="opacity:0;transition:none;" class="blocksmith-blocks ${modalViewClass}">
+                  <div class="blocksmith-block-gutter"></div>
+                </div>
             </div>
             <div class="footer blocksmith-modal-footer">
                 <button type="button" class="btn cancel-btn" tabindex="0">${this.translate(
@@ -201,83 +208,87 @@
      */
     renderBlockTypes(searchValue, categoryId = null) {
       const $blocksContainer = this.$modal.find(".blocksmith-blocks");
-      $blocksContainer.empty();
 
-      const filteredBlockTypes = this.blockTypes.filter((blockType) => {
+        // Create all block elements and save them to create them only once
+        this.blockTypes.forEach((blockType, index) => {
+          if(!blockType?.elem) {
+
+          let previewImage = blockType.previewImage || this.placeholderImage;
+
+          if (window.BlocksmithConfig.settings.useHandleBasedPreviews) {
+            previewImage = `${window.BlocksmithConfig.settings.previewImageVolume}/${
+              window.BlocksmithConfig.settings.previewImageSubfolder
+                ? window.BlocksmithConfig.settings.previewImageSubfolder + "/"
+                : ""
+            }${blockType.handle}.png`;
+          }
+
+          const description =
+            blockType.description ||
+            Craft.t("blocksmith", "No description available.");
+
+          const $block = $(`
+                <div class="blocksmith-block blocksmith-block-hidden" data-type="${blockType.handle}">
+                  <div class="blocksmith-block-inner">
+                    <img src="${previewImage}" alt="${blockType.name}" onerror="
+                        this.src='${this.placeholderImage}'; 
+                        const hint = this.closest('.blocksmith-block').querySelector('.blocksmith-hint');
+                        if (hint) {
+                            hint.style.display = 'block';
+                        }">
+                    <div class="blocksmith-footer">
+                        <span>${blockType.name}</span>
+                        <div class="blocksmith-hint" style="display: none;">
+                            ${Craft.t(
+                              "blocksmith",
+                              "Add a PNG file named '{fileName}' to the configured asset volume.",
+                              { fileName: `${blockType.handle}.png` },
+                            )}
+                        </div>
+                        ${blockType.description ? `<div class="blocksmith-block-description">${blockType.description}</div>` : ""}
+                    </div>
+                  </div>
+                </div>
+            `);
+
+          $block.on("click", () => {
+            this.onBlockSelected(blockType);
+            this.hide();
+          });
+          this.blockTypes[index].elem = $block[0];
+          $blocksContainer.append($block);
+        }
+      })
+
+      // Filter the block types and hide / display them accordingly
+      this.blockTypes.filter((blockType) => {
+        // Hide all block types to start
+        blockType.elem.classList.add('blocksmith-block-hidden');
+
         const matchesSearch = blockType.name
           .toLowerCase()
           .includes(searchValue.toLowerCase());
-        const matchesCategory = categoryId
-          ? blockType.categories.includes(categoryId)
-          : true;
-        return matchesSearch && matchesCategory;
-      });
 
-      filteredBlockTypes.forEach((blockType) => {
-        let previewImage = blockType.previewImage || this.placeholderImage;
-
-        if (window.BlocksmithConfig.settings.useHandleBasedPreviews) {
-          previewImage = `${window.BlocksmithConfig.settings.previewImageVolume}/${
-            window.BlocksmithConfig.settings.previewImageSubfolder
-              ? window.BlocksmithConfig.settings.previewImageSubfolder + "/"
-              : ""
-          }${blockType.handle}.png`;
+        // Hide the ones that have no category set when a category is being filtered
+        let matchesCategory = true;
+        if(categoryId !== null){
+          if(blockType.categories.length > 0 && blockType.categories.includes(categoryId)){
+            matchesCategory = true;
+          }else{
+            matchesCategory = false;
+          }
         }
 
-        const description =
-          blockType.description ||
-          Craft.t("blocksmith", "No description available.");
-
-        const $block = $(`
-              <div class="blocksmith-block" data-type="${blockType.handle}">
-                  <img src="${previewImage}" alt="${blockType.name}" onerror="
-                      this.src='${this.placeholderImage}'; 
-                      const hint = this.closest('.blocksmith-block').querySelector('.blocksmith-hint');
-                      if (hint) {
-                          hint.style.display = 'block';
-                      }">
-                  <div class="blocksmith-footer">
-                      <span>${blockType.name}</span>
-                      <div class="blocksmith-hint" style="display: none;">
-                          ${Craft.t(
-                            "blocksmith",
-                            "Add a PNG file named '{fileName}' to the configured asset volume.",
-                            { fileName: `${blockType.handle}.png` },
-                          )}
-                      </div>
-                      ${blockType.description ? `<div class="blocksmith-block-description">${blockType.description}</div>` : ""}
-                  </div>
-              </div>
-          `);
-
-        $block.on("click", () => {
-          this.onBlockSelected(blockType);
-          this.hide();
-        });
-
-        $blocksContainer.append($block);
+        if(matchesSearch && matchesCategory){
+          blockType.elem.classList.remove('blocksmith-block-hidden');
+        }
       });
 
-      setTimeout(() => {
-        imagesLoaded($blocksContainer[0], () => {
-          requestAnimationFrame(() => {
-            this.initializeMasonry($blocksContainer[0]);
-          });
+      imagesLoaded($blocksContainer[0], () => {
+        requestAnimationFrame(() => {
+          this.initializeMasonry($blocksContainer[0]);
         });
-      }, 100);
-    }
-
-    initializeMasonry(container) {
-      if (!this.masonryInstance) {
-        this.masonryInstance = new Masonry(container, {
-          itemSelector: ".blocksmith-block",
-          columnWidth: ".blocksmith-block",
-          percentPosition: true,
-        });
-      } else {
-        this.masonryInstance.reloadItems();
-        this.masonryInstance.layout();
-      }
+      });
     }
 
     /**
@@ -287,52 +298,19 @@
      */
     initializeMasonry(container) {
       const masonryConfig = {
-        itemSelector: ".blocksmith-block",
+        itemSelector: ".blocksmith-block:not(.blocksmith-block-hidden)",
         percentPosition: true,
-        gutter: 20,
-      };
-
-      const applyColumnLogic = () => {
-        const modalWidth =
-          document.querySelector(".blocksmith-modal").offsetWidth;
-
-        let columns = 1;
-        let columnWidth = modalWidth;
-
-        if (modalWidth > 800) {
-          if (window.BlocksmithConfig?.settings?.wideViewFourBlocks) {
-            columns = 3;
-          } else {
-            columns = 2;
-          }
-        } else {
-          columns = 2;
-        }
-
-        columnWidth = modalWidth / columns - 40;
-
-        const blockElements = container.querySelectorAll(
-          masonryConfig.itemSelector,
-        );
-        blockElements.forEach((block) => {
-          block.style.width = `${columnWidth}px`;
-        });
-
-        masonryConfig.columnWidth = columnWidth;
-
-        if (this.masonryInstance) {
-          this.masonryInstance.reloadItems();
-          this.masonryInstance.layout();
-        }
+        transitionDuration: '.2s',
+        gutter: '.blocksmith-block-gutter',
       };
 
       if (!this.masonryInstance) {
         this.masonryInstance = new Masonry(container, masonryConfig);
+        container.style.opacity = "1";
+        container.style.transition = "opacity .2s ease";
+      }else{
+        this.masonryInstance.layout();
       }
-
-      applyColumnLogic();
-
-      window.addEventListener("resize", applyColumnLogic);
     }
 
     /**
