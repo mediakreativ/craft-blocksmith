@@ -35,8 +35,8 @@ return [
         "Η αντιγραφή απέτυχε. Παρακαλώ δοκιμάστε ξανά.",
     "General Settings" => "Γενικές Ρυθμίσεις",
     "Use Handle-based Previews" => "Χρήση Προεπισκοπήσεων βάσει Handle",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Αναθέστε αυτόματα εικόνες προεπισκόπησης βάσει των λαβών μπλοκ αντί να τις ανεβάζετε χειροκίνητα μέσω του Asset Browser. Για να το κάνετε αυτό, οι εικόνες προεπισκόπησης πρέπει να ονομάζονται με βάση τη λαβή του μπλοκ τους (π.χ., textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Αυτόματη ανάθεση εικόνων προεπισκόπησης με βάση τα handles των μπλοκ αντί να τις ανεβάζετε χειροκίνητα μέσω του Asset Browser. Για να το κάνετε αυτό, οι εικόνες προεπισκόπησης πρέπει να αποθηκεύονται ως αρχεία PNG και να ονομάζονται σύμφωνα με τα handles των αντίστοιχων μπλοκ (π.χ. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Παράθυρο Προεπισκόπησης: Εμφάνιση 3 Μπλοκ ανά Σειρά (Προεπιλογή 2) σε Ευρύ Προβολέα",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

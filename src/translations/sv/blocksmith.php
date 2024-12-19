@@ -35,8 +35,8 @@ return [
     "General Settings" => "Allmänna inställningar",
     "Use Handle-based Previews" =>
         "Använd handtagsbaserade förhandsgranskningar",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Tilldela förhandsgranskningsbilder automatiskt baserat på blockhandtag istället för att ladda upp dem manuellt via Asset Browser. För att göra detta måste förhandsgranskningsbilderna namnges efter sina blockhandtag (t.ex. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Tilldela automatiskt förhandsgranskningsbilder baserat på blockhandtag istället för att ladda upp dem manuellt via Asset Browser. För att göra detta måste förhandsgranskningsbilderna sparas som PNG-filer och namnges efter sina respektive blockhandtag (t.ex. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Förhandsgranskningsmodal: Visa 3 block per rad (standard 2) i bred vy",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

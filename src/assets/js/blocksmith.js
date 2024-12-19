@@ -52,8 +52,6 @@
         },
       });
 
-      console.log(matrixFieldSettings);
-
       const modifyContextMenu = Garnish.DisclosureMenu.prototype.show;
       Garnish.DisclosureMenu.prototype.show = function (...args) {
         const matrixBlock = this.$trigger.closest(".matrixblock");

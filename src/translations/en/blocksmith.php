@@ -34,8 +34,8 @@ return [
     "Failed to copy. Please try again." => "Failed to copy. Please try again.",
     "General Settings" => "General Settings",
     "Use Handle-based Previews" => "Use Handle-based Previews",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

@@ -5,6 +5,17 @@
 
 {% set fullPageForm = true %}
 
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    }
+] %}
+
 {% set title = "Configure Matrix Fields"|t('blocksmith') %}
 
 {% block sidebar %}
@@ -12,8 +23,8 @@
 {% endblock %}
 
 {% block content %}
-<input type="hidden" name="pluginHandle" value="blocksmith">
-{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
+	<input type="hidden" name="pluginHandle" value="blocksmith">
+	{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
 	<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
 
 	<table class="data fullwidth">

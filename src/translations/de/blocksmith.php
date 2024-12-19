@@ -35,8 +35,8 @@ return [
         "Kopieren fehlgeschlagen. Bitte versuche es erneut.",
     "General Settings" => "Allgemeine Einstellungen",
     "Use Handle-based Previews" => "Handle-basierte Vorschaubilder verwenden",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Weise Vorschaubilder automatisch basierend auf den Block-Handles zu, anstatt sie manuell über den Asset-Browser hochzuladen. Die Vorschaubilder müssen hierzu nach ihrem Block-Handle benannt werden (z. B. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Weise Vorschaubilder automatisch basierend auf den Block-Handles zu, anstatt sie manuell über den Asset-Browser hochzuladen. Die Vorschaubilder müssen hierzu als PNG-Dateien gespeichert und nach ihrem jeweiligen Block-Handle benannt werden (z. B. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Vorschau-Modal: Zeige 3 Blöcke pro Zeile (Standard 2) bei breitem Viewport",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

@@ -35,8 +35,8 @@ return [
         "Kopiëren mislukt. Probeer het opnieuw.",
     "General Settings" => "Algemene instellingen",
     "Use Handle-based Previews" => "Gebruik op handles gebaseerde previews",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Wijs automatisch voorbeeldafbeeldingen toe op basis van blokhandles in plaats van ze handmatig via de Asset Browser te uploaden. Om dit te doen, moeten de voorbeeldafbeeldingen worden genoemd naar hun blokhandle (bijv. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Wijs automatisch voorbeeldafbeeldingen toe op basis van blokhandles in plaats van ze handmatig te uploaden via de Asset Browser. Hiervoor moeten de voorbeeldafbeeldingen worden opgeslagen als PNG-bestanden en worden genoemd naar hun respectieve blokhandles (bijv. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Preview-modal: Toon 3 blokken per rij (standaard 2) bij breed viewport",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

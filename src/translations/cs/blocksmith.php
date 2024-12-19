@@ -35,8 +35,8 @@ return [
         "Kopírování se nezdařilo. Zkuste to prosím znovu.",
     "General Settings" => "Obecné nastavení",
     "Use Handle-based Previews" => "Použít náhledy založené na handle",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Automaticky přiřaďte náhledové obrázky na základě blokových identifikátorů místo jejich ručního nahrávání přes Prohlížeč prostředků. Za tímto účelem musí být náhledové obrázky pojmenovány podle identifikátoru bloku (např. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Automaticky přiřaďte náhledové obrázky na základě identifikátorů bloků místo jejich ručního nahrávání přes Asset Browser. Náhledové obrázky musí být uloženy jako soubory PNG a pojmenovány podle příslušných identifikátorů bloků (např. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Modální okno náhledu: Zobrazit 3 bloky na řádek (výchozí 2) na širokém zobrazení",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

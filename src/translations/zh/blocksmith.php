@@ -30,8 +30,8 @@ return [
     "Failed to copy. Please try again." => "复制失败。请重试。",
     "General Settings" => "常规设置",
     "Use Handle-based Previews" => "使用基于句柄的预览",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "根据区块句柄自动分配预览图片，而不是通过资源浏览器手动上传。为此，预览图片需要以其区块句柄命名（例如，textAndImage.png）。",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "根据区块句柄自动分配预览图像，而不是通过资源浏览器手动上传。为此，预览图像必须保存为 PNG 格式，并以相应的区块句柄命名（例如，textAndImage.png）。",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "预览模式：在宽视口中每行显示3个区块（默认2个）",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

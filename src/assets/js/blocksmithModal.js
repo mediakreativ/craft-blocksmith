@@ -118,7 +118,7 @@
                     )}"></button>
                 </div>
                 <div class="categories-container">
-                  <!-- Kategorien werden hier dynamisch eingefügt -->
+                  <!-- Categories are dynamically inserted here -->
                 </div>
                 <div style="opacity:0;transition:none;" class="blocksmith-blocks ${modalViewClass}">
                   <div class="blocksmith-block-gutter"></div>

@@ -34,8 +34,8 @@ return [
     "Failed to copy. Please try again." => "Kopiering mislykkedes. Prøv igen.",
     "General Settings" => "Generelle indstillinger",
     "Use Handle-based Previews" => "Brug håndtagsbaserede forhåndsvisninger",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Tildel automatisk forhåndsvisningsbilleder baseret på blokhåndtag i stedet for at uploade dem manuelt via Asset Browser. For at gøre dette skal forhåndsvisningsbillederne navngives efter deres blokhåndtag (f.eks. textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Tildel automatisk forhåndsvisningsbilleder baseret på blokhåndtag i stedet for at uploade dem manuelt via Asset Browser. For at gøre dette skal forhåndsvisningsbillederne gemmes som PNG-filer og navngives efter deres respektive blokhåndtag (f.eks. textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Forhåndsvisningsmodal: Vis 3 blokke pr. række (standard 2) i bred visning",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

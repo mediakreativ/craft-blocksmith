@@ -35,8 +35,8 @@ return [
         "Copia fallita. Per favore, riprova.",
     "General Settings" => "Impostazioni generali",
     "Use Handle-based Previews" => "Usa anteprime basate su handle",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "Assegna automaticamente le immagini di anteprima in base ai handle dei blocchi invece di caricarle manualmente tramite il browser delle risorse. Per fare ciò, le immagini di anteprima devono essere nominate in base all'handle del blocco (ad esempio, textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "Assegna automaticamente le immagini di anteprima in base ai handle dei blocchi invece di caricarle manualmente tramite il browser delle risorse. Per fare ciò, le immagini di anteprima devono essere salvate in formato PNG e denominate in base agli handle dei rispettivi blocchi (ad esempio, textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "Finestra di anteprima: Mostra 3 blocchi per riga (predefinito 2) in visualizzazione ampia",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>

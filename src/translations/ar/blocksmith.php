@@ -34,8 +34,8 @@ return [
     "Failed to copy. Please try again." => "فشل النسخ. يرجى المحاولة مرة أخرى.",
     "General Settings" => "الإعدادات العامة",
     "Use Handle-based Previews" => "استخدام معاينات تعتمد على المقابض",
-    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images need to be named after their block handle (e.g., textAndImage.png)." =>
-        "قم بتعيين صور المعاينة تلقائيًا بناءً على مقابض الكتل بدلاً من تحميلها يدويًا عبر مستعرض الأصول. للقيام بذلك، يجب أن تتم تسمية صور المعاينة وفقًا لمقابض الكتل الخاصة بها (على سبيل المثال: textAndImage.png).",
+    "Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png)." =>
+        "تعيين صور المعاينة تلقائيًا بناءً على معرفات الكتل بدلاً من تحميلها يدويًا عبر مستعرض الأصول. للقيام بذلك، يجب حفظ صور المعاينة كملفات PNG وتسميتها وفقًا لمعرفات الكتل الخاصة بها (مثل textAndImage.png).",
     "Preview Modal: Show 3 Blocks per Row (Default 2) in Wide Viewport" =>
         "نافذة المعاينة: عرض 3 كتل في الصف (الافتراضي 2) في العرض الواسع",
     "Enable this option to display 3 blocks per row for browser widths of 1178px or more." =>
