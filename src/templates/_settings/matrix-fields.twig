@@ -40,7 +40,13 @@
 				<tr>
 					<td>{{ field.name }}</td>
 					<td>
-						<code>{{ field.handle }}</code>
+						<div class="block-handle">
+							<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+								<span class="copytextbtn__value">{{ field.handle }}</span>
+								<span class="visually-hidden">Copy to clipboard</span>
+								<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+							</div>
+						</div>
 					</td>
 					<td>
 						{{ forms.lightswitchField({

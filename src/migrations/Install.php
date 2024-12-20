@@ -88,6 +88,19 @@ class Install extends Migration
             "uid" => $this->uid(),
         ]);
 
+        $matrixFields = Craft::$app->fields->getAllFields();
+        foreach ($matrixFields as $field) {
+            if ($field instanceof \craft\fields\Matrix) {
+                $this->insert("{{%blocksmith_matrix_settings}}", [
+                    "fieldHandle" => $field->handle,
+                    "enablePreview" => true,
+                    "dateCreated" => new \yii\db\Expression("NOW()"),
+                    "dateUpdated" => new \yii\db\Expression("NOW()"),
+                    "uid" => Craft::$app->getSecurity()->generateRandomString(),
+                ]);
+            }
+        }
+
         // Create the blocksmith_favorites table
         $this->createTable("{{%blocksmith_favorites}}", [
             "id" => $this->primaryKey(),

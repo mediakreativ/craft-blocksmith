@@ -16,22 +16,41 @@ class m241215_124253_create_blocksmith_matrix_settings_table extends Migration
     public function safeUp(): bool
     {
         // Überprüfe, ob die Tabelle bereits existiert
-        if ($this->db->tableExists('{{%blocksmith_matrix_settings}}')) {
-            Craft::info('Table "blocksmith_matrix_settings" already exists.', __METHOD__);
+        if ($this->db->tableExists("{{%blocksmith_matrix_settings}}")) {
+            Craft::info(
+                'Table "blocksmith_matrix_settings" already exists.',
+                __METHOD__
+            );
             return true;
         }
 
         // Erstelle die Tabelle
-        $this->createTable('{{%blocksmith_matrix_settings}}', [
-            'id' => $this->primaryKey(),
-            'fieldHandle' => $this->string(255)->notNull()->unique(),
-            'enablePreview' => $this->boolean()->defaultValue(true),
-            'dateCreated' => $this->dateTime()->notNull(),
-            'dateUpdated' => $this->dateTime()->notNull(),
-            'uid' => $this->uid(),
+        $this->createTable("{{%blocksmith_matrix_settings}}", [
+            "id" => $this->primaryKey(),
+            "fieldHandle" => $this->string(255)->notNull()->unique(),
+            "enablePreview" => $this->boolean()->defaultValue(true),
+            "dateCreated" => $this->dateTime()->notNull(),
+            "dateUpdated" => $this->dateTime()->notNull(),
+            "uid" => $this->uid(),
         ]);
 
-        Craft::info('Table "blocksmith_matrix_settings" created successfully.', __METHOD__);
+        $matrixFields = Craft::$app->fields->getAllFields();
+        foreach ($matrixFields as $field) {
+            if ($field instanceof \craft\fields\Matrix) {
+                $this->insert("{{%blocksmith_matrix_settings}}", [
+                    "fieldHandle" => $field->handle,
+                    "enablePreview" => true,
+                    "dateCreated" => new \yii\db\Expression("NOW()"),
+                    "dateUpdated" => new \yii\db\Expression("NOW()"),
+                    "uid" => Craft::$app->getSecurity()->generateRandomString(),
+                ]);
+            }
+        }
+
+        Craft::info(
+            'Table "blocksmith_matrix_settings" created successfully.',
+            __METHOD__
+        );
 
         return true;
     }
@@ -42,7 +61,7 @@ class m241215_124253_create_blocksmith_matrix_settings_table extends Migration
     public function safeDown(): bool
     {
         // Lösche die Tabelle
-        $this->dropTableIfExists('{{%blocksmith_matrix_settings}}');
+        $this->dropTableIfExists("{{%blocksmith_matrix_settings}}");
 
         Craft::info('Table "blocksmith_matrix_settings" removed.', __METHOD__);
 

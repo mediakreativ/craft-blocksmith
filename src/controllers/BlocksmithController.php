@@ -331,14 +331,12 @@ class BlocksmithController extends \craft\web\Controller
 
         $transaction = Craft::$app->db->beginTransaction();
         try {
-            // Lösche die Kategorie aus der Tabelle `blocksmith_categories`
             $deleted = Craft::$app->db
                 ->createCommand()
                 ->delete("{{%blocksmith_categories}}", ["id" => $id])
                 ->execute();
 
             if ($deleted) {
-                // Entferne die Kategorie aus der `categories` Spalte in der `blocksmith_blockdata`-Tabelle
                 $blockData = (new \yii\db\Query())
                     ->select(["id", "categories"])
                     ->from("{{%blocksmith_blockdata}}")
@@ -350,13 +348,11 @@ class BlocksmithController extends \craft\web\Controller
                         ($key = array_search((int) $id, $categories)) !== false
                     ) {
                         unset($categories[$key]);
-                        // Update der `categories`-Spalte
                         Craft::$app->db
                             ->createCommand()
                             ->update(
                                 "{{%blocksmith_blockdata}}",
                                 [
-                                    // Stelle sicher, dass das Ergebnis ein echtes JSON-Array ist
                                     "categories" => empty($categories)
                                         ? null
                                         : $categories,
@@ -399,21 +395,19 @@ class BlocksmithController extends \craft\web\Controller
     {
         $matrixFields = Blocksmith::getInstance()->service->getAllMatrixFields();
 
-        // Abrufen gespeicherter Einstellungen
         $savedSettings = (new \yii\db\Query())
             ->select(["fieldHandle", "enablePreview"])
             ->from("{{%blocksmith_matrix_settings}}")
             ->indexBy("fieldHandle")
             ->all();
 
-        // Feld-Array aufbauen
         $matrixFieldSettings = [];
         foreach ($matrixFields as $field) {
             $matrixFieldSettings[] = [
-                "name" => $field->name, // Feldname
-                "handle" => $field->handle, // Feld-Handle
+                "name" => $field->name,
+                "handle" => $field->handle,
                 "enablePreview" =>
-                    $savedSettings[$field->handle]["enablePreview"] ?? true, // enablePreview Wert
+                    $savedSettings[$field->handle]["enablePreview"] ?? true,
             ];
         }
 
@@ -510,7 +504,7 @@ class BlocksmithController extends \craft\web\Controller
         $allBlockTypes = [];
 
         foreach ($matrixFields as $matrixField) {
-            if(isset($fieldsEnabled[$matrixField->handle])) {
+            if (isset($fieldsEnabled[$matrixField->handle])) {
                 foreach ($matrixField->getEntryTypes() as $blockType) {
                     $blockHandle = $blockType->handle;
                     $entryTypeId = $blockType->id;
@@ -519,7 +513,10 @@ class BlocksmithController extends \craft\web\Controller
 
                     $categoryIds = [];
                     if (isset($data["categories"])) {
-                        $decodedCategories = json_decode($data["categories"], true);
+                        $decodedCategories = json_decode(
+                            $data["categories"],
+                            true
+                        );
                         if (
                             json_last_error() === JSON_ERROR_NONE &&
                             is_array($decodedCategories)
@@ -550,14 +547,18 @@ class BlocksmithController extends \craft\web\Controller
                     $previewImageUrl =
                         $data["previewImageUrl"] ?? $placeholderImageUrl;
 
-                    if ($useHandleBasedPreviews && $settings->previewImageVolume) {
+                    if (
+                        $useHandleBasedPreviews &&
+                        $settings->previewImageVolume
+                    ) {
                         $volume = Craft::$app->volumes->getVolumeByUid(
                             $settings->previewImageVolume
                         );
                         if ($volume) {
                             $baseVolumeUrl = rtrim($volume->getRootUrl(), "/");
                             $subfolder = $settings->previewImageSubfolder
-                                ? "/" . trim($settings->previewImageSubfolder, "/")
+                                ? "/" .
+                                    trim($settings->previewImageSubfolder, "/")
                                 : "";
                             $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockHandle}.png";
                             $previewImageUrl =
@@ -747,7 +748,10 @@ class BlocksmithController extends \craft\web\Controller
             ->all();
 
         foreach ($allFields as $field) {
-            if ($field instanceof \craft\fields\Matrix && isset($fieldsEnabled[$field->handle])) {
+            if (
+                $field instanceof \craft\fields\Matrix &&
+                isset($fieldsEnabled[$field->handle])
+            ) {
                 foreach ($field->getEntryTypes() as $entryType) {
                     if (in_array($entryType->id, $processedEntryTypes, true)) {
                         continue;
