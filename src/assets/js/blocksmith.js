@@ -82,7 +82,7 @@
           return;
         }
 
-        self.initiateContextMenu(this);
+        self.initiateContextMenu(this, matrixFieldHandle);
         modifyContextMenu.apply(this, args);
       };
 
@@ -184,7 +184,7 @@
             },
           );
 
-          modal.show();
+          modal.show(matrixFieldHandle);
         });
       };
     },
@@ -194,7 +194,7 @@
      *
      * @param {Object} disclosureMenu - The Garnish DisclosureMenu instance
      */
-    initiateContextMenu: function (disclosureMenu) {
+    initiateContextMenu: function (disclosureMenu, matrixFieldHandle) {
       const { $trigger, $container } = disclosureMenu;
 
       if (!$trigger || !$container || !$trigger.hasClass("action-btn")) {
@@ -230,7 +230,7 @@
       }
       disclosureMenu._menuInitialized = true;
 
-      this.addMenuToContextMenu($container, typeId, entry, matrix);
+      this.addMenuToContextMenu($container, typeId, entry, matrix, matrixFieldHandle);
       this.verifyExistance($container, matrix);
     },
 
@@ -242,7 +242,7 @@
      * @param {Object} entry - The current entry object, containing data about the Matrix block
      * @param {Craft.MatrixInput} matrix - The current MatrixInput instance managing the Matrix field
      */
-    addMenuToContextMenu: function ($container, typeId, entry, matrix) {
+    addMenuToContextMenu: function ($container, typeId, entry, matrix, matrixFieldHandle) {
       const $addButtonContainer = $container
         .find('[data-action="add"]')
         .parent()
@@ -301,7 +301,7 @@
             },
           );
 
-          modal.show();
+          modal.show(matrixFieldHandle);
         });
 
         $deleteList.before($newList);

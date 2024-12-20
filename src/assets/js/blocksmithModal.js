@@ -46,15 +46,19 @@
     /**
      * Displays the modal
      */
-    show() {
+    show(matrixFieldHandle) {
       this.createOverlay();
-      this.createModal();
+      this.createModal(matrixFieldHandle);
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
 
       this.loadBlockTypes()
         .done((blockTypes) => {
-          this.blockTypes = blockTypes;
+          this.blockTypes = blockTypes.filter((blockType) =>
+            blockType.matrixFields.some(
+              (field) => field.handle === matrixFieldHandle,
+            ),
+          );
           this.renderBlockTypes("");
         })
         .fail((error) => {
@@ -97,10 +101,10 @@
     /**
      * Creates the modal element with dynamic translations
      */
-    createModal() {
-      let modalViewClass = 'blocksmith-regular-view';
-      if(window.BlocksmithConfig?.settings?.wideViewFourBlocks) {
-        modalViewClass = 'blocksmith-wide-view';
+    createModal(matrixFieldHandle) {
+      let modalViewClass = "blocksmith-regular-view";
+      if (window.BlocksmithConfig?.settings?.wideViewFourBlocks) {
+        modalViewClass = "blocksmith-wide-view";
       }
 
       const $modal = $(`
@@ -209,10 +213,9 @@
     renderBlockTypes(searchValue, categoryId = null) {
       const $blocksContainer = this.$modal.find(".blocksmith-blocks");
 
-        // Create all block elements and save them to create them only once
-        this.blockTypes.forEach((blockType, index) => {
-          if(!blockType?.elem) {
-
+      // Create all block elements and save them to create them only once
+      this.blockTypes.forEach((blockType, index) => {
+        if (!blockType?.elem) {
           let previewImage = blockType.previewImage || this.placeholderImage;
 
           if (window.BlocksmithConfig.settings.useHandleBasedPreviews) {
@@ -258,12 +261,12 @@
           this.blockTypes[index].elem = $block[0];
           $blocksContainer.append($block);
         }
-      })
+      });
 
       // Filter the block types and hide / display them accordingly
       this.blockTypes.filter((blockType) => {
         // Hide all block types to start
-        blockType.elem.classList.add('blocksmith-block-hidden');
+        blockType.elem.classList.add("blocksmith-block-hidden");
 
         const matchesSearch = blockType.name
           .toLowerCase()
@@ -271,16 +274,19 @@
 
         // Hide the ones that have no category set when a category is being filtered
         let matchesCategory = true;
-        if(categoryId !== null){
-          if(blockType.categories.length > 0 && blockType.categories.includes(categoryId)){
+        if (categoryId !== null) {
+          if (
+            blockType.categories.length > 0 &&
+            blockType.categories.includes(categoryId)
+          ) {
             matchesCategory = true;
-          }else{
+          } else {
             matchesCategory = false;
           }
         }
 
-        if(matchesSearch && matchesCategory){
-          blockType.elem.classList.remove('blocksmith-block-hidden');
+        if (matchesSearch && matchesCategory) {
+          blockType.elem.classList.remove("blocksmith-block-hidden");
         }
       });
 
@@ -300,15 +306,15 @@
       const masonryConfig = {
         itemSelector: ".blocksmith-block:not(.blocksmith-block-hidden)",
         percentPosition: true,
-        transitionDuration: '.2s',
-        gutter: '.blocksmith-block-gutter',
+        transitionDuration: ".2s",
+        gutter: ".blocksmith-block-gutter",
       };
 
       if (!this.masonryInstance) {
         this.masonryInstance = new Masonry(container, masonryConfig);
         container.style.opacity = "1";
         container.style.transition = "opacity .2s ease";
-      }else{
+      } else {
         this.masonryInstance.layout();
       }
     }

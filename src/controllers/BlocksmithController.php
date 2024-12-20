@@ -768,6 +768,28 @@ class BlocksmithController extends \craft\web\Controller
                         ->where(["entryTypeId" => $entryType->id])
                         ->one();
 
+                    $matrixFields = [];
+                    foreach ($allFields as $potentialField) {
+                        if ($potentialField instanceof \craft\fields\Matrix) {
+                            $entryTypeHandles = array_map(
+                                fn($type) => $type->handle,
+                                $potentialField->getEntryTypes()
+                            );
+                            if (
+                                in_array(
+                                    $entryType->handle,
+                                    $entryTypeHandles,
+                                    true
+                                )
+                            ) {
+                                $matrixFields[] = [
+                                    "name" => $potentialField->name,
+                                    "handle" => $potentialField->handle,
+                                ];
+                            }
+                        }
+                    }
+
                     $blockTypes[] = [
                         "name" => $entryType->name,
                         "handle" => $entryType->handle,
@@ -778,6 +800,7 @@ class BlocksmithController extends \craft\web\Controller
                         "previewImage" =>
                             $blockData["previewImageUrl"] ??
                             $placeholderImageUrl,
+                        "matrixFields" => $matrixFields,
                     ];
                 }
             }
