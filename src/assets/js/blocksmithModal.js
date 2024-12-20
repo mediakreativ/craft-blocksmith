@@ -54,12 +54,22 @@
 
       this.loadBlockTypes()
         .done((blockTypes) => {
+          // Filtere die Blocktypen für das aktuelle Matrix-Feld
           this.blockTypes = blockTypes.filter((blockType) =>
             blockType.matrixFields.some(
               (field) => field.handle === matrixFieldHandle,
             ),
           );
-          this.renderBlockTypes("");
+
+          // Lade die Kategorien basierend auf den sichtbaren Blöcken
+          this.loadCategories()
+            .done((categories) => {
+              this.renderCategories(categories);
+              this.renderBlockTypes("");
+            })
+            .fail((error) => {
+              console.error("Failed to load categories:", error);
+            });
         })
         .fail((error) => {
           console.error("Failed to load block types:", error);
@@ -167,7 +177,17 @@
       const $categoriesContainer = this.$modal.find(".categories-container");
       $categoriesContainer.empty();
 
-      if (categories.length > 0) {
+      // Erstelle eine Liste von Kategorie-IDs, die in den sichtbaren Blöcken verwendet werden
+      const visibleCategoryIds = new Set(
+        this.blockTypes.flatMap((blockType) => blockType.categories || []),
+      );
+
+      // Filtere die Kategorien basierend auf den sichtbaren Blöcken
+      const filteredCategories = categories.filter((category) =>
+        visibleCategoryIds.has(category.id),
+      );
+
+      if (filteredCategories.length > 0) {
         const setActiveCategory = ($selectedBadge) => {
           $categoriesContainer
             .find(".blocksmith-category-badge")
@@ -188,7 +208,7 @@
 
         $categoriesContainer.append($allCategoriesButton);
 
-        categories.forEach((category) => {
+        filteredCategories.forEach((category) => {
           const $badge = $(`
             <span class="blocksmith-badge blocksmith-category-badge" data-category-id="${category.id}">
               ${category.name}
