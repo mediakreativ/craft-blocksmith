@@ -35,7 +35,7 @@ class Blocksmith extends Plugin
 {
     public const TRANSLATION_CATEGORY = "blocksmith";
 
-    public string $schemaVersion = "1.1.1";
+    public string $schemaVersion = "1.1.2";
     public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
     public bool $hasCpSettings = true;
 

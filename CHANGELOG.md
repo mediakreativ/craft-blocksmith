@@ -1,3 +1,14 @@
+## [1.2.4] - 2024-12-20
+
+### Fixed
+- Preview jump when initializing Masonry (Thanks to David [(@davidwebca)](https://github.com/davidwebca) for the contribution!)
+- Filtering of child Matrix elements; ensure only enabled Matrix fields are displayed in the modal (Thanks to David [(@davidwebca)](https://github.com/davidwebca) for the contribution!)
+
+### Improvement
+- Ensure only block types assigned to the current Matrix field are displayed in the modal.
+- Categories are properly filtered and displayed based on visible blocks when opening the modal.
+
+
 ## [1.2.3] - 2024-12-15
 
 ### Added
