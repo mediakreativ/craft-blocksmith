@@ -54,14 +54,12 @@
 
       this.loadBlockTypes()
         .done((blockTypes) => {
-          // Filtere die Blocktypen für das aktuelle Matrix-Feld
           this.blockTypes = blockTypes.filter((blockType) =>
             blockType.matrixFields.some(
               (field) => field.handle === matrixFieldHandle,
             ),
           );
 
-          // Lade die Kategorien basierend auf den sichtbaren Blöcken
           this.loadCategories()
             .done((categories) => {
               this.renderCategories(categories);
@@ -177,12 +175,10 @@
       const $categoriesContainer = this.$modal.find(".categories-container");
       $categoriesContainer.empty();
 
-      // Erstelle eine Liste von Kategorie-IDs, die in den sichtbaren Blöcken verwendet werden
       const visibleCategoryIds = new Set(
         this.blockTypes.flatMap((blockType) => blockType.categories || []),
       );
 
-      // Filtere die Kategorien basierend auf den sichtbaren Blöcken
       const filteredCategories = categories.filter((category) =>
         visibleCategoryIds.has(category.id),
       );

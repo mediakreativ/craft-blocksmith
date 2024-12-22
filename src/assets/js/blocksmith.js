@@ -91,8 +91,14 @@
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
         originalUpdateAddEntryBtn.apply(this, args);
         const matrixContainer = this.$container.closest(".matrix-field");
+        console.log("matrixContainer: ", matrixContainer);
         const matrixFieldId = matrixContainer.attr("id");
-        const matrixFieldHandle = matrixFieldId?.replace("fields-", "");
+        console.log("matrixFieldId: ", matrixFieldId);
+        const matrixFieldHandle = matrixFieldId
+          ?.replace(/^fields-/, "")
+          .split("-fields-")
+          .pop();
+        console.log("matrixFieldHandle: ", matrixFieldHandle);
 
         // Skip modification if preview is disabled for this field
         if (
@@ -230,7 +236,13 @@
       }
       disclosureMenu._menuInitialized = true;
 
-      this.addMenuToContextMenu($container, typeId, entry, matrix, matrixFieldHandle);
+      this.addMenuToContextMenu(
+        $container,
+        typeId,
+        entry,
+        matrix,
+        matrixFieldHandle,
+      );
       this.verifyExistance($container, matrix);
     },
 
@@ -242,7 +254,13 @@
      * @param {Object} entry - The current entry object, containing data about the Matrix block
      * @param {Craft.MatrixInput} matrix - The current MatrixInput instance managing the Matrix field
      */
-    addMenuToContextMenu: function ($container, typeId, entry, matrix, matrixFieldHandle) {
+    addMenuToContextMenu: function (
+      $container,
+      typeId,
+      entry,
+      matrix,
+      matrixFieldHandle,
+    ) {
       const $addButtonContainer = $container
         .find('[data-action="add"]')
         .parent()
