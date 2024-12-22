@@ -71,19 +71,19 @@
 
 .blocksmith-block-image {
   flex-shrink: 0;
-  width: 220px; /* Einheitliche Breite */
-  height: 165px; /* Einheitliche Höhe */
-  aspect-ratio: auto; /* Optional für Browser-Kompatibilität */
+  width: 220px;
+  height: 165px;
+  aspect-ratio: auto;
   margin-right: 16px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  overflow: hidden; /* Zusätzlicher Schutz vor Überlauf */
+  overflow: hidden;
 }
 
 .blocksmith-block-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Alternativ: cover, je nach gewünschtem Effekt */
+  object-fit: contain;
   background: #f7f7f7;
 }
 
@@ -200,7 +200,7 @@
 }
 
 @media only screen and (min-width: 800px) {
-  .blocksmith-wide-view .blocksmith-block{
+  .blocksmith-wide-view .blocksmith-block {
     width: 32%;
   }
 }
@@ -434,11 +434,11 @@ body .blocksmith-modal {
   margin-top: 20px;
 }
 
-.blocksmith-block-gutter{
+.blocksmith-block-gutter {
   width: 2%;
 }
 
-.blocksmith-block.blocksmith-block-hidden{
+.blocksmith-block.blocksmith-block-hidden {
   opacity: 0 !important;
   height: 0 !important; /* Override Masonry's height */
   margin: 0 !important;
@@ -452,7 +452,7 @@ body .blocksmith-modal {
   width: 49%;
 }
 
-.blocksmith-block-inner{
+.blocksmith-block-inner {
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -506,13 +506,16 @@ body .blocksmith-modal {
   display: none !important;
 }
 
-.matrix-extended-buttons-above.matrix-extended-buttons, .matrix-extended-buttons.blocksmith-preview-disabled {
+.matrix-extended-buttons-above.matrix-extended-buttons,
+.matrix-extended-buttons.blocksmith-preview-disabled {
   display: flex !important;
 }
 
 ul.matrix-extended > li > button[data-action="add-block"] {
   display: none !important;
 }
-ul.matrix-extended.blocksmith-preview-disabled > li > button[data-action="add-block"] {
+ul.matrix-extended.blocksmith-preview-disabled
+  > li
+  > button[data-action="add-block"] {
   display: flex !important;
 }

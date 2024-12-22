@@ -91,14 +91,11 @@
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
         originalUpdateAddEntryBtn.apply(this, args);
         const matrixContainer = this.$container.closest(".matrix-field");
-        console.log("matrixContainer: ", matrixContainer);
         const matrixFieldId = matrixContainer.attr("id");
-        console.log("matrixFieldId: ", matrixFieldId);
         const matrixFieldHandle = matrixFieldId
           ?.replace(/^fields-/, "")
           .split("-fields-")
           .pop();
-        console.log("matrixFieldHandle: ", matrixFieldHandle);
 
         // Skip modification if preview is disabled for this field
         if (

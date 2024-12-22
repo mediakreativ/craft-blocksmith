@@ -1,3 +1,8 @@
+## [1.2.5] - 2024-12-22
+### Fixed
+- Correct extraction of Matrix field handles for nested Matrix fields.
+- Ensured proper handling of `fields-` prefix removal.
+
 ## [1.2.4] - 2024-12-20
 
 ### Fixed
