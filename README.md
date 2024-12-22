@@ -10,7 +10,7 @@
 - **Flexible preview settings**: Upload custom preview images directly via the Craft Asset Browser or use handle-based preview images as an alternative if preferred.
 - **Enhanced layout and usability**: Masonry.js ensures a flexible and aesthetic grid layout, even for blocks with tall content previews.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
-- **Category and Favorite Management**: Organize blocks into categories and quickly filter or reset with the "All Categories" button.
+- **Category Management**: Organize blocks into categories and quickly filter or reset with the "All Categories" button.
 - **Matrix Extended Compatibility**: Matrix Extended's context menu button and button group are displayed when **Blocksmith**'s preview modal is disabled for a Matrix field.
 - **Language support**: Available in the following languages: English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, Ukrainian, Arabic, Czech, Danish, Greek, Hebrew, Japanese, Korean, Polish, Swedish, Turkish, and Chinese. Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
 
