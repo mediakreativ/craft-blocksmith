@@ -234,8 +234,9 @@ class BlocksmithController extends \craft\web\Controller
     public function actionCategories(): Response
     {
         $categories = (new \yii\db\Query())
-            ->select(["id", "name", "description"])
+            ->select(["id", "name", "sortOrder"])
             ->from("{{%blocksmith_categories}}")
+            ->orderBy(["sortOrder" => SORT_ASC])
             ->all();
 
         return $this->renderTemplate("blocksmith/_settings/categories", [
@@ -245,13 +246,19 @@ class BlocksmithController extends \craft\web\Controller
         ]);
     }
 
+    /**
+     * Edits an existing category or initializes a new one.
+     *
+     * @param int|null $id The ID of the category to edit (optional).
+     * @return \yii\web\Response The rendered template for editing or creating a category.
+     */
     public function actionEditCategory(int $id = null): Response
     {
         $category = null;
 
         if ($id) {
             $category = (new \yii\db\Query())
-                ->select(["id", "name", "description"])
+                ->select(["id", "name"])
                 ->from("{{%blocksmith_categories}}")
                 ->where(["id" => $id])
                 ->one();
@@ -267,6 +274,11 @@ class BlocksmithController extends \craft\web\Controller
         ]);
     }
 
+    /**
+     * Saves a category to the database.
+     *
+     * @return \yii\web\Response Redirects to the categories settings page after saving.
+     */
     public function actionSaveCategory(): Response
     {
         $this->requirePostRequest();
@@ -274,16 +286,19 @@ class BlocksmithController extends \craft\web\Controller
         $request = Craft::$app->getRequest();
         $id = $request->getBodyParam("id");
         $name = $request->getBodyParam("name");
-        $description = $request->getBodyParam("description");
 
         if (!$name) {
             Craft::$app->getSession()->setError("Category name is required.");
             return $this->redirectToPostedUrl();
         }
 
+        $maxSortOrder = (new \yii\db\Query())
+            ->from("{{%blocksmith_categories}}")
+            ->max("sortOrder");
+
         $data = [
             "name" => $name,
-            "description" => $description ?: null,
+            "sortOrder" => $maxSortOrder + 1,
             "dateUpdated" => new \yii\db\Expression("NOW()"),
         ];
 
@@ -315,6 +330,11 @@ class BlocksmithController extends \craft\web\Controller
         return $this->redirect("blocksmith/settings/categories");
     }
 
+    /**
+     * Deletes a category and updates any related block data.
+     *
+     * @return \yii\web\Response JSON response indicating success or failure.
+     */
     public function actionDeleteCategory(): Response
     {
         $this->requirePostRequest();
@@ -384,6 +404,70 @@ class BlocksmithController extends \craft\web\Controller
                     "An error occurred while trying to delete the category.",
             ]);
         }
+    }
+
+    /**
+     * Retrieves all categories sorted by their sort order.
+     *
+     * @return \yii\web\Response JSON response containing the list of categories.
+     */
+    public function actionGetCategories(): Response
+    {
+        $categories = (new \yii\db\Query())
+            ->select(["id", "name", "sortOrder"])
+            ->from("{{%blocksmith_categories}}")
+            ->orderBy(["sortOrder" => SORT_ASC])
+            ->all();
+
+        return $this->asJson($categories);
+    }
+
+    /**
+     * Reorders categories based on the provided IDs.
+     *
+     * @return \yii\web\Response JSON response indicating success or failure.
+     */
+    public function actionReorderCategories()
+    {
+        $this->requirePostRequest();
+
+        // IDs vom Request abrufen
+        $ids = Craft::$app->getRequest()->getRequiredBodyParam("ids");
+
+        // JSON-Dekodierung hinzufügen, falls die IDs ein String sind
+        if (is_string($ids)) {
+            $ids = json_decode($ids, true);
+        }
+
+        // Debug: Überprüfen, ob die Dekodierung erfolgreich war
+        if (!is_array($ids)) {
+            Craft::error(
+                "Failed to decode IDs: " . json_encode($ids),
+                __METHOD__
+            );
+            return $this->asJson([
+                "success" => false,
+                "error" => "Invalid IDs format.",
+            ]);
+        }
+
+        // IDs aktualisieren
+        foreach ($ids as $sortOrder => $id) {
+            Craft::info(
+                "Updating category ID {$id} to sortOrder " . ($sortOrder + 1),
+                __METHOD__
+            );
+            Craft::$app->db
+                ->createCommand()
+                ->update(
+                    "{{%blocksmith_categories}}",
+                    ["sortOrder" => $sortOrder + 1],
+                    ["id" => $id]
+                )
+                ->execute();
+        }
+
+        return $this->asJson(["success" => true]);
     }
 
     /**
@@ -807,16 +891,6 @@ class BlocksmithController extends \craft\web\Controller
         }
 
         return $this->asJson($blockTypes);
-    }
-
-    public function actionGetCategories(): Response
-    {
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name"])
-            ->from("{{%blocksmith_categories}}")
-            ->all();
-
-        return $this->asJson($categories);
     }
 
     /**

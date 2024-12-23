@@ -22,6 +22,7 @@ class Install extends Migration
             "id" => $this->primaryKey(),
             "name" => $this->string()->notNull(),
             "description" => $this->text(),
+            "sortOrder" => $this->integer()->notNull()->defaultValue(0), // Neue Spalte
             "dateCreated" => $this->dateTime()
                 ->notNull()
                 ->defaultExpression("CURRENT_TIMESTAMP"),

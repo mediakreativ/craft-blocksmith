@@ -38,13 +38,9 @@
 
 {% set tableData = [] %}
 {% for category in categories %}
-	{% set truncatedDescription = category.description is not empty and category.description|length > 100
-        ? category.description|slice(0, 100) ~ '…'
-        : category.description %}
 	{% set tableData = tableData|merge([{
         id: category.id,
         title: category.name,
-        description: truncatedDescription,
         url: url('blocksmith/settings/categories/edit/' ~ category.id),
     }]) %}
 {% endfor %}
@@ -57,20 +53,21 @@ new Craft.VueAdminTable({
             name: '__slot:title',
             title: Craft.t('blocksmith', 'Name'),
         },
-        {
-            name: 'description',
-            title: Craft.t('blocksmith', 'Description'),
-        },
     ],
     container: '#blocksmith-categories-vue-admin-table',
     deleteAction: 'blocksmith/blocksmith/delete-category',
     emptyMessage: Craft.t('blocksmith', 'No categories exist yet.'),
-    tableData:
-{{ tableData|json_encode|raw }},
+    tableData: {{ tableData|json_encode|raw }},
+    reorderAction: 'blocksmith/blocksmith/reorder-categories',
+    onSortChange: (sortedIds) => {            
+    Craft.sendActionRequest('POST', 'blocksmith/reorder-categories', {
+        data: { ids: sortedIds },
+    });
+    },
     slots: {
         title: (row) => {
             return `<a href="${row.url}">${row.title}</a>`;
-	        },
-	    },
-	});
+		        },
+		    },
+		});
 {% endjs %}

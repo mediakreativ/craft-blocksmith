@@ -35,7 +35,7 @@ class Blocksmith extends Plugin
 {
     public const TRANSLATION_CATEGORY = "blocksmith";
 
-    public string $schemaVersion = "1.1.2";
+    public string $schemaVersion = "1.1.4";
     public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
     public bool $hasCpSettings = true;
 
@@ -115,6 +115,9 @@ class Blocksmith extends Plugin
 
                 $event->rules["blocksmith/get-categories"] =
                     "blocksmith/blocksmith/get-categories";
+
+                $event->rules["blocksmith/reorder-categories"] =
+                    "blocksmith/blocksmith/reorder-categories";
 
                 $event->rules["blocksmith/settings/matrix-fields"] =
                     "blocksmith/blocksmith/matrix-fields";

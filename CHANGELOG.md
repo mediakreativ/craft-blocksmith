@@ -1,4 +1,10 @@
+## [1.2.6] - 2024-12-23
+
+### Added
+- Reorder categories via drag-and-drop in the Control Panel
+
 ## [1.2.5] - 2024-12-22
+
 ### Fixed
 - Correct extraction of Matrix field handles for nested Matrix fields.
 - Ensured proper handling of `fields-` prefix removal.
