@@ -57,7 +57,10 @@
         const matrixBlock = this.$trigger.closest(".matrixblock");
         const matrixContainer = matrixBlock.closest(".matrix-field");
         const matrixFieldId = matrixContainer.attr("id");
-        const matrixFieldHandle = matrixFieldId?.replace("fields-", "");
+        const matrixFieldHandle = matrixFieldId
+          ?.replace(/^fields-/, "")
+          .split("-fields-")
+          .pop();
 
         // Skip modification if preview is disabled for this field
         if (
