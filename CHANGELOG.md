@@ -1,7 +1,12 @@
+## [1.2.7] - 2024-12-23
+
+### Fixed
+- Correct extraction of Matrix field handles for nested Matrix fields in disclosure menus.
+
 ## [1.2.6] - 2024-12-23
 
 ### Added
-- Reorder categories via drag-and-drop in the Control Panel
+- Reorder categories via drag-and-drop in the Control Panel.
 
 ## [1.2.5] - 2024-12-22
 
