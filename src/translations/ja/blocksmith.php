@@ -81,4 +81,15 @@ return [
     "Handle" => "ハンドル",
     "Enable Preview" => "プレビューを有効にする",
     "Configure Matrix Fields" => "マトリックスフィールドを設定する",
+
+    "No Matrix fields exist yet." => "Matrixフィールドはまだ存在しません。",
+    "No Blocks exist yet." => "ブロックはまだ存在しません。",
+    "Create Matrix Field" => "Matrixフィールドを作成",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "エントリータイプ付きのMatrixフィールドを作成すると、ここにブロックが表示されます。",
+    "All Matrix fields have preview disabled." =>
+        "すべてのMatrixフィールドのプレビューが無効になっています。",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "BlocksmithのMatrixフィールド設定でプレビューを有効にして、ブロックのプレビューを有効化してください。",
+    "Open Matrix Settings" => "Matrix設定を開く",
 ];

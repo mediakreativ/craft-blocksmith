@@ -76,4 +76,15 @@ return [
     "Handle" => "句柄",
     "Enable Preview" => "启用预览",
     "Configure Matrix Fields" => "配置矩阵字段",
+
+    "No Matrix fields exist yet." => "尚未存在 Matrix 字段。",
+    "No Blocks exist yet." => "尚未存在块。",
+    "Create Matrix Field" => "创建 Matrix 字段",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "创建具有条目类型的 Matrix 字段后，块将出现在此处。",
+    "All Matrix fields have preview disabled." =>
+        "所有 Matrix 字段的预览已被禁用。",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "在 Blocksmith 的 Matrix 字段设置中启用预览以激活块预览。",
+    "Open Matrix Settings" => "打开 Matrix 设置",
 ];

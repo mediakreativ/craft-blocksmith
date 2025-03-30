@@ -81,4 +81,15 @@ return [
     "Handle" => "Odnośnik",
     "Enable Preview" => "Włącz podgląd",
     "Configure Matrix Fields" => "Konfiguruj pola Matrix",
+
+    "No Matrix fields exist yet." => "Nie istnieją jeszcze żadne pola Matrix.",
+    "No Blocks exist yet." => "Nie istnieją jeszcze żadne bloki.",
+    "Create Matrix Field" => "Utwórz pole Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Bloki pojawią się tutaj po utworzeniu pól Matrix z typami wpisów.",
+    "All Matrix fields have preview disabled." =>
+        "Podgląd jest wyłączony dla wszystkich pól Matrix.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Włącz podgląd w ustawieniach pól Matrix w Blocksmith, aby aktywować podglądy bloków.",
+    "Open Matrix Settings" => "Otwórz ustawienia Matrix",
 ];

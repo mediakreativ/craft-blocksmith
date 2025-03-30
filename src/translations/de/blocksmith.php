@@ -81,4 +81,16 @@ return [
     "Handle" => "Kurzname",
     "Enable Preview" => "Vorschau aktivieren",
     "Configure Matrix Fields" => "Matrix-Felder konfigurieren",
+
+    "No Matrix fields exist yet." =>
+        "Es wurden noch keine Matrix-Felder erstellt.",
+    "No Blocks exist yet." => "Noch keine Blocks vorhanden.",
+    "Create Matrix Field" => "Matrix-Feld erstellen",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Blocks erscheinen hier, sobald du Matrix-Felder mit Entry Types erstellt hast.",
+    "All Matrix fields have preview disabled." =>
+        "Für alle Matrix-Felder ist die Vorschau deaktiviert.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Aktiviere die Vorschau in den Blocksmith Matrix-Feld-Einstellungen, um Block-Vorschauen zu aktivieren.",
+    "Open Matrix Settings" => "Matrix-Einstellungen öffnen",
 ];

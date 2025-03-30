@@ -80,4 +80,15 @@ return [
     "Handle" => "מזהה ייחודי",
     "Enable Preview" => "הפעל תצוגה מקדימה",
     "Configure Matrix Fields" => "הגדרת שדות מטריצה",
+
+    "No Matrix fields exist yet." => "עדיין אין שדות Matrix.",
+    "No Blocks exist yet." => "עדיין אין בלוקים.",
+    "Create Matrix Field" => "צור שדה Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "בלוקים יופיעו כאן לאחר שתיצור שדות Matrix עם סוגי ערכים.",
+    "All Matrix fields have preview disabled." =>
+        "לכל שדות ה-Matrix הושבתה התצוגה המקדימה.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "הפעל תצוגה מקדימה בהגדרות שדה ה-Matrix של Blocksmith כדי להפעיל תצוגה מקדימה לבלוקים.",
+    "Open Matrix Settings" => "פתח הגדרות Matrix",
 ];

@@ -81,4 +81,15 @@ return [
     "Handle" => "Identificateur",
     "Enable Preview" => "Activer l’aperçu",
     "Configure Matrix Fields" => "Configurer les champs Matrix",
+
+    "No Matrix fields exist yet." => "Aucun champ Matrix n'existe encore.",
+    "No Blocks exist yet." => "Aucun bloc n'existe encore.",
+    "Create Matrix Field" => "Créer un champ Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Les blocs apparaîtront ici une fois que vous aurez créé des champs Matrix avec des types d’entrée.",
+    "All Matrix fields have preview disabled." =>
+        "Tous les champs Matrix ont l’aperçu désactivé.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Activez l’aperçu dans les paramètres des champs Matrix de Blocksmith pour activer l’aperçu des blocs.",
+    "Open Matrix Settings" => "Ouvrir les paramètres Matrix",
 ];

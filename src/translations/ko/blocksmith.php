@@ -81,4 +81,15 @@ return [
     "Handle" => "핸들",
     "Enable Preview" => "미리보기 활성화",
     "Configure Matrix Fields" => "매트릭스 필드 구성",
+
+    "No Matrix fields exist yet." => "Matrix 필드가 아직 존재하지 않습니다.",
+    "No Blocks exist yet." => "블록이 아직 존재하지 않습니다.",
+    "Create Matrix Field" => "Matrix 필드 만들기",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "엔트리 타입이 있는 Matrix 필드를 만들면 여기에 블록이 표시됩니다.",
+    "All Matrix fields have preview disabled." =>
+        "모든 Matrix 필드의 미리보기가 비활성화되어 있습니다.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Blocksmith의 Matrix 필드 설정에서 미리보기를 활성화하여 블록 미리보기를 사용할 수 있습니다.",
+    "Open Matrix Settings" => "Matrix 설정 열기",
 ];

@@ -81,4 +81,15 @@ return [
     "Handle" => "Hantera",
     "Enable Preview" => "Aktivera förhandsvisning",
     "Configure Matrix Fields" => "Konfigurera Matrix-fält",
+
+    "No Matrix fields exist yet." => "Inga Matrix-fält har skapats ännu.",
+    "No Blocks exist yet." => "Inga block finns ännu.",
+    "Create Matrix Field" => "Skapa Matrix-fält",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Block kommer att visas här när du har skapat Matrix-fält med inmatningstyper.",
+    "All Matrix fields have preview disabled." =>
+        "Alla Matrix-fält har förhandsvisning inaktiverad.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Aktivera förhandsvisning i Blocksmiths Matrix-fältinställningar för att aktivera blockförhandsvisningar.",
+    "Open Matrix Settings" => "Öppna Matrix-inställningar",
 ];

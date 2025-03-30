@@ -82,4 +82,15 @@ return [
     "Handle" => "Дескриптор",
     "Enable Preview" => "Увімкнути попередній перегляд",
     "Configure Matrix Fields" => "Налаштувати поля Matrix",
+
+    "No Matrix fields exist yet." => "Поля Matrix ще не створено.",
+    "No Blocks exist yet." => "Блоки ще не створено.",
+    "Create Matrix Field" => "Створити поле Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Блоки з'являться тут після створення полів Matrix з типами записів.",
+    "All Matrix fields have preview disabled." =>
+        "Усі поля Matrix мають вимкнений попередній перегляд.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Увімкніть попередній перегляд у налаштуваннях поля Matrix у Blocksmith для активації перегляду блоків.",
+    "Open Matrix Settings" => "Відкрити налаштування Matrix",
 ];

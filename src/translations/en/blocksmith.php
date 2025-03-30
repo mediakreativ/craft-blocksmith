@@ -80,4 +80,15 @@ return [
     "Handle" => "Handle",
     "Enable Preview" => "Εnable Preview",
     "Configure Matrix Fields" => "Configure Matrix Fields",
+
+    "No Matrix fields exist yet." => "No Matrix fields exist yet.",
+    "No Blocks exist yet." => "No Blocks exist yet.",
+    "Create Matrix Field" => "Create Matrix Field",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Blocks will appear here once you've created Matrix fields with entry types.",
+    "All Matrix fields have preview disabled." =>
+        "All Matrix fields have preview disabled.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews.",
+    "Open Matrix Settings" => "Open Matrix Settings",
 ];

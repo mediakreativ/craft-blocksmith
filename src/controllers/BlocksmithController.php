@@ -669,11 +669,29 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
+        $matrixFieldSettings = [];
+        foreach ($matrixFields as $field) {
+            $setting = (new \yii\db\Query())
+                ->select(["enablePreview"])
+                ->from("{{%blocksmith_matrix_settings}}")
+                ->where(["fieldHandle" => $field->handle])
+                ->one();
+
+            $matrixFieldSettings[] = [
+                "name" => $field->name,
+                "handle" => $field->handle,
+                "enablePreview" => $setting
+                    ? (bool) $setting["enablePreview"]
+                    : false,
+            ];
+        }
+
         return $this->renderTemplate("blocksmith/_settings/blocks", [
             "plugin" => Blocksmith::getInstance(),
             "title" => Craft::t("blocksmith", "Blocksmith"),
             "allBlockTypes" => $allBlockTypes,
             "placeholderImageUrl" => $placeholderImageUrl,
+            "matrixFields" => $matrixFieldSettings,
         ]);
     }
 

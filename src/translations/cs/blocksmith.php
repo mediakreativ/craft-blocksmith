@@ -81,4 +81,15 @@ return [
     "Handle" => "Identifikátor",
     "Enable Preview" => "Povolit náhled",
     "Configure Matrix Fields" => "Nastavit pole Matrix",
+
+    "No Matrix fields exist yet." => "Zatím neexistují žádná pole Matrix.",
+    "No Blocks exist yet." => "Zatím neexistují žádné bloky.",
+    "Create Matrix Field" => "Vytvořit pole Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Jakmile vytvoříte pole Matrix s typy záznamů, bloky se zde zobrazí.",
+    "All Matrix fields have preview disabled." =>
+        "U všech polí Matrix je náhled deaktivován.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Povolte náhled v nastavení polí Matrix v Blocksmith, abyste aktivovali náhledy bloků.",
+    "Open Matrix Settings" => "Otevřít nastavení Matrix",
 ];

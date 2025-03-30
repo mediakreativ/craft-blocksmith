@@ -4,8 +4,6 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{# {% set fullPageForm = true %} #}
-
 {% set crumbs = [
     {
         label: "Settings"|t('blocksmith'),
@@ -22,72 +20,98 @@
 {% endblock %}
 
 {% block content %}
-	<input type="hidden" name="pluginHandle" value="blocksmith">
-	{{ actionInput('blocksmith/blocksmith/save-settings') }}
-	<div class="blocksmith-settings-wrapper">
-		<div class="blocksmith-settings-content">
-			<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
-			<div class="blocksmith-block-list"> 
-				{% for blockType in allBlockTypes %}
-					<div class="blocksmith-block-card-horizontal">
-						<div class="blocksmith-block-content">
-							<div class="blocksmith-block-image">
-								<img src="{{ blockType.previewImageUrl }}" alt="Preview Image" onerror="this.src='{{ placeholderImageUrl|e('js') }}';" loading="lazy">
-							</div>
-							<div class="blocksmith-block-details">
-								<div class="blocksmith-blocktype-header">
-									<span class="blocksmith-blockname">{{ blockType.name }}</span>
-									<div class="block-handle">
-										<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
-											<span class="copytextbtn__value">{{ blockType.handle }}</span>
-											<span class="visually-hidden">Copy to clipboard</span>
-											<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+	{% if allBlockTypes is not empty %}
+		<input type="hidden" name="pluginHandle" value="blocksmith">
+		{{ actionInput('blocksmith/blocksmith/save-settings') }}
+		<div class="blocksmith-settings-wrapper">
+			<div class="blocksmith-settings-content">
+				<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
+				<div class="blocksmith-block-list">
+					{% for blockType in allBlockTypes %}
+						<div class="blocksmith-block-card-horizontal">
+							<div class="blocksmith-block-content">
+								<div class="blocksmith-block-image">
+									<img src="{{ blockType.previewImageUrl }}" alt="Preview Image" onerror="this.src='{{ placeholderImageUrl|e('js') }}';" loading="lazy">
+								</div>
+								<div class="blocksmith-block-details">
+									<div class="blocksmith-blocktype-header">
+										<span class="blocksmith-blockname">{{ blockType.name }}</span>
+										<div class="block-handle">
+											<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+												<span class="copytextbtn__value">{{ blockType.handle }}</span>
+												<span class="visually-hidden">Copy to clipboard</span>
+												<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+											</div>
 										</div>
 									</div>
+									<p class="block-description">
+										{{ blockType.description ?: "No description available." }}
+									</p>
 								</div>
-								<p class="block-description">
-									{{ blockType.description ?: "No description available." }}
-								</p>
+								<div class="block-actions">
+									<a class="btn edit-btn" href="{{ url('blocksmith/settings/edit-block/' ~ blockType.handle) }}">
+										{{ "Edit"|t('blocksmith') }}
+									</a>
+								</div>
 							</div>
-							<div class="block-actions">
-								<a class="btn edit-btn" href="{{ url('blocksmith/settings/edit-block/' ~ blockType.handle) }}">
-									{{ "Edit"|t('blocksmith') }}
-								</a>
+							<div class="blocksmith-card-footer">
+								{% if blockType.matrixFields|length > 0 %}
+									<div class="blocksmith-matrix-badges">
+										{% if blockType.matrixFields|length == 1 %}
+											<span class="badge-label">{{ 'Matrix Field'|t('blocksmith') }}:</span>
+										{% else %}
+											<span class="badge-label">{{ 'Matrix Fields'|t('blocksmith') }}:</span>
+										{% endif %}
+										{% for matrixField in blockType.matrixFields %}
+											<div class="blocksmith-badge blocksmith-matrix-field-badge code">
+												{{ matrixField.name }}
+											</div>
+										{% endfor %}
+									</div>
+								{% endif %}
+
+								{% set categories = blockType.categories ?? [] %}
+
+								{% if blockType.categories|length > 0 %}
+									<div class="blocksmith-category-badges">
+										<span class="blocksmith-badge-label">{{ "Categories"|t('blocksmith') }}:</span>
+										{% for categoryName in blockType.categories %}
+											<span class="blocksmith-badge blocksmith-category-badge code">{{ categoryName }}</span>
+										{% endfor %}
+									</div>
+								{% else %}
+									<span class="badge-label">{{ 'No categories assigned'|t('blocksmith') }}</span>
+								{% endif %}
 							</div>
 						</div>
-						<div class="blocksmith-card-footer">
-							{% if blockType.matrixFields|length > 0 %}
-								<div class="blocksmith-matrix-badges">
-									{% if blockType.matrixFields|length == 1 %}
-										<span class="badge-label">{{ 'Matrix Field'|t('blocksmith') }}:</span>
-									{% else %}
-										<span class="badge-label">{{ 'Matrix Fields'|t('blocksmith') }}:</span>
-									{% endif %}
-									{% for matrixField in blockType.matrixFields %}
-										<div class="blocksmith-badge blocksmith-matrix-field-badge code">
-											{{ matrixField.name }}
-										</div>
-									{% endfor %}
-								</div>
-							{% endif %}
-
-							{% set categories = blockType.categories ?? [] %}
-
-							{% if blockType.categories|length > 0 %}
-								<div class="blocksmith-category-badges">
-									<span class="blocksmith-badge-label">{{ "Categories"|t('blocksmith') }}:</span>
-									{% for categoryName in blockType.categories %}
-										<span class="blocksmith-badge blocksmith-category-badge code">{{ categoryName }}</span>
-									{% endfor %}
-								</div>
-							{% else %}
-								<span class="badge-label">{{ 'No categories assigned'|t('blocksmith') }}</span>
-							{% endif %}
-
-
-						</div>
-					</div>
-				{% endfor %}
+					{% endfor %}
+				</div>
 			</div>
-		</div>
+		{% else %}
+			{% if matrixFields is not empty and matrixFields|filter(f => not f.enablePreview)|length == matrixFields|length %}
+				<div class="blocksmith-zilch">
+					<div class="blocksmith-zilch-text">
+						{{ "All Matrix fields have preview disabled."|t('blocksmith') }}
+					</div>
+					<div class="blocksmith-zilch-text-small">
+						{{ "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews."|t('blocksmith') }}
+					</div>
+					<a href="{{ url('blocksmith/settings/matrix-fields') }}" class="btn submit icon">
+						{{ "Open Matrix Settings"|t('blocksmith') }}
+					</a>
+				</div>
+			{% else %}
+				<div class="blocksmith-zilch">
+					<div class="blocksmith-zilch-text">
+						{{ "No Blocks exist yet."|t('blocksmith') }}<br>
+					</div>
+					<div class="blocksmith-zilch-text-small">
+						{{ "Blocks will appear here once you've created Matrix fields with entry types."|t('blocksmith') }}<br>
+					</div>
+					<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon">
+						{{ "Create Matrix Field"|t('blocksmith') }}
+					</a>
+				</div>
+			{% endif %}
+		{% endif %}
 	{% endblock %}

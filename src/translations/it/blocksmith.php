@@ -81,4 +81,15 @@ return [
     "Handle" => "Puntatore",
     "Enable Preview" => "Abilita anteprima",
     "Configure Matrix Fields" => "Configura i campi Matrix",
+
+    "No Matrix fields exist yet." => "Non esistono ancora campi Matrix.",
+    "No Blocks exist yet." => "Non esistono ancora blocchi.",
+    "Create Matrix Field" => "Crea campo Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "I blocchi appariranno qui una volta creati i campi Matrix con i tipi di ingresso.",
+    "All Matrix fields have preview disabled." =>
+        "Tutti i campi Matrix hanno l’anteprima disattivata.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Abilita l’anteprima nelle impostazioni dei campi Matrix di Blocksmith per attivare l’anteprima dei blocchi.",
+    "Open Matrix Settings" => "Apri impostazioni Matrix",
 ];

@@ -81,4 +81,15 @@ return [
     "Handle" => "Дескриптор",
     "Enable Preview" => "Включить предпросмотр",
     "Configure Matrix Fields" => "Настроить поля Matrix",
+
+    "No Matrix fields exist yet." => "Поля Matrix пока не существуют.",
+    "No Blocks exist yet." => "Блоки пока не существуют.",
+    "Create Matrix Field" => "Создать поле Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Блоки появятся здесь, как только вы создадите поля Matrix с типами записей.",
+    "All Matrix fields have preview disabled." =>
+        "У всех полей Matrix отключён предварительный просмотр.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Включите предварительный просмотр в настройках полей Matrix Blocksmith, чтобы активировать предварительный просмотр блоков.",
+    "Open Matrix Settings" => "Открыть настройки Matrix",
 ];

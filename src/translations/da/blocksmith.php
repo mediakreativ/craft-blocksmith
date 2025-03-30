@@ -80,4 +80,15 @@ return [
     "Handle" => "Kodetagget",
     "Enable Preview" => "Aktiver forhåndsvisning",
     "Configure Matrix Fields" => "Konfigurer Matrix-felter",
+
+    "No Matrix fields exist yet." => "Der findes endnu ingen Matrix-felter.",
+    "No Blocks exist yet." => "Der findes endnu ingen blokke.",
+    "Create Matrix Field" => "Opret Matrix-felt",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Blokke vil blive vist her, når du har oprettet Matrix-felter med entry types.",
+    "All Matrix fields have preview disabled." =>
+        "Alle Matrix-felter har forhåndsvisning deaktiveret.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Aktivér forhåndsvisning i Blocksmith’s Matrix-feltindstillinger for at aktivere blokforhåndsvisning.",
+    "Open Matrix Settings" => "Åbn Matrix-indstillinger",
 ];

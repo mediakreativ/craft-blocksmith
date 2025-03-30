@@ -81,4 +81,15 @@ return [
     "Handle" => "Λαβή",
     "Enable Preview" => "Ενεργοποίηση προεπισκόπησης",
     "Configure Matrix Fields" => "Ρύθμιση πεδίων Matrix",
+
+    "No Matrix fields exist yet." => "Δεν υπάρχουν ακόμη πεδία Matrix.",
+    "No Blocks exist yet." => "Δεν υπάρχουν ακόμη μπλοκ.",
+    "Create Matrix Field" => "Δημιουργία πεδίου Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Τα μπλοκ θα εμφανιστούν εδώ αφού δημιουργήσετε πεδία Matrix με τύπους εγγραφών.",
+    "All Matrix fields have preview disabled." =>
+        "Όλα τα πεδία Matrix έχουν την προεπισκόπηση απενεργοποιημένη.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Ενεργοποιήστε την προεπισκόπηση στις Ρυθμίσεις πεδίου Matrix του Blocksmith για να ενεργοποιήσετε τις προεπισκοπήσεις μπλοκ.",
+    "Open Matrix Settings" => "Άνοιγμα Ρυθμίσεων Matrix",
 ];

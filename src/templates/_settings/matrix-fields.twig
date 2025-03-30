@@ -3,7 +3,7 @@
 {% extends '_layouts/cp' %}
 {% import '_includes/forms' as forms %}
 
-{% set fullPageForm = true %}
+{% set fullPageForm = matrixFields is not empty %}
 
 {% set crumbs = [
     {
@@ -23,44 +23,54 @@
 {% endblock %}
 
 {% block content %}
-	<input type="hidden" name="pluginHandle" value="blocksmith">
-	{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
-	<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
-
-	<table class="data fullwidth">
-		<thead>
-			<tr>
-				<th>{{ "Matrix Field"|t('blocksmith') }}</th>
-				<th>{{ "Handle"|t('blocksmith') }}</th>
-				<th>{{ "Enable Preview"|t('blocksmith') }}</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for field in matrixFields %}
+	{% if matrixFields is not empty %}
+		<input type="hidden" name="pluginHandle" value="blocksmith">
+		{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
+		<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
+		<table class="data fullwidth">
+			<thead>
 				<tr>
-					<td>{{ field.name }}</td>
-					<td>
-						<div class="block-handle">
-							<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
-								<span class="copytextbtn__value">{{ field.handle }}</span>
-								<span class="visually-hidden">Copy to clipboard</span>
-								<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
-							</div>
-						</div>
-					</td>
-					<td>
-						{{ forms.lightswitchField({
-                            name: 'enablePreview[' ~ field.handle ~ ']',
-                            id: 'enablePreview-' ~ field.handle,
-                            on: field.enablePreview,
-                            small: true,
-                            inputAttributes: {
-                                'data-handle': field.handle
-                            }
-                        }) }}
-					</td>
+					<th>{{ "Matrix Field"|t('blocksmith') }}</th>
+					<th>{{ "Handle"|t('blocksmith') }}</th>
+					<th>{{ "Enable Preview"|t('blocksmith') }}</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for field in matrixFields %}
+					<tr>
+						<td>{{ field.name }}</td>
+						<td>
+							<div class="block-handle">
+								<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+									<span class="copytextbtn__value">{{ field.handle }}</span>
+									<span class="visually-hidden">Copy to clipboard</span>
+									<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+								</div>
+							</div>
+						</td>
+						<td>
+							{{ forms.lightswitchField({
+                                name: 'enablePreview[' ~ field.handle ~ ']',
+                                id: 'enablePreview-' ~ field.handle,
+                                on: field.enablePreview,
+                                small: true,
+                                inputAttributes: {
+                                    'data-handle': field.handle
+                                }
+                            }) }}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<div class="blocksmith-zilch">
+			<div class="blocksmith-zilch-text">
+				{{ "No Matrix fields exist yet."|t('blocksmith') }}
+			</div>
+			<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon">
+				{{ "Create Matrix Field"|t('blocksmith') }}
+			</a>
+		</div>
+	{% endif %}
 {% endblock %}

@@ -81,4 +81,15 @@ return [
     "Handle" => "Ingang",
     "Enable Preview" => "Voorvertoning inschakelen",
     "Configure Matrix Fields" => "Matrix-velden configureren",
+
+    "No Matrix fields exist yet." => "Er bestaan nog geen Matrix-velden.",
+    "No Blocks exist yet." => "Er bestaan nog geen blokken.",
+    "Create Matrix Field" => "Maak Matrix-veld aan",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Blokken verschijnen hier zodra je Matrix-velden met invoertypes hebt gemaakt.",
+    "All Matrix fields have preview disabled." =>
+        "Voor alle Matrix-velden is de preview uitgeschakeld.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Schakel preview in via de Matrix-veldinstellingen van Blocksmith om blok-previews te activeren.",
+    "Open Matrix Settings" => "Open Matrix-instellingen",
 ];

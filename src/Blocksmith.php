@@ -13,6 +13,11 @@ use yii\base\Event;
 use mediakreativ\blocksmith\services\BlocksmithService;
 use mediakreativ\blocksmith\assets\BlocksmithAsset;
 use mediakreativ\blocksmith\models\BlocksmithSettings;
+use craft\events\FieldEvent;
+use craft\services\Fields;
+use craft\db\Query;
+use craft\helpers\Db;
+use craft\helpers\StringHelper;
 
 /**
  * Blocksmith plugin for Craft CMS
@@ -161,6 +166,77 @@ class Blocksmith extends Plugin
         $this->initializeCoreFeatures();
         $this->initializeSiteFeatures();
         $this->initializeControlPanelFeatures();
+
+        /**
+         * Automatically registers a new Matrix field in blocksmith_matrix_settings when it is saved.
+         *
+         * This ensures that newly created Matrix fields are enabled for Blocksmith preview
+         * without requiring manual activation in the settings panel.
+         *
+         * @param FieldEvent $event The event containing the saved field.
+         */
+        Event::on(Fields::class, Fields::EVENT_AFTER_SAVE_FIELD, function (
+            FieldEvent $event
+        ) {
+            $field = $event->field;
+
+            if ($field instanceof \craft\fields\Matrix) {
+                $handle = $field->handle;
+
+                $exists = (new Query())
+                    ->from("{{%blocksmith_matrix_settings}}")
+                    ->where(["fieldHandle" => $handle])
+                    ->exists();
+
+                if (!$exists) {
+                    Craft::$app->db
+                        ->createCommand()
+                        ->insert("{{%blocksmith_matrix_settings}}", [
+                            "fieldHandle" => $handle,
+                            "enablePreview" => true,
+                            "dateCreated" => Db::prepareDateForDb(
+                                new \DateTime()
+                            ),
+                            "dateUpdated" => Db::prepareDateForDb(
+                                new \DateTime()
+                            ),
+                            "uid" => StringHelper::UUID(),
+                        ])
+                        ->execute();
+
+                    Craft::info(
+                        "Blocksmith: Auto-registered Matrix field '$handle' in matrix_settings.",
+                        __METHOD__
+                    );
+                }
+            }
+        });
+
+        /**
+         * Automatically removes a Matrix field entry from blocksmith_matrix_settings when it is deleted.
+         *
+         * This keeps the Blocksmith settings table clean and avoids orphaned field references.
+         *
+         * @param FieldEvent $event The event containing the field being deleted.
+         */
+        Event::on(Fields::class, Fields::EVENT_BEFORE_DELETE_FIELD, function (
+            FieldEvent $event
+        ) {
+            $field = $event->field;
+            if ($field instanceof \craft\fields\Matrix) {
+                Craft::$app->db
+                    ->createCommand()
+                    ->delete("{{%blocksmith_matrix_settings}}", [
+                        "fieldHandle" => $field->handle,
+                    ])
+                    ->execute();
+
+                Craft::info(
+                    "Blocksmith: Removed matrix setting for deleted field '{$field->handle}'.",
+                    __METHOD__
+                );
+            }
+        });
     }
 
     /**

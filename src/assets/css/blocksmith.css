@@ -11,6 +11,27 @@
 /* ### Plugin Settings ### */
 /* ####################### */
 
+.blocksmith-zilch {
+  color: var(--light-text-color);
+  padding-block: 100px;
+  padding-inline: 0;
+  text-align: center;
+}
+
+.blocksmith-zilch-text {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.blocksmith-zilch-text-small {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.blocksmith-zilch .btn {
+  margin-top: 1rem;
+}
+
 .blocksmith-hint {
   margin-bottom: 20px;
   padding: 10px 15px;

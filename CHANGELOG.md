@@ -1,3 +1,17 @@
+## [1.2.7] - 2025-03-30
+
+### Bug Fixes
+- Fixed a critical issue where newly created Matrix fields were not automatically registered in Blocksmith’s settings until the Matrix Settings were saved again.
+  - Previously, clicking the “Add Block” button for such fields opened an empty modal.
+  - Blocksmith now listens for Matrix field creation and automatically inserts the required DB record for preview support.
+- When deleting a Matrix field, the corresponding record is now also cleaned up.
+
+### Improved UX
+Improved empty state messaging in the **Block Settings** area for greater clarity:
+  - If no blocks exist, a "Create Matrix Field" button is now shown.
+  - If all Matrix fields have preview disabled, a clear hint with a button to open the Matrix Field Settings appears.
+
+
 ## [1.2.6] - 2024-12-23
 
 ### Added

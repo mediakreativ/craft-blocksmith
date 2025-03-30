@@ -80,4 +80,15 @@ return [
     "Handle" => "المقبض",
     "Enable Preview" => "تمكين المعاينة",
     "Configure Matrix Fields" => "تكوين حقول المصفوفة",
+
+    "No Matrix fields exist yet." => "لا توجد حقول Matrix حتى الآن.",
+    "No Blocks exist yet." => "لا توجد كتل حتى الآن.",
+    "Create Matrix Field" => "إنشاء حقل Matrix",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "ستظهر الكتل هنا بمجرد إنشاء حقول Matrix مع أنواع الإدخالات.",
+    "All Matrix fields have preview disabled." =>
+        "جميع حقول Matrix تم تعطيل المعاينة لها.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "قم بتمكين المعاينة في إعدادات حقل Matrix الخاصة بـ Blocksmith لتفعيل معاينة الكتل.",
+    "Open Matrix Settings" => "فتح إعدادات Matrix",
 ];

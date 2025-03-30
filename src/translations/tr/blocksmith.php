@@ -81,4 +81,15 @@ return [
     "Handle" => "Simge",
     "Enable Preview" => "Önizlemeyi Etkinleştir",
     "Configure Matrix Fields" => "Matrix Alanlarını Yapılandır",
+
+    "No Matrix fields exist yet." => "Henüz Matrix alanı yok.",
+    "No Blocks exist yet." => "Henüz blok yok.",
+    "Create Matrix Field" => "Matrix Alanı Oluştur",
+    "Blocks will appear here once you've created Matrix fields with entry types." =>
+        "Giriş türleri ile Matrix alanları oluşturduğunuzda bloklar burada görünecektir.",
+    "All Matrix fields have preview disabled." =>
+        "Tüm Matrix alanlarında önizleme devre dışı.",
+    "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
+        "Blok önizlemelerini etkinleştirmek için Blocksmith’in Matrix Alanı Ayarlarından önizlemeyi etkinleştirin.",
+    "Open Matrix Settings" => "Matrix Ayarlarını Aç",
 ];
