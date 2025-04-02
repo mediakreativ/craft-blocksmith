@@ -115,11 +115,11 @@ class Blocksmith extends Plugin
                     "blocksmith/settings/edit-block/<blockTypeHandle>"
                 ] = "blocksmith/blocksmith/edit-block";
 
-                $event->rules["blocksmith/get-block-types"] =
-                    "blocksmith/blocksmith/get-block-types";
+                $event->rules["blocksmith-modal/get-block-types"] =
+                    "blocksmith/blocksmith-modal/get-block-types";
 
-                $event->rules["blocksmith/get-categories"] =
-                    "blocksmith/blocksmith/get-categories";
+                $event->rules["blocksmith-modal/get-categories"] =
+                    "blocksmith/blocksmith-modal/get-categories";
 
                 $event->rules["blocksmith/reorder-categories"] =
                     "blocksmith/blocksmith/reorder-categories";

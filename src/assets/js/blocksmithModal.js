@@ -37,7 +37,7 @@
 
     loadBlockTypes() {
       return $.ajax({
-        url: Craft.getCpUrl("blocksmith/get-block-types"),
+        url: Craft.getCpUrl("blocksmith-modal/get-block-types"),
         method: "GET",
         dataType: "json",
       });
@@ -165,7 +165,7 @@
 
     loadCategories() {
       return $.ajax({
-        url: Craft.getCpUrl("blocksmith/get-categories"),
+        url: Craft.getCpUrl("blocksmith-modal/get-categories"),
         method: "GET",
         dataType: "json",
       });

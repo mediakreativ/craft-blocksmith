@@ -407,22 +407,6 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
-     * Retrieves all categories sorted by their sort order.
-     *
-     * @return \yii\web\Response JSON response containing the list of categories.
-     */
-    public function actionGetCategories(): Response
-    {
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name", "sortOrder"])
-            ->from("{{%blocksmith_categories}}")
-            ->orderBy(["sortOrder" => SORT_ASC])
-            ->all();
-
-        return $this->asJson($categories);
-    }
-
-    /**
      * Reorders categories based on the provided IDs.
      *
      * @return \yii\web\Response JSON response indicating success or failure.
@@ -825,90 +809,6 @@ class BlocksmithController extends \craft\web\Controller
         $this->requireCpRequest();
         $this->settings = Blocksmith::getInstance()->getSettings();
         return true;
-    }
-
-    /**
-     * Retrieves block types with their descriptions and other data for the modal
-     *
-     * @return \yii\web\Response JSON response with block types
-     */
-    public function actionGetBlockTypes(): Response
-    {
-        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
-        $fieldsService = Craft::$app->fields;
-
-        $blockTypes = [];
-        $processedEntryTypes = [];
-
-        $allFields = $fieldsService->getAllFields();
-
-        $fieldsEnabled = (new \yii\db\Query())
-            ->select(["fieldHandle", "enablePreview"])
-            ->from("{{%blocksmith_matrix_settings}}")
-            ->indexBy("fieldHandle")
-            ->where(["enablePreview" => true])
-            ->all();
-
-        foreach ($allFields as $field) {
-            if (
-                $field instanceof \craft\fields\Matrix &&
-                isset($fieldsEnabled[$field->handle])
-            ) {
-                foreach ($field->getEntryTypes() as $entryType) {
-                    if (in_array($entryType->id, $processedEntryTypes, true)) {
-                        continue;
-                    }
-                    $processedEntryTypes[] = $entryType->id;
-
-                    $blockData = (new \yii\db\Query())
-                        ->select([
-                            "description",
-                            "categories",
-                            "previewImageUrl",
-                        ])
-                        ->from("{{%blocksmith_blockdata}}")
-                        ->where(["entryTypeId" => $entryType->id])
-                        ->one();
-
-                    $matrixFields = [];
-                    foreach ($allFields as $potentialField) {
-                        if ($potentialField instanceof \craft\fields\Matrix) {
-                            $entryTypeHandles = array_map(
-                                fn($type) => $type->handle,
-                                $potentialField->getEntryTypes()
-                            );
-                            if (
-                                in_array(
-                                    $entryType->handle,
-                                    $entryTypeHandles,
-                                    true
-                                )
-                            ) {
-                                $matrixFields[] = [
-                                    "name" => $potentialField->name,
-                                    "handle" => $potentialField->handle,
-                                ];
-                            }
-                        }
-                    }
-
-                    $blockTypes[] = [
-                        "name" => $entryType->name,
-                        "handle" => $entryType->handle,
-                        "description" => $blockData["description"] ?? null,
-                        "categories" => json_decode(
-                            $blockData["categories"] ?? "[]"
-                        ),
-                        "previewImage" =>
-                            $blockData["previewImageUrl"] ??
-                            $placeholderImageUrl,
-                        "matrixFields" => $matrixFields,
-                    ];
-                }
-            }
-        }
-
-        return $this->asJson($blockTypes);
     }
 
     /**

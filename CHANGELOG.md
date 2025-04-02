@@ -1,7 +1,12 @@
+## [1.3.0] - 2025-04-02
+
+### Fixed
+- Fixed access issues for non-admin users when fetching modal data.
+
 ## [1.2.7] - 2025-03-30
 
-### Bug Fixes
-- Fixed a critical issue where newly created Matrix fields were not automatically registered in Blocksmith’s settings until the Matrix Settings were saved again.
+### Fixed
+- Fixed an issue where newly created Matrix fields were not automatically registered in Blocksmith’s settings until the Matrix Settings were saved again.
   - Previously, clicking the “Add Block” button for such fields opened an empty modal.
   - Blocksmith now listens for Matrix field creation and automatically inserts the required DB record for preview support.
 - When deleting a Matrix field, the corresponding record is now also cleaned up.
