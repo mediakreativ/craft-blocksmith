@@ -65,7 +65,7 @@
 
 .blocksmith-block-card-horizontal {
   display: flex;
-  flex-direction: column; /* Behält die Hauptinhalte getrennt vom Footer */
+  flex-direction: column;
   align-items: stretch;
   max-width: 800px;
   padding: 16px;
@@ -77,7 +77,7 @@
 }
 
 .blocksmith-block-content {
-  display: flex; /* Die Hauptinhalte bleiben horizontal */
+  display: flex;
   align-items: flex-start;
 }
 
@@ -461,7 +461,7 @@ body .blocksmith-modal {
 
 .blocksmith-block.blocksmith-block-hidden {
   opacity: 0 !important;
-  height: 0 !important; /* Override Masonry's height */
+  height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   border: none !important;
@@ -535,8 +535,13 @@ body .blocksmith-modal {
 ul.matrix-extended > li > button[data-action="add-block"] {
   display: none !important;
 }
+
 ul.matrix-extended.blocksmith-preview-disabled
   > li
   > button[data-action="add-block"] {
+  display: flex !important;
+}
+
+.nested-element-cards .matrix-extended-buttons {
   display: flex !important;
 }
