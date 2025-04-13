@@ -43,6 +43,7 @@ class BlocksmithModalController extends Controller
     {
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $fieldsService = Craft::$app->fields;
+        $requestedHandle = Craft::$app->getRequest()->getParam("handle");
 
         $blockTypes = [];
         $processedEntryTypes = [];
@@ -59,7 +60,8 @@ class BlocksmithModalController extends Controller
         foreach ($allFields as $field) {
             if (
                 $field instanceof \craft\fields\Matrix &&
-                isset($fieldsEnabled[$field->handle])
+                isset($fieldsEnabled[$field->handle]) &&
+                (!$requestedHandle || $field->handle === $requestedHandle)
             ) {
                 foreach ($field->getEntryTypes() as $entryType) {
                     if (in_array($entryType->id, $processedEntryTypes, true)) {

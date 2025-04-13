@@ -184,6 +184,7 @@
                 }
 
                 $button.trigger("activate");
+                // $button[0].click();
               } catch (error) {
                 console.error("Error adding block:", error);
               }
@@ -193,6 +194,10 @@
           modal.show(matrixFieldHandle);
         });
       };
+
+      // Initialisiere auch Card View Support
+      this.initCardViewSupport();
+      this.observeLivePreview();
     },
 
     /**
@@ -410,6 +415,170 @@
       }
 
       $addButton.enable();
+    },
+
+    initCardViewSupport: function (root = document) {
+
+
+      const createBlocksmithButton = (nativeBtn, fieldHandle) => {
+        nativeBtn.classList.add("blocksmith-replaced");
+        nativeBtn.style.display = "none";
+
+        const labelEl = nativeBtn.querySelector(".label");
+        const newBlockLabel =
+          labelEl?.textContent.trim() || Craft.t("blocksmith", "New Entry");
+
+        const customBtn = document.createElement("button");
+        customBtn.className = "btn add icon dashed blocksmith-add-btn";
+        customBtn.textContent = newBlockLabel;
+
+        nativeBtn.after(customBtn);
+
+        // Initial disabled status übernehmen
+        const syncDisabledState = () => {
+          const isDisabled = nativeBtn.classList.contains("disabled");
+          customBtn.disabled = isDisabled;
+          customBtn.classList.toggle("disabled", isDisabled);
+          customBtn.title = isDisabled
+            ? Craft.t("blocksmith", "Maximum number of blocks reached.")
+            : "";
+        };
+
+        syncDisabledState();
+
+        // MutationObserver für Klassenänderungen
+        const observer = new MutationObserver(() => {
+          syncDisabledState();
+        });
+
+        observer.observe(nativeBtn, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+
+        customBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          if (customBtn.disabled) {
+            return;
+          }
+
+          // Extract raw field handle in case it's namespaced
+          const rawHandle =
+            fieldHandle?.match(/fields-(.+?)(-|$)/)?.[1] || fieldHandle;
+
+          console.log("Opening Blocksmith Modal with handle:", rawHandle);
+
+          const modal = new BlocksmithModal(
+            [],
+            (selectedBlock) => {
+              console.log("Selected block (Cards):", selectedBlock);
+            },
+            {
+              mode: "cards",
+            },
+          );
+
+          modal.show(rawHandle);
+        });
+
+        console.log("Blocksmith Button injected!");
+      };
+
+      root.querySelectorAll(".nested-element-cards").forEach((container, i) => {
+        console.log(
+          `[${i}] Checking .nested-element-cards container`,
+          container,
+        );
+
+        if (container.classList.contains("blocksmith-initialized")) {
+          console.log(`Already initialized [${i}]`);
+          return;
+        }
+
+        container.classList.add("blocksmith-initialized");
+
+        const id = container.id;
+        const fieldHandle =
+          id?.match(/fields-(.+?)-element-index/)?.[1] || null;
+
+        console.log(`[${i}] Field detected`, { container, fieldHandle });
+
+        const observer = new MutationObserver(() => {
+          const nativeBtn = container.querySelector(".btn.menubtn.add");
+          if (
+            !nativeBtn ||
+            nativeBtn.classList.contains("blocksmith-replaced") ||
+            nativeBtn.offsetParent === null
+          ) {
+            return;
+          }
+
+          observer.disconnect();
+          createBlocksmithButton(nativeBtn, fieldHandle);
+        });
+
+        observer.observe(container, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Fallback für bereits gerenderte Buttons
+        const nativeBtn = container.querySelector(".btn.menubtn.add");
+        if (nativeBtn && !nativeBtn.classList.contains("blocksmith-replaced")) {
+          createBlocksmithButton(nativeBtn, fieldHandle);
+          observer.disconnect();
+        }
+      });
+    },
+
+    observeLivePreview: function () {
+      const observer = new MutationObserver((mutationsList) => {
+        let shouldReinit = false;
+
+        for (const mutation of mutationsList) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType !== 1) continue;
+
+            const el = /** @type {HTMLElement} */ (node);
+
+            // Wenn Live Preview Editor geladen wird
+            if (el.classList?.contains("lp-editor-container")) {
+              shouldReinit = true;
+              break;
+            }
+
+            // Oder wenn ein .nested-element-cards-Container neu gerendert wurde
+            if (
+              el.matches?.(".nested-element-cards") ||
+              el.querySelector?.(".nested-element-cards")
+            ) {
+              shouldReinit = true;
+              break;
+            }
+          }
+        }
+
+        if (shouldReinit) {
+          console.log("DOM changed – reinitializing Blocksmith card buttons");
+          setTimeout(() => {
+            this.initCardViewSupport(document);
+          }, 100);
+        }
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      // Zusätzlich: Live Preview Wechsel abfangen
+      Craft.cp.on("toggleLivePreview", () => {
+        console.log("Live Preview toggled – triggering Blocksmith reinit");
+        setTimeout(() => {
+          this.initCardViewSupport(document);
+        }, 100);
+      });
     },
   });
 })(window);

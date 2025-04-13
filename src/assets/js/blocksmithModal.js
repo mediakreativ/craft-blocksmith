@@ -19,11 +19,11 @@
      * @param {Function} onBlockSelected - Callback executed when a block is selected
      * @param {Object} config - Additional configuration options
      */
-    constructor(blockTypes, onBlockSelected, config) {
+    constructor(blockTypes, onBlockSelected, config = {}) {
       this.blockTypes = blockTypes;
       this.onBlockSelected = onBlockSelected;
-      this.$overlay = null;
-      this.$modal = null;
+      this.config = config;
+      this.mode = config.mode || "inline";
 
       /**
        * Placeholder image for block previews.
@@ -35,11 +35,14 @@
       this.translations = window.BlocksmithTranslations || {};
     }
 
-    loadBlockTypes() {
+    loadBlockTypes(matrixFieldHandle) {
       return $.ajax({
         url: Craft.getCpUrl("blocksmith-modal/get-block-types"),
         method: "GET",
         dataType: "json",
+        data: {
+          handle: matrixFieldHandle,
+        },
       });
     }
 
@@ -47,18 +50,33 @@
      * Displays the modal
      */
     show(matrixFieldHandle) {
+      this.matrixFieldHandle = matrixFieldHandle;
       this.createOverlay();
       this.createModal(matrixFieldHandle);
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
+      console.log(matrixFieldHandle);
 
-      this.loadBlockTypes()
+      this.loadBlockTypes(matrixFieldHandle)
         .done((blockTypes) => {
-          this.blockTypes = blockTypes.filter((blockType) =>
-            blockType.matrixFields.some(
+          console.log("Loaded blockTypes:", blockTypes);
+          console.log("Filtering for matrixFieldHandle:", matrixFieldHandle);
+
+          this.blockTypes = blockTypes.filter((blockType) => {
+            const matches = blockType.matrixFields.some(
               (field) => field.handle === matrixFieldHandle,
-            ),
-          );
+            );
+            if (!matches) {
+              console.log(
+                `⛔️ Block type "${blockType.handle}" does NOT match any field with handle "${matrixFieldHandle}"`,
+              );
+              console.log(
+                "Available field handles:",
+                blockType.matrixFields.map((f) => f.handle),
+              );
+            }
+            return matches;
+          });
 
           this.loadCategories()
             .done((categories) => {
@@ -271,9 +289,87 @@
             `);
 
           $block.on("click", () => {
-            this.onBlockSelected(blockType);
             this.hide();
+
+            if (this.mode === "cards") {
+              // TODO: Replace this approach with a call to `Craft.createElementEditor` once we have a reliable way to trigger it programmatically.
+              const labelToClick = blockType.name;
+
+              // Try to find the correct container for the nested element cards field
+              let $scope = $(document);
+
+              // Priority 1: Live Preview Slideout (e.g. for nested blocks)
+              const $slideoutContainer = $(".slideout-container.so-lp").not(
+                ".hidden",
+              );
+              if ($slideoutContainer.length) {
+                $scope = $slideoutContainer;
+                console.log("Using slideout-container as scope");
+              }
+              // Priority 2: Standard Live Preview editor
+              else {
+                const $previewContainer = $(".lp-editor-container");
+                if ($previewContainer.length) {
+                  $scope = $previewContainer;
+                  console.log("Using lp-editor-container as scope");
+                }
+              }
+
+              // Now look for the correct field container within the selected scope
+              // Jetzt viel robuster auch für verschachtelte Matrix-Felder
+              const $fieldContainer = $scope
+                .find(`[id*="-element-index"]`)
+                .filter((_, el) => {
+                  const id = el.id;
+                  return id.includes(
+                    `fields-${this.matrixFieldHandle}-element-index`,
+                  );
+                })
+                .first();
+
+              console.log("$fieldContainer (scoped):", $fieldContainer);
+
+              if ($fieldContainer.length) {
+                const $triggerButton = $fieldContainer.find(
+                  ".blocksmith-replaced.menubtn",
+                );
+
+                if ($triggerButton.length) {
+                  const menuId = $triggerButton.attr("aria-controls");
+                  const $menu = $(`#${menuId}`);
+                  console.log($menu);
+
+                  if ($menu.length) {
+                    const $matchingButton = $menu
+                      .find("button")
+                      .filter((_, btn) => {
+                        return $(btn).text().trim() === labelToClick.trim();
+                      });
+
+                    if ($matchingButton.length) {
+                      console.log($matchingButton);
+                      $matchingButton[0].click();
+                    } else {
+                      console.warn(
+                        `No button with label "${labelToClick}" found.`,
+                      );
+                    }
+                  } else {
+                    console.warn(`Menu with ID "${menuId}" not found.`);
+                  }
+                } else {
+                  console.warn(`No hidden menu trigger button found.`);
+                }
+              } else {
+                console.warn(
+                  `No field container found for handle "${this.matrixFieldHandle}".`,
+                );
+              }
+            } else {
+              this.onBlockSelected(blockType);
+            }
           });
+
           this.blockTypes[index].elem = $block[0];
           $blocksContainer.append($block);
         }
