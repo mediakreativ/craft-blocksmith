@@ -418,8 +418,6 @@
     },
 
     initCardViewSupport: function (root = document) {
-
-
       const createBlocksmithButton = (nativeBtn, fieldHandle) => {
         nativeBtn.classList.add("blocksmith-replaced");
         nativeBtn.style.display = "none";
@@ -509,7 +507,8 @@
           if (
             !nativeBtn ||
             nativeBtn.classList.contains("blocksmith-replaced") ||
-            nativeBtn.offsetParent === null
+            (getComputedStyle(nativeBtn).display === "none" &&
+              !container.querySelector(".matrix-extended-buttons"))
           ) {
             return;
           }
