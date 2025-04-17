@@ -503,7 +503,12 @@
         console.log(`[${i}] Field detected`, { container, fieldHandle });
 
         const observer = new MutationObserver(() => {
-          const nativeBtn = container.querySelector(".btn.menubtn.add");
+          const nativeBtn =
+            container.querySelector(".btn.menubtn.add") ||
+            container.querySelector(
+              'button.btn.icon.dashed.wrap.menubtn[aria-controls^="menu-"]',
+            );
+
           if (
             !nativeBtn ||
             nativeBtn.classList.contains("blocksmith-replaced") ||
@@ -523,7 +528,12 @@
         });
 
         // Fallback für bereits gerenderte Buttons
-        const nativeBtn = container.querySelector(".btn.menubtn.add");
+        const nativeBtn =
+          container.querySelector(".btn.menubtn.add") ||
+          container.querySelector(
+            'button.btn.icon.dashed.wrap.menubtn[aria-controls^="menu-"]',
+          );
+
         if (nativeBtn && !nativeBtn.classList.contains("blocksmith-replaced")) {
           createBlocksmithButton(nativeBtn, fieldHandle);
           observer.disconnect();

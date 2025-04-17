@@ -316,17 +316,9 @@
               }
 
               // Now look for the correct field container within the selected scope
-              // Jetzt viel robuster auch für verschachtelte Matrix-Felder
-              const $fieldContainer = $scope
-                .find(`[id*="-element-index"]`)
-                .filter((_, el) => {
-                  const id = el.id;
-                  return id.includes(
-                    `fields-${this.matrixFieldHandle}-element-index`,
-                  );
-                })
-                .first();
-
+              const $fieldContainer = this.getActiveFieldContainer(
+                this.matrixFieldHandle,
+              );
               console.log("$fieldContainer (scoped):", $fieldContainer);
 
               if ($fieldContainer.length) {
@@ -439,6 +431,34 @@
      */
     translate(message) {
       return this.translations[message] || message;
+    }
+
+    /**
+     * Returns the currently visible field container for a given Matrix field handle.
+     *
+     * @param {string} handle - The handle of the Matrix field
+     * @returns {jQuery} The jQuery-wrapped container element
+     */
+    getActiveFieldContainer(handle) {
+      let $scope = $(document);
+
+      const $slideoutContainer = $(".slideout-container.so-lp").not(".hidden");
+      if ($slideoutContainer.length) {
+        $scope = $slideoutContainer;
+      } else {
+        const $previewContainer = $(".lp-editor-container");
+        if ($previewContainer.length) {
+          $scope = $previewContainer;
+        }
+      }
+
+      return $scope
+        .find(`[id*="fields-${handle}-element-index"]`)
+        .filter((_, el) => {
+          const $el = $(el);
+          return $el.is(":visible") && $el.hasClass("nested-element-cards");
+        })
+        .first();
     }
   }
 

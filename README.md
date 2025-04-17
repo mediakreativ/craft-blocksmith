@@ -51,14 +51,21 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### Short-Term
 
-1. **Favorites Settings**
+1. **"Cards" view mode support**
+   - Integrate Blocksmith with the "Cards" view mode of Matrix fields.
+
+2. **More Complex Block Scenarios**
+   - Support for nested Matrix fields and dependencies between block types.
+   - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
+
+3. **Favorites Settings**
    - Setting for defining favorites.
    - By default, favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
 
-2. **Individual Button Label Settings for Each Matrix Field**
+4. **Individual Button Label Settings for Each Matrix Field**
    - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
 
-3. **Individual Block Settings per Matrix Field**
+5. **Individual Block Settings per Matrix Field**
    - Add the ability to configure block-specific settings (e.g., descriptions, preview images) individually for each Matrix field where the block is used.
    - **Example Use Case:** A block might need different preview images in different Matrix fields due to layout variations.
 
@@ -67,25 +74,12 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 1. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
    - **Example:** Preview images and categories should be configurable per site.
-2. **More Complex Block Scenarios**
-   - Support for nested Matrix fields and dependencies between block types.
-   - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
-
 
 ### Long-Term
 
-1. **Enhanced Cards and Element Index Support**
-   - Integrate Blocksmith with the "Cards" view mode of Matrix fields.
-   - Expand cards to display additional block information, such as live status or specific block content.
-   - Add an option to enable/disable blocks directly within the card.
-   - Improve the Element Index view to allow seamless modal integration and better information display.
-
-2. **Integration with Third-Party Plugins**
+1. **Integration with Third-Party Plugins**
    - Add compatibility with popular Craft plugins (e.g. Neo, Matrix Extended).
    - **Aim:** Seamless integration and support of extended Matrix field functionality.
-
-3. **Copy-/Paste-/Clone Functionality**
-   - Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.
 
 ### Completed Features
 
@@ -100,8 +94,14 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 4. **Categories for Blocks**
    - Users can assign blocks to categories and filter by them in the preview modal.
-4. **Enable or Disable Previews**
+
+5. **Enable or Disable Previews**
    - Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
+
+6. ~~**Copy-/Paste-/Clone Functionality**~~  
+   ~~Add functionality to copy, paste, and clone blocks within the same Matrix field or across fields, if they are allowed in the destination field.~~
+
+   **No longer needed** – This is now natively supported as of **Craft 5.7.0**.
 
 
 ## Note on the Roadmap
