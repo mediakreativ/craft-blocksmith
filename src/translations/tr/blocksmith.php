@@ -92,4 +92,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "Blok önizlemelerini etkinleştirmek için Blocksmith’in Matrix Alanı Ayarlarından önizlemeyi etkinleştirin.",
     "Open Matrix Settings" => "Matrix Ayarlarını Aç",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        '"Kartlar olarak" görünüm modunu kullanan Matrix alanları için desteği etkinleştir. Bu, "Yeni giriş" düğmesiyle yeni kartlar eklemeyi ve gelişmiş bağlam menüsüyle mevcut kartların üzerine kart eklemeyi mümkün kılar.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'Kart desteği devre dışı – bu ayarların "Kartlar olarak" görünüm modunu kullanan alanlar üzerinde etkisi yoktur.',
+
+    "Enable Blocksmith" => "Blocksmith’i etkinleştir",
+
+    "Enable Cards support" => "Kart desteğini etkinleştir",
+
+    "Pro Tip:" => "İpucu:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'Craft’ta yerleşik olarak bulunmayan "Yukarıya <em>{Blockname}</em> ekle" bağlamsal eylemini elde etmek için yalnızca bir blok türü olan "Kartlar olarak" görünüm modundaki Matrix alanları için bile Blocksmith’i etkinleştirin.',
 ];

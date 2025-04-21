@@ -18,6 +18,7 @@ class BlocksmithSettings extends Model
     public ?string $previewImageSubfolder = null;
     public bool $wideViewFourBlocks = false;
     public bool $useHandleBasedPreviews = false;
+    public bool $enableCardsSupport = true;
 
     /**
      * Defines validation rules for the settings attributes
@@ -46,6 +47,7 @@ class BlocksmithSettings extends Model
             ],
             [["useHandleBasedPreviews"], "boolean"],
             [["wideViewFourBlocks"], "boolean"],
+            [["enableCardsSupport"], "boolean"],
         ];
     }
 }

@@ -6,6 +6,11 @@
     return;
   }
 
+  function debugLog(...args) {
+    if (!window.BlocksmithDebug) return;
+    console.log("[Blocksmith]", ...args);
+  }
+
   /**
    * Blocksmith plugin for Craft CMS
    *
@@ -48,51 +53,18 @@
           Object.assign(matrixFieldSettings, response);
         },
         error: function () {
-          console.error("Failed to fetch Blocksmith matrix field settings.");
+          debugLog("Failed to fetch Blocksmith matrix field settings.");
         },
       });
 
-      const modifyContextMenu = Garnish.DisclosureMenu.prototype.show;
-      Garnish.DisclosureMenu.prototype.show = function (...args) {
-        const matrixBlock = this.$trigger.closest(".matrixblock");
-        const matrixContainer = matrixBlock.closest(".matrix-field");
-        const matrixFieldId = matrixContainer.attr("id");
-        const matrixFieldHandle = matrixFieldId
-          ?.replace(/^fields-/, "")
-          .split("-fields-")
-          .pop();
+      this.matrixFieldSettings = matrixFieldSettings;
 
-        // Skip modification if preview is disabled for this field
-        if (
-          matrixFieldHandle &&
-          matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
-        ) {
-          // Show Matrix Extended Context Menu if preview disabled
-          requestAnimationFrame(() => {
-            document.querySelectorAll("ul.matrix-extended").forEach((menu) => {
-              menu.classList.add("blocksmith-preview-disabled");
-
-              const addBlockButton = menu.querySelector(
-                'button[data-action="add-block"]',
-              );
-              if (addBlockButton) {
-                addBlockButton.focus();
-              }
-            });
-          });
-
-          modifyContextMenu.apply(this, args);
-          return;
-        }
-
-        self.initiateContextMenu(this, matrixFieldHandle);
-        modifyContextMenu.apply(this, args);
-      };
-
-      const originalUpdateAddEntryBtn =
+      // Override Craft's default "New Entry" button rendering
+      // to inject Blocksmith’s custom inline-add button (if enabled)
+      const replaceCraftNewEntryButton =
         Craft.MatrixInput.prototype.updateAddEntryBtn;
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
-        originalUpdateAddEntryBtn.apply(this, args);
+        replaceCraftNewEntryButton.apply(this, args);
         const matrixContainer = this.$container.closest(".matrix-field");
         const matrixFieldId = matrixContainer.attr("id");
         const matrixFieldHandle = matrixFieldId
@@ -100,110 +72,217 @@
           .split("-fields-")
           .pop();
 
-        // Skip modification if preview is disabled for this field
+        // Skip modification if Blocksmith preview is disabled for this field
         if (
           matrixFieldHandle &&
           matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
         ) {
-          // Show Matrix Extended Button Group if preview disabled
+          // Show Matrix Extended Button Group if Blocksmith preview disabled for this field
           requestAnimationFrame(() => {
-            matrixContainer[0]
-              .querySelectorAll(".matrix-extended-buttons")
-              .forEach((buttonGroup) => {
-                buttonGroup.classList.add("blocksmith-preview-disabled");
-              });
+            const btnGroup = matrixContainer[0].querySelector(
+              ":scope > .buttons > .matrix-extended-buttons",
+            );
+
+            if (btnGroup) {
+              btnGroup.classList.add("blocksmith-preview-disabled");
+            }
           });
 
-          originalUpdateAddEntryBtn.apply(this, args);
+          replaceCraftNewEntryButton.apply(this, args);
           return;
         }
-
-        this.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
-
-        const newBlockLabel =
-          this.$addEntryMenuBtn.find(".label").text() ||
-          Craft.t("blocksmith", "New Entry");
-
-        this.$addEntryMenuBtn.hide();
-
-        const $newAddButton = $(
-          `<button class="blocksmith-add-btn btn add icon dashed">${newBlockLabel}</button>`,
-        );
-
-        this.$addEntryMenuBtn.after($newAddButton);
-
-        if (!this.canAddMoreEntries()) {
-          $newAddButton.prop("disabled", true).addClass("disabled");
-          $newAddButton.attr(
-            "title",
-            Craft.t("blocksmith", "Maximum number of blocks reached."),
-          );
-        }
-
-        $newAddButton.on("click", (event) => {
-          event.preventDefault();
-
-          if (!this.canAddMoreEntries()) {
-            console.warn("Cannot add more blocks, limit reached.");
-            return;
-          }
-
-          const blockTypes = [];
-          const $buttons = this.$addEntryMenuBtn
-            .data("disclosureMenu")
-            .$container.find("button");
-
-          $buttons.each(function () {
-            const $button = $(this);
-            const blockHandle = $button.data("type");
-
-            const previewImagePath = `${config.settings.previewImageVolume}/${config.settings.previewImageSubfolder ? config.settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
-
-            blockTypes.push({
-              handle: blockHandle,
-              name: $button.find(".menu-item-label").text(),
-              previewImage: previewImagePath,
-            });
-          });
-
-          const modal = new BlocksmithModal(
-            blockTypes,
-            async (selectedBlock) => {
-              try {
-                const $button = this.$addEntryMenuBtn
-                  .data("disclosureMenu")
-                  .$container.find("button")
-                  .filter(
-                    (_, el) => $(el).data("type") === selectedBlock.handle,
-                  );
-
-                if (!$button.length) {
-                  throw new Error(
-                    `No button found for block type: ${selectedBlock.handle}`,
-                  );
-                }
-
-                $button.trigger("activate");
-                // $button[0].click();
-              } catch (error) {
-                console.error("Error adding block:", error);
-              }
-            },
-          );
-
-          modal.show(matrixFieldHandle);
-        });
+        self.addBlocksmithAddButton(this, matrixFieldHandle, matrixContainer);
+        replaceCraftNewEntryButton.apply(this, args);
       };
 
-      // Initialisiere auch Card View Support
-      this.initCardViewSupport();
-      this.observeLivePreview();
+      // Override Craft's default context menu rendering
+      // to inject Blocksmith’s custom "Add block above" action
+      // for both inline and Cards view modes (if preview is enabled)
+      const modifyContextMenu = Garnish.DisclosureMenu.prototype.show;
+      Garnish.DisclosureMenu.prototype.show = function (...args) {
+        const $trigger = this.$trigger;
+        const triggerEl = $trigger?.[0];
+        debugLog("trigger: ", $trigger);
+
+        // === Inline view ===
+        if (triggerEl?.parentElement?.classList.contains("actions")) {
+          debugLog("Inline view");
+
+          const matrixContainer = this.$trigger
+            .parents(".matrix-field")
+            .first();
+          const matrixFieldId = matrixContainer.attr("id");
+          const matrixFieldHandle = matrixFieldId
+            ?.replace(/^fields-/, "")
+            .split("-fields-")
+            .pop();
+
+          debugLog("matrixFieldHandle: ", matrixFieldHandle);
+
+          // Skip modification if Blocksmith preview is disabled for this field
+          if (
+            matrixFieldHandle &&
+            matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+          ) {
+            // Show Matrix Extended Context Menu if Blpocksmith preview disabled for this field
+            requestAnimationFrame(() => {
+              const menuId = this.$trigger.attr("aria-controls"); // z.B. "menu-12345"
+              const menuEl = document.getElementById(menuId);
+              const extendedMenu = menuEl?.querySelector("ul.matrix-extended");
+              if (extendedMenu) {
+                extendedMenu.classList.add("blocksmith-preview-disabled");
+
+                const addBlockButton = extendedMenu.querySelector(
+                  'button[data-action="add-block"]',
+                );
+                if (addBlockButton) {
+                  addBlockButton.focus();
+                }
+              }
+            });
+
+            return modifyContextMenu.apply(this, args);
+          }
+          self.initiateContextMenu(this, matrixFieldHandle);
+          return modifyContextMenu.apply(this, args);
+        }
+
+        // === Cards view ===
+        if (
+          triggerEl?.parentElement?.classList.contains("card-actions") &&
+          self.settings.enableCardsSupport !== false
+        ) {
+          debugLog("Cards view");
+
+          const matrixContainer = this.$trigger
+            .parents(".nested-element-cards")
+            .first();
+          const matrixFieldId = matrixContainer.attr("id");
+          const matches = [
+            ...matrixFieldId.matchAll(/fields-([a-zA-Z0-9_]+)/g),
+          ];
+          const matrixFieldHandle = matches.at(-1)?.[1];
+
+          debugLog("matrixFieldHandle: ", matrixFieldHandle);
+
+          const $clickedCard = this.$trigger.parents(".element.card").first();
+          debugLog("$clickedCard: ", $clickedCard);
+
+          const insertAboveEntryId = $clickedCard.data("id");
+
+          // Skip modification if Blocksmith preview is disabled for this field
+          if (
+            matrixFieldHandle &&
+            matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+          ) {
+            return modifyContextMenu.apply(this, args);
+          }
+
+          self.initiateCardsContextMenu(
+            this,
+            matrixFieldHandle,
+            matrixContainer,
+            insertAboveEntryId,
+          );
+          return modifyContextMenu.apply(this, args);
+        }
+
+        return modifyContextMenu.apply(this, args);
+      };
+
+      // Initialize custom buttons for Cards view and observe DOM for dynamic changes
+      if (this.settings.enableCardsSupport !== false) {
+        this.initCardViewAddButtons();
+        this.observeLivePreviewForCardButtons();
+      }
     },
 
     /**
-     * Initializes the context menu by adding custom menu items
+     * Injects a custom "Add block" button for inline-editable Matrix fields,
+     * replacing Craft’s default menu button and opening the Blocksmith modal.
+     *
+     * @param {Craft.MatrixInput} matrixInput - The MatrixInput instance
+     * @param {string} matrixFieldHandle - The handle of the Matrix field
+     */
+    addBlocksmithAddButton: function (matrixInput, matrixFieldHandle) {
+      const self = this;
+      matrixInput.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
+
+      const newBlockLabel =
+        matrixInput.$addEntryMenuBtn.find(".label").text() ||
+        Craft.t("blocksmith", "New Entry");
+
+      matrixInput.$addEntryMenuBtn.hide();
+
+      const $newAddButton = $(
+        `<button class="blocksmith-add-btn btn add icon dashed">${newBlockLabel}</button>`,
+      );
+
+      matrixInput.$addEntryMenuBtn.after($newAddButton);
+
+      if (!Craft.Blocksmith.prototype.canAddMoreEntries(matrixInput, null)) {
+        $newAddButton.prop("disabled", true).addClass("disabled");
+        $newAddButton.attr(
+          "title",
+          Craft.t("blocksmith", "Maximum number of blocks reached."),
+        );
+      }
+
+      $newAddButton.on("click", (event) => {
+        event.preventDefault();
+
+        if (!Craft.Blocksmith.prototype.canAddMoreEntries(matrixInput, null)) {
+          console.warn("Cannot add more blocks, limit reached.");
+          return;
+        }
+
+        const blockTypes = [];
+        const $buttons = matrixInput.$addEntryMenuBtn
+          .data("disclosureMenu")
+          .$container.find("button");
+
+        $buttons.each(function () {
+          const $button = $(this);
+          const blockHandle = $button.data("type");
+
+          const previewImagePath = `${self.settings.previewImageVolume}/${self.settings.previewImageSubfolder ? self.settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
+
+          blockTypes.push({
+            handle: blockHandle,
+            name: $button.find(".menu-item-label").text(),
+            previewImage: previewImagePath,
+          });
+        });
+
+        const modal = new BlocksmithModal(blockTypes, async (selectedBlock) => {
+          try {
+            const $button = matrixInput.$addEntryMenuBtn
+              .data("disclosureMenu")
+              .$container.find("button")
+              .filter((_, el) => $(el).data("type") === selectedBlock.handle);
+
+            if (!$button.length) {
+              throw new Error(
+                `No button found for block type: ${selectedBlock.handle}`,
+              );
+            }
+
+            $button.trigger("activate");
+          } catch (error) {
+            console.error("Error adding block:", error);
+          }
+        });
+
+        modal.show(matrixFieldHandle);
+      });
+    },
+
+    /**
+     * Injects Blocksmith-specific menu items into the context menu
+     * for inline-editable Matrix blocks (if preview is enabled).
      *
      * @param {Object} disclosureMenu - The Garnish DisclosureMenu instance
+     * @param {string} matrixFieldHandle - The field handle of the current Matrix field
      */
     initiateContextMenu: function (disclosureMenu, matrixFieldHandle) {
       const { $trigger, $container } = disclosureMenu;
@@ -241,27 +320,21 @@
       }
       disclosureMenu._menuInitialized = true;
 
-      this.addMenuToContextMenu(
-        $container,
-        typeId,
-        entry,
-        matrix,
-        matrixFieldHandle,
-      );
+      this.addMenuToContextMenu($container, entry, matrix, matrixFieldHandle);
       this.verifyExistance($container, matrix);
     },
 
     /**
-     * Adds custom menu items to the context menu.
+     * Adds the "Add block above" action to the context menu of an inline Matrix block.
+     * Replaces Craft’s native "Add" button in the context menu if multiple block types exist.
      *
      * @param {jQuery} $container - The jQuery object representing the menu container
-     * @param {string} typeId - The block type ID (e.g., "text", "image")
      * @param {Object} entry - The current entry object, containing data about the Matrix block
      * @param {Craft.MatrixInput} matrix - The current MatrixInput instance managing the Matrix field
+     * @param {string} matrixFieldHandle - The field handle of the Matrix field
      */
     addMenuToContextMenu: function (
       $container,
-      typeId,
       entry,
       matrix,
       matrixFieldHandle,
@@ -335,60 +408,188 @@
     },
 
     /**
-     * Adds a custom "Add block above" button to the context menu.
+     * Prepares the context menu for a Matrix block in Cards view.
+     * Adds the "Add block above" action if the blocksmith preview is enabled.
      *
-     * @param {jQuery} $menu - The jQuery object representing the menu
-     * @param {string} typeId - The block type ID
-     * @param {Object} entry - The current entry object
-     * @param {Object} matrix - The current MatrixInput instance
+     * @param {Object} disclosureMenu - The Garnish DisclosureMenu instance
+     * @param {string} matrixFieldHandle - The field handle of the Matrix field
+     * @param {jQuery} matrixContainer - The container element of the Matrix field in Cards view
      */
-    addNewBlockBtnToDisclosureMenu: function ($menu, _, entry, matrix) {
-      if (!matrix.$addEntryMenuBtn.length && !matrix.$addEntryBtn.length) {
+    initiateCardsContextMenu: function (
+      disclosureMenu,
+      matrixFieldHandle,
+      matrixContainer,
+      insertAboveEntryId,
+    ) {
+      if (this.settings.enableCardsSupport === false) {
+        debugLog("Skipping Cards support – disabled via settings.");
         return;
       }
 
-      const $addNewBlockButton = $(`
-    <li>
-      <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
-        <span class="menu-item-label">
-          ${Craft.t("blocksmith", "Add block above")}
-        </span>
-      </button>
-    </li>
-  `);
+      const { $trigger, $container } = disclosureMenu;
 
-      $menu.append($addNewBlockButton);
+      if (!$trigger || !$container || !$trigger.hasClass("action-btn")) {
+        return;
+      }
+      debugLog("$trigger: ", $trigger);
 
-      $addNewBlockButton.find("button").on("click", () => {
-        const blockTypes = [];
-        const $buttons = matrix.$addEntryMenuBtn
-          .data("disclosureMenu")
-          .$container.find("button");
+      const $element = $trigger.closest(".card-titlebar").parent(".element");
+      debugLog("$element: ", $element);
+      if (!$element.length) {
+        return;
+      }
 
-        const settings = this.settings;
+      this.addMenuToCardsContextMenu(
+        $container,
+        matrixFieldHandle,
+        matrixContainer,
+        insertAboveEntryId,
+      );
+    },
 
-        $buttons.each(function () {
-          const $button = $(this);
-          const blockHandle = $button.data("type");
+    /**
+     * Adds the custom "Add block above" action to the context menu
+     * for Matrix blocks in Cards view (if blocksmith preview is enabled).
+     *
+     * @param {jQuery} $container - The context menu container element
+     * @param {string} matrixFieldHandle - The handle of the Matrix field
+     * @param {jQuery} matrixContainer - The container element of the Matrix field in Cards view
+     */
 
-          const previewImagePath = `${settings.previewImageVolume}/${settings.previewImageSubfolder ? settings.previewImageSubfolder + "/" : ""}${blockHandle}.png`;
+    addMenuToCardsContextMenu: function (
+      $container,
+      matrixFieldHandle,
+      matrixContainer,
+      insertAboveEntryId,
+    ) {
+      if (this.settings.enableCardsSupport === false) {
+        debugLog(
+          "Skipping Cards menu injection – Cards support disabled via settings.",
+        );
+        return;
+      }
 
-          blockTypes.push({
-            handle: blockHandle,
-            name: $button.find(".menu-item-label").text(),
-            previewImage: previewImagePath,
+      if ($container.data("blocksmithInitialized")) {
+        return;
+      }
+      $container.data("blocksmithInitialized", true);
+
+      debugLog("$container: ", $container);
+
+      const $deleteList = $container
+        .find('button[data-destructive="true"]')
+        .closest("ul");
+
+      if (!$deleteList.length) {
+        console.error("Delete button not found in context menu.");
+        return;
+      }
+
+      const $newList = $('<ul class="blocksmith"></ul>');
+
+      const nativeAddButton = matrixContainer.find(
+        "button.btn.icon.dashed.wrap",
+      );
+
+      this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+        debugLog("Loaded blockTypes (Cards context menu):", blockTypes);
+
+        const isDisabled = !this.canAddMoreEntries(null, nativeAddButton);
+
+        if (blockTypes.length === 1) {
+          const singleBlock = blockTypes[0];
+
+          const $addNewBlockButton = $(`
+            <li>
+              <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
+                <span class="menu-item-label">
+                  ${Craft.t("blocksmith", `Add ${singleBlock.name} above`)}
+                </span>
+              </button>
+            </li>
+          `);
+
+          const $button = $addNewBlockButton.find("button");
+
+          $button
+            .prop("disabled", isDisabled)
+            .toggleClass("disabled", isDisabled)
+            .attr(
+              "title",
+              isDisabled
+                ? Craft.t("blocksmith", "Maximum number of blocks reached.")
+                : "",
+            );
+
+          $button.on("click", async () => {
+            if ($button.prop("disabled")) return;
+
+            window.BlocksmithRuntime = window.BlocksmithRuntime || {};
+            window.BlocksmithRuntime.insertAboveEntryId = insertAboveEntryId;
+
+            nativeAddButton[0].click();
+
+            window.BlocksmithUtils.observeInsertedCard(
+              matrixContainer,
+              insertAboveEntryId,
+            );
           });
-        });
 
-        const modal = new BlocksmithModal(blockTypes, async (selectedBlock) => {
-          try {
-            await matrix.addEntry(selectedBlock.handle, entry.$container);
-          } catch (error) {
-            console.error("Error adding block:", error);
-          }
-        });
+          $newList.append($addNewBlockButton);
+        } else {
+          const $addNewBlockButton = $(`
+            <li>
+              <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
+                <span class="menu-item-label">
+                  ${Craft.t("blocksmith", "Add block above")}
+                </span>
+              </button>
+            </li>
+          `);
 
-        modal.show();
+          const $button = $addNewBlockButton.find("button");
+
+          $button
+            .prop("disabled", isDisabled)
+            .toggleClass("disabled", isDisabled)
+            .attr(
+              "title",
+              isDisabled
+                ? Craft.t("blocksmith", "Maximum number of blocks reached.")
+                : "",
+            );
+
+          $button.on("click", (e) => {
+            e.preventDefault();
+            if ($button.prop("disabled")) return;
+
+            debugLog(
+              "Opening Blocksmith Modal with handle:",
+              matrixFieldHandle,
+            );
+
+            window.BlocksmithRuntime = window.BlocksmithRuntime || {};
+            window.BlocksmithRuntime.insertAboveEntryId = insertAboveEntryId;
+
+            const modal = new BlocksmithModal(
+              [],
+              (selectedBlock) => {
+                debugLog("Selected block (Cards):", selectedBlock);
+              },
+              {
+                mode: "cards",
+                scope: matrixContainer,
+              },
+            );
+
+            modal.show(matrixFieldHandle);
+          });
+
+          $newList.append($addNewBlockButton);
+        }
+
+        $deleteList.before($newList);
+        $newList.after('<hr class="padded">');
       });
     },
 
@@ -400,25 +601,57 @@
      */
     verifyExistance: function ($container, matrix) {
       const $addButton = $container.find('button[data-action="add-block"]');
-
-      $addButton.disable();
-
       const $parent = $addButton.parent();
       $parent.attr("title", "");
 
-      if (!matrix.canAddMoreEntries()) {
+      const isAllowed = this.canAddMoreEntries(matrix, null);
+
+      $addButton
+        .prop("disabled", !isAllowed)
+        .toggleClass("disabled", !isAllowed);
+      if (!isAllowed) {
         $parent.attr(
           "title",
           Craft.t("blocksmith", "You reached the maximum number of entries."),
         );
+      }
+    },
+
+    /**
+     * Injects custom "Add block" buttons into Matrix fields rendered in Cards view,
+     * replacing Craft’s default dropdowns (if Blocksmith preview is enabled).
+     *
+     * This method scans the DOM for .nested-element-cards containers and replaces
+     * the native "Add" buttons with custom Blocksmith buttons that open the Blocksmith modal.
+     *
+     * @param {Document|HTMLElement} [root=document] - Optional root element to scope the DOM query
+     */
+    initCardViewAddButtons: function (root = document) {
+      if (this.settings.enableCardsSupport === false) {
+        debugLog("Skipping initCardViewAddButtons – Cards support disabled.");
         return;
       }
 
-      $addButton.enable();
-    },
-
-    initCardViewSupport: function (root = document) {
       const createBlocksmithButton = (nativeBtn, fieldHandle) => {
+        const matrixContainer = nativeBtn.closest(".nested-element-cards");
+
+        // Skip modification if Blocksmith preview is disabled for this field
+        if (
+          fieldHandle &&
+          this.matrixFieldSettings[fieldHandle]?.enablePreview === 0
+        ) {
+          // Show Matrix Extended Button Group if Blocksmith preview disabled for this field
+          requestAnimationFrame(() => {
+            matrixContainer
+              .querySelectorAll(".matrix-extended-buttons")
+              .forEach((buttonGroup) => {
+                buttonGroup.classList.add("blocksmith-preview-disabled");
+              });
+          });
+
+          return;
+        }
+
         nativeBtn.classList.add("blocksmith-replaced");
         nativeBtn.style.display = "none";
 
@@ -432,9 +665,13 @@
 
         nativeBtn.after(customBtn);
 
-        // Initial disabled status übernehmen
+        // Synchronize disabled state between the native and custom "Add block" buttons
+        // Ensures the custom button is disabled if the native one would be (e.g. max blocks reached)
         const syncDisabledState = () => {
-          const isDisabled = nativeBtn.classList.contains("disabled");
+          const isDisabled = !Craft.Blocksmith.prototype.canAddMoreEntries(
+            null,
+            $(nativeBtn),
+          );
           customBtn.disabled = isDisabled;
           customBtn.classList.toggle("disabled", isDisabled);
           customBtn.title = isDisabled
@@ -444,7 +681,7 @@
 
         syncDisabledState();
 
-        // MutationObserver für Klassenänderungen
+        // Observe class changes on the native button to update the custom button state accordingly
         const observer = new MutationObserver(() => {
           syncDisabledState();
         });
@@ -465,32 +702,30 @@
           const rawHandle =
             fieldHandle?.match(/fields-(.+?)(-|$)/)?.[1] || fieldHandle;
 
-          console.log("Opening Blocksmith Modal with handle:", rawHandle);
+          debugLog("Opening Blocksmith Modal with handle:", rawHandle);
 
           const modal = new BlocksmithModal(
             [],
             (selectedBlock) => {
-              console.log("Selected block (Cards):", selectedBlock);
+              debugLog("Selected block (Cards):", selectedBlock);
             },
             {
               mode: "cards",
+              scope: matrixContainer,
             },
           );
 
           modal.show(rawHandle);
         });
 
-        console.log("Blocksmith Button injected!");
+        debugLog("Blocksmith Button injected!");
       };
 
       root.querySelectorAll(".nested-element-cards").forEach((container, i) => {
-        console.log(
-          `[${i}] Checking .nested-element-cards container`,
-          container,
-        );
+        debugLog(`[${i}] Checking .nested-element-cards container`, container);
 
         if (container.classList.contains("blocksmith-initialized")) {
-          console.log(`Already initialized [${i}]`);
+          debugLog(`Already initialized [${i}]`);
           return;
         }
 
@@ -500,7 +735,7 @@
         const fieldHandle =
           id?.match(/fields-(.+?)-element-index/)?.[1] || null;
 
-        console.log(`[${i}] Field detected`, { container, fieldHandle });
+        debugLog(`[${i}] Field detected`, { container, fieldHandle });
 
         const observer = new MutationObserver(() => {
           const nativeBtn =
@@ -527,7 +762,7 @@
           subtree: true,
         });
 
-        // Fallback für bereits gerenderte Buttons
+        // Fallback: handle already rendered native buttons that were not observed in time
         const nativeBtn =
           container.querySelector(".btn.menubtn.add") ||
           container.querySelector(
@@ -541,7 +776,18 @@
       });
     },
 
-    observeLivePreview: function () {
+    /**
+     * Observes DOM changes and Live Preview toggles to re-inject Blocksmith buttons
+     * into Matrix fields in Cards view, ensuring buttons are re-rendered when needed
+     */
+    observeLivePreviewForCardButtons: function () {
+      if (this.settings.enableCardsSupport === false) {
+        debugLog(
+          "Skipping observeLivePreviewForCardButtons – Cards support disabled.",
+        );
+        return;
+      }
+
       const observer = new MutationObserver((mutationsList) => {
         let shouldReinit = false;
 
@@ -551,13 +797,13 @@
 
             const el = /** @type {HTMLElement} */ (node);
 
-            // Wenn Live Preview Editor geladen wird
+            // Trigger re-initialization when the Live Preview editor is rendered
             if (el.classList?.contains("lp-editor-container")) {
               shouldReinit = true;
               break;
             }
 
-            // Oder wenn ein .nested-element-cards-Container neu gerendert wurde
+            // Or when a new .nested-element-cards container appears (e.g. slideout)
             if (
               el.matches?.(".nested-element-cards") ||
               el.querySelector?.(".nested-element-cards")
@@ -569,9 +815,9 @@
         }
 
         if (shouldReinit) {
-          console.log("DOM changed – reinitializing Blocksmith card buttons");
+          debugLog("DOM changed – reinitializing Blocksmith card buttons");
           setTimeout(() => {
-            this.initCardViewSupport(document);
+            this.initCardViewAddButtons(document);
           }, 100);
         }
       });
@@ -581,12 +827,45 @@
         subtree: true,
       });
 
-      // Zusätzlich: Live Preview Wechsel abfangen
+      // Also re-initialize when Live Preview is toggled
       Craft.cp.on("toggleLivePreview", () => {
-        console.log("Live Preview toggled – triggering Blocksmith reinit");
+        debugLog("Live Preview toggled – triggering Blocksmith reinit");
         setTimeout(() => {
-          this.initCardViewSupport(document);
+          this.initCardViewAddButtons(document);
         }, 100);
+      });
+    },
+
+    /**
+     * Checks whether a new Matrix block can be added
+     *
+     * @param {Craft.MatrixInput|null} matrix - The MatrixInput instance (for inline mode)
+     * @param {jQuery|null} nativeBtn - The hidden native add button (for cards mode)
+     * @returns {boolean} Whether a new block can be added
+     */
+    canAddMoreEntries: function (matrix, nativeBtn) {
+      if (matrix && typeof matrix.canAddMoreEntries === "function") {
+        return matrix.canAddMoreEntries();
+      }
+
+      if (nativeBtn && nativeBtn.length) {
+        return !nativeBtn.hasClass("disabled");
+      }
+
+      return true; // Fallback if nothing is known
+    },
+
+    /**
+     * Loads available block types for a given Matrix field via Ajax.
+     */
+    loadBlockTypes: function (matrixFieldHandle) {
+      return $.ajax({
+        url: Craft.getCpUrl("blocksmith-modal/get-block-types"),
+        method: "GET",
+        dataType: "json",
+        data: {
+          handle: matrixFieldHandle,
+        },
       });
     },
   });

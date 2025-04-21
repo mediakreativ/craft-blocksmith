@@ -98,8 +98,8 @@ class BlocksmithController extends \craft\web\Controller
         $settings->previewImageSubfolder = $request->getBodyParam(
             "previewImageSubfolder"
         );
-        $settings->useHandleBasedPreviews = (bool) $request->getBodyParam(
-            "useHandleBasedPreviews"
+        $settings->enableCardsSupport = (bool) $request->getBodyParam(
+            "enableCardsSupport"
         );
 
         if (
@@ -461,6 +461,8 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionMatrixFields(): Response
     {
+        $settings = Blocksmith::getInstance()->getSettings();
+        
         $matrixFields = Blocksmith::getInstance()->service->getAllMatrixFields();
 
         $savedSettings = (new \yii\db\Query())
@@ -481,6 +483,7 @@ class BlocksmithController extends \craft\web\Controller
 
         return $this->renderTemplate("blocksmith/_settings/matrix-fields", [
             "matrixFields" => $matrixFieldSettings,
+            "enableCardsSupport" => $settings->enableCardsSupport,
         ]);
     }
 

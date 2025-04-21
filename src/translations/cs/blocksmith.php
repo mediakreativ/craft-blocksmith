@@ -92,4 +92,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "Povolte náhled v nastavení polí Matrix v Blocksmith, abyste aktivovali náhledy bloků.",
     "Open Matrix Settings" => "Otevřít nastavení Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        "Povolit podporu polí Matrix pomocí režimu zobrazení „Jako karty“. To umožňuje přidávat nové karty pomocí tlačítka „Nový záznam“ a vkládat karty nad stávající prostřednictvím vylepšené kontextové nabídky.",
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        "Podpora karet je deaktivována – tato nastavení nemají žádný vliv na pole používající režim zobrazení „Jako karty“.",
+
+    "Enable Blocksmith" => "Povolit Blocksmith",
+
+    "Enable Cards support" => "Povolit podporu karet",
+
+    "Pro Tip:" => "Profesionální tip:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        "Povolte Blocksmith i pro pole Matrix v režimu zobrazení „Jako karty“ s pouze jedním typem bloku, abyste získali kontextovou akci „Přidat <em>{Blockname}</em> nad“ – funkci, která není v Craftu nativně dostupná.",
 ];

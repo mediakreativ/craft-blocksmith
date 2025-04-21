@@ -542,6 +542,7 @@ ul.matrix-extended.blocksmith-preview-disabled
   display: flex !important;
 }
 
-/* .nested-element-cards .matrix-extended-buttons {
+.nested-element-cards .matrix-extended-buttons.blocksmith-preview-disabled,
+.nested-element-cards:not(.blocksmith-initialized) .matrix-extended-buttons {
   display: flex !important;
-} */
+}

@@ -92,4 +92,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "Abilita l’anteprima nelle impostazioni dei campi Matrix di Blocksmith per attivare l’anteprima dei blocchi.",
     "Open Matrix Settings" => "Apri impostazioni Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        'Abilita il supporto per i campi Matrix utilizzando la modalità di visualizzazione "Come schede". Questo consente di aggiungere nuove schede tramite il pulsante "Nuova voce" e di inserire schede sopra quelle esistenti attraverso il menu contestuale avanzato.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'Il supporto per le schede è disabilitato – queste impostazioni non hanno effetto sui campi che utilizzano la modalità di visualizzazione "Come schede".',
+
+    "Enable Blocksmith" => "Abilita Blocksmith",
+
+    "Enable Cards support" => "Abilita il supporto per le schede",
+
+    "Pro Tip:" => "Suggerimento:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'Abilita Blocksmith anche per i campi Matrix in modalità di visualizzazione "Come schede" con un solo tipo di blocco per ottenere l’azione contestuale "Aggiungi <em>{Blockname}</em> sopra" – una funzionalità non disponibile nativamente in Craft.',
 ];

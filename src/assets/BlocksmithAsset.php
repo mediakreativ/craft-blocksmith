@@ -25,13 +25,23 @@ class BlocksmithAsset extends AssetBundle
     {
         $this->sourcePath = "@mediakreativ/blocksmith/assets";
 
-        $this->js = [
-            "js/masonry.pkgd.min.js",
-            "js/imagesloaded.pkgd.min.js",
-            "js/blocksmith.js",
-            "js/blocksmithModal.js",
-            "js/blocksmithSettings.js",
-        ];
+        $settings = Craft::$app
+            ->getPlugins()
+            ->getPlugin("blocksmith")
+            ?->getSettings();
+
+        $enableCardsSupport = $settings->enableCardsSupport ?? true;
+
+        $this->js = ["js/masonry.pkgd.min.js", "js/imagesloaded.pkgd.min.js"];
+
+        if ($enableCardsSupport) {
+            $this->js[] = "js/blocksmithCardsSupportUtils.js";
+        }
+
+        $this->js[] = "js/blocksmith.js";
+        $this->js[] = "js/blocksmithModal.js";
+        $this->js[] = "js/blocksmithSettings.js";
+
         $this->css = ["css/blocksmith.css"];
         $this->depends = [CpAsset::class, MatrixAsset::class];
 
@@ -192,6 +202,7 @@ JS;
                 "previewImageVolume" => $volumePath,
                 "previewImageSubfolder" => $settings->previewImageSubfolder,
                 "useHandleBasedPreviews" => $settings->useHandleBasedPreviews,
+                "enableCardsSupport" => $settings->enableCardsSupport,
             ],
         ];
     }

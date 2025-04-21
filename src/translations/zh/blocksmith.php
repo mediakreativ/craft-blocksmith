@@ -87,4 +87,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "在 Blocksmith 的 Matrix 字段设置中启用预览以激活块预览。",
     "Open Matrix Settings" => "打开 Matrix 设置",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        "启用对使用“卡片视图”模式的 Matrix 字段的支持。这允许通过“新建条目”按钮添加新卡片，并通过增强的上下文菜单将卡片插入到现有卡片上方。",
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        "卡片支持已禁用 — 这些设置对使用“卡片视图”模式的字段无效。",
+
+    "Enable Blocksmith" => "启用 Blocksmith",
+
+    "Enable Cards support" => "启用卡片支持",
+
+    "Pro Tip:" => "专业提示：",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        "即使 Matrix 字段在“卡片视图”模式下只有一个区块类型，也启用 Blocksmith，以获取上下文操作“在上方添加 <em>{Blockname}</em>” —— 这是 Craft 原生不支持的功能。",
 ];

@@ -6,6 +6,11 @@
     return;
   }
 
+  function debugLog(...args) {
+    if (!window.BlocksmithDebug) return;
+    console.log("[Blocksmith]", ...args);
+  }
+
   /**
    * BlocksmithModal Class
    *
@@ -55,22 +60,21 @@
       this.createModal(matrixFieldHandle);
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
-      console.log(matrixFieldHandle);
 
       this.loadBlockTypes(matrixFieldHandle)
         .done((blockTypes) => {
-          console.log("Loaded blockTypes:", blockTypes);
-          console.log("Filtering for matrixFieldHandle:", matrixFieldHandle);
+          debugLog("Loaded blockTypes:", blockTypes);
+          debugLog("Filtering for matrixFieldHandle:", matrixFieldHandle);
 
           this.blockTypes = blockTypes.filter((blockType) => {
             const matches = blockType.matrixFields.some(
               (field) => field.handle === matrixFieldHandle,
             );
             if (!matches) {
-              console.log(
-                `⛔️ Block type "${blockType.handle}" does NOT match any field with handle "${matrixFieldHandle}"`,
+              debugLog(
+                `Block type "${blockType.handle}" does NOT match any field with handle "${matrixFieldHandle}"`,
               );
-              console.log(
+              debugLog(
                 "Available field handles:",
                 blockType.matrixFields.map((f) => f.handle),
               );
@@ -293,33 +297,19 @@
 
             if (this.mode === "cards") {
               // TODO: Replace this approach with a call to `Craft.createElementEditor` once we have a reliable way to trigger it programmatically.
-              const labelToClick = blockType.name;
-
-              // Try to find the correct container for the nested element cards field
-              let $scope = $(document);
-
-              // Priority 1: Live Preview Slideout (e.g. for nested blocks)
-              const $slideoutContainer = $(".slideout-container.so-lp").not(
-                ".hidden",
+              this.insertAboveEntryId =
+                window.BlocksmithRuntime?.insertAboveEntryId || null;
+              debugLog(
+                "insertAboveEntryId in modal (from global):",
+                this.insertAboveEntryId,
               );
-              if ($slideoutContainer.length) {
-                $scope = $slideoutContainer;
-                console.log("Using slideout-container as scope");
-              }
-              // Priority 2: Standard Live Preview editor
-              else {
-                const $previewContainer = $(".lp-editor-container");
-                if ($previewContainer.length) {
-                  $scope = $previewContainer;
-                  console.log("Using lp-editor-container as scope");
-                }
-              }
+              const labelToClick = blockType.name;
 
               // Now look for the correct field container within the selected scope
               const $fieldContainer = this.getActiveFieldContainer(
                 this.matrixFieldHandle,
               );
-              console.log("$fieldContainer (scoped):", $fieldContainer);
+              debugLog("$fieldContainer (scoped):", $fieldContainer);
 
               if ($fieldContainer.length) {
                 const $triggerButton = $fieldContainer.find(
@@ -329,7 +319,7 @@
                 if ($triggerButton.length) {
                   const menuId = $triggerButton.attr("aria-controls");
                   const $menu = $(`#${menuId}`);
-                  console.log($menu);
+                  debugLog("Disclosure menu: ", $menu);
 
                   if ($menu.length) {
                     const $matchingButton = $menu
@@ -339,8 +329,13 @@
                       });
 
                     if ($matchingButton.length) {
-                      console.log($matchingButton);
+                      debugLog("Matching button: ", $matchingButton);
                       $matchingButton[0].click();
+
+                      window.BlocksmithUtils.observeInsertedCard(
+                        $fieldContainer,
+                        this.insertAboveEntryId,
+                      );
                     } else {
                       console.warn(
                         `No button with label "${labelToClick}" found.`,
@@ -440,25 +435,15 @@
      * @returns {jQuery} The jQuery-wrapped container element
      */
     getActiveFieldContainer(handle) {
-      let $scope = $(document);
+      if (this.config.scope) {
+        const $scope = $(this.config.scope);
 
-      const $slideoutContainer = $(".slideout-container.so-lp").not(".hidden");
-      if ($slideoutContainer.length) {
-        $scope = $slideoutContainer;
-      } else {
-        const $previewContainer = $(".lp-editor-container");
-        if ($previewContainer.length) {
-          $scope = $previewContainer;
+        if (window.BlocksmithDebug) {
+          debugLog("[Blocksmith] Scope passed directly:", $scope);
         }
-      }
 
-      return $scope
-        .find(`[id*="fields-${handle}-element-index"]`)
-        .filter((_, el) => {
-          const $el = $(el);
-          return $el.is(":visible") && $el.hasClass("nested-element-cards");
-        })
-        .first();
+        return $scope;
+      }
     }
   }
 

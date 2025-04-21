@@ -92,4 +92,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "Ενεργοποιήστε την προεπισκόπηση στις Ρυθμίσεις πεδίου Matrix του Blocksmith για να ενεργοποιήσετε τις προεπισκοπήσεις μπλοκ.",
     "Open Matrix Settings" => "Άνοιγμα Ρυθμίσεων Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        'Ενεργοποιήστε την υποστήριξη για πεδία Matrix χρησιμοποιώντας τη λειτουργία προβολής "Ως κάρτες". Αυτό επιτρέπει την προσθήκη νέων καρτών μέσω του κουμπιού "Νέα καταχώρηση" και την εισαγωγή καρτών πάνω από τις υπάρχουσες μέσω του ενισχυμένου μενού περιβάλλοντος.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'Η υποστήριξη καρτών είναι απενεργοποιημένη – αυτές οι ρυθμίσεις δεν έχουν καμία επίδραση σε πεδία που χρησιμοποιούν τη λειτουργία προβολής "Ως κάρτες".',
+
+    "Enable Blocksmith" => "Ενεργοποίηση Blocksmith",
+
+    "Enable Cards support" => "Ενεργοποίηση υποστήριξης καρτών",
+
+    "Pro Tip:" => "Επαγγελματική συμβουλή:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'Ενεργοποιήστε το Blocksmith ακόμα και για πεδία Matrix στη λειτουργία προβολής "Ως κάρτες" με μόνο έναν τύπο μπλοκ για να αποκτήσετε μια συμφραζόμενη ενέργεια "Προσθήκη <em>{Blockname}</em> πάνω" – μια δυνατότητα που δεν είναι διαθέσιμη εγγενώς στο Craft.',
 ];

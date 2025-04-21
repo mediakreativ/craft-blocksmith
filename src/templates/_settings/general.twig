@@ -31,6 +31,17 @@
 			<h1>{{ "General Settings"|t('blocksmith') }}</h1>
 
 			{{ forms.lightswitchField({
+                label: 'Enable Cards support'|t('blocksmith'),
+                name: 'enableCardsSupport',
+                id: 'enableCardsSupport',
+                instructions: 'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.'|t('blocksmith'),
+                on: settings.enableCardsSupport,
+                disabled: 'enableCardsSupport' in overrides,
+                warning: 'enableCardsSupport' in overrides ? macros.configWarning('enableCardsSupport'),
+            }) }}
+
+
+			{{ forms.lightswitchField({
                 label: 'Use Handle-based Previews'|t('blocksmith'),
                 name: 'useHandleBasedPreviews',
                 id: 'useHandleBasedPreviews',

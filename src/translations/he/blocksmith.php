@@ -91,4 +91,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "הפעל תצוגה מקדימה בהגדרות שדה ה-Matrix של Blocksmith כדי להפעיל תצוגה מקדימה לבלוקים.",
     "Open Matrix Settings" => "פתח הגדרות Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        'הפעל תמיכה בשדות Matrix באמצעות מצב התצוגה "כתצוגת כרטיסים". זה מאפשר הוספת כרטיסים חדשים דרך כפתור "רשומה חדשה" והוספת כרטיסים מעל כרטיסים קיימים דרך תפריט ההקשר המורחב.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'תמיכה בכרטיסים מושבתת – ההגדרות האלה אינן משפיעות על שדות המשתמשים במצב התצוגה "כתצוגת כרטיסים".',
+
+    "Enable Blocksmith" => "הפעל את Blocksmith",
+
+    "Enable Cards support" => "הפעל תמיכה בכרטיסים",
+
+    "Pro Tip:" => "טיפ:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'הפעל את Blocksmith גם עבור שדות Matrix במצב "כתצוגת כרטיסים" עם סוג בלוק אחד בלבד כדי לאפשר פעולה קונטקסטואלית של "הוסף את <em>{Blockname}</em> מעל" – תכונה שאינה קיימת באופן מובנה ב־Craft.',
 ];

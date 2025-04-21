@@ -93,4 +93,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "Увімкніть попередній перегляд у налаштуваннях поля Matrix у Blocksmith для активації перегляду блоків.",
     "Open Matrix Settings" => "Відкрити налаштування Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        'Увімкніть підтримку полів Matrix у режимі перегляду "Картками". Це дозволяє додавати нові картки через кнопку "Новий запис" і вставляти їх над наявними за допомогою розширеного контекстного меню.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'Підтримка карток вимкнена — ці налаштування не впливають на поля в режимі перегляду "Картками".',
+
+    "Enable Blocksmith" => "Увімкнути Blocksmith",
+
+    "Enable Cards support" => "Увімкнути підтримку карток",
+
+    "Pro Tip:" => "Порада:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'Увімкніть Blocksmith навіть для полів Matrix у режимі "Картками" з лише одним типом блоку, щоб отримати контекстну дію "Додати <em>{Blockname}</em> вище" — функцію, якої немає в Craft за замовчуванням.',
 ];

@@ -91,4 +91,19 @@ return [
     "Enable preview in Blocksmith’s Matrix Field Settings to activate block previews." =>
         "قم بتمكين المعاينة في إعدادات حقل Matrix الخاصة بـ Blocksmith لتفعيل معاينة الكتل.",
     "Open Matrix Settings" => "فتح إعدادات Matrix",
+
+    'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.' =>
+        'تمكين دعم حقول المصفوفة باستخدام وضع العرض "كبطاقات". يتيح ذلك إضافة بطاقات جديدة عبر زر "إدخال جديد" وإدراج بطاقات فوق البطاقات الموجودة من خلال قائمة السياق المحسّنة.',
+
+    'Cards support is disabled – these settings have no effect on fields using the "As cards" view mode.' =>
+        'دعم البطاقات معطل – هذه الإعدادات ليس لها تأثير على الحقول التي تستخدم وضع العرض "كبطاقات".',
+
+    "Enable Blocksmith" => "تمكين Blocksmith",
+
+    "Enable Cards support" => "تمكين دعم البطاقات",
+
+    "Pro Tip:" => "نصيحة احترافية:",
+
+    'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
+        'قم بتمكين Blocksmith حتى لحقول المصفوفة في وضع العرض "كبطاقات" مع نوع كتلة واحد فقط للحصول على إجراء "إضافة <em>{Blockname}</em> أعلاه" السياقي – وهي ميزة غير متوفرة أصلاً في Craft.',
 ];
