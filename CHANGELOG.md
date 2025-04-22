@@ -4,8 +4,7 @@
 This release brings **full Cards view compatibility** to Blocksmith, making it the first plugin to support true context-aware editing for Matrix fields using the “Cards” view mode – including the ability to add blocks above existing ones, a feature not natively available in Craft CMS.
 
 ### Added
-- **Live Preview compatibility**: Blocksmith now supports modal previews for Matrix fields in “Cards” view mode.
-- **Cards view support for context menu actions**: The “Add block above” option is now available when using Matrix fields in Cards view.
+- **Full Cards View compatibility**: Bring context-aware editing to the Cards view – including the unique ability to add blocks above existing ones, a feature not natively supported by Craft.
 - **Single block type fallback in Cards view**: If only a single block type is available, the context menu shows an “Add {Blockname} above” button that opens the Craft Slideout and correctly positions the new block above.
 
 ## [1.3.0] - 2025-04-02
