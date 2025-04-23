@@ -106,4 +106,8 @@ return [
 
     'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
         'قم بتمكين Blocksmith حتى لحقول المصفوفة في وضع العرض "كبطاقات" مع نوع كتلة واحد فقط للحصول على إجراء "إضافة <em>{Blockname}</em> أعلاه" السياقي – وهي ميزة غير متوفرة أصلاً في Craft.',
+
+    "Add {name} above" => "أضف {name} أعلاه",
+    "Add {name} before" => "أضف {name} قبل",
+    "Add block before" => "أضف كتلة قبل",
 ];

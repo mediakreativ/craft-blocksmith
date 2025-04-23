@@ -6,6 +6,8 @@
     return;
   }
 
+  window.BlocksmithDebug = true;
+
   function debugLog(...args) {
     if (!window.BlocksmithDebug) return;
     console.log("[Blocksmith]", ...args);
@@ -499,11 +501,21 @@
         if (blockTypes.length === 1) {
           const singleBlock = blockTypes[0];
 
+          const isGridView = matrixContainer
+            .find("ul.elements")
+            .first()
+            .hasClass("card-grid");
+          const translatedLabel = Craft.t(
+            "blocksmith",
+            isGridView ? "Add {name} before" : "Add {name} above",
+            { name: singleBlock.name },
+          );
+
           const $addNewBlockButton = $(`
             <li>
               <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
                 <span class="menu-item-label">
-                  ${Craft.t("blocksmith", `Add ${singleBlock.name} above`)}
+                ${translatedLabel}
                 </span>
               </button>
             </li>
@@ -537,11 +549,15 @@
 
           $newList.append($addNewBlockButton);
         } else {
+          const isGridView = matrixContainer
+            .find("ul.elements")
+            .first()
+            .hasClass("card-grid");
           const $addNewBlockButton = $(`
             <li>
               <button class="blocksmith-menu-item menu-item add icon" data-action="add-block" tabindex="0">
                 <span class="menu-item-label">
-                  ${Craft.t("blocksmith", "Add block above")}
+                ${Craft.t("blocksmith", isGridView ? "Add block before" : "Add block above")}
                 </span>
               </button>
             </li>

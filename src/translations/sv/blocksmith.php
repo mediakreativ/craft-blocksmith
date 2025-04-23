@@ -107,4 +107,8 @@ return [
 
     'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
         'Aktivera Blocksmith även för Matrix-fält i "Som kort"-läget med endast en blocktyp för att få en kontextuell åtgärd "Lägg till <em>{Blockname}</em> ovanför" – en funktion som inte finns inbyggd i Craft.',
+
+    "Add {name} above" => "Lägg till {name} ovanför",
+    "Add {name} before" => "Lägg till {name} före",
+    "Add block before" => "Lägg till block före",
 ];

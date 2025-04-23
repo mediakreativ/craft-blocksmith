@@ -102,4 +102,8 @@ return [
 
     'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
         "即使 Matrix 字段在“卡片视图”模式下只有一个区块类型，也启用 Blocksmith，以获取上下文操作“在上方添加 <em>{Blockname}</em>” —— 这是 Craft 原生不支持的功能。",
+
+    "Add {name} above" => "在上方添加 {name}",
+    "Add {name} before" => "在前面添加 {name}",
+    "Add block before" => "在前面添加区块",
 ];

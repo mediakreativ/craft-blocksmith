@@ -80,12 +80,15 @@
     return new Promise((resolve) => {
       const check = () => {
         const $firstUl = $menu.find("ul").first();
-        const expectedLabel = Craft.t("app", "Move up");
+        const expectedLabels = [
+          Craft.t("app", "Move up"),
+          Craft.t("app", "Move forward"),
+        ];
         const $moveUpBtn = $firstUl
           .find("button.menu-item")
           .filter((_, btn) => {
             const label = $(btn).find(".menu-item-label").text().trim();
-            return label === expectedLabel;
+            return expectedLabels.includes(label);
           });
 
         if ($moveUpBtn.length) {

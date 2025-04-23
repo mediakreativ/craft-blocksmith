@@ -13,7 +13,7 @@ return [
     "Clear search" => "Suche löschen",
     "Cancel" => "Abbrechen",
     "Add new block" => "Neuen Block hinzufügen",
-    "Add block above" => "Block darüber hinzufügen",
+    "Add block above" => "Block darüber einfügen",
     "You reached the maximum number of entries" =>
         "Die maximale Anzahl an Einträgen wurde erreicht.",
     "A default volume has been set automatically. You can update it here if necessary." =>
@@ -108,4 +108,8 @@ return [
 
     'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.' =>
         "Aktiviere Blocksmith auch für Matrix-Felder im Ansichtsmodus „Als Karten“ mit nur einem Blocktyp, um die kontextuelle Aktion „<em>{Blockname}</em> oberhalb einfügen“ zu erhalten – eine Funktion, die in Craft nicht nativ verfügbar ist.",
+
+    "Add {name} above" => "{name} darüber einfügen",
+    "Add {name} before" => "{name} davor einfügen",
+    "Add block before" => "Block davor einfügen",
 ];

@@ -1,3 +1,8 @@
+## [1.4.1] - 2025-04-23
+
+### Fixed
+- “Add block above” now works correctly in Cards view when “Show cards in a grid” is enabled.
+
 ## [1.4.0] - 2025-04-21
 
 ### Highlights
