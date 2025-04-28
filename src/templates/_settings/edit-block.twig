@@ -62,7 +62,7 @@
 					name: 'categories',
 					id: 'categories',
 					instructions: 'Select one or more categories for this block.'|t('blocksmith'),
-					options: block.categories|map(category => { label: category.name, value: category.id }),
+					options: block.categories|map(category => { label: category.name, value: category.uid }),
 					values: block.selectedCategories
 				}) }}
 

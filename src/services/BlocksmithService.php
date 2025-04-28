@@ -84,4 +84,41 @@ class BlocksmithService
             Craft::info($details, __METHOD__);
         }
     }
+
+    /**
+     * Retrieves all categories from Project Config, sorted by sortOrder.
+     *
+     * @return array
+     */
+    public function getAllCategories(): array
+    {
+        $categoriesFromConfig =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithCategories"
+            ) ?? [];
+
+        $categories = [];
+
+        foreach ($categoriesFromConfig as $uid => $data) {
+            if (!isset($data["name"])) {
+                Craft::warning(
+                    "Blocksmith: Skipping invalid category entry (missing name) for UID {$uid}.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $categories[] = [
+                "uid" => $uid,
+                "name" => $data["name"],
+                "sortOrder" => (int) ($data["sortOrder"] ?? 0),
+            ];
+        }
+
+        usort($categories, function ($a, $b) {
+            return $a["sortOrder"] <=> $b["sortOrder"];
+        });
+
+        return $categories;
+    }
 }

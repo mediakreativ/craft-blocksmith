@@ -6,6 +6,7 @@ namespace mediakreativ\blocksmith\controllers;
 use Craft;
 use craft\web\Controller;
 use yii\web\Response;
+use mediakreativ\blocksmith\Blocksmith;
 
 /**
  * Blocksmith Modal Controller
@@ -127,11 +128,7 @@ class BlocksmithModalController extends Controller
      */
     public function actionGetCategories(): Response
     {
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name", "sortOrder"])
-            ->from("{{%blocksmith_categories}}")
-            ->orderBy(["sortOrder" => SORT_ASC])
-            ->all();
+        $categories = Blocksmith::getInstance()->service->getAllCategories();
 
         return $this->asJson($categories);
     }

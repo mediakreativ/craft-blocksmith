@@ -7,6 +7,7 @@ use Craft;
 use craft\web\Controller;
 use mediakreativ\blocksmith\Blocksmith;
 use yii\web\Response;
+use craft\helpers\StringHelper;
 
 /**
  * Blocksmith Controller
@@ -149,20 +150,19 @@ class BlocksmithController extends \craft\web\Controller
         $request = Craft::$app->getRequest();
         $entryTypeId = $request->post("entryTypeId");
         $description = $request->post("description");
-        $categories = $request->post("categories");
+        $categories = $request->post("categories", []);
         $previewImageId = $request->post("previewImageId");
+
+        $categoriesArray = is_array($categories)
+            ? array_map("strval", $categories)
+            : [];
+
         $previewImageUrl = null;
-
-        $categoriesJson = [];
-        if (!empty($categories) && is_array($categories)) {
-            $categoriesJson = array_map("intval", $categories);
-        }
-
         if ($previewImageId) {
             $asset = Craft::$app->assets->getAssetById((int) $previewImageId);
-            if ($asset) {
-                $previewImageUrl = $asset->getUrl();
-            } else {
+            $previewImageUrl = $asset ? $asset->getUrl() : null;
+
+            if (!$asset) {
                 Craft::warning(
                     "Asset with ID {$previewImageId} not found.",
                     __METHOD__
@@ -174,7 +174,7 @@ class BlocksmithController extends \craft\web\Controller
             Craft::info("entryTypeId: " . $entryTypeId, __METHOD__);
             Craft::info("description: " . $description, __METHOD__);
             Craft::info(
-                "categories: " . json_encode($categoriesJson),
+                "categories: " . json_encode($categoriesArray),
                 __METHOD__
             );
             Craft::info("previewImageId: " . $previewImageId, __METHOD__);
@@ -186,27 +186,29 @@ class BlocksmithController extends \craft\web\Controller
             return $this->redirectToPostedUrl();
         }
 
+        $now = new \yii\db\Expression("NOW()");
+
         $insertData = [
             "entryTypeId" => $entryTypeId,
             "description" => $description ?: null,
-            "categories" => $categoriesJson,
+            "categories" => $categoriesArray,
             "previewImageId" => $previewImageId ?: null,
             "previewImageUrl" => $previewImageUrl ?: null,
-            "dateCreated" => new \yii\db\Expression("NOW()"),
-            "dateUpdated" => new \yii\db\Expression("NOW()"),
+            "dateCreated" => $now,
+            "dateUpdated" => $now,
         ];
 
         $updateData = [
             "description" => $description ?: null,
-            "categories" => $categoriesJson,
+            "categories" => $categoriesArray,
             "previewImageId" => $previewImageId ?: null,
             "previewImageUrl" => $previewImageUrl ?: null,
-            "dateUpdated" => new \yii\db\Expression("NOW()"),
+            "dateUpdated" => $now,
         ];
 
         try {
-            $db = Craft::$app->db;
-            $db->createCommand()
+            Craft::$app->db
+                ->createCommand()
                 ->upsert("{{%blocksmith_blockdata}}", $insertData, $updateData)
                 ->execute();
 
@@ -233,11 +235,32 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionCategories(): Response
     {
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name", "sortOrder"])
-            ->from("{{%blocksmith_categories}}")
-            ->orderBy(["sortOrder" => SORT_ASC])
-            ->all();
+        $categoriesFromConfig =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithCategories"
+            ) ?? [];
+
+        $categories = [];
+
+        foreach ($categoriesFromConfig as $uid => $categoryData) {
+            if (!isset($categoryData["name"])) {
+                Craft::warning(
+                    "Blocksmith: Skipping category with UID {$uid} due to missing 'name'.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $categories[] = [
+                "uid" => $uid,
+                "name" => $categoryData["name"],
+                "sortOrder" => (int) ($categoryData["sortOrder"] ?? 0),
+            ];
+        }
+
+        usort($categories, function ($a, $b) {
+            return $a["sortOrder"] <=> $b["sortOrder"];
+        });
 
         return $this->renderTemplate("blocksmith/_settings/categories", [
             "categories" => $categories,
@@ -284,7 +307,7 @@ class BlocksmithController extends \craft\web\Controller
         $this->requirePostRequest();
 
         $request = Craft::$app->getRequest();
-        $id = $request->getBodyParam("id");
+        $uid = $request->getBodyParam("id");
         $name = $request->getBodyParam("name");
 
         if (!$name) {
@@ -292,41 +315,24 @@ class BlocksmithController extends \craft\web\Controller
             return $this->redirectToPostedUrl();
         }
 
-        $maxSortOrder = (new \yii\db\Query())
-            ->from("{{%blocksmith_categories}}")
-            ->max("sortOrder");
+        $path = "blocksmith.blocksmithCategories";
 
-        $data = [
-            "name" => $name,
-            "sortOrder" => $maxSortOrder + 1,
-            "dateUpdated" => new \yii\db\Expression("NOW()"),
-        ];
+        $existingCategories = Craft::$app->projectConfig->get($path) ?? [];
 
-        try {
-            if ($id) {
-                Craft::$app->db
-                    ->createCommand()
-                    ->update("{{%blocksmith_categories}}", $data, ["id" => $id])
-                    ->execute();
-            } else {
-                $data["dateCreated"] = new \yii\db\Expression("NOW()");
-                Craft::$app->db
-                    ->createCommand()
-                    ->insert("{{%blocksmith_categories}}", $data)
-                    ->execute();
-            }
-
-            Craft::$app
-                ->getSession()
-                ->setNotice("Category saved successfully.");
-        } catch (\Throwable $e) {
-            Craft::error(
-                "Failed to save category: " . $e->getMessage(),
-                __METHOD__
-            );
-            Craft::$app->getSession()->setError("Failed to save category.");
+        if (!$uid) {
+            $uid = StringHelper::UUID();
         }
 
+        $sortOrder =
+            $existingCategories[$uid]["sortOrder"] ??
+            count($existingCategories) + 1;
+
+        Craft::$app->projectConfig->set("$path.$uid", [
+            "name" => $name,
+            "sortOrder" => $sortOrder,
+        ]);
+
+        Craft::$app->getSession()->setNotice("Category saved successfully.");
         return $this->redirect("blocksmith/settings/categories");
     }
 
@@ -340,68 +346,39 @@ class BlocksmithController extends \craft\web\Controller
         $this->requirePostRequest();
 
         $request = Craft::$app->getRequest();
-        $id = $request->getBodyParam("id");
+        $uid = $request->getBodyParam("id"); // ID = UID!
 
-        if (!$id) {
+        if (!$uid) {
             return $this->asJson([
                 "success" => false,
-                "error" => "Category ID is required.",
+                "error" => "Category UID is required.",
             ]);
         }
 
-        $transaction = Craft::$app->db->beginTransaction();
+        $path = "blocksmith.blocksmithCategories.$uid";
+
         try {
-            $deleted = Craft::$app->db
-                ->createCommand()
-                ->delete("{{%blocksmith_categories}}", ["id" => $id])
-                ->execute();
+            Craft::$app->projectConfig->remove($path);
+            Craft::$app->projectConfig->processConfigChanges($path);
 
-            if ($deleted) {
-                $blockData = (new \yii\db\Query())
-                    ->select(["id", "categories"])
-                    ->from("{{%blocksmith_blockdata}}")
-                    ->all();
+            Craft::info(
+                "Blocksmith: Deleted category with UID {$uid} from Project Config.",
+                __METHOD__
+            );
 
-                foreach ($blockData as $block) {
-                    $categories = json_decode($block["categories"], true) ?: [];
-                    if (
-                        ($key = array_search((int) $id, $categories)) !== false
-                    ) {
-                        unset($categories[$key]);
-                        Craft::$app->db
-                            ->createCommand()
-                            ->update(
-                                "{{%blocksmith_blockdata}}",
-                                [
-                                    "categories" => empty($categories)
-                                        ? null
-                                        : $categories,
-                                ],
-                                ["id" => $block["id"]]
-                            )
-                            ->execute();
-                    }
-                }
+            // @todo: Remove references to this category UID from blocksmith_blockdata once blocksmith_blockdata is migrated to Project Config
 
-                $transaction->commit();
-                return $this->asJson(["success" => true]);
-            }
+            return $this->asJson(["success" => true]);
+        } catch (\Throwable $e) {
+            Craft::error(
+                "Blocksmith: Failed to delete category UID {$uid}: " .
+                    $e->getMessage(),
+                __METHOD__
+            );
 
-            $transaction->rollBack();
             return $this->asJson([
                 "success" => false,
                 "error" => "Failed to delete category.",
-            ]);
-        } catch (\Throwable $e) {
-            $transaction->rollBack();
-            Craft::error(
-                "Failed to delete category: " . $e->getMessage(),
-                __METHOD__
-            );
-            return $this->asJson([
-                "success" => false,
-                "error" =>
-                    "An error occurred while trying to delete the category.",
             ]);
         }
     }
@@ -411,22 +388,20 @@ class BlocksmithController extends \craft\web\Controller
      *
      * @return \yii\web\Response JSON response indicating success or failure.
      */
-    public function actionReorderCategories()
+    public function actionReorderCategories(): Response
     {
         $this->requirePostRequest();
 
-        // IDs vom Request abrufen
         $ids = Craft::$app->getRequest()->getRequiredBodyParam("ids");
 
-        // JSON-Dekodierung hinzufügen, falls die IDs ein String sind
+        // IDs können als JSON-String kommen – sicherstellen, dass sie ein Array sind
         if (is_string($ids)) {
             $ids = json_decode($ids, true);
         }
 
-        // Debug: Überprüfen, ob die Dekodierung erfolgreich war
         if (!is_array($ids)) {
             Craft::error(
-                "Failed to decode IDs: " . json_encode($ids),
+                "Blocksmith: Failed to decode category IDs for reorder.",
                 __METHOD__
             );
             return $this->asJson([
@@ -435,23 +410,41 @@ class BlocksmithController extends \craft\web\Controller
             ]);
         }
 
-        // IDs aktualisieren
-        foreach ($ids as $sortOrder => $id) {
-            Craft::info(
-                "Updating category ID {$id} to sortOrder " . ($sortOrder + 1),
-                __METHOD__
-            );
-            Craft::$app->db
-                ->createCommand()
-                ->update(
-                    "{{%blocksmith_categories}}",
-                    ["sortOrder" => $sortOrder + 1],
-                    ["id" => $id]
-                )
-                ->execute();
+        $categoriesPath = "blocksmith.blocksmithCategories";
+        $categories = Craft::$app->projectConfig->get($categoriesPath) ?? [];
+
+        foreach ($ids as $sortOrder => $uid) {
+            if (isset($categories[$uid])) {
+                $categories[$uid]["sortOrder"] = $sortOrder + 1;
+            } else {
+                Craft::warning(
+                    "Blocksmith: UID {$uid} not found during reorder.",
+                    __METHOD__
+                );
+            }
         }
 
-        return $this->asJson(["success" => true]);
+        try {
+            // Ganze Kategorien-Struktur zurückschreiben
+            Craft::$app->projectConfig->set($categoriesPath, $categories);
+
+            Craft::info(
+                "Blocksmith: Categories reordered successfully.",
+                __METHOD__
+            );
+
+            return $this->asJson(["success" => true]);
+        } catch (\Throwable $e) {
+            Craft::error(
+                "Blocksmith: Failed to reorder categories: " . $e->getMessage(),
+                __METHOD__
+            );
+
+            return $this->asJson([
+                "success" => false,
+                "error" => "Failed to reorder categories.",
+            ]);
+        }
     }
 
     /**
@@ -792,10 +785,7 @@ class BlocksmithController extends \craft\web\Controller
             ->where(["entryTypeId" => $blockType->id])
             ->one();
 
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name"])
-            ->from("{{%blocksmith_categories}}")
-            ->all();
+        $categories = Blocksmith::getInstance()->service->getAllCategories();
 
         if (!$categories) {
             $categories = [];

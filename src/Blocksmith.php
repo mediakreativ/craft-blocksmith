@@ -18,7 +18,6 @@ use craft\services\Fields;
 
 use craft\db\Query; /* Remove in next Version */
 
-
 /**
  * Blocksmith plugin for Craft CMS
  *
@@ -73,6 +72,7 @@ class Blocksmith extends Plugin
         /* Just for testing */
         if (Craft::$app->getConfig()->getGeneral()->devMode) {
             $this->migrateMatrixFieldSettingsToProjectConfig();
+            $this->migrateCategorySettingsToProjectConfig();
         }
         /* End testing */
 
@@ -512,7 +512,7 @@ class Blocksmith extends Plugin
     }
 
     /**
-     * Automatically migrates Matrix Field settings from DB into Project Config YAML after plugin update.
+     * Automatically migrates all Blocksmith settings from DB into Project Config YAML after plugin update.
      *
      * @param bool $isNewVersion Whether this is a plugin update to a new version.
      */
@@ -526,6 +526,7 @@ class Blocksmith extends Plugin
                 __METHOD__
             );
             $this->migrateMatrixFieldSettingsToProjectConfig();
+            $this->migrateCategorySettingsToProjectConfig();
         }
     }
 
@@ -572,6 +573,46 @@ class Blocksmith extends Plugin
 
                 Craft::info(
                     "Blocksmith: Migrated matrix field '{$handle}' (UID: {$uid}) to Project Config.",
+                    __METHOD__
+                );
+            }
+        }
+    }
+
+    /**
+     * Migrates blocksmith_categories DB entries to Project Config.
+     */
+    private function migrateCategorySettingsToProjectConfig(): void
+    {
+        $rows = (new \craft\db\Query())
+            ->select(["id", "uid", "name", "sortOrder"])
+            ->from("{{%blocksmith_categories}}")
+            ->all();
+
+        foreach ($rows as $row) {
+            $id = $row["id"] ?? null;
+            $uid = $row["uid"] ?? null;
+            $name = $row["name"] ?? null;
+            $sortOrder = (int) ($row["sortOrder"] ?? 0);
+
+            if (!$id || !$uid || !$name) {
+                Craft::warning(
+                    "Blocksmith: Skipping migration for category with missing ID, UID or name.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $path = "blocksmith.blocksmithCategories.$uid";
+
+            if (!Craft::$app->projectConfig->get($path)) {
+                Craft::$app->projectConfig->set($path, [
+                    "name" => $name,
+                    "sortOrder" => $sortOrder,
+                ]);
+
+                Craft::info(
+                    "Blocksmith: Migrated category '{$name}' (UID: {$uid}) to Project Config.",
                     __METHOD__
                 );
             }
