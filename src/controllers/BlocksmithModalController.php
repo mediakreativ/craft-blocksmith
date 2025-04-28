@@ -50,17 +50,17 @@ class BlocksmithModalController extends Controller
 
         $allFields = $fieldsService->getAllFields();
 
-        $fieldsEnabled = (new \yii\db\Query())
-            ->select(["fieldHandle", "enablePreview"])
-            ->from("{{%blocksmith_matrix_settings}}")
-            ->indexBy("fieldHandle")
-            ->where(["enablePreview" => true])
-            ->all();
+        $fieldsEnabled =
+            Craft::$app
+                ->getProjectConfig()
+                ->get("blocksmith.blocksmithMatrixFields") ?? [];
 
         foreach ($allFields as $field) {
             if (
                 $field instanceof \craft\fields\Matrix &&
-                isset($fieldsEnabled[$field->handle]) &&
+                isset($fieldsEnabled[$field->uid]) &&
+                ($fieldsEnabled[$field->uid]["enablePreview"] ?? true) ===
+                    true &&
                 (!$requestedHandle || $field->handle === $requestedHandle)
             ) {
                 foreach ($field->getEntryTypes() as $entryType) {

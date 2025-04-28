@@ -51,6 +51,9 @@
         ),
         method: "GET",
         async: false,
+        headers: {
+          Accept: "application/json",
+        },
         success: function (response) {
           Object.assign(matrixFieldSettings, response);
         },
@@ -66,7 +69,7 @@
       const replaceCraftNewEntryButton =
         Craft.MatrixInput.prototype.updateAddEntryBtn;
       Craft.MatrixInput.prototype.updateAddEntryBtn = function (...args) {
-        replaceCraftNewEntryButton.apply(this, args);
+        // replaceCraftNewEntryButton.apply(this, args);
         const matrixContainer = this.$container.closest(".matrix-field");
         const matrixFieldId = matrixContainer.attr("id");
         const matrixFieldHandle = matrixFieldId
@@ -77,7 +80,8 @@
         // Skip modification if Blocksmith preview is disabled for this field
         if (
           matrixFieldHandle &&
-          matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+          (matrixFieldSettings[matrixFieldHandle]?.enablePreview ?? true) ===
+            false
         ) {
           // Show Matrix Extended Button Group if Blocksmith preview disabled for this field
           requestAnimationFrame(() => {
@@ -90,7 +94,7 @@
             }
           });
 
-          replaceCraftNewEntryButton.apply(this, args);
+          // replaceCraftNewEntryButton.apply(this, args);
           return;
         }
         self.addBlocksmithAddButton(this, matrixFieldHandle, matrixContainer);
@@ -124,11 +128,12 @@
           // Skip modification if Blocksmith preview is disabled for this field
           if (
             matrixFieldHandle &&
-            matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+            (matrixFieldSettings[matrixFieldHandle]?.enablePreview ?? true) ===
+              false
           ) {
             // Show Matrix Extended Context Menu if Blpocksmith preview disabled for this field
             requestAnimationFrame(() => {
-              const menuId = this.$trigger.attr("aria-controls"); // z.B. "menu-12345"
+              const menuId = this.$trigger.attr("aria-controls");
               const menuEl = document.getElementById(menuId);
               const extendedMenu = menuEl?.querySelector("ul.matrix-extended");
               if (extendedMenu) {
@@ -175,7 +180,8 @@
           // Skip modification if Blocksmith preview is disabled for this field
           if (
             matrixFieldHandle &&
-            matrixFieldSettings[matrixFieldHandle]?.enablePreview === 0
+            (matrixFieldSettings[matrixFieldHandle]?.enablePreview ?? true) ===
+              false
           ) {
             return modifyContextMenu.apply(this, args);
           }
@@ -654,7 +660,8 @@
         // Skip modification if Blocksmith preview is disabled for this field
         if (
           fieldHandle &&
-          this.matrixFieldSettings[fieldHandle]?.enablePreview === 0
+          (this.matrixFieldSettings[fieldHandle]?.enablePreview ?? true) ===
+            false
         ) {
           // Show Matrix Extended Button Group if Blocksmith preview disabled for this field
           requestAnimationFrame(() => {

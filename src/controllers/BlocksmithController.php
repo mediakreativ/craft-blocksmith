@@ -462,22 +462,24 @@ class BlocksmithController extends \craft\web\Controller
     public function actionMatrixFields(): Response
     {
         $settings = Blocksmith::getInstance()->getSettings();
-        
+
         $matrixFields = Blocksmith::getInstance()->service->getAllMatrixFields();
 
-        $savedSettings = (new \yii\db\Query())
-            ->select(["fieldHandle", "enablePreview"])
-            ->from("{{%blocksmith_matrix_settings}}")
-            ->indexBy("fieldHandle")
-            ->all();
+        $savedSettings =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithMatrixFields"
+            ) ?? [];
 
         $matrixFieldSettings = [];
         foreach ($matrixFields as $field) {
+            $uid = $field->uid;
+
             $matrixFieldSettings[] = [
                 "name" => $field->name,
                 "handle" => $field->handle,
-                "enablePreview" =>
-                    $savedSettings[$field->handle]["enablePreview"] ?? true,
+                "enablePreview" => isset($savedSettings[$uid])
+                    ? (bool) $savedSettings[$uid]["enablePreview"]
+                    : true,
             ];
         }
 
@@ -499,17 +501,27 @@ class BlocksmithController extends \craft\web\Controller
         $settings = $request->getBodyParam("enablePreview", []);
 
         foreach ($settings as $fieldHandle => $enablePreview) {
-            Craft::$app->db
-                ->createCommand()
-                ->upsert(
-                    "{{%blocksmith_matrix_settings}}",
-                    [
-                        "fieldHandle" => $fieldHandle,
-                        "enablePreview" => (bool) $enablePreview,
-                    ],
-                    ["enablePreview" => (bool) $enablePreview]
-                )
-                ->execute();
+            $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
+
+            if ($field && $field instanceof \craft\fields\Matrix) {
+                $uid = $field->uid;
+                $path = "blocksmith.blocksmithMatrixFields.$uid";
+
+                Craft::$app->projectConfig->set($path, [
+                    "fieldHandle" => $fieldHandle,
+                    "enablePreview" => (bool) $enablePreview,
+                ]);
+
+                Craft::info(
+                    "Blocksmith: Saved matrix field setting for '{$fieldHandle}' (UID: {$uid}) to Project Config.",
+                    __METHOD__
+                );
+            } else {
+                Craft::warning(
+                    "Blocksmith: Cannot save setting, matrix field '{$fieldHandle}' not found.",
+                    __METHOD__
+                );
+            }
         }
 
         Craft::$app->getSession()->setNotice("Matrix field settings saved.");
@@ -523,13 +535,33 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionGetMatrixFieldSettings(): Response
     {
-        $savedSettings = (new \yii\db\Query())
-            ->select(["fieldHandle", "enablePreview"])
-            ->from("{{%blocksmith_matrix_settings}}")
-            ->indexBy("fieldHandle")
-            ->all();
+        $this->requireAcceptsJson();
 
-        return $this->asJson($savedSettings);
+        $savedSettings =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithMatrixFields"
+            ) ?? [];
+
+        $result = [];
+
+        foreach (Craft::$app->fields->getAllFields() as $field) {
+            if ($field instanceof \craft\fields\Matrix) {
+                $uid = $field->uid;
+                $handle = $field->handle;
+
+                $enablePreview = true;
+                if (isset($savedSettings[$uid])) {
+                    $enablePreview =
+                        (bool) ($savedSettings[$uid]["enablePreview"] ?? true);
+                }
+
+                $result[$handle] = [
+                    "enablePreview" => $enablePreview,
+                ];
+            }
+        }
+
+        return $this->asJson($result);
     }
 
     /**
@@ -543,12 +575,23 @@ class BlocksmithController extends \craft\web\Controller
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
-        $fieldsEnabled = (new \yii\db\Query())
-            ->select(["fieldHandle", "enablePreview"])
-            ->from("{{%blocksmith_matrix_settings}}")
-            ->indexBy("fieldHandle")
-            ->where(["enablePreview" => true])
-            ->all();
+        $savedSettings =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithMatrixFields"
+            ) ?? [];
+
+        $fieldsEnabled = [];
+        foreach (Craft::$app->fields->getAllFields() as $field) {
+            if ($field instanceof \craft\fields\Matrix) {
+                $uid = $field->uid;
+                if (
+                    isset($savedSettings[$uid]) &&
+                    !empty($savedSettings[$uid]["enablePreview"])
+                ) {
+                    $fieldsEnabled[$field->handle] = true;
+                }
+            }
+        }
 
         $blockData = (new \yii\db\Query())
             ->select([
@@ -658,18 +701,18 @@ class BlocksmithController extends \craft\web\Controller
 
         $matrixFieldSettings = [];
         foreach ($matrixFields as $field) {
-            $setting = (new \yii\db\Query())
-                ->select(["enablePreview"])
-                ->from("{{%blocksmith_matrix_settings}}")
-                ->where(["fieldHandle" => $field->handle])
-                ->one();
+            $uid = $field->uid;
+            $enablePreview = true; // Default
+
+            if (isset($savedSettings[$uid])) {
+                $enablePreview =
+                    (bool) ($savedSettings[$uid]["enablePreview"] ?? true);
+            }
 
             $matrixFieldSettings[] = [
                 "name" => $field->name,
                 "handle" => $field->handle,
-                "enablePreview" => $setting
-                    ? (bool) $setting["enablePreview"]
-                    : false,
+                "enablePreview" => $enablePreview,
             ];
         }
 

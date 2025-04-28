@@ -15,9 +15,9 @@ use mediakreativ\blocksmith\assets\BlocksmithAsset;
 use mediakreativ\blocksmith\models\BlocksmithSettings;
 use craft\events\FieldEvent;
 use craft\services\Fields;
-use craft\db\Query;
-use craft\helpers\Db;
-use craft\helpers\StringHelper;
+
+use craft\db\Query; /* Remove in next Version */
+
 
 /**
  * Blocksmith plugin for Craft CMS
@@ -69,6 +69,12 @@ class Blocksmith extends Plugin
         );
 
         Craft::info("Blocksmith plugin initialized.", __METHOD__);
+
+        /* Just for testing */
+        if (Craft::$app->getConfig()->getGeneral()->devMode) {
+            $this->migrateMatrixFieldSettingsToProjectConfig();
+        }
+        /* End testing */
 
         /**
          * Handles the `EVENT_REGISTER_CP_URL_RULES` event to define
@@ -168,7 +174,7 @@ class Blocksmith extends Plugin
         $this->initializeControlPanelFeatures();
 
         /**
-         * Automatically registers a new Matrix field in blocksmith_matrix_settings when it is saved.
+         * Automatically registers a new Matrix field in the Project Config when it is saved.
          *
          * This ensures that newly created Matrix fields are enabled for Blocksmith preview
          * without requiring manual activation in the settings panel.
@@ -181,31 +187,20 @@ class Blocksmith extends Plugin
             $field = $event->field;
 
             if ($field instanceof \craft\fields\Matrix) {
-                $handle = $field->handle;
+                $uid = $field->uid;
+                $path = "blocksmith.blocksmithMatrixFields.$uid";
 
-                $exists = (new Query())
-                    ->from("{{%blocksmith_matrix_settings}}")
-                    ->where(["fieldHandle" => $handle])
-                    ->exists();
+                // Check if entry already exists in Project Config
+                $existing = Craft::$app->projectConfig->get($path);
 
-                if (!$exists) {
-                    Craft::$app->db
-                        ->createCommand()
-                        ->insert("{{%blocksmith_matrix_settings}}", [
-                            "fieldHandle" => $handle,
-                            "enablePreview" => true,
-                            "dateCreated" => Db::prepareDateForDb(
-                                new \DateTime()
-                            ),
-                            "dateUpdated" => Db::prepareDateForDb(
-                                new \DateTime()
-                            ),
-                            "uid" => StringHelper::UUID(),
-                        ])
-                        ->execute();
+                if (!$existing) {
+                    Craft::$app->projectConfig->set($path, [
+                        "fieldHandle" => $field->handle,
+                        "enablePreview" => true, // Default: new fields have preview enabled
+                    ]);
 
                     Craft::info(
-                        "Blocksmith: Auto-registered Matrix field '$handle' in matrix_settings.",
+                        "Blocksmith: Auto-registered Matrix field '{$field->handle}' (UID: {$uid}) into Project Config.",
                         __METHOD__
                     );
                 }
@@ -213,26 +208,26 @@ class Blocksmith extends Plugin
         });
 
         /**
-         * Automatically removes a Matrix field entry from blocksmith_matrix_settings when it is deleted.
+         * Automatically removes a Matrix field entry from the Project Config when it is deleted.
          *
-         * This keeps the Blocksmith settings table clean and avoids orphaned field references.
+         * This keeps the Blocksmith configuration clean and avoids orphaned field references.
          *
          * @param FieldEvent $event The event containing the field being deleted.
          */
+
         Event::on(Fields::class, Fields::EVENT_BEFORE_DELETE_FIELD, function (
             FieldEvent $event
         ) {
             $field = $event->field;
+
             if ($field instanceof \craft\fields\Matrix) {
-                Craft::$app->db
-                    ->createCommand()
-                    ->delete("{{%blocksmith_matrix_settings}}", [
-                        "fieldHandle" => $field->handle,
-                    ])
-                    ->execute();
+                $uid = $field->uid;
+                $path = "blocksmith.blocksmithMatrixFields.$uid";
+
+                Craft::$app->projectConfig->remove($path);
 
                 Craft::info(
-                    "Blocksmith: Removed matrix setting for deleted field '{$field->handle}'.",
+                    "Blocksmith: Removed Matrix field setting '{$field->handle}' (UID: {$uid}) from Project Config.",
                     __METHOD__
                 );
             }
@@ -514,5 +509,72 @@ class Blocksmith extends Plugin
         Craft::$app->getView()->registerAssetBundle(BlocksmithAsset::class);
 
         Craft::info("Blocksmith Control Panel assets registered.", __METHOD__);
+    }
+
+    /**
+     * Automatically migrates Matrix Field settings from DB into Project Config YAML after plugin update.
+     *
+     * @param bool $isNewVersion Whether this is a plugin update to a new version.
+     */
+    public function afterUpdate(bool $isNewVersion): void
+    {
+        parent::afterUpdate($isNewVersion);
+
+        if ($isNewVersion) {
+            Craft::info(
+                "Blocksmith: Running internal migration of matrix field settings to Project Config.",
+                __METHOD__
+            );
+            $this->migrateMatrixFieldSettingsToProjectConfig();
+        }
+    }
+
+    /**
+     * Migrates blocksmith_matrix_settings DB entries to Project Config.
+     */
+    private function migrateMatrixFieldSettingsToProjectConfig(): void
+    {
+        $rows = (new \craft\db\Query())
+            ->select(["fieldHandle", "enablePreview"])
+            ->from("{{%blocksmith_matrix_settings}}")
+            ->all();
+
+        foreach ($rows as $row) {
+            $handle = $row["fieldHandle"] ?? null;
+
+            if (!$handle) {
+                Craft::warning(
+                    "Blocksmith: Skipping migration for matrix field without handle.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            /** @var \craft\fields\Matrix|null $field */
+            $field = Craft::$app->fields->getFieldByHandle($handle);
+
+            if (!$field || !$field instanceof \craft\fields\Matrix) {
+                Craft::warning(
+                    "Blocksmith: Skipping migration for non-existent or non-Matrix field '{$handle}'.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $uid = $field->uid;
+            $path = "blocksmith.blocksmithMatrixFields.$uid";
+
+            if (!Craft::$app->projectConfig->get($path)) {
+                Craft::$app->projectConfig->set($path, [
+                    "fieldHandle" => $handle,
+                    "enablePreview" => (bool) $row["enablePreview"],
+                ]);
+
+                Craft::info(
+                    "Blocksmith: Migrated matrix field '{$handle}' (UID: {$uid}) to Project Config.",
+                    __METHOD__
+                );
+            }
+        }
     }
 }
