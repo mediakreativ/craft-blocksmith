@@ -69,14 +69,6 @@ class Blocksmith extends Plugin
 
         Craft::info("Blocksmith plugin initialized.", __METHOD__);
 
-        /* Just for testing */
-        if (Craft::$app->getConfig()->getGeneral()->devMode) {
-            $this->migrateMatrixFieldSettingsToProjectConfig();
-            $this->migrateCategorySettingsToProjectConfig();
-            $this->migrateBlockSettingsToProjectConfig();
-        }
-        /* End testing */
-
         /**
          * Handles the `EVENT_REGISTER_CP_URL_RULES` event to define
          * routes for the plugin's settings pages. Each route maps a URL pattern to a specific
