@@ -12,8 +12,7 @@
 > **Option 1:** Update Blocksmith on the **live server** → pull the updated Project Config to your local environment  
 > **Option 2:** Sync your **live database to local** → update Blocksmith locally → deploy the updated Project Config
 >
-> ✅ After updating, all settings will be stored in **Project Config YAML files**.  
-> No further steps required.
+> ✅ After updating, all settings will be stored in **Project Config YAML files**. No further steps required.
 
 ---
 
@@ -23,7 +22,7 @@
   - Matrix field preview settings
   - Block descriptions and assigned categories
   - Preview image paths  
-    *(Note: Preview images must still be uploaded manually to the live server if not using handle-based previews.)*
+    *(Note: Preview images must still be uploaded manually to the live server.)*
     
 ## [1.4.1] - 2025-04-23
 
