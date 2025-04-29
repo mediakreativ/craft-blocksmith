@@ -1,3 +1,30 @@
+## [1.4.2] - 2025-04-29
+
+> [!NOTE]
+> **Important: Read before updating!**
+>
+> Blocksmith now uses **Craft’s Project Config** to store all plugin settings.
+>
+> If you’ve configured Blocksmith **only on your live server**, and not synced your local environment:
+>
+> 👉 Do **one** of the following **before updating**, to avoid overwriting live settings:
+>
+> **Option 1:** Update Blocksmith on the **live server** → pull the updated Project Config to your local environment  
+> **Option 2:** Sync your **live database to local** → update Blocksmith locally → deploy the updated Project Config
+>
+> ✅ After updating, all settings will be stored in **Project Config YAML files**.  
+> No further steps required.
+
+---
+
+- This update automatically migrates all Blocksmith settings from the database to Project Config.
+- Settings now stored in Project Config include:
+  - Categories
+  - Matrix field preview settings
+  - Block descriptions and assigned categories
+  - Preview image paths  
+    *(Note: Preview images must still be uploaded manually to the live server if not using handle-based previews.)*
+    
 ## [1.4.1] - 2025-04-23
 
 ### Fixed
