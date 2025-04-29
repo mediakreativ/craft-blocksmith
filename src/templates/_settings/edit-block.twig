@@ -100,18 +100,16 @@
 
 					<div id="previewImage-field" class="input">
 						<button type="button" id="previewImage-picker" class="btn" data-icon="image">
-							{{ block.previewImageId ? "Change image"|t('blocksmith') : "Select or upload an image"|t('blocksmith') }}
+							{{ block.previewImagePath ? "Change image"|t('blocksmith') : "Select or upload an image"|t('blocksmith') }}
 						</button>
 
-						{% if block.previewImageUrl %}
-							<div class="blocksmith-preview-image">
-								<img src="{{ block.previewImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}">
-							</div>
-						{% endif %}
+						<div class="blocksmith-preview-image" id="previewImageContainer">
+							<img src="{{ block.previewImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}" id="previewImagePreview" data-placeholder="{{ block.placeholderImageUrl }}">
+						</div>
 
-						<input type="hidden" name="previewImageId" id="previewImageId" value="{{ block.previewImageId ?? '' }}">
+						<input type="hidden" name="previewImagePath" id="previewImagePath" value="{{ block.previewImagePath ?? '' }}">
 
-						{% if block.previewImageId %}
+						{% if block.previewImagePath %}
 							<button type="button" id="previewImage-delete" class="btn" style="margin-top: 1rem;" data-icon="remove">
 								{{ "Remove image"|t('blocksmith') }}
 							</button>

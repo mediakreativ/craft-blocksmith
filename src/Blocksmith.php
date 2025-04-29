@@ -73,6 +73,7 @@ class Blocksmith extends Plugin
         if (Craft::$app->getConfig()->getGeneral()->devMode) {
             $this->migrateMatrixFieldSettingsToProjectConfig();
             $this->migrateCategorySettingsToProjectConfig();
+            $this->migrateBlockSettingsToProjectConfig();
         }
         /* End testing */
 
@@ -102,7 +103,7 @@ class Blocksmith extends Plugin
                 $event->rules["blocksmith/settings/categories/new"] =
                     "blocksmith/blocksmith/edit-category";
 
-                $event->rules["blocksmith/settings/categories/edit/<id:\d+>"] =
+                $event->rules["blocksmith/settings/categories/edit/<uid:.*>"] =
                     "blocksmith/blocksmith/edit-category";
 
                 $event->rules["blocksmith/settings/categories/save"] =
@@ -174,7 +175,7 @@ class Blocksmith extends Plugin
         $this->initializeControlPanelFeatures();
 
         /**
-         * Automatically registers a new Matrix field in the Project Config when it is saved.
+         * Automatically registers a new Matrix field in the Project Config YAML when it is saved.
          *
          * This ensures that newly created Matrix fields are enabled for Blocksmith preview
          * without requiring manual activation in the settings panel.
@@ -208,7 +209,7 @@ class Blocksmith extends Plugin
         });
 
         /**
-         * Automatically removes a Matrix field entry from the Project Config when it is deleted.
+         * Automatically removes a Matrix field entry from the Project Config YAML when it is deleted.
          *
          * This keeps the Blocksmith configuration clean and avoids orphaned field references.
          *
@@ -527,11 +528,12 @@ class Blocksmith extends Plugin
             );
             $this->migrateMatrixFieldSettingsToProjectConfig();
             $this->migrateCategorySettingsToProjectConfig();
+            $this->migrateBlockSettingsToProjectConfig();
         }
     }
 
     /**
-     * Migrates blocksmith_matrix_settings DB entries to Project Config.
+     * Migrates blocksmith_matrix_settings DB entries to the Project Config YAML.
      */
     private function migrateMatrixFieldSettingsToProjectConfig(): void
     {
@@ -580,7 +582,7 @@ class Blocksmith extends Plugin
     }
 
     /**
-     * Migrates blocksmith_categories DB entries to Project Config.
+     * Migrates blocksmith_categories DB entries to Project Config YAML.
      */
     private function migrateCategorySettingsToProjectConfig(): void
     {
@@ -613,6 +615,93 @@ class Blocksmith extends Plugin
 
                 Craft::info(
                     "Blocksmith: Migrated category '{$name}' (UID: {$uid}) to Project Config.",
+                    __METHOD__
+                );
+            }
+        }
+    }
+
+    /**
+     * Migrates blocksmith_blockdata DB entries to Project Config YAML.
+     */
+    private function migrateBlockSettingsToProjectConfig(): void
+    {
+        $rows = (new \craft\db\Query())
+            ->select([
+                "uid",
+                "entryTypeId",
+                "description",
+                "categories",
+                "previewImageUrl",
+            ])
+            ->from("{{%blocksmith_blockdata}}")
+            ->all();
+
+        foreach ($rows as $row) {
+            $blockUid = $row["uid"] ?? null;
+            $entryTypeId = $row["entryTypeId"] ?? null;
+
+            if (!$blockUid || !$entryTypeId) {
+                Craft::warning(
+                    "Blocksmith: Skipping block migration – missing UID or entryTypeId.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $entryType = Craft::$app->entries->getEntryTypeById($entryTypeId);
+            if (!$entryType) {
+                Craft::warning(
+                    "Blocksmith: No Matrix EntryType found for ID {$entryTypeId} (block UID: {$blockUid}).",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $entryTypeUid = $entryType->uid;
+            $description = $row["description"] ?? null;
+
+            $categories = [];
+            if (!empty($row["categories"])) {
+                $decoded = json_decode($row["categories"], true);
+                if (
+                    json_last_error() === JSON_ERROR_NONE &&
+                    is_array($decoded)
+                ) {
+                    $categories = $decoded;
+                } else {
+                    Craft::warning(
+                        "Blocksmith: Invalid category JSON for block UID {$blockUid}.",
+                        __METHOD__
+                    );
+                }
+            }
+
+            $previewImagePath = null;
+            if (!empty($row["previewImageUrl"])) {
+                $parsed = parse_url($row["previewImageUrl"]);
+                if (!empty($parsed["path"])) {
+                    $previewImagePath = ltrim($parsed["path"], "/");
+                }
+            }
+
+            $path = "blocksmith.blocksmithBlocks.$blockUid";
+
+            if (!Craft::$app->projectConfig->get($path)) {
+                $config = [
+                    "entryTypeUid" => $entryTypeUid,
+                    "description" => $description,
+                    "categories" => $categories,
+                ];
+
+                if ($previewImagePath) {
+                    $config["previewImagePath"] = $previewImagePath;
+                }
+
+                Craft::$app->projectConfig->set($path, $config);
+
+                Craft::info(
+                    "Blocksmith: Migrated block UID '{$blockUid}' (EntryType UID: {$entryTypeUid}) to Project Config.",
                     __METHOD__
                 );
             }

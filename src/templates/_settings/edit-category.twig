@@ -45,15 +45,6 @@
                 instructions: 'Enter the name of the category.'|t('blocksmith')
             }) }}
 
-			{{ forms.textareaField({
-                label: 'Description'|t('blocksmith'),
-                name: 'description',
-                id: 'description',
-                value: category.description ?? '',
-                rows: 4,
-                instructions: 'Provide a short description for this category (optional).'|t('blocksmith')
-            }) }}
-
 		</div>
 	</div>
 {% endblock %}

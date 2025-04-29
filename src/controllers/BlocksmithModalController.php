@@ -12,8 +12,7 @@ use mediakreativ\blocksmith\Blocksmith;
  * Blocksmith Modal Controller
  *
  * Provides endpoints for the block selection modal so that non-admins
- * (e.g. editors who can edit entries in the CP) can retrieve block types and
- * categories.
+ * can retrieve block types and categories.
  */
 class BlocksmithModalController extends Controller
 {
@@ -43,78 +42,92 @@ class BlocksmithModalController extends Controller
     public function actionGetBlockTypes(): Response
     {
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+        $request = Craft::$app->getRequest();
         $fieldsService = Craft::$app->fields;
-        $requestedHandle = Craft::$app->getRequest()->getParam("handle");
+
+        $requestedHandle = $request->getParam("handle");
+        $blockConfig =
+            Craft::$app->projectConfig->get("blocksmith.blocksmithBlocks") ??
+            [];
+        $matrixConfig =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithMatrixFields"
+            ) ?? [];
+        $categoryConfig =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithCategories"
+            ) ?? [];
+
+        $fields = array_filter(
+            $fieldsService->getAllFields(),
+            fn($field) => $field instanceof \craft\fields\Matrix
+        );
+
+        $enabledFields = array_filter($fields, function ($field) use (
+            $matrixConfig,
+            $requestedHandle
+        ) {
+            return isset($matrixConfig[$field->uid]) &&
+                ($matrixConfig[$field->uid]["enablePreview"] ?? true) &&
+                (!$requestedHandle || $field->handle === $requestedHandle);
+        });
 
         $blockTypes = [];
-        $processedEntryTypes = [];
+        $seenEntryUids = [];
 
-        $allFields = $fieldsService->getAllFields();
+        foreach ($enabledFields as $field) {
+            foreach ($field->getEntryTypes() as $entryType) {
+                $entryTypeUid = $entryType->uid;
+                $entryTypeHandle = $entryType->handle;
 
-        $fieldsEnabled =
-            Craft::$app
-                ->getProjectConfig()
-                ->get("blocksmith.blocksmithMatrixFields") ?? [];
+                if (isset($seenEntryUids[$entryTypeUid])) {
+                    continue;
+                }
+                $seenEntryUids[$entryTypeUid] = true;
 
-        foreach ($allFields as $field) {
-            if (
-                $field instanceof \craft\fields\Matrix &&
-                isset($fieldsEnabled[$field->uid]) &&
-                ($fieldsEnabled[$field->uid]["enablePreview"] ?? true) ===
-                    true &&
-                (!$requestedHandle || $field->handle === $requestedHandle)
-            ) {
-                foreach ($field->getEntryTypes() as $entryType) {
-                    if (in_array($entryType->id, $processedEntryTypes, true)) {
-                        continue;
+                $block = null;
+                foreach ($blockConfig as $uid => $config) {
+                    if (($config["entryTypeUid"] ?? null) === $entryTypeUid) {
+                        $block = $config;
+                        break;
                     }
-                    $processedEntryTypes[] = $entryType->id;
+                }
 
-                    $blockData = (new \yii\db\Query())
-                        ->select([
-                            "description",
-                            "categories",
-                            "previewImageUrl",
-                        ])
-                        ->from("{{%blocksmith_blockdata}}")
-                        ->where(["entryTypeId" => $entryType->id])
-                        ->one();
+                $description = $block["description"] ?? null;
+                $previewImagePath = $block["previewImagePath"] ?? null;
 
-                    $matrixFields = [];
-                    foreach ($allFields as $potentialField) {
-                        if ($potentialField instanceof \craft\fields\Matrix) {
-                            $entryTypeHandles = array_map(
-                                fn($type) => $type->handle,
-                                $potentialField->getEntryTypes()
-                            );
-                            if (
-                                in_array(
-                                    $entryType->handle,
-                                    $entryTypeHandles,
-                                    true
-                                )
-                            ) {
-                                $matrixFields[] = [
-                                    "name" => $potentialField->name,
-                                    "handle" => $potentialField->handle,
-                                ];
-                            }
+                $categories = [];
+                foreach ($block["categories"] ?? [] as $catUid) {
+                    if (isset($categoryConfig[$catUid]["name"])) {
+                        $categories[] = $categoryConfig[$catUid]["name"];
+                    }
+                }
+
+                $previewImage = $previewImagePath
+                    ? "/" . ltrim($previewImagePath, "/")
+                    : $placeholderImageUrl;
+
+                $matrixFields = [];
+                foreach ($fields as $potentialField) {
+                    foreach ($potentialField->getEntryTypes() as $et) {
+                        if ($et->handle === $entryTypeHandle) {
+                            $matrixFields[] = [
+                                "name" => $potentialField->name,
+                                "handle" => $potentialField->handle,
+                            ];
+                            break;
                         }
                     }
-
-                    $blockTypes[] = [
-                        "name" => $entryType->name,
-                        "handle" => $entryType->handle,
-                        "description" => $blockData["description"] ?? null,
-                        "categories" => json_decode(
-                            $blockData["categories"] ?? "[]"
-                        ),
-                        "previewImage" =>
-                            $blockData["previewImageUrl"] ??
-                            $placeholderImageUrl,
-                        "matrixFields" => $matrixFields,
-                    ];
                 }
+
+                $blockTypes[] = [
+                    "name" => $entryType->name,
+                    "handle" => $entryTypeHandle,
+                    "description" => $description,
+                    "categories" => $categories,
+                    "previewImage" => $previewImage,
+                    "matrixFields" => $matrixFields,
+                ];
             }
         }
 

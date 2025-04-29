@@ -78,7 +78,7 @@ class BlocksmithController extends \craft\web\Controller
      * Saves the plugin's general settings
      *
      * This action processes data from the settings form in the Control Panel,
-     * validates it, and stores it in the database
+     * validates it, and stores it in the Project Config YAML.
      *
      * @return \yii\web\Response Redirects to the posted URL after saving
      */
@@ -111,6 +111,22 @@ class BlocksmithController extends \craft\web\Controller
             $settings->previewImageVolume = $volumes[0]->uid ?? null;
         }
 
+        if ($settings->useHandleBasedPreviews) {
+            $blockConfig =
+                Craft::$app->projectConfig->get(
+                    "blocksmith.blocksmithBlocks"
+                ) ?? [];
+            foreach ($blockConfig as $blockUid => $blockData) {
+                if (isset($blockData["previewImagePath"])) {
+                    unset($blockData["previewImagePath"]);
+                    Craft::$app->projectConfig->set(
+                        "blocksmith.blocksmithBlocks.$blockUid",
+                        $blockData
+                    );
+                }
+            }
+        }
+
         if (!$settings->validate()) {
             Craft::$app->session->setError(
                 Craft::t("blocksmith", "Failed to save settings.")
@@ -140,91 +156,72 @@ class BlocksmithController extends \craft\web\Controller
      * Saves settings for individual blocks
      *
      * This action handles data for a specific block, including its description,
-     * category, and preview image. It validates the data and stores it in the
-     * database
+     * category, and preview image. It validates the data and stores it in the Project Config YAML.
      *
      * @return \yii\web\Response Redirects to the posted URL after saving
      */
-    public function actionSaveBlockSettings()
+    public function actionSaveBlockSettings(): Response
     {
         $request = Craft::$app->getRequest();
-        $entryTypeId = $request->post("entryTypeId");
-        $description = $request->post("description");
-        $categories = $request->post("categories", []);
-        $previewImageId = $request->post("previewImageId");
+
+        $entryTypeId = (int) $request->getBodyParam("entryTypeId");
+        $description = trim((string) $request->getBodyParam("description"));
+        $categories = $request->getBodyParam("categories", []);
+        $previewImagePath = trim(
+            (string) $request->getBodyParam("previewImagePath")
+        );
 
         $categoriesArray = is_array($categories)
             ? array_map("strval", $categories)
             : [];
 
-        $previewImageUrl = null;
-        if ($previewImageId) {
-            $asset = Craft::$app->assets->getAssetById((int) $previewImageId);
-            $previewImageUrl = $asset ? $asset->getUrl() : null;
-
-            if (!$asset) {
-                Craft::warning(
-                    "Asset with ID {$previewImageId} not found.",
-                    __METHOD__
-                );
-            }
-        }
-
-        if (YII_DEBUG) {
-            Craft::info("entryTypeId: " . $entryTypeId, __METHOD__);
-            Craft::info("description: " . $description, __METHOD__);
-            Craft::info(
-                "categories: " . json_encode($categoriesArray),
-                __METHOD__
-            );
-            Craft::info("previewImageId: " . $previewImageId, __METHOD__);
-            Craft::info("previewImageUrl: " . $previewImageUrl, __METHOD__);
-        }
-
         if (!$entryTypeId) {
-            Craft::$app->session->setError("Entry Type ID is required.");
+            Craft::$app->getSession()->setError("Entry Type ID is required.");
             return $this->redirectToPostedUrl();
         }
 
-        $now = new \yii\db\Expression("NOW()");
-
-        $insertData = [
-            "entryTypeId" => $entryTypeId,
-            "description" => $description ?: null,
-            "categories" => $categoriesArray,
-            "previewImageId" => $previewImageId ?: null,
-            "previewImageUrl" => $previewImageUrl ?: null,
-            "dateCreated" => $now,
-            "dateUpdated" => $now,
-        ];
-
-        $updateData = [
-            "description" => $description ?: null,
-            "categories" => $categoriesArray,
-            "previewImageId" => $previewImageId ?: null,
-            "previewImageUrl" => $previewImageUrl ?: null,
-            "dateUpdated" => $now,
-        ];
-
-        try {
-            Craft::$app->db
-                ->createCommand()
-                ->upsert("{{%blocksmith_blockdata}}", $insertData, $updateData)
-                ->execute();
-
-            Craft::$app->session->setNotice(
-                "Block settings saved successfully."
-            );
-        } catch (\Throwable $e) {
-            Craft::error(
-                "Failed to save block settings: " . $e->getMessage(),
-                __METHOD__
-            );
-            Craft::$app->session->setError(
-                "Failed to save block settings. Please check the logs."
-            );
+        $entryType = Craft::$app->entries->getEntryTypeById($entryTypeId);
+        if (!$entryType) {
+            Craft::error("Invalid entryTypeId: {$entryTypeId}", __METHOD__);
+            Craft::$app->getSession()->setError("Invalid Entry Type.");
+            return $this->redirectToPostedUrl();
         }
 
+        $entryTypeUid = $entryType->uid;
+
+        $blockConfig =
+            Craft::$app->projectConfig->get("blocksmith.blocksmithBlocks") ??
+            [];
+
+        $blockUid = null;
+        foreach ($blockConfig as $uid => $config) {
+            if (($config["entryTypeUid"] ?? null) === $entryTypeUid) {
+                $blockUid = $uid;
+                break;
+            }
+        }
+
+        if (!$blockUid) {
+            $blockUid = \craft\helpers\StringHelper::UUID();
+        }
+
+        $path = "blocksmith.blocksmithBlocks.$blockUid";
+
+        $configData = [
+            "entryTypeUid" => $entryTypeUid,
+            "description" => $description ?: null,
+            "categories" => $categoriesArray,
+        ];
+
+        if ($previewImagePath !== "") {
+            $configData["previewImagePath"] = $previewImagePath;
+        }
+
+        Craft::$app->projectConfig->set($path, $configData);
+
+        Craft::$app
+            ->getSession()
+            ->setNotice("Block settings saved successfully.");
         return $this->redirectToPostedUrl();
     }
 
@@ -275,21 +272,25 @@ class BlocksmithController extends \craft\web\Controller
      * @param int|null $id The ID of the category to edit (optional).
      * @return \yii\web\Response The rendered template for editing or creating a category.
      */
-    public function actionEditCategory(int $id = null): Response
+    public function actionEditCategory(string $uid = null): Response
     {
         $category = null;
 
-        if ($id) {
-            $category = (new \yii\db\Query())
-                ->select(["id", "name"])
-                ->from("{{%blocksmith_categories}}")
-                ->where(["id" => $id])
-                ->one();
+        if ($uid) {
+            $categories =
+                Craft::$app->projectConfig->get(
+                    "blocksmith.blocksmithCategories"
+                ) ?? [];
 
-            if (!$category) {
+            if (!isset($categories[$uid])) {
                 Craft::$app->getSession()->setError("Category not found.");
                 return $this->redirect("blocksmith/settings/categories");
             }
+
+            $category = [
+                "uid" => $uid,
+                "name" => $categories[$uid]["name"] ?? "",
+            ];
         }
 
         return $this->renderTemplate("blocksmith/_settings/edit-category", [
@@ -298,7 +299,7 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
-     * Saves a category to the database.
+     * Saves a category to the config.
      *
      * @return \yii\web\Response Redirects to the categories settings page after saving.
      */
@@ -346,7 +347,7 @@ class BlocksmithController extends \craft\web\Controller
         $this->requirePostRequest();
 
         $request = Craft::$app->getRequest();
-        $uid = $request->getBodyParam("id"); // ID = UID!
+        $uid = $request->getBodyParam("id");
 
         if (!$uid) {
             return $this->asJson([
@@ -366,7 +367,33 @@ class BlocksmithController extends \craft\web\Controller
                 __METHOD__
             );
 
-            // @todo: Remove references to this category UID from blocksmith_blockdata once blocksmith_blockdata is migrated to Project Config
+            $blockConfig =
+                Craft::$app->projectConfig->get(
+                    "blocksmith.blocksmithBlocks"
+                ) ?? [];
+
+            foreach ($blockConfig as $blockUid => $blockData) {
+                $updatedCategories = array_filter(
+                    $blockData["categories"] ?? [],
+                    function ($categoryUid) use ($uid) {
+                        return $categoryUid !== $uid;
+                    }
+                );
+
+                if (
+                    count($updatedCategories) !==
+                    count($blockData["categories"] ?? [])
+                ) {
+                    Craft::$app->projectConfig->set(
+                        "blocksmith.blocksmithBlocks.$blockUid.categories",
+                        $updatedCategories
+                    );
+                    Craft::info(
+                        "Blocksmith: Updated categories for block UID {$blockUid} after category UID {$uid} removal.",
+                        __METHOD__
+                    );
+                }
+            }
 
             return $this->asJson(["success" => true]);
         } catch (\Throwable $e) {
@@ -394,7 +421,6 @@ class BlocksmithController extends \craft\web\Controller
 
         $ids = Craft::$app->getRequest()->getRequiredBodyParam("ids");
 
-        // IDs können als JSON-String kommen – sicherstellen, dass sie ein Array sind
         if (is_string($ids)) {
             $ids = json_decode($ids, true);
         }
@@ -425,7 +451,6 @@ class BlocksmithController extends \craft\web\Controller
         }
 
         try {
-            // Ganze Kategorien-Struktur zurückschreiben
             Craft::$app->projectConfig->set($categoriesPath, $categories);
 
             Craft::info(
@@ -562,46 +587,45 @@ class BlocksmithController extends \craft\web\Controller
      *
      * @return \yii\web\Response The rendered template for the Blocks Settings page
      */
-    public function actionBlocks()
+    public function actionBlocks(): Response
     {
         $settings = Blocksmith::getInstance()->getSettings();
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
-        $savedSettings =
+        $blockConfig =
+            Craft::$app->projectConfig->get("blocksmith.blocksmithBlocks") ??
+            [];
+
+        $categoryConfig =
+            Craft::$app->projectConfig->get(
+                "blocksmith.blocksmithCategories"
+            ) ?? [];
+
+        $matrixFieldSettings =
             Craft::$app->projectConfig->get(
                 "blocksmith.blocksmithMatrixFields"
             ) ?? [];
 
         $fieldsEnabled = [];
-        foreach (Craft::$app->fields->getAllFields() as $field) {
-            if ($field instanceof \craft\fields\Matrix) {
-                $uid = $field->uid;
-                if (
-                    isset($savedSettings[$uid]) &&
-                    !empty($savedSettings[$uid]["enablePreview"])
-                ) {
+        foreach ($matrixFieldSettings as $uid => $config) {
+            if (($config["enablePreview"] ?? true) === true) {
+                $field = Craft::$app->fields->getFieldByUid($uid);
+                if ($field instanceof \craft\fields\Matrix) {
                     $fieldsEnabled[$field->handle] = true;
                 }
             }
         }
 
-        $blockData = (new \yii\db\Query())
-            ->select([
-                "entryTypeId",
-                "description",
-                "categories",
-                "previewImageUrl",
-            ])
-            ->from("{{%blocksmith_blockdata}}")
-            ->indexBy("entryTypeId")
-            ->all();
-
-        $categories = (new \yii\db\Query())
-            ->select(["id", "name"])
-            ->from("{{%blocksmith_categories}}")
-            ->indexBy("id")
-            ->all();
+        $volumeBaseUrl = null;
+        if ($useHandleBasedPreviews && $settings->previewImageVolume) {
+            $volume = Craft::$app->volumes->getVolumeByUid(
+                $settings->previewImageVolume
+            );
+            if ($volume) {
+                $volumeBaseUrl = rtrim($volume->getRootUrl(), "/");
+            }
+        }
 
         $matrixFields = array_filter(
             Craft::$app->fields->getAllFields(),
@@ -611,101 +635,76 @@ class BlocksmithController extends \craft\web\Controller
         $allBlockTypes = [];
 
         foreach ($matrixFields as $matrixField) {
-            if (isset($fieldsEnabled[$matrixField->handle])) {
-                foreach ($matrixField->getEntryTypes() as $blockType) {
-                    $blockHandle = $blockType->handle;
-                    $entryTypeId = $blockType->id;
+            if (!isset($fieldsEnabled[$matrixField->handle])) {
+                continue;
+            }
 
-                    $data = $blockData[$entryTypeId] ?? null;
+            foreach ($matrixField->getEntryTypes() as $entryType) {
+                $blockHandle = $entryType->handle;
+                $entryTypeUid = $entryType->uid;
 
-                    $categoryIds = [];
-                    if (isset($data["categories"])) {
-                        $decodedCategories = json_decode(
-                            $data["categories"],
-                            true
+                $config = null;
+                foreach ($blockConfig as $uid => $data) {
+                    if (($data["entryTypeUid"] ?? null) === $entryTypeUid) {
+                        $config = $data;
+                        break;
+                    }
+                }
+
+                $description = $config["description"] ?? null;
+
+                $categoryNames = [];
+                $categoryUids = $config["categories"] ?? [];
+                foreach ($categoryUids as $categoryUid) {
+                    if (isset($categoryConfig[$categoryUid])) {
+                        $categoryNames[] =
+                            $categoryConfig[$categoryUid]["name"];
+                    } else {
+                        Craft::warning(
+                            "Unknown category UID: {$categoryUid}",
+                            __METHOD__
                         );
-                        if (
-                            json_last_error() === JSON_ERROR_NONE &&
-                            is_array($decodedCategories)
-                        ) {
-                            $categoryIds = $decodedCategories;
-                        } else {
-                            Craft::warning(
-                                "Failed to decode categories for entryTypeId {$entryTypeId}. Raw value: {$data["categories"]}",
-                                __METHOD__
-                            );
-                        }
                     }
+                }
 
-                    $categoryNames = [];
-                    if (!empty($categories)) {
-                        foreach ($categoryIds as $id) {
-                            if (isset($categories[$id])) {
-                                $categoryNames[] = $categories[$id]["name"];
-                            } else {
-                                Craft::warning(
-                                    "Category ID {$id} not found in categories table.",
-                                    __METHOD__
-                                );
-                            }
-                        }
-                    }
-
+                $previewImageUrl = $placeholderImageUrl;
+                if (!empty($config["previewImagePath"])) {
                     $previewImageUrl =
-                        $data["previewImageUrl"] ?? $placeholderImageUrl;
+                        "/" . ltrim($config["previewImagePath"], "/");
+                } elseif ($useHandleBasedPreviews && $volumeBaseUrl) {
+                    $subfolder = $settings->previewImageSubfolder
+                        ? "/" . trim($settings->previewImageSubfolder, "/")
+                        : "";
+                    $previewImageUrl = "{$volumeBaseUrl}{$subfolder}/{$blockHandle}.png";
+                }
 
-                    if (
-                        $useHandleBasedPreviews &&
-                        $settings->previewImageVolume
-                    ) {
-                        $volume = Craft::$app->volumes->getVolumeByUid(
-                            $settings->previewImageVolume
-                        );
-                        if ($volume) {
-                            $baseVolumeUrl = rtrim($volume->getRootUrl(), "/");
-                            $subfolder = $settings->previewImageSubfolder
-                                ? "/" .
-                                    trim($settings->previewImageSubfolder, "/")
-                                : "";
-                            $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockHandle}.png";
-                            $previewImageUrl =
-                                $potentialImageUrl ?: $placeholderImageUrl;
-                        }
-                    }
-
-                    if (!isset($allBlockTypes[$blockHandle])) {
-                        $allBlockTypes[$blockHandle] = [
-                            "name" => $blockType->name,
-                            "handle" => $blockHandle,
-                            "description" => $data["description"] ?? null,
-                            "categories" => $categoryNames,
-                            "previewImageUrl" => $previewImageUrl,
-                            "matrixFields" => [],
-                        ];
-                    }
-
-                    $allBlockTypes[$blockHandle]["matrixFields"][] = [
-                        "name" => $matrixField->name,
-                        "handle" => $matrixField->handle,
+                if (!isset($allBlockTypes[$blockHandle])) {
+                    $allBlockTypes[$blockHandle] = [
+                        "name" => $entryType->name,
+                        "handle" => $blockHandle,
+                        "description" => $description,
+                        "categories" => $categoryNames,
+                        "previewImageUrl" => $previewImageUrl,
+                        "matrixFields" => [],
                     ];
                 }
+
+                $allBlockTypes[$blockHandle]["matrixFields"][] = [
+                    "name" => $matrixField->name,
+                    "handle" => $matrixField->handle,
+                ];
             }
         }
 
-        $matrixFieldSettings = [];
+        $matrixFieldList = [];
         foreach ($matrixFields as $field) {
             $uid = $field->uid;
-            $enablePreview = true; // Default
-
-            if (isset($savedSettings[$uid])) {
-                $enablePreview =
-                    (bool) ($savedSettings[$uid]["enablePreview"] ?? true);
-            }
-
-            $matrixFieldSettings[] = [
+            $matrixFieldList[] = [
                 "name" => $field->name,
                 "handle" => $field->handle,
-                "enablePreview" => $enablePreview,
+                "enablePreview" => isset($matrixFieldSettings[$uid])
+                    ? (bool) $matrixFieldSettings[$uid]["enablePreview"]
+                    : true,
             ];
         }
 
@@ -714,7 +713,7 @@ class BlocksmithController extends \craft\web\Controller
             "title" => Craft::t("blocksmith", "Blocksmith"),
             "allBlockTypes" => $allBlockTypes,
             "placeholderImageUrl" => $placeholderImageUrl,
-            "matrixFields" => $matrixFieldSettings,
+            "matrixFields" => $matrixFieldList,
         ]);
     }
 
@@ -735,12 +734,8 @@ class BlocksmithController extends \craft\web\Controller
         $placeholderImageUrl = "/blocksmith/images/placeholder.png";
         $handleBasedImageUrl = null;
 
-        $handleBasedImageUrl = null;
-
-        $fieldsService = Craft::$app->fields;
         $blockType = null;
-
-        foreach ($fieldsService->getAllFields() as $field) {
+        foreach (Craft::$app->fields->getAllFields() as $field) {
             if ($field instanceof \craft\fields\Matrix) {
                 foreach ($field->getEntryTypes() as $entryType) {
                     if ($entryType->handle === $blockTypeHandle) {
@@ -751,7 +746,40 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        if ($useHandleBasedPreviews && $settings->previewImageVolume) {
+        if (!$blockType) {
+            Craft::$app->session->setError(
+                Craft::t(
+                    "blocksmith",
+                    'Block with handle "{handle}" not found.',
+                    ["handle" => $blockTypeHandle]
+                )
+            );
+            return $this->redirect("blocksmith/settings/blocks");
+        }
+
+        $entryTypeUid = $blockType->uid;
+        $blockConfig =
+            Craft::$app->projectConfig->get("blocksmith.blocksmithBlocks") ??
+            [];
+
+        $matchedBlock = null;
+        foreach ($blockConfig as $uid => $config) {
+            if (($config["entryTypeUid"] ?? null) === $entryTypeUid) {
+                $matchedBlock = $config;
+                break;
+            }
+        }
+
+        $description = $matchedBlock["description"] ?? null;
+        $previewImagePath = $matchedBlock["previewImagePath"] ?? null;
+        $selectedCategories = $matchedBlock["categories"] ?? [];
+
+        $categories = Blocksmith::getInstance()->service->getAllCategories();
+
+        $previewImageUrl = $placeholderImageUrl;
+        if ($previewImagePath) {
+            $previewImageUrl = "/" . ltrim($previewImagePath, "/");
+        } elseif ($useHandleBasedPreviews && $settings->previewImageVolume) {
             $volume = Craft::$app->volumes->getVolumeByUid(
                 $settings->previewImageVolume
             );
@@ -768,52 +796,13 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        if (!$blockType) {
-            Craft::$app->session->setError(
-                Craft::t(
-                    "blocksmith",
-                    'Block with handle "{handle}" not found.',
-                    ["handle" => $blockTypeHandle]
-                )
-            );
-            return $this->redirect("blocksmith/settings/blocks");
-        }
-
-        $blockData = (new \yii\db\Query())
-            ->select("*")
-            ->from("{{%blocksmith_blockdata}}")
-            ->where(["entryTypeId" => $blockType->id])
-            ->one();
-
-        $categories = Blocksmith::getInstance()->service->getAllCategories();
-
-        if (!$categories) {
-            $categories = [];
-            Craft::warning("No categories found for Blocksmith.", __METHOD__);
-        }
-
-        $selectedCategories =
-            $blockData && isset($blockData["categories"])
-                ? json_decode($blockData["categories"], true)
-                : [];
-
-        $previewImageUrl = $placeholderImageUrl;
-        if ($blockData && isset($blockData["previewImageId"])) {
-            $asset = Craft::$app->assets->getAssetById(
-                $blockData["previewImageId"]
-            );
-            if ($asset) {
-                $previewImageUrl = $asset->getUrl();
-            }
-        }
-
         $block = [
             "name" => $blockType->name,
             "handle" => $blockType->handle,
             "entryTypeId" => $blockType->id,
-            "description" => $blockData["description"] ?? null,
+            "description" => $description,
             "previewImageUrl" => $previewImageUrl,
-            "previewImageId" => $blockData["previewImageId"] ?? null,
+            "previewImagePath" => $previewImagePath,
             "categories" => $categories,
             "selectedCategories" => $selectedCategories,
             "useHandleBasedPreviews" => $useHandleBasedPreviews,

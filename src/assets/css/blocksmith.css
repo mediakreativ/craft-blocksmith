@@ -242,17 +242,22 @@
   border-radius: 4px;
   overflow: hidden;
   background: #f7f7f7;
-  width: auto;
-  max-width: 200px;
+  width: 200px;
   height: auto;
   margin-top: 1rem;
+  aspect-ratio: 3 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .blocksmith-preview-image img {
   width: 100%;
   height: auto;
   object-fit: contain;
+  object-position: center;
 }
+
 .blocksmith-settings-wrapper .field {
   margin-bottom: 1.5rem;
 }
