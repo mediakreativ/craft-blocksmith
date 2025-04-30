@@ -360,6 +360,7 @@ class Blocksmith extends Plugin
                 "blocksmith_matrix_settings",
                 "blocksmith_blockdata",
                 "blocksmith_categories",
+                "blocksmith_favorites",
             ]
             as $table
         ) {
