@@ -144,6 +144,8 @@ class Blocksmith extends Plugin
             }
         }
 
+        $this->initializeDefaultMatrixFieldSettings();
+
         // Register the Twig extension for the custom translation filter
         Craft::$app->view->registerTwigExtension(
             new class extends \Twig\Extension\AbstractExtension {
@@ -706,6 +708,39 @@ class Blocksmith extends Plugin
 
                 Craft::info(
                     "Blocksmith: Migrated block UID '{$blockUid}' (EntryType UID: {$entryTypeUid}) to Project Config.",
+                    __METHOD__
+                );
+            }
+        }
+    }
+
+    /**
+     * Automatically initializes all Matrix fields with default Blocksmith settings in the Project Config,
+     * if no entry exists yet.
+     *
+     * This ensures that a fresh install of Blocksmith starts with preview enabled
+     * for all existing Matrix fields – no manual “Save” step required.
+     */
+    private function initializeDefaultMatrixFieldSettings(): void
+    {
+        $fields = Craft::$app->fields->getAllFields();
+
+        foreach ($fields as $field) {
+            if (!$field instanceof \craft\fields\Matrix) {
+                continue;
+            }
+
+            $uid = $field->uid;
+            $path = "blocksmith.blocksmithMatrixFields.$uid";
+
+            if (!Craft::$app->projectConfig->get($path)) {
+                Craft::$app->projectConfig->set($path, [
+                    "fieldHandle" => $field->handle,
+                    "enablePreview" => true,
+                ]);
+
+                Craft::info(
+                    "Blocksmith: Auto-initialized Matrix field '{$field->handle}' (UID: {$uid}) into Project Config.",
                     __METHOD__
                 );
             }
