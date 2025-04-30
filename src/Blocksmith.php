@@ -144,6 +144,18 @@ class Blocksmith extends Plugin
             }
         }
 
+        // Migrate old DB settings into YAML (e.g. from v1.4.1 or earlier)
+        if (
+            $this->isInstalled &&
+            Craft::$app
+                ->getProjectConfig()
+                ->get("plugins.blocksmith.enabled") &&
+            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
+        ) {
+            $this->ensureMigrationCompleted();
+        }
+
+        // Initialize default Matrix field settings for fields not covered by migration
         $this->initializeDefaultMatrixFieldSettings();
 
         // Register the Twig extension for the custom translation filter
@@ -222,18 +234,6 @@ class Blocksmith extends Plugin
                 );
             }
         });
-
-        // Run legacy data migration from DB to Project Config,
-        // but only if Blocksmith was updated from a pre-1.4.2 version.
-        if (
-            $this->isInstalled &&
-            Craft::$app
-                ->getProjectConfig()
-                ->get("plugins.blocksmith.enabled") &&
-            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
-        ) {
-            $this->ensureMigrationCompleted();
-        }
     }
 
     /**
