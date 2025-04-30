@@ -342,6 +342,15 @@ class Blocksmith extends Plugin
                 __METHOD__
             );
         }
+
+        // Remove all related Project Config entries
+        $config = Craft::$app->projectConfig;
+        $config->remove("blocksmith.blocksmithMatrixFields");
+        $config->remove("blocksmith.blocksmithBlocks");
+        $config->remove("blocksmith.blocksmithCategories");
+        $config->remove("blocksmith.__migrationCompleted");
+
+        Craft::info("Blocksmith Project Config entries removed.", __METHOD__);
     }
 
     /**
