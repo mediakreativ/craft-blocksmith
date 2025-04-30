@@ -40,7 +40,7 @@ class Blocksmith extends Plugin
     public const TRANSLATION_CATEGORY = "blocksmith";
 
     public string $schemaVersion = "1.1.4";
-    public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
+    // public string $migrationNamespace = "mediakreativ\\blocksmith\\migrations";
     public bool $hasCpSettings = true;
 
     /**
@@ -56,11 +56,6 @@ class Blocksmith extends Plugin
             "service" =>
                 \mediakreativ\blocksmith\services\BlocksmithService::class,
         ]);
-
-        Craft::info(
-            "Migration Namespace: " . $this->migrationNamespace,
-            __METHOD__
-        );
 
         Craft::info(
             "Is Blocksmith installed? " . ($this->isInstalled ? "Yes" : "No"),
@@ -225,6 +220,18 @@ class Blocksmith extends Plugin
                 );
             }
         });
+
+        // Run legacy data migration from DB to Project Config,
+        // but only if Blocksmith was updated from a pre-1.4.2 version.
+        if (
+            $this->isInstalled &&
+            Craft::$app
+                ->getProjectConfig()
+                ->get("plugins.blocksmith.enabled") &&
+            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
+        ) {
+            $this->ensureMigrationCompleted();
+        }
     }
 
     /**
@@ -505,23 +512,28 @@ class Blocksmith extends Plugin
     }
 
     /**
-     * Automatically migrates all Blocksmith settings from DB into Project Config YAML after plugin update.
-     *
-     * @param bool $isNewVersion Whether this is a plugin update to a new version.
+     * Ensures that the DB-to-Project Config YAML migration is performed.
      */
-    public function afterUpdate(bool $isNewVersion): void
+    private function ensureMigrationCompleted(): void
     {
-        parent::afterUpdate($isNewVersion);
+        $config = Craft::$app->projectConfig;
 
-        if ($isNewVersion) {
-            Craft::info(
-                "Blocksmith: Running internal migration of matrix field settings to Project Config.",
-                __METHOD__
-            );
-            $this->migrateMatrixFieldSettingsToProjectConfig();
-            $this->migrateCategorySettingsToProjectConfig();
-            $this->migrateBlockSettingsToProjectConfig();
+        // Use an internal flag to avoid duplicate execution
+        $wasCompleted = $config->get("blocksmith.__migrationCompleted");
+        if ($wasCompleted) {
+            return;
         }
+
+        Craft::info(
+            "Blocksmith: Running fallback migration to Project Config.",
+            __METHOD__
+        );
+
+        $this->migrateMatrixFieldSettingsToProjectConfig();
+        $this->migrateCategorySettingsToProjectConfig();
+        $this->migrateBlockSettingsToProjectConfig();
+
+        $config->set("blocksmith.__migrationCompleted", true);
     }
 
     /**
