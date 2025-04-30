@@ -351,6 +351,35 @@ class Blocksmith extends Plugin
         $config->remove("blocksmith.__migrationCompleted");
 
         Craft::info("Blocksmith Project Config entries removed.", __METHOD__);
+
+        // Drop legacy DB tables if they still exist (for users upgrading from older versions)
+        $db = Craft::$app->db;
+
+        foreach (
+            [
+                "blocksmith_matrix_settings",
+                "blocksmith_blockdata",
+                "blocksmith_categories",
+            ]
+            as $table
+        ) {
+            $tableName = "{{%$table}}";
+
+            if ($db->tableExists($tableName)) {
+                try {
+                    $db->createCommand()->dropTable($tableName)->execute();
+                    Craft::info(
+                        "Dropped legacy Blocksmith table: $tableName",
+                        __METHOD__
+                    );
+                } catch (\Throwable $e) {
+                    Craft::warning(
+                        "Could not drop table $tableName: " . $e->getMessage(),
+                        __METHOD__
+                    );
+                }
+            }
+        }
     }
 
     /**
