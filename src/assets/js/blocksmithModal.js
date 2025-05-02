@@ -202,7 +202,7 @@
       );
 
       const filteredCategories = categories.filter((category) =>
-        visibleCategoryIds.has(category.id),
+        visibleCategoryIds.has(category.uid),
       );
 
       if (filteredCategories.length > 0) {
@@ -228,14 +228,14 @@
 
         filteredCategories.forEach((category) => {
           const $badge = $(`
-            <span class="blocksmith-badge blocksmith-category-badge" data-category-id="${category.id}">
+            <span class="blocksmith-badge blocksmith-category-badge" data-category-id="${category.uid}">
               ${category.name}
             </span>
           `);
 
           $badge.on("click", () => {
             setActiveCategory($badge);
-            this.renderBlockTypes("", category.id);
+            this.renderBlockTypes("", category.uid);
           });
 
           $categoriesContainer.append($badge);

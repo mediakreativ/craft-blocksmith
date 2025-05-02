@@ -98,8 +98,8 @@ class BlocksmithModalController extends Controller
 
                 $categories = [];
                 foreach ($block["categories"] ?? [] as $catUid) {
-                    if (isset($categoryConfig[$catUid]["name"])) {
-                        $categories[] = $categoryConfig[$catUid]["name"];
+                    if (isset($categoryConfig[$catUid])) {
+                        $categories[] = $catUid;
                     }
                 }
 

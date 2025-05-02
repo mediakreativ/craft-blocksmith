@@ -6,7 +6,7 @@
     return;
   }
 
-  window.BlocksmithDebug = true;
+  // window.BlocksmithDebug = true;
 
   function debugLog(...args) {
     if (!window.BlocksmithDebug) return;
