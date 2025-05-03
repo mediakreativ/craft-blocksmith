@@ -1,4 +1,4 @@
-## [1.4.3] – 2025-05-02
+## [1.4.3] – 2025-05-03
 
 > [!NOTE]
 >**Important: Project Config migration**
