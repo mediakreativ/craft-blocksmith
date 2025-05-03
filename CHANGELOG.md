@@ -1,8 +1,8 @@
 ## [1.4.3] – 2025-05-03
 
 > [!NOTE]
->**Important: Project Config migration**
->If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
+> **Important: Project Config migration**
+> If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
 
 As of v1.4.2 Blocksmith uses **Craft’s Project Config** to store all plugin settings.
 
