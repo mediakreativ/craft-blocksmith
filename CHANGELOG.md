@@ -1,27 +1,7 @@
-## [1.4.4] – 2025-05-03
-
-> [!NOTE]
-> **Important: Project Config migration**
-> If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
-
-As of v1.4.2 Blocksmith uses **Craft’s Project Config** to store all plugin settings.
-
-👉 Do **one** of the following **before updating**, to avoid overwriting live settings:
-
-**Option 1:** Update Blocksmith on the **live server** → pull the updated Project Config to your local environment  
-**Option 2:** Sync your **live database to local** → update Blocksmith locally → deploy the updated Project Config
-
-✅ After updating, all settings will be stored in **Project Config YAML files** — fully versionable and deployment-friendly.
-
-### Fixed
-- Internal metadata issue preventing the release notes of v1.4.3 from showing up correctly in the Craft Plugin Store and Control Panel.
-- No code changes compared to 1.4.3.
-
 ## [1.4.3] – 2025-05-03
 
-> [!NOTE]
-> **Important: Project Config migration**
-> If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
+**Important: Project Config migration**
+If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
 
 As of v1.4.2 Blocksmith uses **Craft’s Project Config** to store all plugin settings.
 
