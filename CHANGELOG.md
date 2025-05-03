@@ -1,35 +1,18 @@
-## [1.4.5] – 2025-05-03
+## [1.4.2] - 2025-04-29
 
-**Important: Project Config migration**
-If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
+> [!NOTE]
+> **Important: Read before updating!**
 
-As of v1.4.2 Blocksmith uses **Craft’s Project Config** to store all plugin settings.
+Blocksmith now uses **Craft’s Project Config** to store all plugin settings.
+
+If you’ve configured Blocksmith **only on your live server**, and not synced your local environment:
 
 👉 Do **one** of the following **before updating**, to avoid overwriting live settings:
 
 **Option 1:** Update Blocksmith on the **live server** → pull the updated Project Config to your local environment  
 **Option 2:** Sync your **live database to local** → update Blocksmith locally → deploy the updated Project Config
 
-✅ After updating, all settings will be stored in **Project Config YAML files** — fully versionable and deployment-friendly.
-
-### Fixed
-- Fixed: Categories were not displayed in the block selection modal after updating to v1.4.2.
-
-## [1.4.2] - 2025-04-29
-
-> [!NOTE]
-> **Important: Read before updating!**
->
-> Blocksmith now uses **Craft’s Project Config** to store all plugin settings.
->
-> If you’ve configured Blocksmith **only on your live server**, and not synced your local environment:
->
-> 👉 Do **one** of the following **before updating**, to avoid overwriting live settings:
->
-> **Option 1:** Update Blocksmith on the **live server** → pull the updated Project Config to your local environment  
-> **Option 2:** Sync your **live database to local** → update Blocksmith locally → deploy the updated Project Config
->
-> ✅ After updating, all settings will be stored in **Project Config YAML files**. No further steps required.
+✅ After updating, all settings will be stored in **Project Config YAML files**. No further steps required.
 
 ---
 
