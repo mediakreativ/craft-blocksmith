@@ -1,4 +1,4 @@
-## [1.4.3] – 2025-05-03
+## [1.4.5] – 2025-05-03
 
 **Important: Project Config migration**
 If you haven’t updated to **Blocksmith 1.4.2** yet, please read this carefully:
