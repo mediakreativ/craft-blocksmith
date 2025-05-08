@@ -35,7 +35,7 @@
        */
       this.placeholderImage =
         config?.settings?.placeholderImage ||
-        "/blocksmith/images/placeholder.png";
+        "/blocksmith/blocksmith-assets/placeholder.png";
 
       this.translations = window.BlocksmithTranslations || {};
     }
@@ -254,14 +254,28 @@
       // Create all block elements and save them to create them only once
       this.blockTypes.forEach((blockType, index) => {
         if (!blockType?.elem) {
-          let previewImage = blockType.previewImage || this.placeholderImage;
+          let previewImage = blockType.previewImage;
 
-          if (window.BlocksmithConfig.settings.useHandleBasedPreviews) {
-            previewImage = `${window.BlocksmithConfig.settings.previewImageVolume}/${
-              window.BlocksmithConfig.settings.previewImageSubfolder
-                ? window.BlocksmithConfig.settings.previewImageSubfolder + "/"
-                : ""
-            }${blockType.handle}.png`;
+          if (
+            !previewImage &&
+            window.BlocksmithConfig.settings.useHandleBasedPreviews
+          ) {
+            const mode = window.BlocksmithConfig.settings.previewStorageMode;
+
+            if (mode === "web") {
+              previewImage = `/blocksmith/previews/${blockType.handle}.png`;
+            } else if (mode === "volume") {
+              const volume =
+                window.BlocksmithConfig.settings.previewImageVolume || "";
+              const folder =
+                window.BlocksmithConfig.settings.previewImageSubfolder || "";
+              const subfolder = folder ? `/${folder}` : "";
+              previewImage = `${volume}${subfolder}/${blockType.handle}.png`;
+            }
+          }
+
+          if (!previewImage) {
+            previewImage = this.placeholderImage;
           }
 
           const description =
@@ -280,12 +294,21 @@
                     <div class="blocksmith-footer">
                         <span>${blockType.name}</span>
                         <div class="blocksmith-hint" style="display: none;">
-                            ${Craft.t(
-                              "blocksmith",
-                              "Add a PNG file named '{fileName}' to the configured asset volume.",
-                              { fileName: `${blockType.handle}.png` },
-                            )}
-                        </div>
+                        ${
+                          blockType.previewStorageMode === "web"
+                            ? Craft.t(
+                                "blocksmith",
+                                "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'.",
+                                { fileName: `${blockType.handle}.png` },
+                              )
+                            : Craft.t(
+                                "blocksmith",
+                                "Add a PNG file named '{fileName}' to the configured asset volume.",
+                                { fileName: `${blockType.handle}.png` },
+                              )
+                        }
+                    </div>
+
                         ${blockType.description ? `<div class="blocksmith-block-description">${blockType.description}</div>` : ""}
                     </div>
                   </div>

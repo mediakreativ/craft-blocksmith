@@ -41,9 +41,12 @@ class BlocksmithModalController extends Controller
      */
     public function actionGetBlockTypes(): Response
     {
-        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
         $request = Craft::$app->getRequest();
         $fieldsService = Craft::$app->fields;
+
+        $settings = Blocksmith::getInstance()->getSettings();
+        $previewStorageMode = $settings->previewStorageMode;
 
         $requestedHandle = $request->getParam("handle");
         $blockConfig =
@@ -103,9 +106,10 @@ class BlocksmithModalController extends Controller
                     }
                 }
 
-                $previewImage = $previewImagePath
-                    ? "/" . ltrim($previewImagePath, "/")
-                    : $placeholderImageUrl;
+                $previewImage = Blocksmith::getInstance()->service->resolvePreviewImageUrl(
+                    $entryTypeHandle,
+                    $previewImagePath
+                );
 
                 $matrixFields = [];
                 foreach ($fields as $potentialField) {
@@ -127,6 +131,7 @@ class BlocksmithModalController extends Controller
                     "categories" => $categories,
                     "previewImage" => $previewImage,
                     "matrixFields" => $matrixFields,
+                    "previewStorageMode" => $previewStorageMode,
                 ];
             }
         }

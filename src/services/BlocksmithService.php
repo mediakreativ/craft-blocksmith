@@ -121,4 +121,51 @@ class BlocksmithService
 
         return $categories;
     }
+
+    /**
+     * Resolves the preview image URL for a given block handle.
+     *
+     * This supports all previewStorageMode types:
+     * - "web": Looks for /blocksmith/previews/{handle}.png
+     * - "volume": Searches the selected volume for an asset named {handle}.png
+     * - fallback: Returns /blocksmith/blocksmith-assets/placeholder.png
+     *
+     * @param string $blockHandle The handle of the block (usually the EntryType handle).
+     * @param string|null $explicitUrl Optional manually set previewImagePath (only used if handle-based previews are disabled).
+     * @return string The resolved public URL to the preview image.
+     */
+    public function resolvePreviewImageUrl(
+        string $blockHandle,
+        ?string $previewImagePath = null
+    ): string {
+        $placeholder = "/blocksmith/blocksmith-assets/placeholder.png";
+
+        if ($previewImagePath) {
+            return "/" . ltrim($previewImagePath, "/");
+        }
+
+        $settings = Blocksmith::getInstance()->getSettings();
+        if (!$settings->useHandleBasedPreviews) {
+            return $placeholder;
+        }
+
+        if ($settings->previewStorageMode === "web") {
+            return "/blocksmith/previews/{$blockHandle}.png";
+        }
+
+        if ($settings->previewImageVolume) {
+            $volume = Craft::$app->volumes->getVolumeByUid(
+                $settings->previewImageVolume
+            );
+            if ($volume) {
+                $base = rtrim($volume->getRootUrl(), "/");
+                $subfolder = $settings->previewImageSubfolder
+                    ? "/" . trim($settings->previewImageSubfolder, "/")
+                    : "";
+                return "{$base}{$subfolder}/{$blockHandle}.png";
+            }
+        }
+
+        return $placeholder;
+    }
 }

@@ -85,13 +85,18 @@
 					<div class="instructions">
 						<p>{{ "This block uses a handle-based preview image."|t('blocksmith') }}</p>
 					</div>
-					{% if not block.handleBasedImageUrl %}
+					{% if not block.handleBasedImageExists %}
 						<div class="blocksmith-hint">
-							{{ "Add a PNG file named '{fileName}' to the configured asset volume."|t('blocksmith', { fileName: block.handle ~ '.png' }) }}
+							{% if block.previewStorageMode == 'web' %}
+								{{ "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'."|t('blocksmith', { fileName: block.handle ~ '.png' }) }}
+							{% else %}
+								{{ "Add a PNG file named '{fileName}' to the configured asset volume."|t('blocksmith', { fileName: block.handle ~ '.png' }) }}
+							{% endif %}
 						</div>
 					{% endif %}
+
 					<div class="blocksmith-preview-image">
-						<img src="{{ block.handleBasedImageUrl ?? block.placeholderImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}">
+						<img src="{{ block.handleBasedImageUrl }}" alt="{{ "Preview Image"|t('blocksmith') }}" onerror="this.src='{{ block.placeholderImageUrl|e('js') }}'">
 					</div>
 				{% else %}
 					<div class="instructions">

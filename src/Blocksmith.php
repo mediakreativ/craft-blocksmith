@@ -257,8 +257,8 @@ class Blocksmith extends Plugin
      * Publishes plugin assets to the web directory.
      *
      * Copies all files from the plugin's src/web directory into the
-     * Craft project's public web directory (web/blocksmith) to make them
-     * publicly accessible.
+     * Craft project's public web directory (@webroot/blocksmith) to make them
+     * publicly accessible. Removes the legacy blocksmith/images directory if it exists.
      *
      * @return void
      */
@@ -296,6 +296,26 @@ class Blocksmith extends Plugin
         }
 
         Craft::info("Blocksmith assets published to {$dest}.", __METHOD__);
+
+        // Remove legacy /blocksmith/images directory
+        $legacy = Craft::getAlias("@webroot/blocksmith/images");
+        if (is_dir($legacy)) {
+            \yii\helpers\FileHelper::removeDirectory($legacy);
+            Craft::info(
+                "Removed legacy directory: blocksmith/images",
+                __METHOD__
+            );
+        }
+
+        // Ensure previews/ directory exists for developer-provided images
+        $previews = Craft::getAlias("@webroot/blocksmith/previews");
+        if (!is_dir($previews)) {
+            mkdir($previews, 0755, true);
+            Craft::info(
+                "Created user preview directory: blocksmith/previews",
+                __METHOD__
+            );
+        }
     }
 
     /**

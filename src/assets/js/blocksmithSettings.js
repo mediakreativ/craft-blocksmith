@@ -35,6 +35,7 @@ document.addEventListener("click", function (event) {
   }
 });
 
+
 (function ($) {
   Garnish.$doc.ready(function () {
     const $pickerBtn = $("#previewImage-picker");

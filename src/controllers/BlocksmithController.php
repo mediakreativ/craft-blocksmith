@@ -95,7 +95,8 @@ class BlocksmithController extends \craft\web\Controller
         );
 
         $settings->previewStorageMode = $request->getBodyParam(
-            "previewStorageMode", "web"
+            "previewStorageMode",
+            "web"
         );
 
         $settings->previewImageVolume = $request->getBodyParam(
@@ -599,7 +600,7 @@ class BlocksmithController extends \craft\web\Controller
     public function actionBlocks(): Response
     {
         $settings = Blocksmith::getInstance()->getSettings();
-        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
         $blockConfig =
@@ -626,15 +627,15 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
-        $volumeBaseUrl = null;
-        if ($useHandleBasedPreviews && $settings->previewImageVolume) {
-            $volume = Craft::$app->volumes->getVolumeByUid(
-                $settings->previewImageVolume
-            );
-            if ($volume) {
-                $volumeBaseUrl = rtrim($volume->getRootUrl(), "/");
-            }
-        }
+        // $volumeBaseUrl = null;
+        // if ($useHandleBasedPreviews && $settings->previewImageVolume) {
+        //     $volume = Craft::$app->volumes->getVolumeByUid(
+        //         $settings->previewImageVolume
+        //     );
+        //     if ($volume) {
+        //         $volumeBaseUrl = rtrim($volume->getRootUrl(), "/");
+        //     }
+        // }
 
         $matrixFields = array_filter(
             Craft::$app->fields->getAllFields(),
@@ -676,16 +677,12 @@ class BlocksmithController extends \craft\web\Controller
                     }
                 }
 
-                $previewImageUrl = $placeholderImageUrl;
-                if (!empty($config["previewImagePath"])) {
-                    $previewImageUrl =
-                        "/" . ltrim($config["previewImagePath"], "/");
-                } elseif ($useHandleBasedPreviews && $volumeBaseUrl) {
-                    $subfolder = $settings->previewImageSubfolder
-                        ? "/" . trim($settings->previewImageSubfolder, "/")
-                        : "";
-                    $previewImageUrl = "{$volumeBaseUrl}{$subfolder}/{$blockHandle}.png";
-                }
+                $previewImagePath = $config["previewImagePath"] ?? null;
+
+                $previewImageUrl = Blocksmith::getInstance()->service->resolvePreviewImageUrl(
+                    $blockHandle,
+                    $previewImagePath
+                );
 
                 if (!isset($allBlockTypes[$blockHandle])) {
                     $allBlockTypes[$blockHandle] = [
@@ -740,8 +737,22 @@ class BlocksmithController extends \craft\web\Controller
     {
         $settings = Blocksmith::getInstance()->getSettings();
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews ?? false;
-        $placeholderImageUrl = "/blocksmith/images/placeholder.png";
+        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
         $handleBasedImageUrl = null;
+
+        $volumeName = null;
+        if (
+            $useHandleBasedPreviews &&
+            $settings->previewStorageMode === "volume" &&
+            $settings->previewImageVolume
+        ) {
+            $volume = Craft::$app->volumes->getVolumeByUid(
+                $settings->previewImageVolume
+            );
+            if ($volume) {
+                $volumeName = $volume->name;
+            }
+        }
 
         $blockType = null;
         foreach (Craft::$app->fields->getAllFields() as $field) {
@@ -785,25 +796,23 @@ class BlocksmithController extends \craft\web\Controller
 
         $categories = Blocksmith::getInstance()->service->getAllCategories();
 
-        $previewImageUrl = $placeholderImageUrl;
-        if ($previewImagePath) {
-            $previewImageUrl = "/" . ltrim($previewImagePath, "/");
-        } elseif ($useHandleBasedPreviews && $settings->previewImageVolume) {
-            $volume = Craft::$app->volumes->getVolumeByUid(
-                $settings->previewImageVolume
-            );
-            if ($volume) {
-                $baseVolumeUrl = rtrim($volume->getRootUrl(), "/");
-                $subfolder = $settings->previewImageSubfolder
-                    ? "/" . trim($settings->previewImageSubfolder, "/")
-                    : "";
-                $potentialImageUrl = "{$baseVolumeUrl}{$subfolder}/{$blockType->handle}.png";
+        $previewImageUrl = Blocksmith::getInstance()->service->resolvePreviewImageUrl(
+            $blockType->handle,
+            $previewImagePath
+        );
 
-                if (@get_headers($potentialImageUrl)[0] === "HTTP/1.1 200 OK") {
-                    $handleBasedImageUrl = $potentialImageUrl;
-                }
-            }
+        $doesHandleBasedImageExist = false;
+        if (
+            $settings->useHandleBasedPreviews &&
+            $settings->previewStorageMode === "web"
+        ) {
+            $absolutePath = Craft::getAlias(
+                "@webroot/blocksmith/previews/" . $blockType->handle . ".png"
+            );
+            $doesHandleBasedImageExist = file_exists($absolutePath);
         }
+
+        $handleBasedImageUrl = $useHandleBasedPreviews ? $previewImageUrl : null;
 
         $block = [
             "name" => $blockType->name,
@@ -812,11 +821,13 @@ class BlocksmithController extends \craft\web\Controller
             "description" => $description,
             "previewImageUrl" => $previewImageUrl,
             "previewImagePath" => $previewImagePath,
+            "previewStorageMode" => $settings->previewStorageMode,
             "categories" => $categories,
             "selectedCategories" => $selectedCategories,
             "useHandleBasedPreviews" => $useHandleBasedPreviews,
             "placeholderImageUrl" => $placeholderImageUrl,
             "handleBasedImageUrl" => $handleBasedImageUrl,
+            "handleBasedImageExists" => $doesHandleBasedImageExist,
         ];
 
         return $this->renderTemplate("blocksmith/_settings/edit-block", [
