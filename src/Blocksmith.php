@@ -18,7 +18,7 @@ use mediakreativ\blocksmith\models\BlocksmithSettings;
 use craft\events\FieldEvent;
 use craft\services\Fields;
 
-use craft\db\Query; /* Remove in next Version */
+use craft\db\Query; /* Remove in future Version */
 
 /**
  * Blocksmith plugin for Craft CMS
@@ -138,36 +138,6 @@ class Blocksmith extends Plugin
             }
         );
 
-        Event::on(Plugins::class, Plugins::EVENT_AFTER_UPDATE_PLUGIN, function (
-            PluginEvent $event
-        ) {
-            if ($event->plugin === $this) {
-                $config = Craft::$app->projectConfig;
-
-                // Fallback-Migration aus DB nur bei existierender Tabelle
-                if (
-                    Craft::$app->db->tableExists(
-                        "{{%blocksmith_matrix_settings}}"
-                    )
-                ) {
-                    $this->ensureMigrationCompleted();
-                }
-
-                // previewStorageMode setzen, falls noch nicht vorhanden
-                $pcSettings = $config->get("plugins.blocksmith.settings") ?? [];
-                if (
-                    !array_key_exists("previewStorageMode", $pcSettings) &&
-                    ($settings = $this->getSettings())->useHandleBasedPreviews
-                ) {
-                    $settings->previewStorageMode = "volume";
-                    Craft::$app->plugins->savePluginSettings(
-                        $this,
-                        $settings->toArray()
-                    );
-                }
-            }
-        });
-
         // Ensure a default volume is set for preview images, if not configured
         // if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
         //     $settings = $this->getSettings();
@@ -210,34 +180,34 @@ class Blocksmith extends Plugin
         // }
 
         // Migrate old DB settings into YAML (e.g. from v1.4.1 or earlier)
-        // if (
-        //     $this->isInstalled &&
-        //     Craft::$app
-        //         ->getProjectConfig()
-        //         ->get("plugins.blocksmith.enabled") &&
-        //     Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
-        // ) {
-        //     $this->ensureMigrationCompleted();
-        // }
+        if (
+            $this->isInstalled &&
+            Craft::$app
+                ->getProjectConfig()
+                ->get("plugins.blocksmith.enabled") &&
+            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
+        ) {
+            $this->ensureMigrationCompleted();
+        }
 
         // Write new setting previewStorageMode in YAML
-        // if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
-        //     // Roh-ProjektConfig auslesen
-        //     $pc = Craft::$app->projectConfig;
-        //     $pcSettings = $pc->get("plugins.blocksmith.settings") ?? [];
+        if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
+            // Roh-ProjektConfig auslesen
+            $pc = Craft::$app->projectConfig;
+            $pcSettings = $pc->get("plugins.blocksmith.settings") ?? [];
 
-        //     // erst setzen, wenn Key überhaupt noch nicht existiert und Handle-Previews an sind
-        //     if (
-        //         !array_key_exists("previewStorageMode", $pcSettings) &&
-        //         ($settings = $this->getSettings())->useHandleBasedPreviews
-        //     ) {
-        //         $settings->previewStorageMode = "volume";
-        //         Craft::$app->plugins->savePluginSettings(
-        //             $this,
-        //             $settings->toArray()
-        //         );
-        //     }
-        // }
+            // erst setzen, wenn Key überhaupt noch nicht existiert und Handle-Previews an sind
+            if (
+                !array_key_exists("previewStorageMode", $pcSettings) &&
+                ($settings = $this->getSettings())->useHandleBasedPreviews
+            ) {
+                $settings->previewStorageMode = "volume";
+                Craft::$app->plugins->savePluginSettings(
+                    $this,
+                    $settings->toArray()
+                );
+            }
+        }
 
         // Initialize default Matrix field settings for fields not covered by migration
         $this->initializeDefaultMatrixFieldSettings();
