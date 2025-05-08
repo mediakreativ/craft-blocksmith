@@ -150,7 +150,7 @@ class Blocksmith extends Plugin
             $this->ensureMigrationCompleted();
         }
 
-        // Ensure the previewStorageMode setting exists in project.yaml after installation or update
+        // Ensure the previewStorageMode and previewImageVolume settings exist in project.yaml after installation or update
         if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
             $pc = Craft::$app->projectConfig;
             $pcSettings = $pc->get("plugins.blocksmith.settings") ?? [];
@@ -158,9 +158,12 @@ class Blocksmith extends Plugin
             if (!array_key_exists("previewStorageMode", $pcSettings)) {
                 $settings = $this->getSettings();
 
-                $settings->previewStorageMode = $settings->useHandleBasedPreviews
-                    ? "volume"
-                    : null;
+                if ($settings->useHandleBasedPreviews) {
+                    $settings->previewStorageMode = "volume";
+                } else {
+                    $settings->previewStorageMode = null;
+                    $settings->previewImageVolume = null;
+                }
 
                 Craft::$app->plugins->savePluginSettings(
                     $this,
