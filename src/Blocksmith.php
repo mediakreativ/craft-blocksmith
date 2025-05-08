@@ -130,54 +130,14 @@ class Blocksmith extends Plugin
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
             function (PluginEvent $e) {
                 if ($e->plugin === $this) {
-                    // unser Settings-Model (mit den PHP-Defaults) holen
+                    /**
+                     * Write all default plugin settings to the project config after installation.
+                     */
                     $defaults = $this->getSettings()->toArray();
-                    // und in die project.yaml schreiben
                     Craft::$app->plugins->savePluginSettings($this, $defaults);
                 }
             }
         );
-
-        // Ensure a default volume is set for preview images, if not configured
-        // if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
-        //     $settings = $this->getSettings();
-
-        //     if (empty($settings->previewImageVolume)) {
-        //         $volumes = Craft::$app->volumes->getAllVolumes();
-        //         if (!empty($volumes)) {
-        //             $settings->previewImageVolume = $volumes[0]->uid;
-
-        //             Craft::info(
-        //                 "Default volume set to: " . $volumes[0]->name,
-        //                 __METHOD__
-        //             );
-        //         }
-        //     }
-
-        //     if (
-        //         $settings->useHandleBasedPreviews &&
-        //         $settings->previewStorageMode === null
-        //     ) {
-        //         $settings->previewStorageMode = "volume";
-
-        //         Craft::info(
-        //             "Blocksmith: Default previewStorageMode set to 'volume'.",
-        //             __METHOD__
-        //         );
-        //     } elseif ($settings->previewStorageMode === null) {
-        //         $settings->previewStorageMode = "web";
-
-        //         Craft::info(
-        //             "Blocksmith: Default previewStorageMode set to 'web'.",
-        //             __METHOD__
-        //         );
-        //     }
-
-        //     Craft::$app->plugins->savePluginSettings(
-        //         $this,
-        //         $settings->toArray()
-        //     );
-        // }
 
         // Migrate old DB settings into YAML (e.g. from v1.4.1 or earlier)
         if (
@@ -190,18 +150,18 @@ class Blocksmith extends Plugin
             $this->ensureMigrationCompleted();
         }
 
-        // Write new setting previewStorageMode in YAML
+        // Ensure the previewStorageMode setting exists in project.yaml after installation or update
         if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
-            // Roh-ProjektConfig auslesen
             $pc = Craft::$app->projectConfig;
             $pcSettings = $pc->get("plugins.blocksmith.settings") ?? [];
 
-            // erst setzen, wenn Key überhaupt noch nicht existiert und Handle-Previews an sind
-            if (
-                !array_key_exists("previewStorageMode", $pcSettings) &&
-                ($settings = $this->getSettings())->useHandleBasedPreviews
-            ) {
-                $settings->previewStorageMode = "volume";
+            if (!array_key_exists("previewStorageMode", $pcSettings)) {
+                $settings = $this->getSettings();
+
+                $settings->previewStorageMode = $settings->useHandleBasedPreviews
+                    ? "volume"
+                    : null;
+
                 Craft::$app->plugins->savePluginSettings(
                     $this,
                     $settings->toArray()
