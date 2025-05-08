@@ -20,7 +20,7 @@ document.addEventListener("click", function (event) {
 
           setTimeout(() => {
             iconElement.dataset.icon = originalIcon;
-            iconElement.style.color = ""; // Farbe zurücksetzen
+            iconElement.style.color = "";
           }, 2000);
 
           Craft.cp.displayNotice(Craft.t("blocksmith", "Copied to clipboard."));

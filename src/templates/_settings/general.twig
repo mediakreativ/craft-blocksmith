@@ -42,14 +42,41 @@
 
 
 			{{ forms.lightswitchField({
-                label: 'Use Handle-based Previews'|t('blocksmith'),
+                label: 'Use Handle-based Previews (Recommended)'|t('blocksmith'),
                 name: 'useHandleBasedPreviews',
                 id: 'useHandleBasedPreviews',
-                instructions: 'Automatically assign preview images based on block handles instead of uploading them manually via the Asset Browser. To do so, the preview images must be saved as PNG files and named after their respective block handles (e.g., textAndImage.png).'|t('blocksmith'),
-                on: settings.useHandleBasedPreviews,
-            }) }}
+                instructions: macros.instructions(
+                    'Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in /web/blocksmith.'|t('blocksmith'),
+                    '<p>Preview images must be saved as PNG files and named after the block handles (e.g., <code>textAndImage.png</code>).</p>
+                    <p>You can store them in one of the following locations:<br>
+                    – in a predefined <strong>Asset Volume</strong><br>
+                    – or in the <code>/web/blocksmith</code> folder</p>
+                    <p><strong>Recommended:</strong> Use <code>/web/blocksmith</code> to version and deploy preview images. Ideal for team workflows and automated deployments.</p>'
+                    ),
+                    on: settings.useHandleBasedPreviews,
+            })}}
 
 			{% if settings.useHandleBasedPreviews %}
+
+				{{ forms.radioGroupField({
+                label: 'Preview Storage Mode'|t('blocksmith'),
+                instructions: 'Choose where the preview images will be loaded from.'|t('blocksmith'),
+                name: 'previewStorageMode',
+                options: {
+                    'volume': 'Asset Volume'|t('blocksmith'),
+                    'web': '/web/blocksmith'|t('blocksmith') ~ ' (Recommended)'|t('blocksmith'),
+                    },
+                value: settings.previewStorageMode ?? 'volume',
+                disabled: 'previewStorageMode' in overrides,
+                warning: 'previewStorageMode' in overrides ? macros.configWarning('previewStorageMode'),
+            }) }}
+
+			{% endif %}
+
+
+			{% if settings.useHandleBasedPreviews and settings.previewStorageMode == 'volume' %}
+
+			{# {% if settings.useHandleBasedPreviews %} #}
 
 				{{ forms.selectField({
                     label: 'Preview Image Volume'|t('blocksmith'),

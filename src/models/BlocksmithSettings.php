@@ -18,6 +18,7 @@ class BlocksmithSettings extends Model
     public ?string $previewImageSubfolder = null;
     public bool $wideViewFourBlocks = false;
     public bool $useHandleBasedPreviews = false;
+    public ?string $previewStorageMode = null;
     public bool $enableCardsSupport = true;
 
     /**
@@ -32,7 +33,8 @@ class BlocksmithSettings extends Model
                 ["previewImageVolume"],
                 "required",
                 "when" => function ($model) {
-                    return $model->useHandleBasedPreviews;
+                    return $model->useHandleBasedPreviews &&
+                        $model->previewStorageMode === "volume";
                 },
                 "message" => Blocksmith::t(
                     "Please select a volume for preview images."
@@ -45,6 +47,7 @@ class BlocksmithSettings extends Model
                     "The subfolder must be a valid string."
                 ),
             ],
+            [["previewStorageMode"], "in", "range" => ["volume", "web"]],
             [["useHandleBasedPreviews"], "boolean"],
             [["wideViewFourBlocks"], "boolean"],
             [["enableCardsSupport"], "boolean"],

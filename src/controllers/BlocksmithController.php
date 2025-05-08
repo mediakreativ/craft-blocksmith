@@ -93,6 +93,11 @@ class BlocksmithController extends \craft\web\Controller
         $settings->useHandleBasedPreviews = (bool) $request->getBodyParam(
             "useHandleBasedPreviews"
         );
+
+        $settings->previewStorageMode = $request->getBodyParam(
+            "previewStorageMode", "web"
+        );
+
         $settings->previewImageVolume = $request->getBodyParam(
             "previewImageVolume"
         );
@@ -103,10 +108,14 @@ class BlocksmithController extends \craft\web\Controller
             "enableCardsSupport"
         );
 
-        if (
-            $settings->useHandleBasedPreviews &&
-            empty($settings->previewImageVolume)
-        ) {
+        if (!$settings->useHandleBasedPreviews) {
+            $settings->previewStorageMode = null;
+            $settings->previewImageVolume = null;
+            $settings->previewImageSubfolder = null;
+        } elseif ($settings->previewStorageMode === "web") {
+            $settings->previewImageVolume = null;
+            $settings->previewImageSubfolder = null;
+        } elseif (empty($settings->previewImageVolume)) {
             $volumes = Craft::$app->getVolumes()->getAllVolumes();
             $settings->previewImageVolume = $volumes[0]->uid ?? null;
         }

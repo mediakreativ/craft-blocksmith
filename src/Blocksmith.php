@@ -10,6 +10,8 @@ use craft\web\UrlManager;
 use craft\web\View;
 use craft\helpers\UrlHelper;
 use yii\base\Event;
+use craft\services\Plugins;
+use craft\events\PluginEvent;
 use mediakreativ\blocksmith\services\BlocksmithService;
 use mediakreativ\blocksmith\assets\BlocksmithAsset;
 use mediakreativ\blocksmith\models\BlocksmithSettings;
@@ -123,26 +125,59 @@ class Blocksmith extends Plugin
             }
         );
 
-        // Ensure a default volume is set for preview images, if not configured
-        if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
-            $settings = $this->getSettings();
-
-            if (empty($settings->previewImageVolume)) {
-                $volumes = Craft::$app->volumes->getAllVolumes();
-                if (!empty($volumes)) {
-                    $settings->previewImageVolume = $volumes[0]->uid;
-                    Craft::$app->plugins->savePluginSettings(
-                        $this,
-                        $settings->toArray()
-                    );
-
-                    Craft::info(
-                        "Default volume set to: " . $volumes[0]->name,
-                        __METHOD__
-                    );
+        Event::on(
+            Plugins::class,
+            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
+            function (PluginEvent $e) {
+                if ($e->plugin === $this) {
+                    // unser Settings-Model (mit den PHP-Defaults) holen
+                    $defaults = $this->getSettings()->toArray();
+                    // und in die project.yaml schreiben
+                    Craft::$app->plugins->savePluginSettings($this, $defaults);
                 }
             }
-        }
+        );
+
+        // Ensure a default volume is set for preview images, if not configured
+        // if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
+        //     $settings = $this->getSettings();
+
+        //     if (empty($settings->previewImageVolume)) {
+        //         $volumes = Craft::$app->volumes->getAllVolumes();
+        //         if (!empty($volumes)) {
+        //             $settings->previewImageVolume = $volumes[0]->uid;
+
+        //             Craft::info(
+        //                 "Default volume set to: " . $volumes[0]->name,
+        //                 __METHOD__
+        //             );
+        //         }
+        //     }
+
+        //     if (
+        //         $settings->useHandleBasedPreviews &&
+        //         $settings->previewStorageMode === null
+        //     ) {
+        //         $settings->previewStorageMode = "volume";
+
+        //         Craft::info(
+        //             "Blocksmith: Default previewStorageMode set to 'volume'.",
+        //             __METHOD__
+        //         );
+        //     } elseif ($settings->previewStorageMode === null) {
+        //         $settings->previewStorageMode = "web";
+
+        //         Craft::info(
+        //             "Blocksmith: Default previewStorageMode set to 'web'.",
+        //             __METHOD__
+        //         );
+        //     }
+
+        //     Craft::$app->plugins->savePluginSettings(
+        //         $this,
+        //         $settings->toArray()
+        //     );
+        // }
 
         // Migrate old DB settings into YAML (e.g. from v1.4.1 or earlier)
         if (
