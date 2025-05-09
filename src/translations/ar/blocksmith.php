@@ -110,4 +110,21 @@ return [
     "Add {name} above" => "أضف {name} أعلاه",
     "Add {name} before" => "أضف {name} قبل",
     "Add block before" => "أضف كتلة قبل",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "تعيين صور المعاينة تلقائيًا استنادًا إلى أسماء المقابض بدلاً من تحديدها يدويًا عبر مستعرض الأصول. يدعم المعاينات المتوافقة مع النشر والتحكم في الإصدارات إذا تم تخزين الصور في @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "استخدم معاينات استنادًا إلى المقابض (موصى به لسير العمل المرتبط بالنشر)",
+    "blocksmith_previewInstructionsHtml" => "<p>يجب حفظ صور المعاينة كملفات PNG وتسمية الملفات حسب أسماء المقابض (مثل <code>textAndImage.png</code>).</p>
+    <p>يمكنك تخزينها في أحد المواقع التالية:<br>
+    – في <strong>حجم الأصول</strong> المحدد<br>
+    – أو في مجلد <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>موصى به:</strong> استخدم <code>@webroot/blocksmith/previews/</code> لتضمين الصور ضمن أنظمة التحكم في الإصدارات والنشر. مثالي للعمل الجماعي والنشر الآلي. للقيام بذلك، <strong>تأكد من تضمين المجلد <code>@webroot/blocksmith/</code> في عملية النشر الخاصة بك.</strong></p>",
+    "Preview Image Storage Mode" => "وضع تخزين صورة المعاينة",
+    "Asset Volume" => "حجم الأصول",
+    "Choose where the preview images will be loaded from." =>
+        "اختر من أين سيتم تحميل صور المعاينة.",
+    "Recommended" => "موصى به",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "أضف ملف PNG باسم '{fileName}' إلى '@webroot/blocksmith/previews/'.",
 ];

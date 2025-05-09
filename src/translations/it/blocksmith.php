@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Aggiungi {name} sopra",
     "Add {name} before" => "Aggiungi {name} prima",
     "Add block before" => "Aggiungi blocco prima",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Assegna automaticamente le immagini di anteprima in base agli handle dei blocchi anziché selezionarle manualmente tramite il browser delle risorse. Supporta anteprime versionate e pronte per la distribuzione se le immagini sono archiviate in @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Usa anteprime basate sugli handle (consigliato per i flussi di lavoro di deployment)",
+    "blocksmith_previewInstructionsHtml" => "<p>Le immagini di anteprima devono essere salvate come file PNG e nominate in base all’handle del blocco (es. <code>textAndImage.png</code>).</p>
+    <p>È possibile salvarle in uno dei seguenti percorsi:<br>
+    – in un <strong>Volume di risorse</strong> predefinito<br>
+    – oppure nella cartella <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Consigliato:</strong> Usa <code>@webroot/blocksmith/previews/</code> per versionare e distribuire le immagini. Ideale per il lavoro in team e i deployment automatizzati. Per farlo, assicurati che la cartella <code>@webroot/blocksmith/</code> sia inclusa nel tuo processo di deployment.</p>",
+    "Preview Image Storage Mode" => "Modalità di archiviazione delle anteprime",
+    "Asset Volume" => "Volume di risorse",
+    "Choose where the preview images will be loaded from." =>
+        "Scegli da dove caricare le immagini di anteprima.",
+    "Recommended" => "Consigliato",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Aggiungi un file PNG chiamato '{fileName}' alla cartella '@webroot/blocksmith/previews/'.",
 ];

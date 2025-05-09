@@ -110,4 +110,22 @@ return [
     "Add {name} above" => "Tilføj {name} over",
     "Add {name} before" => "Tilføj {name} før",
     "Add block before" => "Tilføj blok før",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Tildel automatisk forhåndsvisningsbilleder baseret på blok-handles i stedet for at vælge dem manuelt via Asset Browser. Understøtter versionsstyrede og deploy-venlige forhåndsvisninger, hvis billederne gemmes i @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Brug handle-baserede forhåndsvisninger (anbefalet til deploy-arbejdsgange)",
+    "blocksmith_previewInstructionsHtml" => "<p>Forhåndsvisningsbilleder skal gemmes som PNG-filer og navngives efter blok-handles (f.eks. <code>textAndImage.png</code>).</p>
+    <p>Du kan gemme dem ét af følgende steder:<br>
+    – i et foruddefineret <strong>Asset Volume</strong><br>
+    – eller i mappen <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Anbefalet:</strong> Brug <code>@webroot/blocksmith/previews/</code> til versionsstyring og deployment. Ideelt til teamsamarbejde og automatiserede deploys. For at gøre dette, sørg for, at mappen <code>@webroot/blocksmith/</code> er inkluderet i din deployeringsproces.</p>",
+    "Preview Image Storage Mode" =>
+        "Lagringsmetode for forhåndsvisningsbilleder",
+    "Asset Volume" => "Asset Volume",
+    "Choose where the preview images will be loaded from." =>
+        "Vælg, hvorfra forhåndsvisningsbillederne skal indlæses.",
+    "Recommended" => "Anbefalet",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Tilføj en PNG-fil med navnet '{fileName}' til '@webroot/blocksmith/previews/'.",
 ];

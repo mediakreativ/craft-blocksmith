@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "{name} öğesini yukarı ekle",
     "Add {name} before" => "{name} öğesini önce ekle",
     "Add block before" => "Bloğu önce ekle",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Önizleme görsellerini, Asset Tarayıcısı üzerinden manuel olarak seçmek yerine blok handle’larına göre otomatik olarak ata. Görseller @webroot/blocksmith/previews/ klasörüne kaydedildiğinde dağıtıma uygun, sürüm kontrollü önizlemeleri destekler.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Handle tabanlı önizlemeleri kullan (dağıtım süreçleri için önerilir)",
+    "blocksmith_previewInstructionsHtml" => "<p>Önizleme görselleri PNG formatında kaydedilmeli ve blok handle’larına göre adlandırılmalıdır (örneğin: <code>textAndImage.png</code>).</p>
+    <p>Aşağıdaki konumlardan birine kaydedilebilirler:<br>
+    – önceden tanımlı bir <strong>Asset Volume</strong> içine<br>
+    – veya <code>@webroot/blocksmith/previews/</code> klasörüne</p>
+    <p><strong>Önerilir:</strong> Önizleme görsellerini <code>@webroot/blocksmith/previews/</code> altında versiyonlayarak dağıtım yapmak. Ekip çalışmaları ve otomatik dağıtımlar için idealdir. Bunu yapmak için, <code>@webroot/blocksmith/</code> klasörünün dağıtım sürecinize dahil edildiğinden emin olun.</p>",
+    "Preview Image Storage Mode" => "Önizleme görseli depolama modu",
+    "Asset Volume" => "Asset Volume",
+    "Choose where the preview images will be loaded from." =>
+        "Önizleme görsellerinin yükleneceği konumu seçin.",
+    "Recommended" => "Önerilir",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "'{fileName}' adlı bir PNG dosyasını '@webroot/blocksmith/previews/' klasörüne ekleyin.",
 ];

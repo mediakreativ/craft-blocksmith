@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Voeg {name} hierboven toe",
     "Add {name} before" => "Voeg {name} ervoor toe",
     "Add block before" => "Blok ervoor toevoegen",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Wijs automatisch previewafbeeldingen toe op basis van block-handles in plaats van ze handmatig te selecteren via de Asset Browser. Ondersteunt versiebeheer en is geschikt voor deployment wanneer afbeeldingen worden opgeslagen in @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Gebruik previews op basis van handles (aanbevolen voor deployment-workflows)",
+    "blocksmith_previewInstructionsHtml" => "<p>Previewafbeeldingen moeten als PNG-bestanden worden opgeslagen en vernoemd worden naar de block-handle (bijv. <code>textAndImage.png</code>).</p>
+    <p>Je kunt ze opslaan op een van de volgende locaties:<br>
+    – in een vooraf gedefinieerd <strong>Asset Volume</strong><br>
+    – of in de map <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Aanbevolen:</strong> Gebruik <code>@webroot/blocksmith/previews/</code> om previews te versioneren en te deployen. Ideaal voor teamworkflows en geautomatiseerde deployments. Om dit te doen, zorg ervoor dat de map <code>@webroot/blocksmith/</code> is opgenomen in je deploymentproces.</p>",
+    "Preview Image Storage Mode" => "Opslagmodus voor previewafbeeldingen",
+    "Asset Volume" => "Asset Volume",
+    "Choose where the preview images will be loaded from." =>
+        "Kies vanwaar de previewafbeeldingen worden geladen.",
+    "Recommended" => "Aanbevolen",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Voeg een PNG-bestand met de naam '{fileName}' toe aan '@webroot/blocksmith/previews/'.",
 ];

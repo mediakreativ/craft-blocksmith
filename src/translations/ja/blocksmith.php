@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "{name} を上に追加",
     "Add {name} before" => "{name} を前に追加",
     "Add block before" => "ブロックを前に追加",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "ブロックのハンドルに基づいてプレビュー画像を自動的に割り当てます。アセットブラウザで手動選択する必要はありません。画像が @webroot/blocksmith/previews/ に保存されている場合、デプロイに適したバージョン管理されたプレビューをサポートします。",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "ハンドルベースのプレビューを使用（デプロイ向けの推奨設定）",
+    "blocksmith_previewInstructionsHtml" => "<p>プレビュー画像は PNG ファイルとして保存し、ブロックのハンドル名に従って命名する必要があります（例：<code>textAndImage.png</code>）。</p>
+    <p>以下のいずれかの場所に保存できます：<br>
+    – 事前定義された <strong>アセットボリューム</strong><br>
+    – または <code>@webroot/blocksmith/previews/</code> フォルダ</p>
+    <p><strong>推奨：</strong> <code>@webroot/blocksmith/previews/</code> を使用してプレビュー画像をバージョン管理およびデプロイします。チームでの作業や自動デプロイに最適です。これを行うには、<strong><code>@webroot/blocksmith/</code> フォルダがデプロイプロセスに含まれていることを確認してください。</strong></p>",
+    "Preview Image Storage Mode" => "プレビュー画像の保存方法",
+    "Asset Volume" => "アセットボリューム",
+    "Choose where the preview images will be loaded from." =>
+        "プレビュー画像の読み込み元を選択してください。",
+    "Recommended" => "推奨",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "'{fileName}' という名前の PNG ファイルを '@webroot/blocksmith/previews/' に追加してください。",
 ];

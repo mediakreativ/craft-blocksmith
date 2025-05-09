@@ -111,4 +111,22 @@ return [
     "Add {name} above" => "Προσθήκη {name} από πάνω",
     "Add {name} before" => "Προσθήκη {name} πριν",
     "Add block before" => "Προσθήκη μπλοκ πριν",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Αυτόματη αντιστοίχιση εικόνων προεπισκόπησης βάσει των handles των blocks αντί για χειροκίνητη επιλογή μέσω του Asset Browser. Υποστηρίζει προεπισκοπήσεις με δυνατότητα έκδοσης και φιλικές προς το deployment, αν οι εικόνες αποθηκεύονται στον φάκελο @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Χρήση προεπισκοπήσεων βάσει handle (Συνιστάται για διαδικασίες ανάπτυξης)",
+    "blocksmith_previewInstructionsHtml" => "<p>Οι εικόνες προεπισκόπησης πρέπει να αποθηκεύονται ως αρχεία PNG και να ονομάζονται βάσει των handles των blocks (π.χ. <code>textAndImage.png</code>).</p>
+    <p>Μπορείτε να τις αποθηκεύσετε σε ένα από τα παρακάτω σημεία:<br>
+    – σε έναν προκαθορισμένο <strong>Όγκο Αρχείων (Asset Volume)</strong><br>
+    – ή στον φάκελο <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Συνιστάται:</strong> Χρησιμοποιήστε τον φάκελο <code>@webroot/blocksmith/previews/</code> για έκδοση και ανάπτυξη εικόνων προεπισκόπησης. Ιδανικό για ομαδική εργασία και αυτοματοποιημένες αναπτύξεις. Για να το κάνετε αυτό, βεβαιωθείτε ότι ο φάκελος <code>@webroot/blocksmith/</code> περιλαμβάνεται στη διαδικασία ανάπτυξής σας.</p>",
+    "Preview Image Storage Mode" =>
+        "Λειτουργία αποθήκευσης εικόνας προεπισκόπησης",
+    "Asset Volume" => "Όγκος Αρχείων",
+    "Choose where the preview images will be loaded from." =>
+        "Επιλέξτε από πού θα φορτωθούν οι εικόνες προεπισκόπησης.",
+    "Recommended" => "Συνιστάται",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Προσθέστε ένα αρχείο PNG με όνομα '{fileName}' στον φάκελο '@webroot/blocksmith/previews/'.",
 ];

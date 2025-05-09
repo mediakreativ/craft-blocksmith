@@ -112,4 +112,21 @@ return [
     "Add {name} above" => "{name} darüber einfügen",
     "Add {name} before" => "{name} davor einfügen",
     "Add block before" => "Block davor einfügen",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Vorschaubilder automatisch anhand des Block-Handles zuweisen, anstatt sie manuell über den Asset-Browser auszuwählen. Unterstützt deploymentsichere, versionskontrollierte Vorschaubilder, wenn die Bilder unter @webroot/blocksmith/previews/ gespeichert sind.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Handle-basierte Vorschaubilder verwenden (empfohlen für Deployment-Workflows)",
+    "blocksmith_previewInstructionsHtml" => "<p>Vorschaubilder müssen als PNG-Dateien gespeichert und nach dem Handle des Blocks benannt werden (z. B. <code>textAndImage.png</code>).</p>
+    <p>Du kannst sie an einem der folgenden Orte speichern:<br>
+    – in einem vordefinierten <strong>Asset-Volume</strong><br>
+    – oder im Ordner <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Empfohlen:</strong> Verwende <code>@webroot/blocksmith/previews/</code>, um Vorschaubilder zu versionieren und bereitzustellen. Ideal für Team-Workflows und automatisierte Deployments. Um dies zu ermöglichen, stelle sicher, dass der Ordner <code>@webroot/blocksmith/</code> in deinem Deployment-Prozess enthalten ist.</p>",
+    "Preview Image Storage Mode" => "Speichermethode für Vorschaubilder",
+    "Asset Volume" => "Asset-Volume",
+    "Choose where the preview images will be loaded from." =>
+        "Wähle, von wo die Vorschaubilder geladen werden sollen.",
+    "Recommended" => "Empfohlen",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Füge eine PNG-Datei mit dem Namen '{fileName}' zu '@webroot/blocksmith/previews/' hinzu.",
 ];

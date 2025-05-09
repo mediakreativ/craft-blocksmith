@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "{name} 위에 추가",
     "Add {name} before" => "{name} 앞에 추가",
     "Add block before" => "블록을 앞에 추가",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "블록 핸들에 따라 미리보기 이미지를 자동으로 할당합니다. 에셋 브라우저에서 수동으로 선택할 필요가 없습니다. 이미지가 @webroot/blocksmith/previews/에 저장된 경우, 배포 친화적이고 버전 관리 가능한 미리보기를 지원합니다.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "핸들 기반 미리보기 사용 (배포 워크플로우에 권장)",
+    "blocksmith_previewInstructionsHtml" => "<p>미리보기 이미지는 PNG 파일로 저장하고 블록 핸들 이름을 기준으로 이름을 지정해야 합니다 (예: <code>textAndImage.png</code>).</p>
+    <p>다음 위치 중 하나에 저장할 수 있습니다:<br>
+    – 사전 정의된 <strong>에셋 볼륨</strong><br>
+    – 또는 <code>@webroot/blocksmith/previews/</code> 폴더</p>
+    <p><strong>권장:</strong> <code>@webroot/blocksmith/previews/</code>를 사용하여 미리보기 이미지를 버전 관리 및 배포하세요. 팀 작업과 자동 배포에 이상적입니다. 이 작업을 수행하려면 <strong><code>@webroot/blocksmith/</code> 폴더가 배포 프로세스에 포함되어 있는지 확인하세요.</strong></p>",
+    "Preview Image Storage Mode" => "미리보기 이미지 저장 방식",
+    "Asset Volume" => "에셋 볼륨",
+    "Choose where the preview images will be loaded from." =>
+        "미리보기 이미지를 불러올 위치를 선택하세요.",
+    "Recommended" => "권장",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "'{fileName}' 이름의 PNG 파일을 '@webroot/blocksmith/previews/'에 추가하세요.",
 ];

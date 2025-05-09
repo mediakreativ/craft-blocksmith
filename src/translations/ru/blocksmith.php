@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Добавить {name} выше",
     "Add {name} before" => "Добавить {name} перед",
     "Add block before" => "Добавить блок перед",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Автоматически назначать изображения превью на основе handle блоков вместо ручного выбора через браузер файлов. Поддерживает управляемые по версиям превью, подходящие для деплоя, если изображения хранятся в @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Использовать превью по handle (рекомендуется для процессов деплоя)",
+    "blocksmith_previewInstructionsHtml" => "<p>Изображения превью должны быть сохранены в формате PNG и названы в соответствии с handle блока (например, <code>textAndImage.png</code>).</p>
+    <p>Вы можете сохранить их в одном из следующих мест:<br>
+    – в предопределённом <strong>томе файлов (Asset Volume)</strong><br>
+    – или в папке <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Рекомендуется:</strong> используйте <code>@webroot/blocksmith/previews/</code> для версионирования и деплоя изображений. Идеально для командной работы и автоматизированных развертываний. Для этого убедитесь, что папка <code>@webroot/blocksmith/</code> включена в ваш процесс деплоя.</p>",
+    "Preview Image Storage Mode" => "Режим хранения изображений превью",
+    "Asset Volume" => "Том файлов",
+    "Choose where the preview images will be loaded from." =>
+        "Выберите, откуда будут загружаться изображения превью.",
+    "Recommended" => "Рекомендуется",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Добавьте файл PNG с именем '{fileName}' в '@webroot/blocksmith/previews/'.",
 ];

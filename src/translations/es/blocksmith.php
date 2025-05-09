@@ -112,4 +112,22 @@ return [
     "Add {name} above" => "Agregar {name} arriba",
     "Add {name} before" => "Agregar {name} antes",
     "Add block before" => "Agregar bloque antes",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Asignar automáticamente imágenes de vista previa según los handles de los bloques en lugar de seleccionarlas manualmente mediante el navegador de assets. Compatible con vistas previas versionadas y aptas para despliegue si las imágenes se almacenan en @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Usar vistas previas basadas en handle (recomendado para flujos de trabajo de despliegue)",
+    "blocksmith_previewInstructionsHtml" => "<p>Las imágenes de vista previa deben guardarse como archivos PNG y nombrarse según el handle del bloque (por ejemplo, <code>textAndImage.png</code>).</p>
+    <p>Puedes almacenarlas en una de las siguientes ubicaciones:<br>
+    – en un <strong>volumen de assets</strong> predefinido<br>
+    – o en la carpeta <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Recomendado:</strong> Usa <code>@webroot/blocksmith/previews/</code> para versionar y desplegar imágenes de vista previa. Ideal para trabajo en equipo y despliegues automatizados. Para ello, asegúrate de que la carpeta <code>@webroot/blocksmith/</code> esté incluida en tu proceso de despliegue.</p>",
+    "Preview Image Storage Mode" =>
+        "Modo de almacenamiento de imágenes de vista previa",
+    "Asset Volume" => "Volumen de assets",
+    "Choose where the preview images will be loaded from." =>
+        "Elige desde dónde se cargarán las imágenes de vista previa.",
+    "Recommended" => "Recomendado",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Añade un archivo PNG llamado '{fileName}' a '@webroot/blocksmith/previews/'.",
 ];

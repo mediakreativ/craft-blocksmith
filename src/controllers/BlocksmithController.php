@@ -802,6 +802,7 @@ class BlocksmithController extends \craft\web\Controller
         );
 
         $doesHandleBasedImageExist = false;
+
         if (
             $settings->useHandleBasedPreviews &&
             $settings->previewStorageMode === "web"
@@ -810,9 +811,34 @@ class BlocksmithController extends \craft\web\Controller
                 "@webroot/blocksmith/previews/" . $blockType->handle . ".png"
             );
             $doesHandleBasedImageExist = file_exists($absolutePath);
+        } elseif (
+            $settings->useHandleBasedPreviews &&
+            $settings->previewStorageMode === "volume" &&
+            $settings->previewImageVolume
+        ) {
+            $volume = Craft::$app->volumes->getVolumeByUid(
+                $settings->previewImageVolume
+            );
+            if ($volume) {
+                $baseUrl = rtrim($volume->getRootUrl(), "/");
+                $subfolder = $settings->previewImageSubfolder
+                    ? "/" . trim($settings->previewImageSubfolder, "/")
+                    : "";
+                $url = "{$baseUrl}{$subfolder}/{$blockType->handle}.png";
+
+                try {
+                    $headers = @get_headers($url);
+                    $doesHandleBasedImageExist =
+                        $headers && str_contains($headers[0], "200");
+                } catch (\Throwable $e) {
+                    $doesHandleBasedImageExist = false;
+                }
+            }
         }
 
-        $handleBasedImageUrl = $useHandleBasedPreviews ? $previewImageUrl : null;
+        $handleBasedImageUrl = $useHandleBasedPreviews
+            ? $previewImageUrl
+            : null;
 
         $block = [
             "name" => $blockType->name,

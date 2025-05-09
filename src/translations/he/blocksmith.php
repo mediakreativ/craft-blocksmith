@@ -110,4 +110,21 @@ return [
     "Add {name} above" => "הוסף את {name} מעל",
     "Add {name} before" => "הוסף את {name} לפני",
     "Add block before" => "הוסף בלוק לפני",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "הקצה תמונות תצוגה מקדימה באופן אוטומטי לפי הידלים של הבלוקים, במקום לבחור אותן ידנית דרך דפדפן הקבצים. תמיכה בתצוגות מקדימות ניתנות לגרסה ונוחות לפריסה אם התמונות מאוחסנות ב־@webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "השתמש בתצוגות מקדימות לפי Handle (מומלץ עבור תהליכי פריסה)",
+    "blocksmith_previewInstructionsHtml" => "<p>יש לשמור את תמונות התצוגה המקדימה כקובצי PNG ולתת להן שם לפי ה־handle של הבלוק (לדוגמה: <code>textAndImage.png</code>).</p>
+    <p>ניתן לשמור אותן באחד מהמיקומים הבאים:<br>
+    – בתוך <strong>נפח נכסים (Asset Volume)</strong> מוגדר מראש<br>
+    – או בתיקייה <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>מומלץ:</strong> השתמש בתיקיית <code>@webroot/blocksmith/previews/</code> כדי לנהל גרסאות ולפרוס תצוגות מקדימות. אידיאלי לעבודה בצוות ולפריסות אוטומטיות. כדי לעשות זאת, <strong>ודא שהתיקייה <code>@webroot/blocksmith/</code> כלולה בתהליך הפריסה שלך.</strong></p>",
+    "Preview Image Storage Mode" => "מצב אחסון לתמונת תצוגה מקדימה",
+    "Asset Volume" => "נפח נכסים",
+    "Choose where the preview images will be loaded from." =>
+        "בחר מאיפה לטעון את תמונות התצוגה המקדימה.",
+    "Recommended" => "מומלץ",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "הוסף קובץ PNG בשם '{fileName}' לתיקייה '@webroot/blocksmith/previews/'.",
 ];

@@ -111,4 +111,22 @@ return [
     "Add {name} above" => "Adicionar {name} acima",
     "Add {name} before" => "Adicionar {name} antes",
     "Add block before" => "Adicionar bloco antes",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Atribuir automaticamente imagens de pré-visualização com base nos handles dos blocos, em vez de selecioná-las manualmente pelo Navegador de Assets. Suporta pré-visualizações com controlo de versão e prontas para deploy se as imagens estiverem armazenadas em @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Usar pré-visualizações baseadas em handle (recomendado para deploys)",
+    "blocksmith_previewInstructionsHtml" => "<p>As imagens de pré-visualização devem ser guardadas como ficheiros PNG e nomeadas de acordo com o handle do bloco (ex.: <code>textAndImage.png</code>).</p>
+    <p>Podes armazená-las num dos seguintes locais:<br>
+    – num <strong>volume de assets</strong> predefinido<br>
+    – ou na pasta <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Recomendado:</strong> Usa <code>@webroot/blocksmith/previews/</code> para versionar e implementar imagens. Ideal para equipas e deploys automatizados. Para isso, certifique-se de que a pasta <code>@webroot/blocksmith/</code> está incluída no seu processo de implantação.</p>",
+    "Preview Image Storage Mode" =>
+        "Modo de armazenamento da imagem de pré-visualização",
+    "Asset Volume" => "Volume de assets",
+    "Choose where the preview images will be loaded from." =>
+        "Escolhe de onde devem ser carregadas as imagens de pré-visualização.",
+    "Recommended" => "Recomendado",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Adiciona um ficheiro PNG chamado '{fileName}' à pasta '@webroot/blocksmith/previews/'.",
 ];

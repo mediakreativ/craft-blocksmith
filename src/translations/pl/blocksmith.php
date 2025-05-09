@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Dodaj {name} powyżej",
     "Add {name} before" => "Dodaj {name} przed",
     "Add block before" => "Dodaj blok przed",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Automatycznie przypisuj obrazy podglądu na podstawie uchwytów bloków zamiast wybierać je ręcznie przez Przeglądarkę zasobów. Obsługuje wersjonowane podglądy przyjazne dla wdrożeń, jeśli obrazy są przechowywane w @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Użyj podglądów opartych na uchwytach (zalecane dla wdrożeń)",
+    "blocksmith_previewInstructionsHtml" => "<p>Obrazy podglądu muszą być zapisane jako pliki PNG i nazwane zgodnie z uchwytem bloku (np. <code>textAndImage.png</code>).</p>
+    <p>Możesz je przechowywać w jednym z następujących miejsc:<br>
+    – w zdefiniowanym <strong>Wolumenie zasobów</strong><br>
+    – lub w folderze <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Zalecane:</strong> Używaj <code>@webroot/blocksmith/previews/</code> do wersjonowania i wdrażania obrazów. Idealne dla zespołów i automatycznych wdrożeń. Aby to zrobić, upewnij się, że folder <code>@webroot/blocksmith/</code> jest uwzględniony w Twoim procesie wdrażania.</p>",
+    "Preview Image Storage Mode" => "Tryb przechowywania obrazu podglądu",
+    "Asset Volume" => "Wolumen zasobów",
+    "Choose where the preview images will be loaded from." =>
+        "Wybierz, skąd mają być ładowane obrazy podglądu.",
+    "Recommended" => "Zalecane",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Dodaj plik PNG o nazwie '{fileName}' do '@webroot/blocksmith/previews/'.",
 ];

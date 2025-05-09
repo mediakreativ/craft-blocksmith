@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Ajouter {name} au-dessus",
     "Add {name} before" => "Ajouter {name} avant",
     "Add block before" => "Ajouter un bloc avant",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Attribuer automatiquement les images d’aperçu en fonction des handles des blocs au lieu de les sélectionner manuellement via le navigateur d’assets. Prise en charge d’aperçus versionnés adaptés au déploiement si les images sont stockées dans @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Utiliser des aperçus basés sur les handles (recommandé pour les workflows de déploiement)",
+    "blocksmith_previewInstructionsHtml" => "<p>Les images d’aperçu doivent être enregistrées en tant que fichiers PNG et nommées selon le handle du bloc (par exemple, <code>textAndImage.png</code>).</p>
+    <p>Vous pouvez les stocker à l’un des emplacements suivants :<br>
+    – dans un <strong>volume d’assets</strong> prédéfini<br>
+    – ou dans le dossier <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Recommandé :</strong> Utilisez <code>@webroot/blocksmith/previews/</code> pour versionner et déployer les images d’aperçu. Idéal pour les équipes et les déploiements automatisés. Pour ce faire, assurez-vous que le dossier <code>@webroot/blocksmith/</code> est inclus dans votre processus de déploiement.</p>",
+    "Preview Image Storage Mode" => "Mode de stockage des images d’aperçu",
+    "Asset Volume" => "Volume d’assets",
+    "Choose where the preview images will be loaded from." =>
+        "Choisissez où les images d’aperçu seront chargées.",
+    "Recommended" => "Recommandé",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Ajoutez un fichier PNG nommé « {fileName} » dans « @webroot/blocksmith/previews/ ».",
 ];

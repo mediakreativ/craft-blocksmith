@@ -106,4 +106,21 @@ return [
     "Add {name} above" => "在上方添加 {name}",
     "Add {name} before" => "在前面添加 {name}",
     "Add block before" => "在前面添加区块",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "根据区块的 handle 自动分配预览图像，而不是通过资源浏览器手动选择。如果图像存储在 @webroot/blocksmith/previews/ 中，则支持适用于部署的版本控制预览。",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "使用基于 handle 的预览（建议用于部署流程）",
+    "blocksmith_previewInstructionsHtml" => "<p>预览图像必须以 PNG 文件格式保存，并以区块的 handle 命名（例如：<code>textAndImage.png</code>）。</p>
+    <p>您可以将它们存储在以下位置之一：<br>
+    – 预定义的 <strong>资源卷（Asset Volume）</strong><br>
+    – 或者文件夹 <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>建议：</strong>使用 <code>@webroot/blocksmith/previews/</code> 对预览图像进行版本管理和部署。适合团队协作和自动部署. 为此，<strong>请确保文件夹 <code>@webroot/blocksmith/</code> 已包含在您的部署流程中。</strong></p>",
+    "Preview Image Storage Mode" => "预览图像存储模式",
+    "Asset Volume" => "资源卷",
+    "Choose where the preview images will be loaded from." =>
+        "选择预览图像的加载位置。",
+    "Recommended" => "推荐",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "将名为 '{fileName}' 的 PNG 文件添加到 '@webroot/blocksmith/previews/' 中。",
 ];

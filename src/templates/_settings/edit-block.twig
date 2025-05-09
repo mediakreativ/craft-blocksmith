@@ -82,10 +82,11 @@
 					<label for="previewImage">{{ "Preview Image"|t('blocksmith') }}</label>
 				</div>
 				{% if block.useHandleBasedPreviews %}
+					{% if block.handleBasedImageExists %}
 					<div class="instructions">
 						<p>{{ "This block uses a handle-based preview image."|t('blocksmith') }}</p>
 					</div>
-					{% if not block.handleBasedImageExists %}
+					{% elseif not block.handleBasedImageExists %}
 						<div class="blocksmith-hint">
 							{% if block.previewStorageMode == 'web' %}
 								{{ "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'."|t('blocksmith', { fileName: block.handle ~ '.png' }) }}

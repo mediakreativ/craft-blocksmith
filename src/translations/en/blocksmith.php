@@ -110,4 +110,21 @@ return [
     "Add {name} above" => "Add {name} above",
     "Add {name} before" => "Add {name} above",
     "Add block before" => "Add block before",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Use Handle-based Previews (Recommended for deployment workflows)",
+    "blocksmith_previewInstructionsHtml" => "<p>Preview images must be saved as PNG files and named after the block handles (e.g., <code>textAndImage.png</code>).</p>
+    <p>You can store them in one of the following locations:<br>
+    – in a predefined <strong>Asset Volume</strong><br>
+    – or in the <code>@webroot/blocksmith/previews/</code> folder</p>
+    <p><strong>Recommended:</strong> Use <code>@webroot/blocksmith/previews/</code> to version and deploy preview images. Ideal for team workflows and automated deployments. To do so, make sure the <code>@webroot/blocksmith/</code> folder is included in your deployment process.</p>",
+    "Preview Image Storage Mode" => "Preview Image Storage Mode",
+    "Asset Volume" => "Asset Volume",
+    "Choose where the preview images will be loaded from." =>
+        "Choose where the preview images will be loaded from.",
+    "Recommended" => "Recommended",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'.",
 ];

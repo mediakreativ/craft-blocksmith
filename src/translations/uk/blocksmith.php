@@ -112,5 +112,22 @@ return [
     "Add {name} above" => "Додати {name} вище",
     "Add {name} before" => "Додати {name} перед",
     "Add block before" => "Додати блок перед",
-    
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Автоматично призначати зображення попереднього перегляду на основі handle блоків замість ручного вибору через браузер ресурсів. Підтримує зручні для розгортання та контрольовані за версіями зображення, якщо вони зберігаються в @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Використовувати прев’ю на основі handle (рекомендовано для процесів розгортання)",
+    "blocksmith_previewInstructionsHtml" => "<p>Зображення попереднього перегляду мають зберігатися як файли PNG та бути названі згідно з handle блоку (наприклад: <code>textAndImage.png</code>).</p>
+    <p>Ви можете зберігати їх у одному з наступних місць:<br>
+    – у попередньо визначеному <strong>томі ресурсів (Asset Volume)</strong><br>
+    – або у папці <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Рекомендується:</strong> Використовуйте <code>@webroot/blocksmith/previews/</code> для керування версіями та розгортання зображень. Ідеально підходить для командної роботи та автоматизованого розгортання. Щоб це зробити, переконайтеся, що папка <code>@webroot/blocksmith/</code> включена до процесу розгортання.</p>",
+    "Preview Image Storage Mode" =>
+        "Режим збереження зображень попереднього перегляду",
+    "Asset Volume" => "Том ресурсів",
+    "Choose where the preview images will be loaded from." =>
+        "Виберіть, звідки завантажуватимуться зображення попереднього перегляду.",
+    "Recommended" => "Рекомендовано",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Додайте файл PNG із назвою '{fileName}' до папки '@webroot/blocksmith/previews/'.",
 ];

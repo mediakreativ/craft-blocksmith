@@ -111,4 +111,21 @@ return [
     "Add {name} above" => "Přidat {name} nad",
     "Add {name} before" => "Přidat {name} před",
     "Add block before" => "Přidat blok před",
+
+    "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
+        "Automaticky přiřadit náhledové obrázky podle handle bloků místo jejich ručního výběru přes Asset Browser. Podporuje přívětivé nasazení a správu verzí, pokud jsou obrázky uloženy v @webroot/blocksmith/previews/.",
+    "Use Handle-based Previews (Recommended for deployment workflows)" =>
+        "Použít náhledy na základě handle (doporučeno pro nasazení)",
+    "blocksmith_previewInstructionsHtml" => "<p>Náhledové obrázky musí být uloženy jako soubory PNG a pojmenovány podle handle bloků (např. <code>textAndImage.png</code>).</p>
+    <p>Obrázky lze uložit na jedno z následujících míst:<br>
+    – do předdefinovaného <strong>svazku prostředků (Asset Volume)</strong><br>
+    – nebo do složky <code>@webroot/blocksmith/previews/</code></p>
+    <p><strong>Doporučeno:</strong> Používejte <code>@webroot/blocksmith/previews/</code> pro verzování a snadné nasazení náhledových obrázků. Ideální pro týmovou práci a automatizované nasazení. Pro dosažení tohoto cíle ujistěte se, že složka <code>@webroot/blocksmith/</code> je zahrnuta ve vašem nasazovacím procesu.</p>",
+    "Preview Image Storage Mode" => "Způsob uložení náhledových obrázků",
+    "Asset Volume" => "Svazek prostředků",
+    "Choose where the preview images will be loaded from." =>
+        "Vyberte, odkud se mají načítat náhledové obrázky.",
+    "Recommended" => "Doporučeno",
+    "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
+        "Přidejte soubor PNG pojmenovaný '{fileName}' do '@webroot/blocksmith/previews/'.",
 ];
