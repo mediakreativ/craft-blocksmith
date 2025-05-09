@@ -1,8 +1,8 @@
-## [1.4.5] – 2025-05-09
+## [1.4.4] – 2025-05-09
 
 ### Added
 - Support for new setting `Preview Image Storage Mode`: load block previews from the public folder `@webroot/blocksmith/previews/` or an Asset Volume.
-- Deployment-friendly handle-based image previews when using `@webroot/blocksmith/previews/` – ideal for version control and team workflows.
+- Deployment-friendly handle-based image previews when using `@webroot/blocksmith/previews/` - ideal for version control and team workflows.
 
 ## [1.4.3] - 2025-05-04
 
