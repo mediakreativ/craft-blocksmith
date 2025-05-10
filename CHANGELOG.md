@@ -1,3 +1,12 @@
+## [1.4.5] - 2025-05-10
+
+### Fixed
+- Settings could be modified even when `CRAFT_ALLOW_ADMIN_CHANGES=false` was set  
+- All views now enforce read-only mode correctly: fields are disabled, save buttons hidden, and a warning is shown
+
+### Removed
+- Legacy database migrations (`src/legacy-migrations/`) have been removed
+
 ## [1.4.4] - 2025-05-09
 
 ### Added
