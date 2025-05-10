@@ -4,7 +4,12 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{% set fullPageForm = true %}
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% set fullPageForm = not readOnly %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
 
 {% set crumbs = [
     {
@@ -36,7 +41,7 @@
                 id: 'enableCardsSupport',
                 instructions: 'Enable support for Matrix fields using the “As cards” view mode. This allows adding new cards via the "New entry" button and inserting cards above existing ones through the enhanced context menu.'|t('blocksmith'),
                 on: settings.enableCardsSupport,
-                disabled: 'enableCardsSupport' in overrides,
+                disabled: readOnly or ('enableCardsSupport' in overrides),
                 warning: 'enableCardsSupport' in overrides ? macros.configWarning('enableCardsSupport'),
             }) }}
 
@@ -49,7 +54,8 @@
                     'Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/.'|t('blocksmith'),
                     'blocksmith_previewInstructionsHtml'|t('blocksmith')|raw
                     ),
-                    on: settings.useHandleBasedPreviews,
+                on: settings.useHandleBasedPreviews,
+                disabled: readOnly or ('useHandleBasedPreviews' in overrides),
             })}}
 
 			{% if settings.useHandleBasedPreviews %}
@@ -63,7 +69,7 @@
                     'web': '@webroot/blocksmith/previews/'|t('blocksmith') ~ ' (Recommended)'|t('blocksmith'),
                     },
                 value: settings.previewStorageMode ?? 'volume',
-                disabled: 'previewStorageMode' in overrides,
+                disabled: readOnly or ('previewStorageMode' in overrides),
                 warning: 'previewStorageMode' in overrides ? macros.configWarning('previewStorageMode'),
                 }) }}
 
@@ -79,7 +85,7 @@
                     instructions: 'Choose the volume where preview images will be stored.'|t('blocksmith'),
                     options: volumeOptions,
                     value: settings.previewImageVolume,
-                    disabled: 'previewImageVolume' in overrides,
+                    disabled: readOnly or ('previewImageVolume' in overrides),
                     warning: 'previewImageVolume' in overrides ? macros.configWarning('previewImageVolume'),
                 }) }}
 
@@ -89,7 +95,7 @@
                     id: 'previewImageSubfolder',
                     instructions: 'Specify an optional subfolder within the selected volume for storing images.'|t('blocksmith'),
                     value: settings.previewImageSubfolder,
-                    disabled: 'previewImageSubfolder' in overrides,
+                    disabled: readOnly or ('previewImageSubfolder' in overrides),
                     warning: 'previewImageSubfolder' in overrides ? macros.configWarning('previewImageSubfolder'),
                 }) }}
 			{% endif %}
@@ -101,6 +107,7 @@
                 id: 'wideViewFourBlocks',
                 instructions: 'Enable this option to display 3 blocks per row for browser widths of 1178px or more.'|t('blocksmith'),
                 on: settings.wideViewFourBlocks,
+                disabled: readOnly or ('wideViewFourBlocks' in overrides),
             }) }}
 
 		</div>

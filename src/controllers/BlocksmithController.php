@@ -85,6 +85,19 @@ class BlocksmithController extends \craft\web\Controller
     public function actionSaveSettings(): Response
     {
         $request = Craft::$app->getRequest();
+
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            Craft::$app
+                ->getSession()
+                ->setError(
+                    Craft::t(
+                        "blocksmith",
+                        "Settings cannot be changed in this environment."
+                    )
+                );
+            return $this->redirectToPostedUrl();
+        }
+
         $settings = Blocksmith::getInstance()->getSettings();
 
         $settings->wideViewFourBlocks = (bool) $request->getBodyParam(
@@ -173,6 +186,18 @@ class BlocksmithController extends \craft\web\Controller
     public function actionSaveBlockSettings(): Response
     {
         $request = Craft::$app->getRequest();
+
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            Craft::$app
+                ->getSession()
+                ->setError(
+                    Craft::t(
+                        "blocksmith",
+                        "Block settings cannot be changed in this environment."
+                    )
+                );
+            return $this->redirectToPostedUrl();
+        }
 
         $entryTypeId = (int) $request->getBodyParam("entryTypeId");
         $description = trim((string) $request->getBodyParam("description"));
@@ -316,8 +341,20 @@ class BlocksmithController extends \craft\web\Controller
     public function actionSaveCategory(): Response
     {
         $this->requirePostRequest();
-
         $request = Craft::$app->getRequest();
+
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            Craft::$app
+                ->getSession()
+                ->setError(
+                    Craft::t(
+                        "blocksmith",
+                        "Categories cannot be modified in this environment."
+                    )
+                );
+            return $this->redirectToPostedUrl();
+        }
+
         $uid = $request->getBodyParam("id");
         $name = $request->getBodyParam("name");
 
@@ -355,8 +392,8 @@ class BlocksmithController extends \craft\web\Controller
     public function actionDeleteCategory(): Response
     {
         $this->requirePostRequest();
-
         $request = Craft::$app->getRequest();
+        
         $uid = $request->getBodyParam("id");
 
         if (!$uid) {
@@ -526,6 +563,19 @@ class BlocksmithController extends \craft\web\Controller
     {
         $this->requirePostRequest();
         $request = Craft::$app->getRequest();
+
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            Craft::$app
+                ->getSession()
+                ->setError(
+                    Craft::t(
+                        "blocksmith",
+                        "Matrix field settings cannot be changed in this environment."
+                    )
+                );
+            return $this->redirectToPostedUrl();
+        }
+
         $settings = $request->getBodyParam("enablePreview", []);
 
         foreach ($settings as $fieldHandle => $enablePreview) {

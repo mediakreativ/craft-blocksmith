@@ -4,7 +4,12 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{% set fullPageForm = true %}
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% set fullPageForm = not readOnly %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
 
 {% block attr %}
 	{{ parent() }}
@@ -53,7 +58,8 @@
                 id: 'description',
                 value: block.description,
                 rows: 4,
-                instructions: 'Provide a short description for this block (optional).'|t('blocksmith')
+                instructions: 'Provide a short description for this block (optional).'|t('blocksmith'),
+				disabled: readOnly
             }) }}
 
 			{% if block.categories is not empty %}
@@ -63,7 +69,8 @@
 					id: 'categories',
 					instructions: 'Select one or more categories for this block.'|t('blocksmith'),
 					options: block.categories|map(category => { label: category.name, value: category.uid }),
-					values: block.selectedCategories
+					values: block.selectedCategories,
+					disabled: readOnly
 				}) }}
 
 			{% else %}
@@ -83,9 +90,9 @@
 				</div>
 				{% if block.useHandleBasedPreviews %}
 					{% if block.handleBasedImageExists %}
-					<div class="instructions">
-						<p>{{ "This block uses a handle-based preview image."|t('blocksmith') }}</p>
-					</div>
+						<div class="instructions">
+							<p>{{ "This block uses a handle-based preview image."|t('blocksmith') }}</p>
+						</div>
 					{% elseif not block.handleBasedImageExists %}
 						<div class="blocksmith-hint">
 							{% if block.previewStorageMode == 'web' %}
@@ -105,7 +112,7 @@
 					</div>
 
 					<div id="previewImage-field" class="input">
-						<button type="button" id="previewImage-picker" class="btn" data-icon="image">
+						<button type="button" id="previewImage-picker" class="btn {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }} data-icon="image">
 							{{ block.previewImagePath ? "Change image"|t('blocksmith') : "Select or upload an image"|t('blocksmith') }}
 						</button>
 
@@ -116,7 +123,7 @@
 						<input type="hidden" name="previewImagePath" id="previewImagePath" value="{{ block.previewImagePath ?? '' }}">
 
 						{% if block.previewImagePath %}
-							<button type="button" id="previewImage-delete" class="btn" style="margin-top: 1rem;" data-icon="remove">
+							<button type="button" id="previewImage-delete" class="btn {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }} style="margin-top: 1rem;" data-icon="remove">
 								{{ "Remove image"|t('blocksmith') }}
 							</button>
 						{% endif %}

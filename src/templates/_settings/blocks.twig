@@ -4,6 +4,11 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
+
 {% set crumbs = [
     {
         label: "Settings"|t('blocksmith'),
@@ -108,7 +113,7 @@
 					<div class="blocksmith-zilch-text-small">
 						{{ "Blocks will appear here once you've created Matrix fields with entry types."|t('blocksmith') }}<br>
 					</div>
-					<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon">
+					<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }}>
 						{{ "Create Matrix Field"|t('blocksmith') }}
 					</a>
 				</div>

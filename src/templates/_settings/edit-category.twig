@@ -4,7 +4,12 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
-{% set fullPageForm = true %}
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% set fullPageForm = not readOnly %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
 
 {% set crumbs = [
     {
@@ -42,7 +47,8 @@
                 id: 'name',
                 value: category.name ?? '',
                 required: true,
-                instructions: 'Enter the name of the category.'|t('blocksmith')
+                instructions: 'Enter the name of the category.'|t('blocksmith'),
+                disabled: readOnly,
             }) }}
 
 		</div>

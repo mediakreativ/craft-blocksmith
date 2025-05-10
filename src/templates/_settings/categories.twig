@@ -2,6 +2,12 @@
 
 {% extends '_layouts/cp' %}
 
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+
+{% if readOnly %}
+    {% set contentNotice = readOnlyNotice() %}
+{% endif %}
+
 {% set title = "Categories" | t('blocksmith') %}
 
 {% block sidebar %}
@@ -17,7 +23,9 @@
 ]) %}
 
 {% block actionButton %}
-	<a href="{{ url('blocksmith/settings/categories/new') }}" class="btn submit add icon">{{ "New Category"|t('blocksmith') }}</a>
+	{% if not readOnly %}
+		<a href="{{ url('blocksmith/settings/categories/new') }}" class="btn submit add icon">{{ "New Category"|t('blocksmith') }}</a>
+	{% endif %}
 {% endblock %}
 
 {% set crumbs = [
@@ -55,20 +63,22 @@ new Craft.VueAdminTable({
         },
     ],
     container: '#blocksmith-categories-vue-admin-table',
-    deleteAction: 'blocksmith/blocksmith/delete-category',
     emptyMessage: Craft.t('blocksmith', 'No categories exist yet.'),
     tableData:
 {{ tableData|json_encode|raw }},
-    reorderAction: 'blocksmith/blocksmith/reorder-categories',
-    onSortChange: (sortedIds) => {            
-    Craft.sendActionRequest('POST', 'blocksmith/reorder-categories', {
-        data: { ids: sortedIds },
-    });
-    },
-    slots: {
+{% if not readOnly %}
+	deleteAction: 'blocksmith/blocksmith/delete-category',
+	    reorderAction: 'blocksmith/blocksmith/reorder-categories',
+	    onSortChange: (sortedIds) => {
+	        Craft.sendActionRequest('POST', 'blocksmith/reorder-categories', {
+	            data: { ids: sortedIds },
+	        });
+	    },
+{% endif %}
+slots: {
         title: (row) => {
             return `<a href="${row.url}">${row.title}</a>`;
-			        },
-			    },
-			});
+	        },
+	    },
+	});
 {% endjs %}

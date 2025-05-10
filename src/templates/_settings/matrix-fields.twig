@@ -3,7 +3,12 @@
 {% extends '_layouts/cp' %}
 {% import '_includes/forms' as forms %}
 
-{% set fullPageForm = matrixFields is not empty %}
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% set fullPageForm = matrixFields is not empty and not readOnly %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
 
 {% set crumbs = [
     {
@@ -63,7 +68,8 @@
                                 small: true,
                                 inputAttributes: {
                                     'data-handle': field.handle
-                                }
+                                },
+								disabled: readOnly
                             }) }}
 						</td>
 					</tr>
@@ -83,7 +89,7 @@
 			<div class="blocksmith-zilch-text">
 				{{ "No Matrix fields exist yet."|t('blocksmith') }}
 			</div>
-			<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon">
+			<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }}>
 				{{ "Create Matrix Field"|t('blocksmith') }}
 			</a>
 		</div>
