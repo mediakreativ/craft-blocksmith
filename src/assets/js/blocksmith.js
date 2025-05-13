@@ -6,7 +6,7 @@
     return;
   }
 
-  // window.BlocksmithDebug = true;
+  window.BlocksmithDebug = true;
 
   function debugLog(...args) {
     if (!window.BlocksmithDebug) return;
@@ -213,6 +213,13 @@
      * @param {string} matrixFieldHandle - The handle of the Matrix field
      */
     addBlocksmithAddButton: function (matrixInput, matrixFieldHandle) {
+      const uiMode = this.matrixFieldSettings[matrixFieldHandle]?.uiMode;
+      if (uiMode === "btngroup") {
+        this.injectButtonGroup(matrixInput, matrixFieldHandle);
+        matrixInput.$addEntryMenuBtn.hide(); // Original-Button ausblenden
+        return;
+      }
+
       const self = this;
       matrixInput.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
 
@@ -585,13 +592,113 @@
             e.preventDefault();
             if ($button.prop("disabled")) return;
 
-            debugLog(
-              "Opening Blocksmith Modal with handle:",
-              matrixFieldHandle,
-            );
+            debugLog("Opening contextual add handler for:", matrixFieldHandle);
+
+            const uiMode = this.matrixFieldSettings[matrixFieldHandle]?.uiMode;
 
             window.BlocksmithRuntime = window.BlocksmithRuntime || {};
             window.BlocksmithRuntime.insertAboveEntryId = insertAboveEntryId;
+
+            if (uiMode === "btngroup") {
+              debugLog("Injecting Button Group instead of opening Modal");
+
+              // Check if already present above this block
+              const existingGroup = matrixContainer.find(
+                ".blocksmith-btngroup.insert-above",
+              );
+              if (existingGroup.length) {
+                existingGroup.remove(); // remove previous group, if any
+              }
+
+              this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+                const $wrapper = $(
+                  '<div class="blocksmith-btngroup insert-above"><div class="btngroup"></div></div>',
+                );
+                const $btngroup = $wrapper.find(".btngroup");
+
+                blockTypes.forEach((block) => {
+                  const $bgButton = $(`
+                    <button
+                    type="button"
+                    class="menu-item add icon btn dashed"
+                    data-type="${block.handle}"
+                    >
+                    <span class="menu-item-label">${block.name}</span>
+                    </button>
+                  `);
+
+                  $bgButton.on("click", () => {
+                    delete window.BlocksmithRuntime.insertAboveEntryId;
+
+                    const $menubtn = matrixContainer
+                      .find(".blocksmith-replaced.menubtn")
+                      .first();
+
+                    if (!$menubtn.length) {
+                      console.warn("Blocksmith: No menu trigger button found.");
+                      return;
+                    }
+
+                    const menuId = $menubtn.attr("aria-controls");
+                    const $menu = $(`#${menuId}`);
+
+                    debugLog("Disclosure menu ID:", menuId);
+                    debugLog("Disclosure menu content:", $menu);
+
+                    if (!$menu.length) {
+                      console.warn(
+                        `Blocksmith: Menu with ID "${menuId}" not found.`,
+                      );
+                      return;
+                    }
+
+                    const labelToClick = block.name.trim();
+
+                    const $matchingButton = $menu
+                      .find("button")
+                      .filter((_, btn) => {
+                        return $(btn).text().trim() === labelToClick;
+                      });
+
+                    if ($matchingButton.length) {
+                      window.BlocksmithUtils.observeInsertedCard(
+                        matrixContainer,
+                        insertAboveEntryId,
+                      );
+                      $matchingButton[0].click();
+                    } else {
+                      console.warn(
+                        `Blocksmith: No button with label "${labelToClick}" found.`,
+                      );
+                    }
+
+                    $wrapper.remove();
+                  });
+
+                  $btngroup.append($bgButton);
+                });
+
+                const $insertionPoint = matrixContainer
+                  .find(`.element[data-id="${insertAboveEntryId}"]`)
+                  .first();
+
+                if ($insertionPoint.length) {
+                  $wrapper.insertBefore($insertionPoint);
+                } else {
+                  console.warn(
+                    "Blocksmith: Target block not found for insertion.",
+                  );
+                }
+              });
+
+              return;
+            }
+
+            // Default fallback: open Modal
+            debugLog(
+              "→ Opening Blocksmith Modal with handle:",
+              matrixFieldHandle,
+            );
 
             const modal = new BlocksmithModal(
               [],
@@ -655,6 +762,8 @@
       }
 
       const createBlocksmithButton = (nativeBtn, fieldHandle) => {
+        fieldHandle = fieldHandle?.split("-fields-").pop();
+
         const matrixContainer = nativeBtn.closest(".nested-element-cards");
 
         // Skip modification if Blocksmith preview is disabled for this field
@@ -677,6 +786,12 @@
 
         nativeBtn.classList.add("blocksmith-replaced");
         nativeBtn.style.display = "none";
+
+        const uiMode = this.matrixFieldSettings[fieldHandle]?.uiMode;
+        if (uiMode === "btngroup") {
+          this.injectButtonGroupForCards(matrixContainer, fieldHandle);
+          return;
+        }
 
         const labelEl = nativeBtn.querySelector(".label");
         const newBlockLabel =
@@ -721,11 +836,7 @@
             return;
           }
 
-          // Extract raw field handle in case it's namespaced
-          const rawHandle =
-            fieldHandle?.match(/fields-(.+?)(-|$)/)?.[1] || fieldHandle;
-
-          debugLog("Opening Blocksmith Modal with handle:", rawHandle);
+          debugLog("Opening Blocksmith Modal with handle:", fieldHandle);
 
           const modal = new BlocksmithModal(
             [],
@@ -738,7 +849,7 @@
             },
           );
 
-          modal.show(rawHandle);
+          modal.show(fieldHandle);
         });
 
         debugLog("Blocksmith Button injected!");
@@ -889,6 +1000,144 @@
         data: {
           handle: matrixFieldHandle,
         },
+      });
+    },
+
+    injectButtonGroup: function (matrixInput, matrixFieldHandle) {
+      const $existing = matrixInput.$container.find(".blocksmith-btngroup");
+      if ($existing.length) {
+        $existing.remove(); // Clean slate
+      }
+
+      const $wrapper = $(
+        '<div class="blocksmith-btngroup"><div class="btngroup"></div></div>',
+      );
+      const $btngroup = $wrapper.find(".btngroup");
+
+      const $buttons =
+        matrixInput.$addEntryMenuBtn
+          .data("disclosureMenu")
+          ?.$container.find("button") || [];
+
+      $buttons.each(function () {
+        const $menuBtn = $(this);
+        const blockHandle = $menuBtn.data("type");
+        const label = $menuBtn.find(".menu-item-label").text().trim();
+
+        const $button = $(`
+      <button
+        type="button"
+        class="menu-item add icon btn dashed"
+        data-type="${blockHandle}"
+      >
+        <span class="menu-item-label">${label}</span>
+      </button>
+    `);
+
+        const canAdd = Craft.Blocksmith.prototype.canAddMoreEntries(
+          matrixInput,
+          null,
+        );
+        if (!canAdd) {
+          $button.prop("disabled", true).addClass("disabled");
+          $button.attr(
+            "title",
+            Craft.t("blocksmith", "Maximum number of blocks reached."),
+          );
+        }
+
+        $button.on("click", function (e) {
+          e.preventDefault();
+          if (
+            !Craft.Blocksmith.prototype.canAddMoreEntries(matrixInput, null)
+          ) {
+            return;
+          }
+          $menuBtn.trigger("activate");
+        });
+
+        $btngroup.append($button);
+      });
+
+      matrixInput.$container.find("> .buttons").append($wrapper);
+    },
+
+    injectButtonGroupForCards: function (matrixContainer, matrixFieldHandle) {
+      const existing = matrixContainer.querySelector(".blocksmith-btngroup");
+      if (existing) existing.remove();
+
+      this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+        if (!blockTypes || !blockTypes.length) return;
+
+        const $triggerButton = $(matrixContainer).find(
+          "button.blocksmith-replaced.menubtn",
+        );
+
+        if (!$triggerButton.length) {
+          console.warn("Blocksmith: No .menubtn trigger found.");
+          return;
+        }
+
+        const menuId = $triggerButton.attr("aria-controls");
+        const $menu = $(`#${menuId}`);
+
+        if (!$menu.length) {
+          console.warn("Blocksmith: Disclosure menu not found in DOM.");
+          return;
+        }
+
+        const $wrapper = $(
+          '<div class="blocksmith-btngroup"><div class="btngroup"></div></div>',
+        );
+        const $btngroup = $wrapper.find(".btngroup");
+
+        blockTypes.forEach((block) => {
+          const $button = $(`
+        <button
+          type="button"
+          class="menu-item add icon btn dashed"
+          data-type="${block.handle}"
+        >
+          <span class="menu-item-label">${block.name}</span>
+        </button>
+      `);
+
+          const isDisabled = !Craft.Blocksmith.prototype.canAddMoreEntries(
+            null,
+            $triggerButton,
+          );
+          if (isDisabled) {
+            $button.prop("disabled", true).addClass("disabled");
+            $button.attr(
+              "title",
+              Craft.t("blocksmith", "Maximum number of blocks reached."),
+            );
+          }
+
+          $button.on("click", (e) => {
+            e.preventDefault();
+            if ($button.prop("disabled")) return;
+
+            const $matchingButton = $menu
+              .find("button")
+              .filter((_, el) => $(el).text().trim() === block.name.trim());
+
+            if ($matchingButton.length) {
+              window.BlocksmithRuntime = window.BlocksmithRuntime || {};
+              delete window.BlocksmithRuntime.insertAboveEntryId;
+
+              $matchingButton[0].click();
+            } else {
+              console.warn(
+                `Blocksmith: No matching Disclosure menu button found for "${block.name}".`,
+              );
+            }
+          });
+
+          $btngroup.append($button);
+        });
+
+        $triggerButton.after($wrapper);
       });
     },
   });

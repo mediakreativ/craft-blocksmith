@@ -393,7 +393,7 @@ class BlocksmithController extends \craft\web\Controller
     {
         $this->requirePostRequest();
         $request = Craft::$app->getRequest();
-        
+
         $uid = $request->getBodyParam("id");
 
         if (!$uid) {
@@ -545,6 +545,7 @@ class BlocksmithController extends \craft\web\Controller
                 "enablePreview" => isset($savedSettings[$uid])
                     ? (bool) $savedSettings[$uid]["enablePreview"]
                     : true,
+                "uiMode" => $savedSettings[$uid]["uiMode"] ?? "modal",
             ];
         }
 
@@ -576,9 +577,10 @@ class BlocksmithController extends \craft\web\Controller
             return $this->redirectToPostedUrl();
         }
 
-        $settings = $request->getBodyParam("enablePreview", []);
+        $enablePreviews = $request->getBodyParam("enablePreview", []);
+        $uiModes = $request->getBodyParam("uiMode", []);
 
-        foreach ($settings as $fieldHandle => $enablePreview) {
+        foreach ($enablePreviews as $fieldHandle => $enablePreview) {
             $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
 
             if ($field && $field instanceof \craft\fields\Matrix) {
@@ -588,6 +590,7 @@ class BlocksmithController extends \craft\web\Controller
                 Craft::$app->projectConfig->set($path, [
                     "fieldHandle" => $fieldHandle,
                     "enablePreview" => (bool) $enablePreview,
+                    "uiMode" => $uiModes[$fieldHandle] ?? "modal",
                 ]);
 
                 Craft::info(
@@ -635,6 +638,7 @@ class BlocksmithController extends \craft\web\Controller
 
                 $result[$handle] = [
                     "enablePreview" => $enablePreview,
+                    "uiMode" => $savedSettings[$uid]["uiMode"] ?? "modal",
                 ];
             }
         }

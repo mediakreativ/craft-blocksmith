@@ -551,3 +551,28 @@ ul.matrix-extended.blocksmith-preview-disabled
 .nested-element-cards:not(.blocksmith-initialized) .matrix-extended-buttons {
   display: flex !important;
 }
+
+/* ####################### */
+/* ### Button Group ### */
+/* ####################### */
+.blocksmith-btngroup {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.blocksmith-btngroup .btngroup {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.blocksmith-btngroup .btngroup .btn.dashed {
+    border: 1px dashed rgba(96,125,159,.5);
+}
+
+.blocksmith-btngroup .btngroup .btn {
+    border-radius: var(--button-border-radius);;
+}

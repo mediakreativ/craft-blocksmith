@@ -45,6 +45,7 @@
 					<th>{{ "Matrix Field"|t('blocksmith') }}</th>
 					<th>{{ "Handle"|t('blocksmith') }}</th>
 					<th>{{ "Enable Blocksmith"|t('blocksmith') }}</th>
+					<th>{{ "UI Mode"|t('blocksmith') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -72,6 +73,22 @@
 								disabled: readOnly
                             }) }}
 						</td>
+						<td>
+							{{ forms.selectField({
+								id: 'uiMode-' ~ field.handle,
+								name: 'uiMode[' ~ field.handle ~ ']',
+								value: field.uiMode ?? 'modal',
+								options: [
+									{ label: 'Preview Modal'|t('blocksmith'), value: 'modal' },
+									{ label: 'Buttongroup'|t('blocksmith'), value: 'btngroup' }
+								],
+								disabled: readOnly,
+								inputAttributes: {
+									'data-handle': field.handle
+								}
+							}) }}
+						</td>
+
 					</tr>
 				{% endfor %}
 			</tbody>

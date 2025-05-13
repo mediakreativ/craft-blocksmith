@@ -20,6 +20,7 @@ class BlocksmithSettings extends Model
     public bool $useHandleBasedPreviews = false;
     public ?string $previewStorageMode = null;
     public bool $enableCardsSupport = true;
+    public array $matrixFieldSettings = [];
 
     /**
      * Defines validation rules for the settings attributes
