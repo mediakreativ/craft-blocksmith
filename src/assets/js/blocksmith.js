@@ -14,6 +14,28 @@
   }
 
   /**
+   * Enable/disable the "Add block above" button based on the native button state.
+   *
+   * @param {jQuery} $container The context-menu container
+   * @param {jQuery} nativeBtn  The native Craft add-button jQuery object
+   */
+  function syncAddBlockState($container, nativeBtn) {
+    const $add = $container.find('button[data-action="add-block"]');
+    const isAllowed = !nativeBtn.hasClass("disabled");
+
+    $add
+      .prop("disabled", !isAllowed)
+      .toggleClass("disabled", !isAllowed)
+      .parent()
+      .attr(
+        "title",
+        isAllowed
+          ? ""
+          : Craft.t("blocksmith", "Maximum number of blocks reached."),
+      );
+  }
+
+  /**
    * Blocksmith plugin for Craft CMS
    *
    * Provides an optimized experience for managing Craft CMS Matrix fields and their entry types
@@ -94,7 +116,6 @@
             }
           });
 
-          // replaceCraftNewEntryButton.apply(this, args);
           return;
         }
         self.addBlocksmithAddButton(this, matrixFieldHandle, matrixContainer);
@@ -192,7 +213,15 @@
             matrixContainer,
             insertAboveEntryId,
           );
-          return modifyContextMenu.apply(this, args);
+
+          const result = modifyContextMenu.apply(this, args);
+
+          syncAddBlockState(
+            this.$container,
+            matrixContainer.find("button.btn.icon.dashed.wrap"),
+          );
+
+          return result;
         }
 
         return modifyContextMenu.apply(this, args);
@@ -442,7 +471,6 @@
       }
 
       const { $trigger, $container } = disclosureMenu;
-
       if (!$trigger || !$container || !$trigger.hasClass("action-btn")) {
         return;
       }
@@ -454,6 +482,7 @@
         return;
       }
 
+      // Inject Blocksmith menu items for Cards context
       this.addMenuToCardsContextMenu(
         $container,
         matrixFieldHandle,
@@ -477,19 +506,16 @@
       matrixContainer,
       insertAboveEntryId,
     ) {
+      // Skip entirely if Cards support is disabled
       if (this.settings.enableCardsSupport === false) {
-        debugLog(
-          "Skipping Cards menu injection – Cards support disabled via settings.",
-        );
+        debugLog("Skipping Cards menu injection – disabled via settings.");
         return;
       }
 
-      if ($container.data("blocksmithInitialized")) {
-        return;
-      }
-      $container.data("blocksmithInitialized", true);
+      // Remove any previous Blocksmith menus to allow a fresh injection
+      $container.find("ul.blocksmith, hr.padded").remove();
 
-      debugLog("$container: ", $container);
+      debugLog("Injecting Blocksmith menu into Cards context…");
 
       const $deleteList = $container
         .find('button[data-destructive="true"]')
@@ -501,14 +527,11 @@
       }
 
       const $newList = $('<ul class="blocksmith"></ul>');
-
       const nativeAddButton = matrixContainer.find(
         "button.btn.icon.dashed.wrap",
       );
 
       this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
-        debugLog("Loaded blockTypes (Cards context menu):", blockTypes);
-
         const isDisabled = !this.canAddMoreEntries(null, nativeAddButton);
 
         if (blockTypes.length === 1) {
@@ -1004,9 +1027,12 @@
     },
 
     injectButtonGroup: function (matrixInput, matrixFieldHandle) {
-      const $existing = matrixInput.$container.find(".blocksmith-btngroup");
+      const $existing = matrixInput.$container
+        .children(".buttons")
+        .children(".blocksmith-btngroup");
+
       if ($existing.length) {
-        $existing.remove(); // Clean slate
+        $existing.remove();
       }
 
       const $wrapper = $(
@@ -1138,6 +1164,43 @@
         });
 
         $triggerButton.after($wrapper);
+
+        const $btngroupButtons = $btngroup.find("button");
+
+        const syncGroupDisabledState = () => {
+          const isDisabled = !Craft.Blocksmith.prototype.canAddMoreEntries(
+            null,
+            $triggerButton,
+          );
+
+          $btngroupButtons.each(function () {
+            const $btn = $(this);
+            $btn
+              .prop("disabled", isDisabled)
+              .toggleClass("disabled", isDisabled);
+            $btn.attr(
+              "title",
+              isDisabled
+                ? Craft.t("blocksmith", "Maximum number of blocks reached.")
+                : "",
+            );
+          });
+        };
+
+        // Initial state
+        syncGroupDisabledState();
+
+        // Live update on DOM changes
+        const observer = new MutationObserver(() => {
+          // Delay sync to let Craft finish rendering new block
+          setTimeout(() => {
+            syncGroupDisabledState();
+          }, 100);
+        });
+
+        observer.observe(matrixContainer.querySelector("ul.elements"), {
+          childList: true,
+        });
       });
     },
   });
