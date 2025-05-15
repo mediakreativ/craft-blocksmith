@@ -1,3 +1,10 @@
+## [1.5.0] - 2025-05-15
+
+### Added
+- This release introduces the **Button Group Mode** - ideal for Matrix fields with a small number of block types  
+  - Available in both **inline view** and **Cards View**, including **Grid View mode**  
+  - "Add block above" / "Add block before" is fully supported
+
 ## [1.4.5] - 2025-05-10
 
 ### Fixed
