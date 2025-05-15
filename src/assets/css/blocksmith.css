@@ -570,9 +570,64 @@ ul.matrix-extended.blocksmith-preview-disabled
 }
 
 .blocksmith-btngroup .btngroup .btn.dashed {
-    border: 1px dashed rgba(96,125,159,.5);
+  border: 1px dashed rgba(96, 125, 159, 0.5);
 }
 
 .blocksmith-btngroup .btngroup .btn {
-    border-radius: var(--button-border-radius);;
+  border-radius: var(--button-border-radius);
+}
+
+.blocksmith-insert-marker {
+  margin-bottom: 0.3rem;
+  width: 100%;
+}
+
+.blocksmith-insert-anchor {
+  position: relative;
+  height: 0;
+  width: 100%;
+}
+
+.blocksmith-floating-btngroup {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: -15px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 0.5rem;
+  pointer-events: auto;
+  width: 100%;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.blocksmith-floating-btngroup::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 5px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #3f4d5a;
+}
+
+.blocksmith-floating-btngroup .btn.dashed {
+  background-color: white;
+}
+
+.blocksmith-floating-btngroup.btns-removed {
+  visibility: hidden;
+  background: transparent !important;
+  backdrop-filter: unset;
+}
+
+.blocksmith-floating-btngroup.btns-removed::after {
+  visibility: visible;
 }

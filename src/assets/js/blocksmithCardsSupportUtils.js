@@ -1,4 +1,4 @@
-// src/assets/js/blocksmithUtils.js
+// src/assets/js/blocksmitCardsSupportUtils.js
 
 (function (window) {
   /**
@@ -124,6 +124,8 @@
           debugLog("New block created with ID:", newEntryId);
           debugLog("Target ID to insert above:", insertAboveEntryId);
 
+          matrixContainer.find(".blocksmith-insert-marker").remove();
+
           moveCardUpUntilAbove($node, insertAboveEntryId, matrixContainer);
           debugLog("Block moved above the target");
           delete window.BlocksmithRuntime.insertAboveEntryId;
@@ -139,8 +141,113 @@
     });
   }
 
-  // Exportieren
+  /**
+   * Sets up global event listeners to automatically remove
+   * the `.blocksmith-insert-marker` placeholder when a Slideout is closed,
+   * either via ESC key, cancel button, or clicking the shade background.
+   */
+  function setupMarkerCleanupListeners() {
+    Garnish.$doc.on("click", function (event) {
+      const $target = $(event.target);
+
+      const isCancelButton =
+        $target.is("button[type='button']") &&
+        $target.closest(".slideout").length &&
+        $target.closest(".so-footer").length;
+
+      const clickedOutsidePanel =
+        $target.is(".slideout-shade") ||
+        $target.closest(".slideout-shade").is($target);
+
+      if (isCancelButton || clickedOutsidePanel) {
+        $(".blocksmith-insert-marker").remove();
+      }
+    });
+
+    Garnish.$doc.on("keydown", function (event) {
+      if (
+        (event.key === "Escape" || event.keyCode === 27) &&
+        $(".slideout-container .so-visible").length
+      ) {
+        $(".blocksmith-insert-marker").remove();
+      }
+    });
+  }
+
+  /**
+   * Removes inserted Button Group and insert anchor on window resize.
+   */
+  function setupButtonGroupCleanupOnResize() {
+    if (window.BlocksmithButtonGroupCleanupAdded) return;
+
+    window.addEventListener("resize", () => {
+      const $floatingGroup = $(".blocksmith-floating-btngroup");
+      const $inlineGroup = $(".blocksmith-btngroup.insert-above");
+      const $anchor = $(".blocksmith-insert-anchor");
+
+      if ($floatingGroup.length) $floatingGroup.remove();
+      if ($inlineGroup.length) $inlineGroup.remove();
+      if ($anchor.length) $anchor.remove();
+    });
+
+    window.BlocksmithButtonGroupCleanupAdded = true;
+  }
+
+  /**
+   * Removes the inserted Button Group (floating or inline)
+   * and anchor if the user clicks outside of it.
+   */
+  function setupButtonGroupDismissOnOutsideClick() {
+    Garnish.$doc.on("click.blocksmithFloatingDismiss", (event) => {
+      const $target = $(event.target);
+
+      const isInsideFloating = $target.closest(
+        ".blocksmith-floating-btngroup",
+      ).length;
+      const isInsideInline = $target.closest(
+        ".blocksmith-btngroup.insert-above",
+      ).length;
+      const isTriggerOrMenu = $target.closest(".menu").length > 0;
+      const isInsideSlideout =
+        $target.closest(".slideout-container").length > 0;
+
+      if (
+        !isInsideFloating &&
+        !isInsideInline &&
+        !isTriggerOrMenu &&
+        !isInsideSlideout
+      ) {
+        $(".blocksmith-floating-btngroup").remove();
+        $(".blocksmith-btngroup.insert-above").remove();
+        $(".blocksmith-insert-anchor").remove();
+      }
+    });
+  }
+
+  /**
+   * Determines if the Cards view is currently rendered as a multi-column grid
+   * (i.e. visually side-by-side), not just technically "grid" via CSS.
+   *
+   * @param {jQuery} matrixContainer - The container for the matrix field (.nested-element-cards)
+   * @returns {boolean}
+   */
+  function isTrueGridView(matrixContainer) {
+    const $elementsList = matrixContainer.find("ul.elements").first();
+    const computedStyle = getComputedStyle($elementsList[0]);
+
+    const isGridLayout = computedStyle.display === "grid";
+    const columnCount = computedStyle.gridTemplateColumns
+      .split(" ")
+      .filter((v) => v.trim().length > 0).length;
+
+    return isGridLayout && columnCount > 1;
+  }
+
   window.BlocksmithUtils = {
     observeInsertedCard,
+    setupMarkerCleanupListeners,
+    setupButtonGroupCleanupOnResize,
+    setupButtonGroupDismissOnOutsideClick,
+    isTrueGridView,
   };
 })(window);
