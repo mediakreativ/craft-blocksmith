@@ -1,3 +1,10 @@
+## [1.5.1] - 2025-05-16
+
+### Fixed
+
+- Prevented all Project Config changes in read-only environments (when `allowAdminChanges = false`)
+- Fixed layout shift in Cards Grid view when injecting the Button Group UI
+
 ## [1.5.0] - 2025-05-15
 
 ### Added
