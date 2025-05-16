@@ -785,7 +785,7 @@
                 }
 
                 if (isGridView) {
-                  // === FLOATING BUTTON GROUP (Cards View Grid) ===
+                  // === FLOATING BUTTON GROUP ===
 
                   // Insert anchor
                   matrixContainer.find(".blocksmith-insert-anchor").remove();
@@ -836,10 +836,6 @@
                         );
 
                       if ($matchingButton.length) {
-                        // $targetCard.before(
-                        //   '<span class="btn dashed blocksmith-insert-marker"></span>',
-                        // );
-
                         window.BlocksmithUtils.observeInsertedCard(
                           matrixContainer,
                           insertAboveEntryId,
@@ -859,10 +855,10 @@
 
                   $anchor.append($floatGroup);
                 } else {
-                  // === INLINE INSERT-BEFORE VARIANTE ===
+                  // === INLINE BUTTON GROUP ===
 
                   const $wrapper = $(
-                    '<div class="blocksmith-btngroup insert-above"><div class="btngroup"></div></div>',
+                    '<li class="blocksmith-btngroup insert-above"><div class="btngroup"></div></li>',
                   );
                   const $btngroup = $wrapper.find(".btngroup");
 
@@ -926,9 +922,9 @@
                     $btngroup.append($bgButton);
                   });
 
-                  const $insertionPoint = matrixContainer.find(
-                    `.element[data-id="${insertAboveEntryId}"]`,
-                  );
+                  const $insertionPoint = matrixContainer
+                    .find(`.element[data-id="${insertAboveEntryId}"]`)
+                    .closest("li");
 
                   if ($insertionPoint.length) {
                     $wrapper.insertBefore($insertionPoint);

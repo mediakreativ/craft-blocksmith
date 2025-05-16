@@ -145,13 +145,19 @@ class Blocksmith extends Plugin
             Craft::$app
                 ->getProjectConfig()
                 ->get("plugins.blocksmith.enabled") &&
-            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}")
+            Craft::$app->db->tableExists("{{%blocksmith_matrix_settings}}") &&
+            Craft::$app->config->getGeneral()->allowAdminChanges
         ) {
             $this->ensureMigrationCompleted();
         }
 
         // Ensure the previewStorageMode and previewImageVolume settings exist in project.yaml after installation or update
-        if ($this->isInstalled && Craft::$app->getRequest()->getIsCpRequest()) {
+        // TODO: Remove in future version once default for previewStorageMode is guaranteed everywhere.
+        if (
+            $this->isInstalled &&
+            Craft::$app->getRequest()->getIsCpRequest() &&
+            Craft::$app->config->getGeneral()->allowAdminChanges
+        ) {
             $pc = Craft::$app->projectConfig;
             $pcSettings = $pc->get("plugins.blocksmith.settings") ?? [];
 
@@ -203,6 +209,15 @@ class Blocksmith extends Plugin
         Event::on(Fields::class, Fields::EVENT_AFTER_SAVE_FIELD, function (
             FieldEvent $event
         ) {
+            // Do nothing in read-only environments
+            if (!Craft::$app->config->getGeneral()->allowAdminChanges) {
+                Craft::info(
+                    "Blocksmith: Skipping auto-registration of Matrix field due to read-only mode.",
+                    __METHOD__
+                );
+                return;
+            }
+
             $field = $event->field;
 
             if ($field instanceof \craft\fields\Matrix) {
@@ -799,6 +814,14 @@ class Blocksmith extends Plugin
      */
     private function initializeDefaultMatrixFieldSettings(): void
     {
+        if (!Craft::$app->config->getGeneral()->allowAdminChanges) {
+            Craft::info(
+                "Skipping auto-init of default Matrix field settings due to read-only mode.",
+                __METHOD__
+            );
+            return;
+        }
+
         $fields = Craft::$app->fields->getAllFields();
 
         foreach ($fields as $field) {

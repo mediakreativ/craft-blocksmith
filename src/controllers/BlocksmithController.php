@@ -391,6 +391,13 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionDeleteCategory(): Response
     {
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            return $this->asJson([
+                "success" => false,
+                "error" => "Project config is read-only in this environment.",
+            ]);
+        }
+
         $this->requirePostRequest();
         $request = Craft::$app->getRequest();
 
@@ -464,6 +471,13 @@ class BlocksmithController extends \craft\web\Controller
      */
     public function actionReorderCategories(): Response
     {
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            return $this->asJson([
+                "success" => false,
+                "error" => "Reordering is not allowed in this environment.",
+            ]);
+        }
+
         $this->requirePostRequest();
 
         $ids = Craft::$app->getRequest()->getRequiredBodyParam("ids");
