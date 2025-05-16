@@ -1,19 +1,20 @@
 # Blocksmith Plugin for Craft CMS
 
-**Blocksmith** redefines the way you work with Craft CMS Matrix fields. Forget long dropdown lists and experience a sleek, modern modal for block selection, enhanced by visual previews and intuitive controls. Whether you're adding a block via the "New entry" button or through the enhanced context menu, **Blocksmith** transforms block selection into a seamless and visually engaging experience – in both **Inline** and **Cards** view mode.
+**Blocksmith redefines the way you work with Craft CMS Matrix fields.** Forget long dropdown lists and experience a sleek, modern modal for block selection, enhanced by visual previews and intuitive controls. Whether you're adding a block via the "New entry" button or through the enhanced context menu, **Blocksmith** transforms block selection into a seamless and visually engaging experience – in both **Inline** and **Cards** view mode.
 
 ## Features
 
-- **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface, which also supports tall content types for better previews.
-- **Full Cards View compatibility**: Bring context-aware editing to the Cards view – including the unique ability to add blocks **above** existing ones, a feature not natively supported by Craft.
+- **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface.
+- **Optional Button Group Mode**: Offers a faster selection method for fields with few block types – available for both inline and Cards views.
+- **Full Cards View compatibility**: Blocksmith **fully supports Craft’s "Cards" view mode** – including the ability to **add cards above/before existing ones**.
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
 - **Enable or Disable Previews**: Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
-- **Flexible preview settings**: Upload custom preview images directly via the Craft Asset Browser or use handle-based preview images as an alternative if preferred.
+- **Flexible preview settings**:  
+  Upload custom preview images via the Craft Asset Browser, or use handle-based image files stored in either an **Asset Volume** or the public folder `@webroot/blocksmith/previews` *(ideal for teams using version control or automated deployment workflows)*.
 - **Enhanced layout and usability**: Masonry.js ensures a flexible and aesthetic grid layout, even for blocks with tall content previews.
 - **Block settings management**: Easily manage block descriptions and preview images directly within the "Configure Blocks" section.
-- **Category Management**: Organize blocks into categories and quickly filter or reset with the "All Categories" button.
-- **Matrix Extended Compatibility**: Matrix Extended's context menu button and button group are displayed when **Blocksmith**'s preview modal is disabled for a Matrix field.
-- **Language support**: Available in the following languages: English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, Ukrainian, Arabic, Czech, Danish, Greek, Hebrew, Japanese, Korean, Polish, Swedish, Turkish, and Chinese. Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
+- **Category Management**: Organize blocks into categories and quickly filter them for a streamlined selection experience.
+- **Language support**: The following languages are supported: English, German, French, Spanish, Italian, Dutch, Portuguese, Russian, Ukrainian, Arabic, Czech, Danish, Greek, Hebrew, Japanese, Korean, Polish, Swedish, Turkish, and Chinese. Need another language? Feel free to [contact us](mailto:plugins@mediakreativ.de) or submit a [feature request](https://github.com/mediakreativ/craft-blocksmith/issues).
 
 ## Requirements
 
@@ -51,35 +52,22 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 ### Short-Term
 
-1. **More Complex Block Scenarios**
-
-   - Support for nested Matrix fields and dependencies between block types.
-   - Aim: Make Blocksmith compatible with advanced content structures commonly used in modern page builders.
-
-2. **Favorites Settings**
-
-   - Setting for defining favorites.
-   - By default, favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
-
-3. **Individual Button Label Settings for Each Matrix Field**
-
-   - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
-
-4. **Individual Block Settings per Matrix Field**
-   - Add the ability to configure block-specific settings (e.g., descriptions, preview images) individually for each Matrix field where the block is used.
-   - **Example Use Case:** A block might need different preview images in different Matrix fields due to layout variations.
-
-### Mid-Term
-
 1. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
    - **Example:** Preview images and categories should be configurable per site.
 
-### Long-Term
+### Mid-Term
 
-1. **Integration with Third-Party Plugins**
-   - Add compatibility with popular Craft plugins (e.g. Neo, Matrix Extended).
-   - **Aim:** Seamless integration and support of extended Matrix field functionality.
+1. **Favorites Settings**
+   - Setting for defining favorites.
+   - By default, favorite block types will be displayed in the preview modal, with an option to switch to specific categories or all categories.
+
+2. **Individual Button Label Settings for Each Matrix Field**
+   - Allow configuration of button labels directly within Matrix field settings or override them with Blocksmith-specific settings.
+
+3. **Individual Block Settings per Matrix Field**
+   - Add the ability to configure block-specific settings (e.g., descriptions, preview images) individually for each Matrix field where the block is used.
+   - **Example Use Case:** A block might need different preview images in different Matrix fields due to layout variations.
 
 ### Completed Features
 
@@ -110,6 +98,9 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 7. **"Cards" view mode support**
    - Integrate Blocksmith with the "Cards" view mode of Matrix fields.
+  
+8. **Button Groups**
+   - Faster selection method as an alternative to the Preview Modal - for fields with few block types
 
 ## Note on the Roadmap
 
