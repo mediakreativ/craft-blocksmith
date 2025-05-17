@@ -129,4 +129,12 @@ return [
     "Recommended" => "Empfohlen",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "Füge eine PNG-Datei mit dem Namen '{fileName}' zu '@webroot/blocksmith/previews/' hinzu.",
+
+    "Configure Categories" => "Kategorien konfigurieren",
+    "Note: " => "Hinweis: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "Kategorien werden ausschließlich im Vorschau-Modal verwendet und haben keinen Einfluss auf die Darstellung der Button Group.",
+    "UI Mode" => "UI-Modus",
+    "Preview Modal" => "Vorschau-Modal",
+    "Button Group" => "Button Group",
 ];

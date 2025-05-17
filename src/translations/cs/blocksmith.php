@@ -128,4 +128,12 @@ return [
     "Recommended" => "Doporučeno",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "Přidejte soubor PNG pojmenovaný '{fileName}' do '@webroot/blocksmith/previews/'.",
+
+    "Configure Categories" => "Nastavit kategorie",
+    "Note: " => "Poznámka: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "Kategorie se používají pouze v náhledu a nemají vliv na zobrazení skupiny tlačítek.",
+    "UI Mode" => "Režim rozhraní",
+    "Preview Modal" => "Náhledové okno",
+    "Button Group" => "Button Group",
 ];

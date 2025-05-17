@@ -128,4 +128,12 @@ return [
     "Recommended" => "권장",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "'{fileName}' 이름의 PNG 파일을 '@webroot/blocksmith/previews/'에 추가하세요.",
+
+    "Configure Categories" => "카테고리 구성",
+    "Note: " => "참고: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "카테고리는 미리보기 모달에서만 사용되며 Button Group의 표시에는 영향을 주지 않습니다.",
+    "UI Mode" => "UI 모드",
+    "Preview Modal" => "미리보기 모달",
+    "Button Group" => "Button Group",
 ];

@@ -129,4 +129,12 @@ return [
     "Recommended" => "Συνιστάται",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "Προσθέστε ένα αρχείο PNG με όνομα '{fileName}' στον φάκελο '@webroot/blocksmith/previews/'.",
+
+    "Configure Categories" => "Διαμόρφωση κατηγοριών",
+    "Note: " => "Σημείωση: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "Οι κατηγορίες χρησιμοποιούνται μόνο στο παράθυρο προεπισκόπησης και δεν επηρεάζουν την εμφάνιση της Button Group.",
+    "UI Mode" => "Λειτουργία διεπαφής",
+    "Preview Modal" => "Παράθυρο προεπισκόπησης",
+    "Button Group" => "Button Group",
 ];

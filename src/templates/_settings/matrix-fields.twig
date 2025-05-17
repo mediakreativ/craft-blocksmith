@@ -28,41 +28,43 @@
 {% endblock %}
 
 {% block content %}
-	{% if matrixFields is not empty %}
-		<input type="hidden" name="pluginHandle" value="blocksmith">
-		{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
-		<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
+			{% if matrixFields is not empty %}
+				<input type="hidden" name="pluginHandle" value="blocksmith">
+				{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
+				<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
 
-		{% if enableCardsSupport is defined and not enableCardsSupport %}
-			<p class="warning with-icon blocksmith-cards-disabled">
-				{{ "Cards support is disabled – these settings have no effect on fields using the \"As cards\" view mode."|t('blocksmith') }}
-			</p>
-		{% endif %}
+				{% if enableCardsSupport is defined and not enableCardsSupport %}
+					<p class="warning with-icon blocksmith-cards-disabled">
+						{{ "Cards support is disabled – these settings have no effect on fields using the \"As cards\" view mode."|t('blocksmith') }}
+					</p>
+				{% endif %}
 
-		<table class="data fullwidth">
-			<thead>
-				<tr>
-					<th>{{ "Matrix Field"|t('blocksmith') }}</th>
-					<th>{{ "Handle"|t('blocksmith') }}</th>
-					<th>{{ "Enable Blocksmith"|t('blocksmith') }}</th>
-					<th>{{ "UI Mode"|t('blocksmith') }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for field in matrixFields %}
-					<tr>
-						<td>{{ field.name }}</td>
-						<td>
-							<div class="block-handle">
-								<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
-									<span class="copytextbtn__value">{{ field.handle }}</span>
-									<span class="visually-hidden">Copy to clipboard</span>
-									<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
-								</div>
-							</div>
-						</td>
-						<td>
-							{{ forms.lightswitchField({
+				<table class="data fullwidth">
+					<thead>
+						<tr>
+							<th>{{ "Matrix Field"|t('blocksmith') }}</th>
+							<th>{{ "Handle"|t('blocksmith') }}</th>
+							<th>{{ "Enable Blocksmith"|t('blocksmith') }}</th>
+							<th>{{ "UI Mode"|t('blocksmith') }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for field in matrixFields %}
+							<tr>
+								<td>{{ field.name }}</td>
+								<td>
+									<div class="block-handle">
+										<div class="blocksmith-badge blocksmith-badge-copy code light" role="button" title="Copy to clipboard" tabindex="0">
+											<span class="copytextbtn__value">{{ field.handle }}</span>
+											<span class="visually-hidden">Copy to clipboard</span>
+											<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
+										</div>
+									</div>
+								</td>
+								<td>
+									{{ forms.lightswitchField({
                                 name: 'enablePreview[' ~ field.handle ~ ']',
                                 id: 'enablePreview-' ~ field.handle,
                                 on: field.enablePreview,
@@ -72,9 +74,9 @@
                                 },
 								disabled: readOnly
                             }) }}
-						</td>
-						<td>
-							{{ forms.selectField({
+								</td>
+								<td>
+									{{ forms.selectField({
 								id: 'uiMode-' ~ field.handle,
 								name: 'uiMode[' ~ field.handle ~ ']',
 								value: field.uiMode ?? 'modal',
@@ -87,28 +89,23 @@
 									'data-handle': field.handle
 								}
 							}) }}
-						</td>
+								</td>
 
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<div class="field notice">
-			<p>
-				<span data-icon="lightbulb" aria-hidden="true"></span>
-				<strong>{{ "Pro Tip:"|t('blocksmith') }}</strong>
-				{{ "Enable Blocksmith even for Matrix fields in \"As cards\" view mode with just a single block type to get a contextual \"Add <em>{Blockname}</em> above\" action – a feature not available natively in Craft."|t('blocksmith')|raw }}
-			</p>
-		</div>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 
-	{% else %}
-		<div class="blocksmith-zilch">
-			<div class="blocksmith-zilch-text">
-				{{ "No Matrix fields exist yet."|t('blocksmith') }}
-			</div>
-			<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }}>
-				{{ "Create Matrix Field"|t('blocksmith') }}
-			</a>
+			{% else %}
+				<div class="blocksmith-zilch">
+					<div class="blocksmith-zilch-text">
+						{{ "No Matrix fields exist yet."|t('blocksmith') }}
+					</div>
+					<a href="{{ url('settings/fields/new?type=craft\\fields\\Matrix') }}" class="btn submit add icon {{ readOnly ? 'disabled' }}" {{ readOnly ? 'aria-disabled="true" tabindex="-1"' }}>
+						{{ "Create Matrix Field"|t('blocksmith') }}
+					</a>
+				</div>
+			{% endif %}
 		</div>
-	{% endif %}
+	</div>
 {% endblock %}

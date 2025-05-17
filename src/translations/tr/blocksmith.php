@@ -128,4 +128,12 @@ return [
     "Recommended" => "Önerilir",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "'{fileName}' adlı bir PNG dosyasını '@webroot/blocksmith/previews/' klasörüne ekleyin.",
+
+    "Configure Categories" => "Kategorileri yapılandır",
+    "Note: " => "Not: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "Kategoriler yalnızca önizleme modunda kullanılır ve Button Group görünümünü etkilemez.",
+    "UI Mode" => "Arayüz modu",
+    "Preview Modal" => "Önizleme penceresi",
+    "Button Group" => "Button Group",
 ];

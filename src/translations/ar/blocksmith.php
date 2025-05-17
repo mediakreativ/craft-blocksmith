@@ -127,4 +127,12 @@ return [
     "Recommended" => "موصى به",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "أضف ملف PNG باسم '{fileName}' إلى '@webroot/blocksmith/previews/'.",
+
+    "Configure Categories" => "تكوين الفئات",
+    "Note: " => "ملاحظة: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "تُستخدم الفئات فقط في نافذة المعاينة ولا تؤثر على عرض مجموعة الأزرار.",
+    "UI Mode" => "وضع الواجهة",
+    "Preview Modal" => "نافذة المعاينة",
+    "Button Group" => "Button Group",
 ];

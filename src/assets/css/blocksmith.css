@@ -46,6 +46,7 @@
 .blocksmith-settings-wrapper {
   display: flex;
   gap: 20px;
+  overflow: scroll;
 }
 
 /* Content Styling */
@@ -298,6 +299,17 @@
 .blocksmith-matrix-badges {
   display: flex;
   gap: 5px;
+}
+
+.blocksmith-settings-wrapper .tablepane {
+  margin-inline: unset;
+}
+
+.blocksmith-settings-wrapper table.data td,
+table.data th {
+  box-sizing: border-box;
+  padding-inline: 25px;
+  position: relative;
 }
 
 /* ##################### */
@@ -591,17 +603,18 @@ ul.matrix-extended.blocksmith-preview-disabled
 .blocksmith-floating-btngroup {
   position: absolute;
   bottom: calc(100% + 6px);
-  left: -15px;
+  left: -16px;
   z-index: 20;
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
   gap: 0.5rem;
   pointer-events: auto;
-  width: 100%;
+  width: fit-content;
   padding: 5px;
   background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  border: 1px dashed rgba(96, 125, 159, 0.5);
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }

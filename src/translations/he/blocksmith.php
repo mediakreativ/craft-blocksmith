@@ -127,4 +127,12 @@ return [
     "Recommended" => "מומלץ",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "הוסף קובץ PNG בשם '{fileName}' לתיקייה '@webroot/blocksmith/previews/'.",
+
+    "Configure Categories" => "הגדר קטגוריות",
+    "Note: " => "הערה: ",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "הקטגוריות משמשות רק בחלון התצוגה המקדימה ואינן משפיעות על תצוגת ה-Button Group.",
+    "UI Mode" => "מצב ממשק משתמש",
+    "Preview Modal" => "חלון תצוגה מקדימה",
+    "Button Group" => "Button Group",
 ];

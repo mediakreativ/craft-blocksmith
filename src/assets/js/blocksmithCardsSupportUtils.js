@@ -125,9 +125,11 @@
           debugLog("Target ID to insert above:", insertAboveEntryId);
 
           matrixContainer.find(".blocksmith-insert-marker").remove();
+          $(".blocksmith-floating-btngroup").remove();
 
           moveCardUpUntilAbove($node, insertAboveEntryId, matrixContainer);
           debugLog("Block moved above the target");
+
           delete window.BlocksmithRuntime.insertAboveEntryId;
           observerInstance.disconnect();
           return;

@@ -123,4 +123,12 @@ return [
     "Recommended" => "推荐",
     "Add a PNG file named '{fileName}' to '@webroot/blocksmith/previews/'." =>
         "将名为 '{fileName}' 的 PNG 文件添加到 '@webroot/blocksmith/previews/' 中。",
+
+    "Configure Categories" => "配置分类",
+    "Note: " => "注意：",
+    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
+        "分类仅用于预览模式，不影响 Button Group 的显示方式。",
+    "UI Mode" => "界面模式",
+    "Preview Modal" => "预览窗口",
+    "Button Group" => "Button Group",
 ];

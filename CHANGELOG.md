@@ -1,7 +1,15 @@
+## [1.5.2] - 2025-05-17
+
+### Improved
+- Improved Button Group layout in Cards Grid view
+- Improved UI consistency across settings views
+
+### Added
+Added missing translation strings
+
 ## [1.5.1] - 2025-05-16
 
 ### Fixed
-
 - Prevented all Project Config changes in read-only environments (when `allowAdminChanges = false`)
 - Fixed layout shift in Cards Grid view when injecting the Button Group UI
 

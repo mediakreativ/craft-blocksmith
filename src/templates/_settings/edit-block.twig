@@ -63,15 +63,27 @@
             }) }}
 
 			{% if block.categories is not empty %}
-				{{ forms.checkboxSelectField({
-					label: 'Categories'|t('blocksmith'),
-					name: 'categories',
-					id: 'categories',
-					instructions: 'Select one or more categories for this block.'|t('blocksmith'),
-					options: block.categories|map(category => { label: category.name, value: category.uid }),
-					values: block.selectedCategories,
-					disabled: readOnly
-				}) }}
+				<div class="field">
+					<div class="heading">
+						<label for="categories">{{ 'Categories'|t('blocksmith') }}</label>
+					</div>
+					<div class="blocksmith-hint">
+						<strong>{{ "Note: "|t('blocksmith') }}</strong>
+						{{ "Categories are only used in the preview modal and do not affect how Button Groups are displayed."|t('blocksmith') }}
+					</div>
+					<div class="instructions">
+						{{ 'Select one or more categories for this block.'|t('blocksmith') }}
+					</div>
+					<div class="input">
+						{{ forms.checkboxGroup({
+							name: 'categories',
+							options: block.categories|map(category => { label: category.name, value: category.uid }),
+							values: block.selectedCategories,
+							disabled: readOnly
+						}) }}
+					</div>
+				</div>
+
 
 			{% else %}
 				<div class="field">

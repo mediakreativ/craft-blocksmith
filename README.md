@@ -1,14 +1,13 @@
 # Blocksmith Plugin for Craft CMS
 
-**Blocksmith redefines the way you work with Craft CMS Matrix fields.** Forget long dropdown lists and experience a sleek, modern modal for block selection, enhanced by visual previews and intuitive controls. Whether you're adding a block via the "New entry" button or through the enhanced context menu, **Blocksmith** transforms block selection into a seamless and visually engaging experience – in both **Inline** and **Cards** view mode.
+**Blocksmith redefines the way you work with Craft CMS Matrix fields.** Forget long dropdown lists and experience a sleek preview modal for block selection. Whether you're adding a block via the "New entry" button or through the enhanced context menu, **Blocksmith** transforms block selection into a seamless and visually engaging experience – in both **Inline** and **Cards** view mode.
 
 ## Features
 
-- **Intuitive modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface.
-- **Optional Button Group Mode**: Offers a faster selection method for fields with few block types – available for both inline and Cards views.
-- **Full Cards View compatibility**: Blocksmith **fully supports Craft’s "Cards" view mode** – including the ability to **add cards above/before existing ones**.
+- **Intuitive preview modal for block/entry type selection**: Replaces Craft's native dropdown with a streamlined and visually enhanced modal interface.
+- **Optional Button Group Mode**: Offers a faster selection method for fields with few block types – available for both inline and cards views.
+- **Full Cards View compatibility**: Blocksmith fully supports Craft’s **"Cards" view mode** – including the ability to **add cards above/before existing ones**.
 - **Context menu enhancements**: Add blocks directly above existing ones with the "Add block above" option, replacing Craft's native individual entry type buttons.
-- **Enable or Disable Previews**: Option to enable or disable previews for specific Matrix fields, improving workflow in nested Matrix setups.
 - **Flexible preview settings**:  
   Upload custom preview images via the Craft Asset Browser, or use handle-based image files stored in either an **Asset Volume** or the public folder `@webroot/blocksmith/previews` *(ideal for teams using version control or automated deployment workflows)*.
 - **Enhanced layout and usability**: Masonry.js ensures a flexible and aesthetic grid layout, even for blocks with tall content previews.
@@ -54,7 +53,6 @@ You can also reach us directly via email at [plugins@mediakreativ.de](mailto:plu
 
 1. **Optimizations for Multi-Site Setups**
    - Ensure that previews and settings work correctly in multi-site environments.
-   - **Example:** Preview images and categories should be configurable per site.
 
 ### Mid-Term
 
