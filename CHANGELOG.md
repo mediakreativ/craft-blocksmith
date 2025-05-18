@@ -1,3 +1,8 @@
+## [1.5.3] - 2025-05-18
+
+### Fixed
+- Prevented modification of Cards UI context menus for non-Matrix fields, avoiding JS errors in Entries, Assets, Users, and Categories fields.
+
 ## [1.5.2] - 2025-05-17
 
 ### Improved

@@ -185,18 +185,23 @@
           const matrixContainer = this.$trigger
             .parents(".nested-element-cards")
             .first();
+
+          // This check ensures we only apply Blocksmith logic to actual Matrix fields cards.
+          if (!matrixContainer.length) {
+            debugLog(
+              "No .nested-element-cards container found – not a Matrix field - skipping.",
+            );
+            return modifyContextMenu.apply(this, args);
+          }
+
           const matrixFieldId = matrixContainer.attr("id");
+
           const matches = [
             ...matrixFieldId.matchAll(/fields-([a-zA-Z0-9_]+)/g),
           ];
           const matrixFieldHandle = matches.at(-1)?.[1];
 
           debugLog("matrixFieldHandle: ", matrixFieldHandle);
-
-          const $clickedCard = this.$trigger.parents(".element.card").first();
-          debugLog("$clickedCard: ", $clickedCard);
-
-          const insertAboveEntryId = $clickedCard.data("id");
 
           // Skip modification if Blocksmith preview is disabled for this field
           if (
@@ -206,6 +211,11 @@
           ) {
             return modifyContextMenu.apply(this, args);
           }
+
+          const $clickedCard = this.$trigger.parents(".element.card").first();
+          debugLog("$clickedCard: ", $clickedCard);
+
+          const insertAboveEntryId = $clickedCard.data("id");
 
           self.initiateCardsContextMenu(
             this,
