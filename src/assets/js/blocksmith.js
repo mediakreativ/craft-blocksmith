@@ -152,7 +152,7 @@
             (matrixFieldSettings[matrixFieldHandle]?.enablePreview ?? true) ===
               false
           ) {
-            // Show Matrix Extended Context Menu if Blpocksmith preview disabled for this field
+            // Show Matrix Extended Context Menu if Blocksmith preview disabled for this field
             requestAnimationFrame(() => {
               const menuId = this.$trigger.attr("aria-controls");
               const menuEl = document.getElementById(menuId);
