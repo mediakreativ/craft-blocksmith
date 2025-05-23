@@ -108,7 +108,7 @@ return [
         'Enable Blocksmith even for Matrix fields in "As cards" view mode with just a single block type to get a contextual "Add <em>{Blockname}</em> above" action – a feature not available natively in Craft.',
 
     "Add {name} above" => "Add {name} above",
-    "Add {name} before" => "Add {name} above",
+    "Add {name} before" => "Add {name} before",
     "Add block before" => "Add block before",
 
     "Automatically assign preview images based on block handles instead of selecting them manually via the Asset Browser. Supports deployment-friendly, version-controlled previews if images are stored in @webroot/blocksmith/previews/." =>
