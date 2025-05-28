@@ -644,3 +644,21 @@ ul.matrix-extended.blocksmith-preview-disabled
 .blocksmith-floating-btngroup.btns-removed::after {
   visibility: visible;
 }
+
+/* Dropdown styles for Button Groups */
+.blocksmith-dropdown {
+  position: relative;
+}
+.blocksmith-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid rgba(96, 125, 159, 0.5);
+  padding: 4px;
+  z-index: 10;
+}
+.blocksmith-dropdown.open .blocksmith-dropdown-menu {
+  display: block;
+}

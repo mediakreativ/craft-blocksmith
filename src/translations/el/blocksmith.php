@@ -137,4 +137,9 @@ return [
     "UI Mode" => "Λειτουργία διεπαφής",
     "Preview Modal" => "Παράθυρο προεπισκόπησης",
     "Button Group" => "Button Group",
+    "Groups" => "Groups",
+    "Group" => "Group",
+    "New Group" => "New Group",
+    "No groups exist yet." => "No groups exist yet.",
+    "No group assigned" => "No group assigned",
 ];

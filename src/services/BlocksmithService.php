@@ -123,6 +123,37 @@ class BlocksmithService
     }
 
     /**
+     * Retrieves all button groups from Project Config, sorted by sortOrder.
+     *
+     * @return array
+     */
+    public function getAllButtonGroups(): array
+    {
+        $groupsFromConfig = Craft::$app->projectConfig->get('blocksmith.buttonGroups') ?? [];
+
+        $groups = [];
+        foreach ($groupsFromConfig as $uid => $data) {
+            if (!isset($data['name'])) {
+                Craft::warning(
+                    "Blocksmith: Skipping invalid button group entry for UID {$uid}.",
+                    __METHOD__
+                );
+                continue;
+            }
+
+            $groups[] = [
+                'uid' => $uid,
+                'name' => $data['name'],
+                'sortOrder' => (int) ($data['sortOrder'] ?? 0),
+            ];
+        }
+
+        usort($groups, fn($a, $b) => $a['sortOrder'] <=> $b['sortOrder']);
+
+        return $groups;
+    }
+
+    /**
      * Resolves the preview image URL for a given block handle.
      *
      * This supports all previewStorageMode types:

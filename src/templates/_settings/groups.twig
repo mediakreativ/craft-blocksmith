@@ -1,0 +1,93 @@
+{# src/templates/_settings/groups.twig #}
+
+{% extends '_layouts/cp' %}
+
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
+
+{% set title = "Groups" | t('blocksmith') %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% do view.registerAssetBundle('craft\\web\\assets\\admintable\\AdminTableAsset') %}
+
+{% do view.registerTranslations('blocksmith', [
+    "Groups",
+    "New Group",
+    "No groups exist yet.",
+]) %}
+
+{% block actionButton %}
+        {% if not readOnly %}
+                <a href="{{ url('blocksmith/settings/groups/new') }}" class="btn submit add icon">{{ "New Group"|t('blocksmith') }}</a>
+        {% endif %}
+{% endblock %}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    }
+] %}
+
+{% block content %}
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
+
+                        <h1 style="margin-bottom: 3rem;">{{ "Configure Groups"|t('blocksmith') }}</h1>
+                        <div id="blocksmith-groups-vue-admin-table"></div>
+			<div class="blocksmith-hint" style="margin-top: 2rem;">
+                                <strong>{{ "Note: "|t('blocksmith') }}</strong>{{ "Categories are only used in the preview modal and do not affect how Button Groups are displayed."|t('blocksmith') }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% set tableData = [] %}
+{% for group in groups %}
+        {% set tableData = tableData|merge([{
+        id: group.uid,
+        title: group.name,
+        url: url('blocksmith/settings/groups/edit/' ~ group.uid),
+    }]) %}
+{% endfor %}
+
+
+{% js %}
+new Craft.VueAdminTable({
+    columns: [
+        {
+            name: '__slot:title',
+            title: Craft.t('blocksmith', 'Name'),
+        },
+    ],
+    container: '#blocksmith-groups-vue-admin-table',
+    emptyMessage: Craft.t('blocksmith', 'No groups exist yet.'),
+    tableData:
+{{ tableData|json_encode|raw }},
+{% if not readOnly %}
+        deleteAction: 'blocksmith/blocksmith/delete-group',
+                                                    reorderAction: 'blocksmith/blocksmith/reorder-groups',
+                                                    onSortChange: (sortedIds) => {
+                                                        Craft.sendActionRequest('POST', 'blocksmith/reorder-groups', {
+                                                            data: { ids: sortedIds },
+                                                        });
+                                                    },
+{% endif %}
+slots: {
+        title: (row) => {
+            return `<a href="${row.url}">${row.title}</a>`;
+						        },
+						    },
+						});
+{% endjs %}

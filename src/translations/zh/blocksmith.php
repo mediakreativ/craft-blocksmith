@@ -131,4 +131,9 @@ return [
     "UI Mode" => "界面模式",
     "Preview Modal" => "预览窗口",
     "Button Group" => "Button Group",
+    "Groups" => "Groups",
+    "Group" => "Group",
+    "New Group" => "New Group",
+    "No groups exist yet." => "No groups exist yet.",
+    "No group assigned" => "No group assigned",
 ];

@@ -136,4 +136,9 @@ return [
     "UI Mode" => "Режим интерфейса",
     "Preview Modal" => "Окно предварительного просмотра",
     "Button Group" => "Button Group",
+    "Groups" => "Groups",
+    "Group" => "Group",
+    "New Group" => "New Group",
+    "No groups exist yet." => "No groups exist yet.",
+    "No group assigned" => "No group assigned",
 ];

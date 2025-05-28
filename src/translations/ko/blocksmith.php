@@ -136,4 +136,9 @@ return [
     "UI Mode" => "UI 모드",
     "Preview Modal" => "미리보기 모달",
     "Button Group" => "Button Group",
+    "Groups" => "Groups",
+    "Group" => "Group",
+    "New Group" => "New Group",
+    "No groups exist yet." => "No groups exist yet.",
+    "No group assigned" => "No group assigned",
 ];

@@ -1,0 +1,56 @@
+{# src/templates/_settings/edit-group.twig #}
+
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% import 'blocksmith/_includes/macros.twig' as macros %}
+
+{% set readOnly = not craft.app.config.general.allowAdminChanges %}
+{% set fullPageForm = not readOnly %}
+
+{% if readOnly %}
+	{% set contentNotice = readOnlyNotice() %}
+{% endif %}
+
+{% set crumbs = [
+    {
+        label: "Settings"|t('blocksmith'),
+        url: url('admin/settings')
+    },
+    {
+        label: "Plugins"|t('blocksmith'),
+        url: url('admin/settings/plugins')
+    },
+    {
+        label: "Groups"|t('blocksmith'),
+        url: url('blocksmith/settings/groups')
+    }
+] %}
+
+{% set title = group ? ("Edit Group" | t('blocksmith')) : ("New Group" | t('blocksmith')) %}
+
+{% block sidebar %}
+	{% include 'blocksmith/_settings/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+        <input type="hidden" name="pluginHandle" value="blocksmith">
+        <input type="hidden" name="id" value="{{ group.uid ?? '' }}">
+        {{ actionInput('blocksmith/blocksmith/save-group') }}
+
+	<div class="blocksmith-settings-wrapper">
+		<div class="blocksmith-settings-content">
+			<h1>{{ title }}</h1>
+
+			{{ forms.textField({
+                label: 'Name'|t('blocksmith'),
+                name: 'name',
+                id: 'name',
+                value: group.name ?? '',
+                required: true,
+                instructions: 'Enter the name of the group.'|t('blocksmith'),
+                disabled: readOnly,
+            }) }}
+
+		</div>
+	</div>
+{% endblock %}

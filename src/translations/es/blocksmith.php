@@ -138,4 +138,9 @@ return [
     "UI Mode" => "Modo de interfaz",
     "Preview Modal" => "Ventana de vista previa",
     "Button Group" => "Button Group",
+    "Groups" => "Groups",
+    "Group" => "Group",
+    "New Group" => "New Group",
+    "No groups exist yet." => "No groups exist yet.",
+    "No group assigned" => "No group assigned",
 ];

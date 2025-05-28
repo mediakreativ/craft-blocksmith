@@ -11,12 +11,18 @@
 					{{ "General Settings"|t("blocksmith") }}
 				</a>
 			</li>
-			<li>
-				<a href="{{ url('blocksmith/settings/categories') }}" 
-				   {% if currentItem == "categories" %} class="sel"{% endif %}>
-					{{ "Categories"|t("blocksmith") }}
-				</a>
-			</li>
+                        <li>
+                                <a href="{{ url('blocksmith/settings/categories') }}"
+                                   {% if currentItem == "categories" %} class="sel"{% endif %}>
+                                        {{ "Categories"|t("blocksmith") }}
+                                </a>
+                        </li>
+                        <li>
+                                <a href="{{ url('blocksmith/settings/groups') }}"
+                                   {% if currentItem == 'groups' %} class="sel"{% endif %}>
+                                        {{ 'Groups'|t('blocksmith') }}
+                                </a>
+                        </li>
 			<li>
 				<a href="{{ url('blocksmith/settings/matrix-fields') }}"
 					{% if currentPath == "blocksmith/settings/matrix-fields" %} class="sel"{% endif %}>

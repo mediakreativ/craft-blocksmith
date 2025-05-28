@@ -400,6 +400,7 @@ class Blocksmith extends Plugin
         $config->remove("blocksmith.blocksmithMatrixFields");
         $config->remove("blocksmith.blocksmithBlocks");
         $config->remove("blocksmith.blocksmithCategories");
+        $config->remove("blocksmith.buttonGroups");
         $config->remove("blocksmith.__migrationCompleted");
 
         Craft::info("Blocksmith Project Config entries removed.", __METHOD__);

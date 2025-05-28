@@ -94,11 +94,32 @@
 						<p>{{ 'No categories available. Please add categories first in the categories settings page.'|t('blocksmith') }}</p>
 					</div>
 				</div>
-			{% endif %}
+{% endif %}
 
-			<div class="field">
-				<div class="heading">
-					<label for="previewImage">{{ "Preview Image"|t('blocksmith') }}</label>
+                        {% if block.buttonGroups is not empty %}
+                                <div class="field">
+                                        <div class="heading">
+                                                <label for="buttonGroupUid">{{ 'Group'|t('blocksmith') }}</label>
+                                        </div>
+                                        <div class="instructions">
+                                                {{ 'Assign this block to a group.'|t('blocksmith') }}
+                                        </div>
+                                        <div class="input">
+                                                {{ forms.selectField({
+                                                        name: 'buttonGroupUid',
+                                                        id: 'buttonGroupUid',
+                                                        options: block.buttonGroups|map(g => { label: g.name, value: g.uid }),
+                                                        value: block.selectedButtonGroup,
+                                                        includeEmptyOption: true,
+                                                        disabled: readOnly
+                                                }) }}
+                                        </div>
+                                </div>
+                        {% endif %}
+
+                        <div class="field">
+                                <div class="heading">
+                                        <label for="previewImage">{{ "Preview Image"|t('blocksmith') }}</label>
 				</div>
 				{% if block.useHandleBasedPreviews %}
 					{% if block.handleBasedImageExists %}

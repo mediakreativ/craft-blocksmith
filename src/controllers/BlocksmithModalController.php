@@ -61,6 +61,8 @@ class BlocksmithModalController extends Controller
                 "blocksmith.blocksmithCategories"
             ) ?? [];
 
+        $groupConfig = Craft::$app->projectConfig->get('blocksmith.buttonGroups') ?? [];
+
         $fields = array_filter(
             $fieldsService->getAllFields(),
             fn($field) => $field instanceof \craft\fields\Matrix
@@ -106,6 +108,12 @@ class BlocksmithModalController extends Controller
                     }
                 }
 
+                $buttonGroupUid = $block['buttonGroupUid'] ?? null;
+                $buttonGroupName = null;
+                if ($buttonGroupUid && isset($groupConfig[$buttonGroupUid])) {
+                    $buttonGroupName = $groupConfig[$buttonGroupUid]['name'];
+                }
+
                 $previewImage = Blocksmith::getInstance()->service->resolvePreviewImageUrl(
                     $entryTypeHandle,
                     $previewImagePath
@@ -130,6 +138,8 @@ class BlocksmithModalController extends Controller
                     "description" => $description,
                     "categories" => $categories,
                     "previewImage" => $previewImage,
+                    "buttonGroupUid" => $buttonGroupUid,
+                    "buttonGroupName" => $buttonGroupName,
                     "matrixFields" => $matrixFields,
                     "previewStorageMode" => $previewStorageMode,
                 ];

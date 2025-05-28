@@ -202,6 +202,7 @@ class BlocksmithController extends \craft\web\Controller
         $entryTypeId = (int) $request->getBodyParam("entryTypeId");
         $description = trim((string) $request->getBodyParam("description"));
         $categories = $request->getBodyParam("categories", []);
+        $buttonGroupUid = $request->getBodyParam('buttonGroupUid');
         $previewImagePath = trim(
             (string) $request->getBodyParam("previewImagePath")
         );
@@ -243,10 +244,14 @@ class BlocksmithController extends \craft\web\Controller
         $path = "blocksmith.blocksmithBlocks.$blockUid";
 
         $configData = [
-            "entryTypeUid" => $entryTypeUid,
-            "description" => $description ?: null,
-            "categories" => $categoriesArray,
+            'entryTypeUid' => $entryTypeUid,
+            'description' => $description ?: null,
+            'categories' => $categoriesArray,
         ];
+
+        if ($buttonGroupUid) {
+            $configData['buttonGroupUid'] = $buttonGroupUid;
+        }
 
         if ($previewImagePath !== "") {
             $configData["previewImagePath"] = $previewImagePath;
@@ -534,6 +539,178 @@ class BlocksmithController extends \craft\web\Controller
     }
 
     /**
+     * Renders the Button Groups settings page.
+     */
+    public function actionGroups(): Response
+    {
+        $groupsFromConfig = Craft::$app->projectConfig->get('blocksmith.buttonGroups') ?? [];
+
+        $groups = [];
+        foreach ($groupsFromConfig as $uid => $groupData) {
+            if (!isset($groupData['name'])) {
+                Craft::warning("Blocksmith: Skipping group with UID {$uid} due to missing 'name'.", __METHOD__);
+                continue;
+            }
+
+            $groups[] = [
+                'uid' => $uid,
+                'name' => $groupData['name'],
+                'sortOrder' => (int) ($groupData['sortOrder'] ?? 0),
+            ];
+        }
+
+        usort($groups, fn($a, $b) => $a['sortOrder'] <=> $b['sortOrder']);
+
+        return $this->renderTemplate('blocksmith/_settings/groups', [
+            'groups' => $groups,
+            'plugin' => Blocksmith::getInstance(),
+            'title' => Craft::t('blocksmith', 'Groups'),
+        ]);
+    }
+
+    /**
+     * Edits or creates a button group.
+     */
+    public function actionEditGroup(string $uid = null): Response
+    {
+        $group = null;
+
+        if ($uid) {
+            $groups = Craft::$app->projectConfig->get('blocksmith.buttonGroups') ?? [];
+            if (!isset($groups[$uid])) {
+                Craft::$app->getSession()->setError('Group not found.');
+                return $this->redirect('blocksmith/settings/groups');
+            }
+
+            $group = [
+                'uid' => $uid,
+                'name' => $groups[$uid]['name'] ?? '',
+            ];
+        }
+
+        return $this->renderTemplate('blocksmith/_settings/edit-group', [
+            'group' => $group,
+        ]);
+    }
+
+    /**
+     * Saves a button group to config.
+     */
+    public function actionSaveGroup(): Response
+    {
+        $this->requirePostRequest();
+        $request = Craft::$app->getRequest();
+
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            Craft::$app->getSession()->setError(Craft::t('blocksmith', 'Groups cannot be modified in this environment.'));
+            return $this->redirectToPostedUrl();
+        }
+
+        $uid = $request->getBodyParam('id');
+        $name = $request->getBodyParam('name');
+
+        if (!$name) {
+            Craft::$app->getSession()->setError('Group name is required.');
+            return $this->redirectToPostedUrl();
+        }
+
+        $path = 'blocksmith.buttonGroups';
+        $existing = Craft::$app->projectConfig->get($path) ?? [];
+
+        if (!$uid) {
+            $uid = StringHelper::UUID();
+        }
+
+        $sortOrder = $existing[$uid]['sortOrder'] ?? count($existing) + 1;
+
+        Craft::$app->projectConfig->set("$path.$uid", [
+            'name' => $name,
+            'sortOrder' => $sortOrder,
+        ]);
+
+        Craft::$app->getSession()->setNotice('Group saved successfully.');
+        return $this->redirect('blocksmith/settings/groups');
+    }
+
+    /**
+     * Deletes a button group.
+     */
+    public function actionDeleteGroup(): Response
+    {
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            return $this->asJson(['success' => false, 'error' => 'Project config is read-only in this environment.']);
+        }
+
+        $this->requirePostRequest();
+        $request = Craft::$app->getRequest();
+
+        $uid = $request->getBodyParam('id');
+        if (!$uid) {
+            return $this->asJson(['success' => false, 'error' => 'Group UID is required.']);
+        }
+
+        $path = "blocksmith.buttonGroups.$uid";
+
+        try {
+            Craft::$app->projectConfig->remove($path);
+            Craft::$app->projectConfig->processConfigChanges($path);
+
+            Craft::info("Blocksmith: Deleted group with UID {$uid} from Project Config.", __METHOD__);
+
+            $blockConfig = Craft::$app->projectConfig->get('blocksmith.blocksmithBlocks') ?? [];
+            foreach ($blockConfig as $blockUid => $data) {
+                if (($data['buttonGroupUid'] ?? null) === $uid) {
+                    unset($blockConfig[$blockUid]['buttonGroupUid']);
+                    Craft::$app->projectConfig->set("blocksmith.blocksmithBlocks.$blockUid", $blockConfig[$blockUid]);
+                }
+            }
+
+            return $this->asJson(['success' => true]);
+        } catch (\Throwable $e) {
+            Craft::error("Blocksmith: Failed to delete group UID {$uid}: " . $e->getMessage(), __METHOD__);
+            return $this->asJson(['success' => false, 'error' => 'Failed to delete group.']);
+        }
+    }
+
+    /**
+     * Reorders button groups.
+     */
+    public function actionReorderGroups(): Response
+    {
+        if (!Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            return $this->asJson(['success' => false, 'error' => 'Reordering is not allowed in this environment.']);
+        }
+
+        $this->requirePostRequest();
+        $ids = Craft::$app->getRequest()->getRequiredBodyParam('ids');
+
+        if (is_string($ids)) {
+            $ids = json_decode($ids, true);
+        }
+
+        if (!is_array($ids)) {
+            return $this->asJson(['success' => false, 'error' => 'Invalid IDs format.']);
+        }
+
+        $groupsPath = 'blocksmith.buttonGroups';
+        $groups = Craft::$app->projectConfig->get($groupsPath) ?? [];
+
+        foreach ($ids as $sortOrder => $uid) {
+            if (isset($groups[$uid])) {
+                $groups[$uid]['sortOrder'] = $sortOrder + 1;
+            }
+        }
+
+        try {
+            Craft::$app->projectConfig->set($groupsPath, $groups);
+            return $this->asJson(['success' => true]);
+        } catch (\Throwable $e) {
+            Craft::error("Blocksmith: Failed to reorder groups: " . $e->getMessage(), __METHOD__);
+            return $this->asJson(['success' => false, 'error' => 'Failed to reorder groups.']);
+        }
+    }
+
+    /**
      * Renders the Matrix Settings page
      *
      * @return \yii\web\Response The rendered template for the Matrix Settings page
@@ -680,6 +857,8 @@ class BlocksmithController extends \craft\web\Controller
                 "blocksmith.blocksmithCategories"
             ) ?? [];
 
+        $groupConfig = Craft::$app->projectConfig->get('blocksmith.buttonGroups') ?? [];
+
         $matrixFieldSettings =
             Craft::$app->projectConfig->get(
                 "blocksmith.blocksmithMatrixFields"
@@ -746,6 +925,10 @@ class BlocksmithController extends \craft\web\Controller
                 }
 
                 $previewImagePath = $config["previewImagePath"] ?? null;
+                $groupName = null;
+                if (($config['buttonGroupUid'] ?? null) && isset($groupConfig[$config['buttonGroupUid']])) {
+                    $groupName = $groupConfig[$config['buttonGroupUid']]['name'];
+                }
 
                 $previewImageUrl = Blocksmith::getInstance()->service->resolvePreviewImageUrl(
                     $blockHandle,
@@ -754,13 +937,16 @@ class BlocksmithController extends \craft\web\Controller
 
                 if (!isset($allBlockTypes[$blockHandle])) {
                     $allBlockTypes[$blockHandle] = [
-                        "name" => $entryType->name,
-                        "handle" => $blockHandle,
-                        "description" => $description,
-                        "categories" => $categoryNames,
-                        "previewImageUrl" => $previewImageUrl,
-                        "matrixFields" => [],
+                        'name' => $entryType->name,
+                        'handle' => $blockHandle,
+                        'description' => $description,
+                        'categories' => $categoryNames,
+                        'previewImageUrl' => $previewImageUrl,
+                        'buttonGroupName' => $groupName,
+                        'matrixFields' => [],
                     ];
+                } elseif ($groupName !== null) {
+                    $allBlockTypes[$blockHandle]['buttonGroupName'] = $groupName;
                 }
 
                 $allBlockTypes[$blockHandle]["matrixFields"][] = [
@@ -861,6 +1047,9 @@ class BlocksmithController extends \craft\web\Controller
         $description = $matchedBlock["description"] ?? null;
         $previewImagePath = $matchedBlock["previewImagePath"] ?? null;
         $selectedCategories = $matchedBlock["categories"] ?? [];
+        $selectedGroup = $matchedBlock['buttonGroupUid'] ?? null;
+
+        $buttonGroups = Blocksmith::getInstance()->service->getAllButtonGroups();
 
         $categories = Blocksmith::getInstance()->service->getAllCategories();
 
@@ -917,6 +1106,8 @@ class BlocksmithController extends \craft\web\Controller
             "previewImagePath" => $previewImagePath,
             "previewStorageMode" => $settings->previewStorageMode,
             "categories" => $categories,
+            "buttonGroups" => $buttonGroups,
+            "selectedButtonGroup" => $selectedGroup,
             "selectedCategories" => $selectedCategories,
             "useHandleBasedPreviews" => $useHandleBasedPreviews,
             "placeholderImageUrl" => $placeholderImageUrl,
