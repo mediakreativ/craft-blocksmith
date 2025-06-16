@@ -52,70 +52,6 @@
     }
 
     /**
-     * Displays the modal
-     */
-    show(matrixFieldHandle) {
-      this.matrixFieldHandle = matrixFieldHandle;
-      this.createOverlay();
-      this.createModal(matrixFieldHandle);
-      this.$overlay.addClass("open");
-      this.$modal.addClass("open");
-
-      this.loadBlockTypes(matrixFieldHandle)
-        .done((blockTypes) => {
-          debugLog("Loaded blockTypes:", blockTypes);
-          debugLog("Filtering for matrixFieldHandle:", matrixFieldHandle);
-
-          this.blockTypes = blockTypes.filter((blockType) => {
-            const matches = blockType.matrixFields.some(
-              (field) => field.handle === matrixFieldHandle,
-            );
-            if (!matches) {
-              debugLog(
-                `Block type "${blockType.handle}" does NOT match any field with handle "${matrixFieldHandle}"`,
-              );
-              debugLog(
-                "Available field handles:",
-                blockType.matrixFields.map((f) => f.handle),
-              );
-            }
-            return matches;
-          });
-
-          this.loadCategories()
-            .done((categories) => {
-              this.renderCategories(categories);
-              this.renderBlockTypes("");
-            })
-            .fail((error) => {
-              console.error("Failed to load categories:", error);
-            });
-        })
-        .fail((error) => {
-          console.error("Failed to load block types:", error);
-        });
-    }
-
-    /**
-     * Hides the modal
-     */
-    hide() {
-      if (this.masonryInstance) {
-        this.masonryInstance.destroy();
-        this.masonryInstance = null;
-      }
-
-      if (this.$modal) {
-        this.$modal.find(".blocksmith-blocks").empty();
-      }
-
-      this.$overlay.removeClass("open").remove();
-      this.$modal.removeClass("open").remove();
-      this.$overlay = null;
-      this.$modal = null;
-    }
-
-    /**
      * Creates the overlay element
      */
     createOverlay() {
@@ -129,7 +65,7 @@
     }
 
     /**
-     * Creates the modal element with dynamic translations
+     * Creates the modal element
      */
     createModal(matrixFieldHandle) {
       let modalViewClass = "blocksmith-regular-view";
@@ -467,6 +403,76 @@
 
         return $scope;
       }
+    }
+
+    /**
+     * Displays the modal
+     */
+    show(matrixFieldHandle) {
+      this.matrixFieldHandle = matrixFieldHandle;
+
+      // Hey, come on – be fair, dude! My dog needs dogfood...
+      if (!["pro"].includes(window.BlocksmithConfig?.edition)) {
+        return;
+      }
+
+      this.createOverlay();
+      this.createModal(matrixFieldHandle);
+      this.$overlay.addClass("open");
+      this.$modal.addClass("open");
+
+      this.loadBlockTypes(matrixFieldHandle)
+        .done((blockTypes) => {
+          debugLog("Loaded blockTypes:", blockTypes);
+          debugLog("Filtering for matrixFieldHandle:", matrixFieldHandle);
+
+          this.blockTypes = blockTypes.filter((blockType) => {
+            const matches = blockType.matrixFields.some(
+              (field) => field.handle === matrixFieldHandle,
+            );
+            if (!matches) {
+              debugLog(
+                `Block type "${blockType.handle}" does NOT match any field with handle "${matrixFieldHandle}"`,
+              );
+              debugLog(
+                "Available field handles:",
+                blockType.matrixFields.map((f) => f.handle),
+              );
+            }
+            return matches;
+          });
+
+          this.loadCategories()
+            .done((categories) => {
+              this.renderCategories(categories);
+              this.renderBlockTypes("");
+            })
+            .fail((error) => {
+              console.error("Failed to load categories:", error);
+            });
+        })
+        .fail((error) => {
+          console.error("Failed to load block types:", error);
+        });
+    }
+
+    /**
+     * Hides the modal
+     */
+    hide() {
+      if (this.masonryInstance) {
+        this.masonryInstance.destroy();
+        this.masonryInstance = null;
+      }
+
+      if (this.$modal) {
+        this.$modal.find(".blocksmith-blocks").empty();
+      }
+
+      this.$overlay.removeClass("open").remove();
+      this.$modal.removeClass("open").remove();
+      this.$overlay = null;
+      this.$modal = null;
     }
   }
 

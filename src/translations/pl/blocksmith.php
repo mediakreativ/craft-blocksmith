@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "Konfiguruj kategorie",
     "Note: " => "Uwaga: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Kategorie są używane tylko w oknie podglądu i nie wpływają na sposób wyświetlania Button Group.",
     "UI Mode" => "Tryb interfejsu",
     "Preview Modal" => "Okno podglądu",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Grupa przycisków",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Kategorie są używane tylko w <strong>oknie podglądu</strong> i nie wpływają na sposób wyświetlania grup przycisków.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Te ustawienia dotyczą <strong>okna podglądu</strong> i nie wpływają na wygląd <strong>grup przycisków</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Poniższe opcje dotyczą trybu UI <strong>okna podglądu</strong>, dostępnego tylko w <strong>wersji Pro</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Tryb UI jest ustawiony na Grupę przycisków w wersji Lite. Uaktualnij do <strong>Pro</strong>, aby korzystać z <strong>okna podglądu</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Te ustawienia dotyczą trybu UI <strong>okna podglądu</strong>, który jest dostępny tylko w <strong>wersji Pro</strong>.",
 ];

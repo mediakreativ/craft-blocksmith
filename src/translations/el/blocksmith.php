@@ -132,9 +132,17 @@ return [
 
     "Configure Categories" => "Διαμόρφωση κατηγοριών",
     "Note: " => "Σημείωση: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Οι κατηγορίες χρησιμοποιούνται μόνο στο παράθυρο προεπισκόπησης και δεν επηρεάζουν την εμφάνιση της Button Group.",
     "UI Mode" => "Λειτουργία διεπαφής",
     "Preview Modal" => "Παράθυρο προεπισκόπησης",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Ομάδα κουμπιών",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Οι κατηγορίες χρησιμοποιούνται μόνο στο <strong>Παράθυρο προεπισκόπησης</strong> και δεν επηρεάζουν την εμφάνιση των Ομάδων Κουμπιών.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Αυτές οι ρυθμίσεις ισχύουν για το <strong>Παράθυρο προεπισκόπησης</strong> και δεν επηρεάζουν την εμφάνιση των <strong>Ομάδων Κουμπιών</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Οι παρακάτω επιλογές ισχύουν για τη λειτουργία διεπαφής <strong>Παράθυρο προεπισκόπησης</strong>, που είναι διαθέσιμη μόνο στην <strong>Pro Έκδοση</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Η λειτουργία διεπαφής έχει οριστεί σε Ομάδα Κουμπιών στην Lite Έκδοση. Αναβαθμίστε σε <strong>Pro</strong> για να χρησιμοποιήσετε το <strong>Παράθυρο προεπισκόπησης</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Αυτές οι ρυθμίσεις ισχύουν για τη λειτουργία διεπαφής <strong>Παράθυρο προεπισκόπησης</strong>, που είναι διαθέσιμη μόνο στην <strong>Pro Έκδοση</strong>.",
 ];

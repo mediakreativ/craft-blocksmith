@@ -130,9 +130,17 @@ return [
 
     "Configure Categories" => "Configure Categories",
     "Note: " => "Note: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Categories are only used in the preview modal and do not affect how Button Groups are displayed.",
     "UI Mode" => "UI Mode",
     "Preview Modal" => "Preview Modal",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Buttongroup",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>.",
 ];

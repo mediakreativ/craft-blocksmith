@@ -130,9 +130,17 @@ return [
 
     "Configure Categories" => "تكوين الفئات",
     "Note: " => "ملاحظة: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "تُستخدم الفئات فقط في نافذة المعاينة ولا تؤثر على عرض مجموعة الأزرار.",
     "UI Mode" => "وضع الواجهة",
     "Preview Modal" => "نافذة المعاينة",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "مجموعة الأزرار",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "يتم استخدام الفئات فقط في <strong>نافذة المعاينة</strong> ولا تؤثر على كيفية عرض مجموعات الأزرار.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "تنطبق هذه الإعدادات على <strong>نافذة المعاينة</strong> وليس لها تأثير على مظهر <strong>مجموعات الأزرار</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "تنطبق الخيارات التالية على وضع واجهة المستخدم <strong>لنافذة المعاينة</strong>، المتاح فقط في <strong>الإصدار الاحترافي</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "وضع الواجهة ثابت على مجموعة الأزرار في الإصدار الخفيف. قم بالترقية إلى <strong>الاحترافي</strong> لاستخدام <strong>نافذة المعاينة</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "تنطبق هذه الإعدادات على وضع واجهة المستخدم <strong>لنافذة المعاينة</strong>، المتاح فقط في <strong>الإصدار الاحترافي</strong>.",
 ];

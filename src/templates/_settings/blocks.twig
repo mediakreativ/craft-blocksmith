@@ -11,12 +11,8 @@
 
 {% set crumbs = [
     {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
+        label: "Blocksmith",
+        url: url('blocksmith/settings/general')
     }
 ] %}
 
@@ -31,6 +27,12 @@
 		<div class="blocksmith-settings-wrapper">
 			<div class="blocksmith-settings-content">
 				<h1>{{ "Configure Blocks"|t('blocksmith') }}</h1>
+				{% if edition != 'pro' %}
+					<div class="blocksmith-hint">
+						<strong>{{ "Note: "|t('blocksmith') }}</strong>
+						{{ "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>."|t('blocksmith')|raw }}
+					</div>
+				{% endif %}
 				<div class="blocksmith-block-list">
 					{% for blockType in allBlockTypes %}
 						<div class="blocksmith-block-card-horizontal">
@@ -77,7 +79,7 @@
 
 								{% set categories = blockType.categories ?? [] %}
 
-								{% if blockType.categories|length > 0 %}
+								{% if blockType.categories|length > 0 and edition == 'pro' %}
 									<div class="blocksmith-category-badges">
 										<span class="blocksmith-badge-label">{{ "Categories"|t('blocksmith') }}:</span>
 										{% for categoryName in blockType.categories %}

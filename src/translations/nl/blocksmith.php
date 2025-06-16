@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "Categorieën configureren",
     "Note: " => "Opmerking: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Categorieën worden alleen gebruikt in de preview-modus en hebben geen invloed op de weergave van de Button Group.",
     "UI Mode" => "UI-modus",
     "Preview Modal" => "Previewvenster",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Buttongroep",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Categorieën worden alleen gebruikt in de <strong>voorbeeldmodus</strong> en hebben geen invloed op hoe buttongroepen worden weergegeven.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Deze instellingen zijn van toepassing op de <strong>voorbeeldmodus</strong> en hebben geen invloed op het uiterlijk van <strong>buttongroepen</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "De volgende opties zijn van toepassing op de UI-modus <strong>voorbeeldmodus</strong>, die alleen beschikbaar is in de <strong>Pro-editie</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "De UI-modus is vast ingesteld op Buttongroep in de Lite-editie. Upgrade naar <strong>Pro</strong> om de <strong>voorbeeldmodus</strong> te gebruiken.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Deze instellingen zijn van toepassing op de UI-modus <strong>voorbeeldmodus</strong>, die alleen beschikbaar is in de <strong>Pro-editie</strong>.",
 ];

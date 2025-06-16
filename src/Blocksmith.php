@@ -269,6 +269,14 @@ class Blocksmith extends Plugin
     }
 
     /**
+     * Declares supported plugin editions.
+     */
+    public static function editions(): array
+    {
+        return ["lite", "pro"];
+    }
+
+    /**
      * Publishes plugin assets to the web directory.
      *
      * Copies all files from the plugin's src/web directory into the

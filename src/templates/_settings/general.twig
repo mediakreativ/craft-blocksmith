@@ -4,6 +4,8 @@
 {% import '_includes/forms' as forms %}
 {% import 'blocksmith/_includes/macros.twig' as macros %}
 
+{% set currentEdition = craft.app.plugins.getPlugin('blocksmith').edition %}
+
 {% set readOnly = not craft.app.config.general.allowAdminChanges %}
 {% set fullPageForm = not readOnly %}
 
@@ -13,12 +15,8 @@
 
 {% set crumbs = [
     {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
+        label: "Blocksmith",
+        url: url('blocksmith/settings/general')
     }
 ] %}
 
@@ -45,9 +43,17 @@
                 warning: 'enableCardsSupport' in overrides ? macros.configWarning('enableCardsSupport'),
             }) }}
 
+			{% if craft.app.plugins.getPlugin('blocksmith').edition != 'pro' %}
+				<div class="blocksmith-hint" style="margin-top: 2rem;">
+					<strong>{{ "Note: "|t('blocksmith') }}</strong>
+					{{ "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>."|t('blocksmith')|raw }}
+				</div>
+			{% endif %}
+
 
 			{{ forms.lightswitchField({
                 label: 'Use Handle-based Previews (Recommended for deployment workflows)'|t('blocksmith'),
+                labelClass: (currentEdition != 'pro') ? 'text-light' : null,
                 name: 'useHandleBasedPreviews',
                 id: 'useHandleBasedPreviews',
                 instructions: macros.instructions(

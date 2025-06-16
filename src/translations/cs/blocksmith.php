@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "Nastavit kategorie",
     "Note: " => "Poznámka: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Kategorie se používají pouze v náhledu a nemají vliv na zobrazení skupiny tlačítek.",
     "UI Mode" => "Režim rozhraní",
     "Preview Modal" => "Náhledové okno",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Skupina tlačítek",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Kategorie se používají pouze v <strong>náhledu modálního okna</strong> a neovlivňují zobrazení skupin tlačítek.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Tato nastavení platí pro <strong>náhledové modální okno</strong> a nemají žádný vliv na vzhled <strong>skupin tlačítek</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Následující možnosti se vztahují na režim rozhraní <strong>náhledového modálního okna</strong>, který je dostupný pouze v <strong>Pro edici</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Režim rozhraní je ve verzi Lite pevně nastaven na Skupinu tlačítek. Upgradujte na <strong>Pro</strong>, abyste mohli použít <strong>náhledové modální okno</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Tato nastavení se vztahují na režim rozhraní <strong>náhledového modálního okna</strong>, který je dostupný pouze v <strong>Pro edici</strong>.",
 ];

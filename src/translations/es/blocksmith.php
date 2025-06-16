@@ -133,9 +133,17 @@ return [
 
     "Configure Categories" => "Configurar categorías",
     "Note: " => "Nota: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Las categorías se usan solo en la vista previa y no afectan cómo se muestra el Button Group.",
     "UI Mode" => "Modo de interfaz",
     "Preview Modal" => "Ventana de vista previa",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Grupo de botones",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Las categorías solo se utilizan en el <strong>modal de vista previa</strong> y no afectan cómo se muestran los grupos de botones.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Estos ajustes se aplican al <strong>modal de vista previa</strong> y no tienen efecto en la apariencia de los <strong>grupos de botones</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Las siguientes opciones se aplican al modo de interfaz <strong>modal de vista previa</strong>, que solo está disponible en la <strong>edición Pro</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "El modo de interfaz está fijado a grupo de botones en la edición Lite. Actualiza a <strong>Pro</strong> para usar el <strong>modal de vista previa</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Estos ajustes se aplican al modo de interfaz del <strong>modal de vista previa</strong>, que solo está disponible en la <strong>edición Pro</strong>.",
 ];

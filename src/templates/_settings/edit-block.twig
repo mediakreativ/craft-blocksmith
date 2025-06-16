@@ -18,12 +18,8 @@
 
 {% set crumbs = [
     {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
+        label: "Blocksmith",
+        url: url('blocksmith/settings/general')
     },
     {
         label: "Configure Blocks"|t('blocksmith'),
@@ -51,6 +47,17 @@
 					<span class="blocksmith-copytextbtn__icon" data-icon="clipboard" aria-hidden="true"></span>
 				</div>
 			</div>
+			{% if edition != 'pro' %}
+				<div class="blocksmith-hint">
+					<strong>{{ "Note: "|t('blocksmith') }}</strong>
+					{{ "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>."|t('blocksmith')|raw }}
+				</div>
+			{% else %}
+				<div class="blocksmith-hint">
+					<strong>{{ "Note: "|t('blocksmith') }}</strong>
+					{{ "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>."|t('blocksmith')|raw }}
+				</div>
+			{% endif %}
 
 			{{ forms.textareaField({
                 label: 'Description'|t('blocksmith'),
@@ -66,10 +73,6 @@
 				<div class="field">
 					<div class="heading">
 						<label for="categories">{{ 'Categories'|t('blocksmith') }}</label>
-					</div>
-					<div class="blocksmith-hint">
-						<strong>{{ "Note: "|t('blocksmith') }}</strong>
-						{{ "Categories are only used in the preview modal and do not affect how Button Groups are displayed."|t('blocksmith') }}
 					</div>
 					<div class="instructions">
 						{{ 'Select one or more categories for this block.'|t('blocksmith') }}

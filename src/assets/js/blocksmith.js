@@ -245,6 +245,11 @@
         BlocksmithUtils.setupButtonGroupDismissOnOutsideClick();
         BlocksmithUtils.setupMarkerCleanupListeners();
       }
+
+      window.BlocksmithConfig = window.BlocksmithConfig || {};
+      window.BlocksmithConfig.matrixFieldSettings =
+        matrixFieldSettings.settings || {};
+      window.BlocksmithConfig.edition = matrixFieldSettings.edition;
     },
 
     /**

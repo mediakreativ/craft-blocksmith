@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "카테고리 구성",
     "Note: " => "참고: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "카테고리는 미리보기 모달에서만 사용되며 Button Group의 표시에는 영향을 주지 않습니다.",
     "UI Mode" => "UI 모드",
     "Preview Modal" => "미리보기 모달",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "버튼 그룹",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "카테고리는 <strong>미리보기 모달</strong>에서만 사용되며 버튼 그룹의 표시에는 영향을 주지 않습니다.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "이 설정은 <strong>미리보기 모달</strong>에 적용되며 <strong>버튼 그룹</strong>의 모양에는 영향을 주지 않습니다.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "다음 옵션은 <strong>Pro 에디션</strong>에서만 사용할 수 있는 <strong>미리보기 모달</strong> UI 모드에 적용됩니다.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Lite 에디션에서는 UI 모드가 버튼 그룹으로 고정됩니다. <strong>미리보기 모달</strong>을 사용하려면 <strong>Pro</strong>로 업그레이드하세요.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "이 설정은 <strong>Pro 에디션</strong>에서만 사용할 수 있는 <strong>미리보기 모달</strong> UI 모드에 적용됩니다.",
 ];

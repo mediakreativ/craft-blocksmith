@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "Configurer les catégories",
     "Note: " => "Remarque : ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Les catégories sont uniquement utilisées dans la fenêtre de prévisualisation et n'affectent pas l'affichage du Button Group.",
     "UI Mode" => "Mode d’interface",
     "Preview Modal" => "Fenêtre de prévisualisation",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Groupe de boutons",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Les catégories sont uniquement utilisées dans la <strong>fenêtre de prévisualisation</strong> et n'affectent pas l'affichage des groupes de boutons.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Ces paramètres s'appliquent à la <strong>fenêtre de prévisualisation</strong> et n'ont aucun effet sur l'apparence des <strong>groupes de boutons</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Les options suivantes s'appliquent au mode UI de la <strong>fenêtre de prévisualisation</strong>, disponible uniquement dans l'<strong>édition Pro</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Le mode UI est fixé à Groupe de boutons dans l'édition Lite. Passez à la <strong>Pro</strong> pour utiliser la <strong>fenêtre de prévisualisation</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Ces paramètres s'appliquent au mode UI de la <strong>fenêtre de prévisualisation</strong>, disponible uniquement dans l'<strong>édition Pro</strong>.",
 ];

@@ -298,6 +298,7 @@ class BlocksmithController extends \craft\web\Controller
             "categories" => $categories,
             "plugin" => Blocksmith::getInstance(),
             "title" => Craft::t("blocksmith", "Categories"),
+            "edition" => Blocksmith::getInstance()->edition,
         ]);
     }
 
@@ -559,13 +560,19 @@ class BlocksmithController extends \craft\web\Controller
                 "enablePreview" => isset($savedSettings[$uid])
                     ? (bool) $savedSettings[$uid]["enablePreview"]
                     : true,
-                "uiMode" => $savedSettings[$uid]["uiMode"] ?? "modal",
+                "uiMode" => isset($savedSettings[$uid]["uiMode"])
+                    ? ($savedSettings[$uid]["uiMode"] === "modal" &&
+                    Blocksmith::getInstance()->edition !== "pro"
+                        ? "btngroup"
+                        : $savedSettings[$uid]["uiMode"])
+                    : "btngroup",
             ];
         }
 
         return $this->renderTemplate("blocksmith/_settings/matrix-fields", [
             "matrixFields" => $matrixFieldSettings,
             "enableCardsSupport" => $settings->enableCardsSupport,
+            "edition" => Blocksmith::getInstance()->edition,
         ]);
     }
 
@@ -604,7 +611,11 @@ class BlocksmithController extends \craft\web\Controller
                 Craft::$app->projectConfig->set($path, [
                     "fieldHandle" => $fieldHandle,
                     "enablePreview" => (bool) $enablePreview,
-                    "uiMode" => $uiModes[$fieldHandle] ?? "modal",
+                    "uiMode" =>
+                        ($uiModes[$fieldHandle] ?? "modal") === "modal" &&
+                        Blocksmith::getInstance()->edition !== "pro"
+                            ? "btngroup"
+                            : $uiModes[$fieldHandle] ?? "modal",
                 ]);
 
                 Craft::info(
@@ -652,12 +663,21 @@ class BlocksmithController extends \craft\web\Controller
 
                 $result[$handle] = [
                     "enablePreview" => $enablePreview,
-                    "uiMode" => $savedSettings[$uid]["uiMode"] ?? "modal",
+                    "uiMode" => isset($savedSettings[$uid]["uiMode"])
+                        ? ($savedSettings[$uid]["uiMode"] === "modal" &&
+                        Blocksmith::getInstance()->edition !== "pro"
+                            ? "btngroup"
+                            : $savedSettings[$uid]["uiMode"])
+                        : "btngroup",
                 ];
             }
         }
 
-        return $this->asJson($result);
+        return $this->asJson(
+            array_merge($result, [
+                "edition" => Blocksmith::getInstance()->edition,
+            ])
+        );
     }
 
     /**
@@ -694,16 +714,6 @@ class BlocksmithController extends \craft\web\Controller
                 }
             }
         }
-
-        // $volumeBaseUrl = null;
-        // if ($useHandleBasedPreviews && $settings->previewImageVolume) {
-        //     $volume = Craft::$app->volumes->getVolumeByUid(
-        //         $settings->previewImageVolume
-        //     );
-        //     if ($volume) {
-        //         $volumeBaseUrl = rtrim($volume->getRootUrl(), "/");
-        //     }
-        // }
 
         $matrixFields = array_filter(
             Craft::$app->fields->getAllFields(),
@@ -788,6 +798,7 @@ class BlocksmithController extends \craft\web\Controller
             "allBlockTypes" => $allBlockTypes,
             "placeholderImageUrl" => $placeholderImageUrl,
             "matrixFields" => $matrixFieldList,
+            "edition" => Blocksmith::getInstance()->edition,
         ]);
     }
 
@@ -927,6 +938,7 @@ class BlocksmithController extends \craft\web\Controller
         return $this->renderTemplate("blocksmith/_settings/edit-block", [
             "block" => $block,
             "title" => Craft::t("blocksmith", "Edit Block"),
+            "edition" => Blocksmith::getInstance()->edition,
         ]);
     }
 

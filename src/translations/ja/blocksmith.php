@@ -131,9 +131,17 @@ return [
 
     "Configure Categories" => "カテゴリを設定",
     "Note: " => "注: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "カテゴリはプレビューモーダルでのみ使用され、Button Group の表示には影響しません。",
     "UI Mode" => "UIモード",
     "Preview Modal" => "プレビューモーダル",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "ボタングループ",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "カテゴリは<strong>プレビューモーダル</strong>でのみ使用され、ボタングループの表示には影響しません。",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "これらの設定は<strong>プレビューモーダル</strong>に適用され、<strong>ボタングループ</strong>の表示には影響しません。",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "次のオプションは、<strong>Proエディション</strong>でのみ利用可能な<strong>プレビューモーダル</strong>のUIモードに適用されます。",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "LiteエディションではUIモードはボタングループに固定されています。<strong>プレビューモーダル</strong>を使用するには<strong>Pro</strong>にアップグレードしてください。",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "これらの設定は、<strong>Proエディション</strong>でのみ利用可能な<strong>プレビューモーダル</strong>のUIモードに適用されます。",
 ];

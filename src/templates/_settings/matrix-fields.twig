@@ -12,16 +12,12 @@
 
 {% set crumbs = [
     {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
+        label: "Blocksmith",
+        url: url('blocksmith/settings/general')
     }
 ] %}
 
-{% set title = "Configure Matrix Fields"|t('blocksmith') %}
+{% set title = "Blocksmith" %}
 
 {% block sidebar %}
 	{% include 'blocksmith/_settings/sidebar.twig' %}
@@ -35,10 +31,17 @@
 				{{ actionInput('blocksmith/blocksmith/save-matrix-field-settings') }}
 				<h1>{{ "Configure Matrix Fields"|t('blocksmith') }}</h1>
 
-				{% if enableCardsSupport is defined and not enableCardsSupport %}
-					<p class="warning with-icon blocksmith-cards-disabled">
+				{% if enableCardsSupport is defined and not enableCardsSupport and edition == 'pro'%}
+					<p class="warning blocksmith-cards-disabled">
 						{{ "Cards support is disabled – these settings have no effect on fields using the \"As cards\" view mode."|t('blocksmith') }}
 					</p>
+				{% endif %}
+
+				{% if edition != 'pro' %}
+					<div class="blocksmith-hint">
+						<strong>{{ "Note: "|t('blocksmith') }}</strong>
+						{{ "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>."|t('blocksmith')|raw }}
+					</div>
 				{% endif %}
 
 				<table class="data fullwidth">
@@ -84,7 +87,7 @@
 									{ label: 'Preview Modal'|t('blocksmith'), value: 'modal' },
 									{ label: 'Buttongroup'|t('blocksmith'), value: 'btngroup' }
 								],
-								disabled: readOnly,
+								disabled: readOnly or (edition != 'pro'),
 								inputAttributes: {
 									'data-handle': field.handle
 								}

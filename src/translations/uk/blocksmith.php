@@ -133,9 +133,17 @@ return [
 
     "Configure Categories" => "Налаштувати категорії",
     "Note: " => "Примітка: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "Категорії використовуються лише у вікні попереднього перегляду та не впливають на відображення Button Group.",
     "UI Mode" => "Режим інтерфейсу",
     "Preview Modal" => "Вікно попереднього перегляду",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "Група кнопок",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "Категорії використовуються лише у <strong>модальному вікні попереднього перегляду</strong> і не впливають на вигляд груп кнопок.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "Ці налаштування застосовуються до <strong>модального вікна попереднього перегляду</strong> і не впливають на вигляд <strong>груп кнопок</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Наступні параметри застосовуються до режиму інтерфейсу <strong>модального вікна попереднього перегляду</strong>, який доступний лише у <strong>версії Pro</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "Режим інтерфейсу у версії Lite зафіксовано на Групі кнопок. Оновіть до <strong>Pro</strong>, щоб скористатися <strong>модальним вікном попереднього перегляду</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "Ці налаштування застосовуються до режиму інтерфейсу <strong>модального вікна попереднього перегляду</strong>, доступного лише у <strong>версії Pro</strong>.",
 ];

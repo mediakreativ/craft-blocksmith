@@ -8,7 +8,7 @@
 	{% set contentNotice = readOnlyNotice() %}
 {% endif %}
 
-{% set title = "Categories" | t('blocksmith') %}
+{% set title = "Blocksmith" %}
 
 {% block sidebar %}
 	{% include 'blocksmith/_settings/sidebar.twig' %}
@@ -30,24 +30,20 @@
 
 {% set crumbs = [
     {
-        label: "Settings"|t('blocksmith'),
-        url: url('admin/settings')
-    },
-    {
-        label: "Plugins"|t('blocksmith'),
-        url: url('admin/settings/plugins')
+        label: "Blocksmith",
+        url: url('blocksmith/settings/general')
     }
 ] %}
 
 {% block content %}
 	<div class="blocksmith-settings-wrapper">
 		<div class="blocksmith-settings-content">
-
-			<h1 style="margin-bottom: 3rem;">{{ "Configure Categories"|t('blocksmith') }}</h1>
-			<div id="blocksmith-categories-vue-admin-table"></div>
-			<div class="blocksmith-hint" style="margin-top: 2rem;">
-				<strong>{{ "Note: "|t('blocksmith') }}</strong>{{ "Categories are only used in the preview modal and do not affect how Button Groups are displayed."|t('blocksmith') }}
+			<h1>{{ "Configure Categories"|t('blocksmith') }}</h1>
+			<div class="blocksmith-hint" style="margin-bottom: 2.5rem;">
+				<strong>{{ "Note: "|t('blocksmith') }}</strong>
+				{{ "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed."|t('blocksmith')|raw }}
 			</div>
+			<div id="blocksmith-categories-vue-admin-table"></div>
 		</div>
 	</div>
 {% endblock %}
@@ -65,29 +61,13 @@
 
 {% js %}
 new Craft.VueAdminTable({
-    columns: [
-        {
-            name: '__slot:title',
-            title: Craft.t('blocksmith', 'Name'),
-        },
-    ],
+    columns: [{ name: '__slot:title', title: Craft.t('blocksmith', 'Name'), }, ],
     container: '#blocksmith-categories-vue-admin-table',
     emptyMessage: Craft.t('blocksmith', 'No categories exist yet.'),
     tableData:
 {{ tableData|json_encode|raw }},
 {% if not readOnly %}
-	deleteAction: 'blocksmith/blocksmith/delete-category',
-						    reorderAction: 'blocksmith/blocksmith/reorder-categories',
-						    onSortChange: (sortedIds) => {
-						        Craft.sendActionRequest('POST', 'blocksmith/reorder-categories', {
-						            data: { ids: sortedIds },
-						        });
-						    },
+	deleteAction: 'blocksmith/blocksmith/delete-category', reorderAction: 'blocksmith/blocksmith/reorder-categories', onSortChange: (sortedIds) => { Craft.sendActionRequest('POST', 'blocksmith/reorder-categories', { data: { ids: sortedIds }, }); },
 {% endif %}
-slots: {
-        title: (row) => {
-            return `<a href="${row.url}">${row.title}</a>`;
-						        },
-						    },
-						});
+slots: { title: (row) => { return `<a href="${row.url}">${row.title}</a>`; }, }, });
 {% endjs %}

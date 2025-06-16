@@ -130,9 +130,16 @@ return [
 
     "Configure Categories" => "הגדר קטגוריות",
     "Note: " => "הערה: ",
-    "Categories are only used in the preview modal and do not affect how Button Groups are displayed." =>
-        "הקטגוריות משמשות רק בחלון התצוגה המקדימה ואינן משפיעות על תצוגת ה-Button Group.",
-    "UI Mode" => "מצב ממשק משתמש",
     "Preview Modal" => "חלון תצוגה מקדימה",
-    "Button Group" => "Button Group",
+    "Buttongroup" => "קבוצת כפתורים",
+    "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
+        "הקטגוריות משמשות רק בתוך <strong>חלון התצוגה המקדימה</strong> ואינן משפיעות על אופן הצגת קבוצות הכפתורים.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+        "ההגדרות האלו חלות על <strong>חלון התצוגה המקדימה</strong> ואין להן השפעה על מראה <strong>קבוצות הכפתורים</strong>.",
+    "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "האפשרויות הבאות חלות על מצב הממשק <strong>חלון התצוגה המקדימה</strong>, הזמין רק ב<strong>גרסת ה-Pro</strong>.",
+    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+        "מצב הממשק קבוע כקבוצת כפתורים בגרסת ה-Lite. שדרג ל-<strong>Pro</strong> כדי להשתמש ב-<strong>חלון התצוגה המקדימה</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
+        "ההגדרות האלו חלות על מצב הממשק <strong>חלון התצוגה המקדימה</strong>, הזמין רק ב<strong>גרסת ה-Pro</strong>.",
 ];
