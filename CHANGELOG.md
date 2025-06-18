@@ -1,3 +1,14 @@
+## [1.6.0] - 2025-06-18
+
+### Added
+- Official support for **Lite** and **Pro** editions
+  - **Lite Edition** includes Button Group mode with full Cards view support
+  - **Pro Edition** unlocks all advanced features:
+    - Preview Modal with flexible preview image options (handle-based or uploaded)
+    - Block Categories and category-based filtering
+    - Additional preview settings and layout configurations
+    - Existing users of Blocksmith will be automatically granted access to the **Pro Edition** – no action required
+
 ## [1.5.3] - 2025-05-18
 
 ### Fixed

@@ -134,14 +134,14 @@ return [
     "Note: " => "Observera: ",
     "UI Mode" => "UI-läge",
     "Preview Modal" => "Förhandsgranskningsfönster",
-    "Buttongroup" => "Knappgrupp",
+    "Button Group" => "Knappgrupp",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Kategorier används endast i <strong>förhandsgranskningsmodulen</strong> och påverkar inte hur knappgrupper visas.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
         "Dessa inställningar gäller <strong>förhandsgranskningsmodulen</strong> och påverkar inte utseendet på <strong>knappgrupper</strong>.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Följande alternativ gäller för <strong>förhandsgranskningsmodulens</strong> UI-läge, som endast är tillgängligt i <strong>Pro-versionen</strong>.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "UI-läget är låst till knappgrupp i Lite-versionen. Uppgradera till <strong>Pro</strong> för att använda <strong>förhandsgranskningsmodulen</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Dessa inställningar gäller UI-läget för <strong>förhandsgranskningsmodulen</strong>, som endast finns i <strong>Pro-versionen</strong>.",

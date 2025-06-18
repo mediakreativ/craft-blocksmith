@@ -133,14 +133,14 @@ return [
     "Note: " => "Nota: ",
     "UI Mode" => "Modalità interfaccia",
     "Preview Modal" => "Finestra di anteprima",
-    "Buttongroup" => "Gruppo di pulsanti",
+    "Button Group" => "Gruppo di pulsanti",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Le categorie sono utilizzate solo nella <strong>finestra di anteprima</strong> e non influiscono su come vengono visualizzati i gruppi di pulsanti.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Queste impostazioni si applicano alla <strong>finestra di anteprima</strong> e non influenzano l'aspetto dei <strong>gruppi di pulsanti</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Queste impostazioni si applicano alla <strong>finestra di anteprima</strong> e non influenzano l'aspetto dei gruppi di pulsanti.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Le seguenti opzioni si applicano alla modalità UI della <strong>finestra di anteprima</strong>, disponibile solo nell'<strong>edizione Pro</strong>.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "La modalità UI è fissa su Gruppo di pulsanti nell'edizione Lite. Passa alla <strong>Pro</strong> per usare la <strong>finestra di anteprima</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Queste impostazioni si applicano alla modalità UI della <strong>finestra di anteprima</strong>, disponibile solo nell'<strong>edizione Pro</strong>.",

@@ -133,14 +133,14 @@ return [
     "Note: " => "Bemærk: ",
     "UI Mode" => "UI-tilstand",
     "Preview Modal" => "Preview-modal",
-    "Buttongroup" => "Knapgruppe",
+    "Button Group" => "Knapgruppe",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Kategorier bruges kun i <strong>forhåndsvisningsvinduet</strong> og påvirker ikke visningen af knapgrupper.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Disse indstillinger gælder for <strong>forhåndsvisningsvinduet</strong> og har ingen effekt på udseendet af <strong>knapgrupper</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Disse indstillinger gælder for <strong>forhåndsvisningsvinduet</strong> og har ingen effekt på udseendet af knapgrupper.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Følgende indstillinger gælder for <strong>forhåndsvisningsmodus</strong>, som kun er tilgængelig i <strong>Pro-udgaven</strong>.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "Brugergrænsefladetilstand er fastlåst til knapgruppe i Lite-udgaven. Opgrader til <strong>Pro</strong> for at bruge <strong>forhåndsvisningsvinduet</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Disse indstillinger gælder for <strong>forhåndsvisningsmodus</strong>, som kun er tilgængelig i <strong>Pro-udgaven</strong>.",

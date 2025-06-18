@@ -128,14 +128,14 @@ return [
     "Note: " => "注意：",
     "UI Mode" => "界面模式",
     "Preview Modal" => "预览窗口",
-    "Buttongroup" => "按钮组",
+    "Button Group" => "按钮组",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "分类仅用于<strong>预览模态框</strong>，不会影响按钮组的显示方式。",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "这些设置适用于<strong>预览模态框</strong>，对<strong>按钮组</strong>的外观无影响。",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "这些设置适用于<strong>预览模态框</strong>，对按钮组的外观无影响。",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "以下选项适用于<strong>预览模态框</strong>界面模式，该模式仅在<strong>专业版</strong>中提供。",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "在简化版中，界面模式固定为按钮组。升级到<strong>专业版</strong>以使用<strong>预览模态框</strong>。",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "这些设置适用于<strong>预览模态框</strong>界面模式，该模式仅在<strong>专业版</strong>中提供。",

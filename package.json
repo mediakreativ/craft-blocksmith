@@ -4,8 +4,8 @@
     "prettier": "^3.3.3"
   },
   "name": "craft-blocksmith",
-  "version": "1.5.3",
-  "description": "Enhances Craft's Matrix fields with block previews and a user-friendly block selection modal.",
+  "version": "1.6.0",
+  "description": "Adds visual block selection for Matrix fields.",
   "author": {
     "name": "Christian Schindler",
     "email": "plugins@mediakreativ.de",
@@ -20,7 +20,9 @@
     "blocksmith",
     "plugin",
     "UX",
-    "modal"
+    "UI",
+    "modal",
+    "button group"
   ],
   "license": "proprietary",
   "scripts": {

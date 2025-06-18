@@ -40,7 +40,7 @@
 				{% if edition != 'pro' %}
 					<div class="blocksmith-hint">
 						<strong>{{ "Note: "|t('blocksmith') }}</strong>
-						{{ "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>."|t('blocksmith')|raw }}
+						{{ "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>."|t('blocksmith')|raw }}
 					</div>
 				{% endif %}
 
@@ -85,7 +85,7 @@
 								value: field.uiMode ?? 'modal',
 								options: [
 									{ label: 'Preview Modal'|t('blocksmith'), value: 'modal' },
-									{ label: 'Buttongroup'|t('blocksmith'), value: 'btngroup' }
+									{ label: 'Button Group'|t('blocksmith'), value: 'btngroup' }
 								],
 								disabled: readOnly or (edition != 'pro'),
 								inputAttributes: {

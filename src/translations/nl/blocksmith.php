@@ -133,14 +133,14 @@ return [
     "Note: " => "Opmerking: ",
     "UI Mode" => "UI-modus",
     "Preview Modal" => "Previewvenster",
-    "Buttongroup" => "Buttongroep",
+    "Button Group" => "Buttongroep",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Categorieën worden alleen gebruikt in de <strong>voorbeeldmodus</strong> en hebben geen invloed op hoe buttongroepen worden weergegeven.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Deze instellingen zijn van toepassing op de <strong>voorbeeldmodus</strong> en hebben geen invloed op het uiterlijk van <strong>buttongroepen</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Deze instellingen zijn van toepassing op de <strong>voorbeeldmodus</strong> en hebben geen invloed op het uiterlijk van buttongroepen.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "De volgende opties zijn van toepassing op de UI-modus <strong>voorbeeldmodus</strong>, die alleen beschikbaar is in de <strong>Pro-editie</strong>.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "De UI-modus is vast ingesteld op Buttongroep in de Lite-editie. Upgrade naar <strong>Pro</strong> om de <strong>voorbeeldmodus</strong> te gebruiken.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Deze instellingen zijn van toepassing op de UI-modus <strong>voorbeeldmodus</strong>, die alleen beschikbaar is in de <strong>Pro-editie</strong>.",

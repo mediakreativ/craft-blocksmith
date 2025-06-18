@@ -133,14 +133,14 @@ return [
     "Note: " => "Remarque : ",
     "UI Mode" => "Mode d’interface",
     "Preview Modal" => "Fenêtre de prévisualisation",
-    "Buttongroup" => "Groupe de boutons",
+    "Button Group" => "Groupe de boutons",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Les catégories sont uniquement utilisées dans la <strong>fenêtre de prévisualisation</strong> et n'affectent pas l'affichage des groupes de boutons.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Ces paramètres s'appliquent à la <strong>fenêtre de prévisualisation</strong> et n'ont aucun effet sur l'apparence des <strong>groupes de boutons</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Ces paramètres s'appliquent à la <strong>fenêtre de prévisualisation</strong> et n'ont aucun effet sur l'apparence des groupes de boutons.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Les options suivantes s'appliquent au mode UI de la <strong>fenêtre de prévisualisation</strong>, disponible uniquement dans l'<strong>édition Pro</strong>.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "Le mode UI est fixé à Groupe de boutons dans l'édition Lite. Passez à la <strong>Pro</strong> pour utiliser la <strong>fenêtre de prévisualisation</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Ces paramètres s'appliquent au mode UI de la <strong>fenêtre de prévisualisation</strong>, disponible uniquement dans l'<strong>édition Pro</strong>.",

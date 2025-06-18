@@ -134,14 +134,14 @@ return [
     "Note: " => "Hinweis: ",
     "UI Mode" => "UI-Modus",
     "Preview Modal" => "Vorschau-Modal",
-    "Buttongroup" => "Button-Gruppe",
+    "Button Group" => "Button-Gruppe",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Kategorien werden nur im <strong>Vorschau-Modal</strong> verwendet und beeinflussen nicht die Anzeige der Button-Gruppen.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Diese Einstellungen gelten für das <strong>Vorschau-Modal</strong> und haben keinen Einfluss auf das Erscheinungsbild der <strong>Button-Gruppen</strong>.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Diese Einstellungen gelten für das <strong>Vorschau-Modal</strong> und haben keinen Einfluss auf das Erscheinungsbild der Button-Gruppen.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Die folgenden Optionen gelten für den UI-Modus <strong>Vorschau-Modal</strong>, der nur in der <strong>Pro-Version</strong> verfügbar ist.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "Der UI-Modus ist in der Lite-Version auf Button-Gruppe festgelegt. Upgrade auf <strong>Pro</strong>, um das <strong>Vorschau-Modal</strong> zu verwenden.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Diese Einstellungen gelten für den UI-Modus <strong>Vorschau-Modal</strong>, der nur in der <strong>Pro-Version</strong> verfügbar ist.",

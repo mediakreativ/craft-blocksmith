@@ -133,14 +133,14 @@ return [
     "Note: " => "Not: ",
     "UI Mode" => "Arayüz modu",
     "Preview Modal" => "Önizleme penceresi",
-    "Buttongroup" => "Buton grubu",
+    "Button Group" => "Buton grubu",
     "Categories are only used in the <strong>Preview Modal</strong> and do not affect how Button Groups are displayed." =>
         "Kategoriler yalnızca <strong>önizleme modali</strong> içinde kullanılır ve buton gruplarının nasıl göründüğünü etkilemez.",
-    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of <strong>Button Groups</strong>." =>
-        "Bu ayarlar <strong>önizleme modali</strong> için geçerlidir ve <strong>buton gruplarının</strong> görünümünü etkilemez.",
+    "These settings apply to the <strong>Preview Modal</strong> and have no effect on the appearance of Button Groups." =>
+        "Bu ayarlar <strong>önizleme modali</strong> için geçerlidir ve buton gruplarının görünümünü etkilemez.",
     "The following options apply to the <strong>Preview Modal</strong> UI mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Aşağıdaki seçenekler yalnızca <strong>Pro Sürüm</strong>’de mevcut olan <strong>önizleme modali</strong> kullanıcı arayüzü moduna uygulanır.",
-    "UI Mode is fixed to Buttongroup in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
+    "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>." =>
         "Lite Sürüm'de kullanıcı arayüzü modu buton grubuna sabitlenmiştir. <strong>Pro</strong> sürümüne yükselterek <strong>önizleme modalini</strong> kullanabilirsiniz.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Bu ayarlar yalnızca <strong>Pro Sürüm</strong>’de kullanılabilen <strong>önizleme modali</strong> kullanıcı arayüzü moduna uygulanır.",
