@@ -1,3 +1,22 @@
+## [1.6.1] - 2025-06-18
+
+[!NOTE]
+**Note for existing users upgrading from Blocksmith ≤ 1.5.x:**
+
+Unfortunately, we ran into some unexpected behavior during the edition transition.
+After upgrading to 1.6.0, your installation may initially appear as **“Lite”**, even if you purchased a license before this release.
+
+Don’t worry - your license is valid for **Pro**.  
+
+To reactivate it:
+- Open the **Plugin Store** in your Craft Control Panel  
+- Go to **Blocksmith** → Select the **Pro** edition  
+- Click **“Reactivate”** to assign your existing license to Pro  
+
+If you run into any issues with your license, feel free to [contact me directly](mailto:plugins@mediakreativ.de) and I’ll be happy to help.
+
+No code changes in this release – this version only adds a notice for existing users upgrading to 1.6.0.
+
 ## [1.6.0] - 2025-06-18
 
 ### Added
