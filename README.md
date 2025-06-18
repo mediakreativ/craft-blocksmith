@@ -14,7 +14,7 @@ Blocksmith fully supports Craft’s Cards view mode - including the ability to i
 Quickly insert blocks via contextual buttons - ideal for fields with just a few block types. Fully compatible with both Inline and Cards views, including Grid mode.
 
 - **Context menu enhancements**  
-Add blocks directly above existing ones with the "Add block above" option – seamlessly replacing Craft’s native “Add {entry type} above” buttons with the Blocksmith UI.
+Add blocks directly above existing ones with the "Add block above" option - seamlessly replacing Craft’s native “Add {entry type} above” buttons with the Blocksmith UI.
 
 
 
@@ -49,20 +49,8 @@ Blocksmith is localized in:
 
 ## Installation
 
-Blocksmith can be installed via the Craft Plugin Store or Composer.
-
-### From the Plugin Store
-
-1. Open your project’s Control Panel.
-2. Go to the Plugin Store and search for “Blocksmith”.
-3. Click “Install”.
-
-### With Composer
-
-If you're new to Composer, follow these steps:
-
-1. Open your terminal and navigate to your Craft project directory.
-2. Run the commands below:
+Install Blocksmith via the [Craft Plugin Store](https://plugins.craftcms.com/blocksmith)  
+or using Composer:
 
 ```bash
 composer require mediakreativ/craft-blocksmith
