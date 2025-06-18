@@ -1,7 +1,7 @@
 ## [1.6.1] - 2025-06-18
 
-[!NOTE]
-**Note for existing users upgrading from Blocksmith ≤ 1.5.x:**
+> [!NOTE]
+> **Note for existing users upgrading from Blocksmith ≤ 1.5.x:**
 
 Unfortunately, we ran into some unexpected behavior during the edition transition.
 After upgrading to 1.6.0, your installation may initially appear as **“Lite”**, even if you purchased a license before this release.
