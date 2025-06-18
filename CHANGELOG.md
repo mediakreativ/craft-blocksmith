@@ -6,7 +6,7 @@
 Unfortunately, we ran into some unexpected behavior during the edition transition.
 After upgrading to 1.6.0, your installation may initially appear as **“Lite”**, even if you purchased a license before this release.
 
-Don’t worry - your license is valid for **Pro**.  
+**Sorry for the confusion!** Your license is valid for the **Pro Editon**.  
 
 To reactivate it:
 - Open the **Plugin Store** in your Craft Control Panel  
