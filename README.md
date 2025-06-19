@@ -1,7 +1,7 @@
 # Blocksmith Plugin for Craft CMS
 
 **Blocksmith brings visual block selection to your Craft CMS Matrix fields.**  
-Say goodbye to long dropdown lists - Blocksmith transforms block selection into an intuitive and elegant experience. Choose between two UI modes: **Preview Modal** (Pro only) or **Button Group** - individually configurable per Matrix field. Both are fully compatible with Inline and Cards view modes.
+Say goodbye to long dropdown lists - Blocksmith transforms block selection into an intuitive and elegant experience. Choose between two UI modes: **Button Group** or **Preview Modal** (Pro only) - individually configurable per Matrix field. Both are fully compatible with Inline and Cards view modes.
 
 ## Key Features
 
