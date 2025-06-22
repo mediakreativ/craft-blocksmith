@@ -1,3 +1,10 @@
+## [1.6.2] - 2025-06-22
+
+### Fixed
+- **JavaScript Error:** Fixed `TypeError: $buttons.each is not a function` by ensuring a fallback to an empty jQuery object when DisclosureMenu is not available. (Thanks to Andy Harris for reporting this!)
+- **Inline View:** Blocksmith no longer injects Button Groups when only one block type exists. This prevents layout issues and preserves the native Craft button.
+- **Context Menu:** Improved detection of the “Move up” button by searching across all `<ul>` sections instead of only the first. These changes improve forward compatibility with Craft 5.8 without breaking behavior in older versions.
+
 ## [1.6.1] - 2025-06-18
 
 > [!NOTE]

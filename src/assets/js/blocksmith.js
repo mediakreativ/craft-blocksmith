@@ -262,8 +262,29 @@
     addBlocksmithAddButton: function (matrixInput, matrixFieldHandle) {
       const uiMode = this.matrixFieldSettings[matrixFieldHandle]?.uiMode;
       if (uiMode === "btngroup") {
+        const disclosure = matrixInput.$addEntryMenuBtn.data("disclosureMenu");
+
+        // Skip injection if only a single block type exists
+        if (!disclosure || !disclosure.$container) {
+          debugLog(
+            `Skipping inline btngroup injection for "${matrixFieldHandle}" – DisclosureMenu not ready or only 1 block type.`,
+          );
+          return;
+        }
+
+        const $buttons = disclosure.$container.find("button");
+
+        // Do not inject a button group if only a single block type exists.
+        // In this case, Craft uses the native “New entry” button directly.
+        if ($buttons.length <= 1) {
+          debugLog(
+            `Skipping inline btngroup injection – only 1 block type for "${matrixFieldHandle}"`,
+          );
+          return;
+        }
+
         this.injectButtonGroup(matrixInput, matrixFieldHandle);
-        matrixInput.$addEntryMenuBtn.hide(); // Original-Button ausblenden
+        matrixInput.$addEntryMenuBtn.hide();
         return;
       }
 
@@ -371,7 +392,7 @@
       const blockTypes =
         matrix.$addEntryMenuBtn
           ?.data("disclosureMenu")
-          ?.$container?.find("button") || [];
+          ?.$container?.find("button") || $();
       if (blockTypes.length <= 1) {
         return;
       }
@@ -570,7 +591,7 @@
           const $buttons =
             matrix.$addEntryMenuBtn
               .data("disclosureMenu")
-              ?.$container.find("button") || [];
+              ?.$container.find("button") || $();
 
           const settings = this.settings;
 
@@ -1284,7 +1305,7 @@
       const $buttons =
         matrixInput.$addEntryMenuBtn
           .data("disclosureMenu")
-          ?.$container.find("button") || [];
+          ?.$container.find("button") || $();
 
       $buttons.each(function () {
         const $menuBtn = $(this);

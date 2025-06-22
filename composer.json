@@ -1,18 +1,18 @@
 {
   "name": "mediakreativ/craft-blocksmith",
-  "description": "Enhances Craft's Matrix fields with block previews and a user-friendly block selection modal.",
+  "description": "Adds visual block selection for Matrix fields.",
   "type": "craft-plugin",
   "keywords": [
     "craftcms",
     "craft",
     "matrix",
     "matrix fields",
-    "entry types",
     "block previews",
-    "blocksmith",
-    "content blocks",
+    "plugin",
     "UX",
-    "modal"
+    "UI",
+    "modal",
+    "button group"
   ],
   "license": "proprietary",
   "authors": [

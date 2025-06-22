@@ -11,7 +11,6 @@
 
   /**
    * Moves a newly inserted Card above a target block
-   * by repeatedly triggering the "Move up" action in Craft's Cards UI.
    */
   async function moveCardUpUntilAbove(
     $node,
@@ -71,7 +70,7 @@
   }
 
   /**
-   * Waits for the first "Move up" button to appear in the context menu.
+   * Waits for the "Move up" button to appear in the context menu.
    */
   async function waitForMoveUpButton($menu) {
     const MAX_CHECKS = 10;
@@ -79,12 +78,11 @@
 
     return new Promise((resolve) => {
       const check = () => {
-        const $firstUl = $menu.find("ul").first();
         const expectedLabels = [
           Craft.t("app", "Move up"),
           Craft.t("app", "Move forward"),
         ];
-        const $moveUpBtn = $firstUl
+        const $moveUpBtn = $menu
           .find("button.menu-item")
           .filter((_, btn) => {
             const label = $(btn).find(".menu-item-label").text().trim();
