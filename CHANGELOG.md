@@ -1,3 +1,8 @@
+## [1.6.3] - 2025-06-28
+
+### Fixed
+- Prevented a JavaScript error when observing empty Matrix fields in Cards view.
+
 ## [1.6.2] - 2025-06-22
 
 ### Fixed
