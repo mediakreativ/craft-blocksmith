@@ -1,3 +1,13 @@
+## [1.6.4] – 2025-07-05
+
+### Added
+- New setting in General Settings: **Grouped Buttons: Organize button group entries using Craft’s new Entry Type Groups feature**  
+  Allows grouping of Button Groups in Blocksmith based on the Entry Type Groups defined in Craft CMS.
+  (Requires Craft 5.8+ - on Craft versions below 5.8, "Grouped Buttons" is automatically disabled.)
+
+### Fixed
+- Prevented a JavaScript error when observing empty Matrix fields in Cards view.  
+
 ## [1.6.3] - 2025-06-28
 
 ### Fixed
