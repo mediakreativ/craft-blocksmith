@@ -146,4 +146,9 @@ return [
         "Режим інтерфейсу у версії Lite зафіксовано на Групі кнопок. Оновіть до <strong>Pro</strong>, щоб скористатися <strong>модальним вікном попереднього перегляду</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Ці налаштування застосовуються до режиму інтерфейсу <strong>модального вікна попереднього перегляду</strong>, доступного лише у <strong>версії Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Груповані кнопки: Організуйте записи групи кнопок за допомогою груп типів записів Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Ця функція вимагає Craft CMS 5.8 або новішої версії.",
 ];

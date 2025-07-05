@@ -38,6 +38,7 @@ class BlocksmithAsset extends AssetBundle
             $this->js[] = "js/blocksmithCardsSupportUtils.js";
         }
 
+        $this->js[] = "js/blocksmithMenuUtils.js";
         $this->js[] = "js/blocksmith.js";
         $this->js[] = "js/blocksmithModal.js";
         $this->js[] = "js/blocksmithSettings.js";

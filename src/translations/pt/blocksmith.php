@@ -145,4 +145,9 @@ return [
         "O modo de interface está fixo em Grupo de Botões na edição Lite. Atualize para <strong>Pro</strong> para usar o <strong>modal de visualização</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Estas configurações aplicam-se ao modo de interface do <strong>modal de visualização</strong>, disponível apenas na <strong>edição Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Botões agrupados: Organize as entradas do grupo de botões usando os Grupos de Tipos de Entrada do Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Este recurso requer o Craft CMS 5.8 ou superior.",
 ];

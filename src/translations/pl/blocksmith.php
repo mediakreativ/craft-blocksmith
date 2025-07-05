@@ -144,4 +144,9 @@ return [
         "Tryb UI jest ustawiony na Grupę przycisków w wersji Lite. Uaktualnij do <strong>Pro</strong>, aby korzystać z <strong>okna podglądu</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Te ustawienia dotyczą trybu UI <strong>okna podglądu</strong>, który jest dostępny tylko w <strong>wersji Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Pogrupowane przyciski: Organizuj wpisy grupy przycisków za pomocą grup typów wpisów Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Ta funkcja wymaga Craft CMS 5.8 lub nowszego.",
 ];

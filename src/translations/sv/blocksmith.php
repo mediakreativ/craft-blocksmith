@@ -145,4 +145,9 @@ return [
         "UI-läget är låst till knappgrupp i Lite-versionen. Uppgradera till <strong>Pro</strong> för att använda <strong>förhandsgranskningsmodulen</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Dessa inställningar gäller UI-läget för <strong>förhandsgranskningsmodulen</strong>, som endast finns i <strong>Pro-versionen</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Grupperade knappar: Organisera knappgruppsposter med hjälp av Crafts inmatningstypgrupper",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Den här funktionen kräver Craft CMS 5.8 eller senare.",
 ];

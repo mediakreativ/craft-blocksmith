@@ -82,12 +82,10 @@
           Craft.t("app", "Move up"),
           Craft.t("app", "Move forward"),
         ];
-        const $moveUpBtn = $menu
-          .find("button.menu-item")
-          .filter((_, btn) => {
-            const label = $(btn).find(".menu-item-label").text().trim();
-            return expectedLabels.includes(label);
-          });
+        const $moveUpBtn = $menu.find("button.menu-item").filter((_, btn) => {
+          const label = $(btn).find(".menu-item-label").text().trim();
+          return expectedLabels.includes(label);
+        });
 
         if ($moveUpBtn.length) {
           debugLog("Move up button is available.");
@@ -243,7 +241,7 @@
     return isGridLayout && columnCount > 1;
   }
 
-  window.BlocksmithUtils = {
+  window.BlocksmithCardsSupportUtils = {
     observeInsertedCard,
     setupMarkerCleanupListeners,
     setupButtonGroupCleanupOnResize,

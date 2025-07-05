@@ -144,4 +144,9 @@ return [
         "La modalità UI è fissa su Gruppo di pulsanti nell'edizione Lite. Passa alla <strong>Pro</strong> per usare la <strong>finestra di anteprima</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Queste impostazioni si applicano alla modalità UI della <strong>finestra di anteprima</strong>, disponibile solo nell'<strong>edizione Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Pulsanti raggruppati: Organizza le voci del gruppo di pulsanti utilizzando i gruppi di tipi di contenuto di Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Questa funzione richiede Craft CMS 5.8 o versioni successive.",
 ];

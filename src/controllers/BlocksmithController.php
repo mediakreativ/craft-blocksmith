@@ -36,6 +36,7 @@ class BlocksmithController extends \craft\web\Controller
     public function actionGeneral()
     {
         $settings = Blocksmith::getInstance()->getSettings();
+        $settings->normalizeSettings();
         $settings->validate();
 
         $defaultVolume = Craft::$app->volumes->getVolumeByHandle("images");
@@ -149,6 +150,10 @@ class BlocksmithController extends \craft\web\Controller
                 }
             }
         }
+
+        $settings->useEntryTypeGroups = (bool) $request->getBodyParam(
+            "useEntryTypeGroups"
+        );
 
         if (!$settings->validate()) {
             Craft::$app->session->setError(
@@ -688,7 +693,7 @@ class BlocksmithController extends \craft\web\Controller
     public function actionBlocks(): Response
     {
         $settings = Blocksmith::getInstance()->getSettings();
-        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
+        $placeholderImageUrl = Blocksmith::getInstance()->service->getPlaceholderImageUrl();
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews;
 
         $blockConfig =
@@ -816,7 +821,7 @@ class BlocksmithController extends \craft\web\Controller
     {
         $settings = Blocksmith::getInstance()->getSettings();
         $useHandleBasedPreviews = $settings->useHandleBasedPreviews ?? false;
-        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
+        $placeholderImageUrl = Blocksmith::getInstance()->service->getPlaceholderImageUrl();
         $handleBasedImageUrl = null;
 
         $volumeName = null;

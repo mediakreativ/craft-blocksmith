@@ -123,6 +123,22 @@ class BlocksmithService
     }
 
     /**
+     * Returns the placeholder image URL used for blocks without a preview.
+     *
+     * The URL is automatically prefixed with the site's base URL,
+     * including any subfolder (e.g. /events/), ensuring compatibility
+     * with installations running in subdirectories.
+     *
+     * @return string The full URL to the placeholder image.
+     */
+    public function getPlaceholderImageUrl(): string
+    {
+        return \craft\helpers\UrlHelper::siteUrl(
+            "blocksmith/blocksmith-assets/placeholder.png"
+        );
+    }
+
+    /**
      * Resolves the preview image URL for a given block handle.
      *
      * This supports all previewStorageMode types:
@@ -138,7 +154,7 @@ class BlocksmithService
         string $blockHandle,
         ?string $previewImagePath = null
     ): string {
-        $placeholder = "/blocksmith/blocksmith-assets/placeholder.png";
+        $placeholder = $this->getPlaceholderImageUrl();
 
         if ($previewImagePath) {
             return "/" . ltrim($previewImagePath, "/");

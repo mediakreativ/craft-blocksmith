@@ -144,4 +144,9 @@ return [
         "Lite Sürüm'de kullanıcı arayüzü modu buton grubuna sabitlenmiştir. <strong>Pro</strong> sürümüne yükselterek <strong>önizleme modalini</strong> kullanabilirsiniz.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Bu ayarlar yalnızca <strong>Pro Sürüm</strong>’de kullanılabilen <strong>önizleme modali</strong> kullanıcı arayüzü moduna uygulanır.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Gruplanmış Düğmeler: Düğme grubu girişlerini Craft'ın Girdi Türü Gruplarını kullanarak düzenleyin",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Bu özellik için Craft CMS 5.8 veya daha yeni bir sürüm gereklidir.",
 ];

@@ -144,4 +144,9 @@ return [
         "Režim rozhraní je ve verzi Lite pevně nastaven na Skupinu tlačítek. Upgradujte na <strong>Pro</strong>, abyste mohli použít <strong>náhledové modální okno</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Tato nastavení se vztahují na režim rozhraní <strong>náhledového modálního okna</strong>, který je dostupný pouze v <strong>Pro edici</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Seskupená tlačítka: Uspořádejte položky skupiny tlačítek pomocí skupin typů záznamů v Craftu",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Tato funkce vyžaduje Craft CMS 5.8 nebo novější.",
 ];

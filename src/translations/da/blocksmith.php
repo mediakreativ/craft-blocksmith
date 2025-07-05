@@ -144,4 +144,9 @@ return [
         "Brugergrænsefladetilstand er fastlåst til knapgruppe i Lite-udgaven. Opgrader til <strong>Pro</strong> for at bruge <strong>forhåndsvisningsvinduet</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Disse indstillinger gælder for <strong>forhåndsvisningsmodus</strong>, som kun er tilgængelig i <strong>Pro-udgaven</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Grupperede knapper: Organisér knapgruppens elementer ved hjælp af Crafts indtastningstypegrupper",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Denne funktion kræver Craft CMS 5.8 eller nyere.",
 ];

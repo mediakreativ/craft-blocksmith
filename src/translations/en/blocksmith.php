@@ -143,4 +143,9 @@ return [
         "UI Mode is fixed to Button Group in the Lite Edition. Upgrade to <strong>Pro</strong> to use the <strong>Preview Modal</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "This feature requires Craft CMS 5.8 or newer.",
 ];

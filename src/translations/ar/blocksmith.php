@@ -143,4 +143,9 @@ return [
         "وضع الواجهة ثابت على مجموعة الأزرار في الإصدار الخفيف. قم بالترقية إلى <strong>الاحترافي</strong> لاستخدام <strong>نافذة المعاينة</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "تنطبق هذه الإعدادات على وضع واجهة المستخدم <strong>لنافذة المعاينة</strong>، المتاح فقط في <strong>الإصدار الاحترافي</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "الأزرار المجمعة: تنظيم إدخالات مجموعة الأزرار باستخدام مجموعات نوع الإدخال في Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "تتطلب هذه الميزة Craft CMS 5.8 أو أحدث.",
 ];

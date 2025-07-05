@@ -145,4 +145,9 @@ return [
         "Η λειτουργία διεπαφής έχει οριστεί σε Ομάδα Κουμπιών στην Lite Έκδοση. Αναβαθμίστε σε <strong>Pro</strong> για να χρησιμοποιήσετε το <strong>Παράθυρο προεπισκόπησης</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Αυτές οι ρυθμίσεις ισχύουν για τη λειτουργία διεπαφής <strong>Παράθυρο προεπισκόπησης</strong>, που είναι διαθέσιμη μόνο στην <strong>Pro Έκδοση</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Ομαδοποιημένα κουμπιά: Οργανώστε τις εγγραφές ομάδας κουμπιών χρησιμοποιώντας τις Ομάδες Τύπων Καταχωρίσεων του Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Αυτή η δυνατότητα απαιτεί το Craft CMS 5.8 ή νεότερο.",
 ];

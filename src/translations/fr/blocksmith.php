@@ -144,4 +144,9 @@ return [
         "Le mode UI est fixé à Groupe de boutons dans l'édition Lite. Passez à la <strong>Pro</strong> pour utiliser la <strong>fenêtre de prévisualisation</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Ces paramètres s'appliquent au mode UI de la <strong>fenêtre de prévisualisation</strong>, disponible uniquement dans l'<strong>édition Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Boutons groupés : Organisez les entrées du groupe de boutons à l'aide des groupes de types d'entrée de Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Cette fonctionnalité nécessite Craft CMS 5.8 ou une version plus récente.",
 ];

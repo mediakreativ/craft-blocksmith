@@ -41,7 +41,7 @@ class BlocksmithModalController extends Controller
      */
     public function actionGetBlockTypes(): Response
     {
-        $placeholderImageUrl = "/blocksmith/blocksmith-assets/placeholder.png";
+        $placeholderImageUrl = Blocksmith::getInstance()->service->getPlaceholderImageUrl();
         $request = Craft::$app->getRequest();
         $fieldsService = Craft::$app->fields;
 

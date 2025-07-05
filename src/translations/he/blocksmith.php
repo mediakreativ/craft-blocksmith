@@ -142,4 +142,9 @@ return [
         "מצב הממשק קבוע כקבוצת כפתורים בגרסת ה-Lite. שדרג ל-<strong>Pro</strong> כדי להשתמש ב-<strong>חלון התצוגה המקדימה</strong>.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "ההגדרות האלו חלות על מצב הממשק <strong>חלון התצוגה המקדימה</strong>, הזמין רק ב<strong>גרסת ה-Pro</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "כפתורים מקובצים: ארגן את רשומות קבוצת הכפתורים באמצעות קבוצות סוגי הערכים של Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "תכונה זו דורשת את Craft CMS 5.8 או גרסה חדשה יותר.",
 ];

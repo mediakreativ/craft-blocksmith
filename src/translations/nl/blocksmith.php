@@ -144,4 +144,9 @@ return [
         "De UI-modus is vast ingesteld op Buttongroep in de Lite-editie. Upgrade naar <strong>Pro</strong> om de <strong>voorbeeldmodus</strong> te gebruiken.",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Deze instellingen zijn van toepassing op de UI-modus <strong>voorbeeldmodus</strong>, die alleen beschikbaar is in de <strong>Pro-editie</strong>.",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "Gegroepeerde knoppen: Organiseer knopgroepitems met behulp van de invoertypegroepen van Craft",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "Deze functie vereist Craft CMS 5.8 of nieuwer.",
 ];

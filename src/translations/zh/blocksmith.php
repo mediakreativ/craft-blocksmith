@@ -139,4 +139,9 @@ return [
         "在简化版中，界面模式固定为按钮组。升级到<strong>专业版</strong>以使用<strong>预览模态框</strong>。",
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "这些设置适用于<strong>预览模态框</strong>界面模式，该模式仅在<strong>专业版</strong>中提供。",
+
+    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
+        "分组按钮：使用 Craft 的条目类型组组织按钮组条目",
+    "This feature requires Craft CMS 5.8 or newer." =>
+        "此功能需要 Craft CMS 5.8 或更高版本。",
 ];
