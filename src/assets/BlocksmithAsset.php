@@ -202,8 +202,11 @@ JS;
                 "wideViewFourBlocks" => $settings->wideViewFourBlocks,
                 "previewImageVolume" => $volumePath,
                 "previewImageSubfolder" => $settings->previewImageSubfolder,
+                "previewStorageMode" => $settings->previewStorageMode,
                 "useHandleBasedPreviews" => $settings->useHandleBasedPreviews,
                 "enableCardsSupport" => $settings->enableCardsSupport,
+                "useEntryTypeGroups" => $settings->useEntryTypeGroups,
+                
             ],
         ];
     }

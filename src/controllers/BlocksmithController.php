@@ -72,6 +72,7 @@ class BlocksmithController extends \craft\web\Controller
             "wideViewFourBlocks" => $wideViewFourBlocks,
             "defaultVolumeUid" => $defaultVolumeUid,
             "defaultVolumeName" => $defaultVolumeName,
+            "useEntryTypeGroups" => $settings->useEntryTypeGroups,
         ]);
     }
 
@@ -121,6 +122,10 @@ class BlocksmithController extends \craft\web\Controller
         );
         $settings->enableCardsSupport = (bool) $request->getBodyParam(
             "enableCardsSupport"
+        );
+
+        $settings->useEntryTypeGroups = (bool) $request->getBodyParam(
+            "useEntryTypeGroups"
         );
 
         if (!$settings->useHandleBasedPreviews) {

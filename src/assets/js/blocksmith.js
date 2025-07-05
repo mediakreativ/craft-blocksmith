@@ -39,6 +39,8 @@
       const self = this;
       this.settings = config.settings || {};
 
+      console.log("useEntryTypeGroups: ", this.settings.useEntryTypeGroups);
+
       if (!Garnish.DisclosureMenu || !Craft.MatrixInput) {
         return;
       }
@@ -478,7 +480,7 @@
 
             const $groups = $menu.find(".menu-group");
 
-            if ($groups.length) {
+            if ($groups.length && this.settings.useEntryTypeGroups === true) {
               $groups.each((idx, group) => {
                 const $group = $(group);
                 const groupName = $group.find("h3.h6").text().trim();
@@ -1497,7 +1499,7 @@
           },
         );
 
-      if ($groupsWrapper.children().length) {
+      if ($groupsWrapper.children().length && this.settings.useEntryTypeGroups === true) {
         $btngroup.append($groupsWrapper.children());
       } else {
         $buttons.each(function () {
@@ -1615,7 +1617,7 @@
             },
           );
 
-        if (!$groupsWrapper.children().length) {
+        if (!$groupsWrapper.children().length || this.settings.useEntryTypeGroups === false) {
           $groupsWrapper = $(
             '<div class="blocksmith-btngroup"><div class="btngroup"></div></div>',
           );
