@@ -13,7 +13,7 @@ Blocksmith fully supports Craft’s Cards view mode - including the ability to i
 - **Button Group UI mode**  
 Quickly insert blocks via contextual buttons. Fully compatible with both Inline and Cards views, including Grid mode.
 
-- **Grouped Button Group entries**
+- **Grouped Button Group entries**  
 Organize Button Group entries using Craft’s native Entry Type Groups - ideal for keeping large sets of block types structured and easy to navigate (requires Craft 5.8+).
 
 - **Context menu enhancements**  
