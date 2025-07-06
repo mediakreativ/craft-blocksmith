@@ -174,7 +174,7 @@ class BlocksmithAsset extends AssetBundle
         );
 
         $js = <<<JS
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     if (window.Craft && window.Craft.Blocksmith) {
         new window.Craft.Blocksmith($config);
     } else {
@@ -206,7 +206,6 @@ JS;
                 "useHandleBasedPreviews" => $settings->useHandleBasedPreviews,
                 "enableCardsSupport" => $settings->enableCardsSupport,
                 "useEntryTypeGroups" => $settings->useEntryTypeGroups,
-                
             ],
         ];
     }

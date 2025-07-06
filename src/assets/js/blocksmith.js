@@ -35,36 +35,35 @@
      *
      * @param {Object} config Configuration object containing settings
      */
-    init: function (config) {
+    init: async function (config) {
       const self = this;
       this.settings = config.settings || {};
-
-      console.log("useEntryTypeGroups: ", this.settings.useEntryTypeGroups);
 
       if (!Garnish.DisclosureMenu || !Craft.MatrixInput) {
         return;
       }
 
       // Fetch matrix field settings asynchronously
-      const matrixFieldSettings = {};
-      $.ajax({
-        url: Craft.getActionUrl(
-          "blocksmith/blocksmith/get-matrix-field-settings",
-        ),
-        method: "GET",
-        async: false,
-        headers: {
-          Accept: "application/json",
-        },
-        success: function (response) {
-          Object.assign(matrixFieldSettings, response);
-        },
-        error: function () {
+      let matrixFieldSettings = {};
+      try {
+        const response = await fetch(
+          Craft.getActionUrl("blocksmith/blocksmith/get-matrix-field-settings"),
+          {
+            method: "GET",
+            headers: { Accept: "application/json" },
+            credentials: "same-origin",
+          },
+        );
+        if (response.ok) {
+          matrixFieldSettings = await response.json();
+        } else {
           debugLog("Failed to fetch Blocksmith matrix field settings.");
-        },
-      });
+        }
+      } catch (e) {
+        debugLog("Failed to fetch Blocksmith matrix field settings.");
+      }
 
-      this.matrixFieldSettings = matrixFieldSettings;
+      this.matrixFieldSettings = matrixFieldSettings || {};
 
       // Override Craft's default "New Entry" button rendering
       // to inject Blocksmith’s custom inline-add button (if enabled)
@@ -378,7 +377,7 @@
       }
 
       if (disclosureMenu._menuInitialized) {
-        this.verifyExistance($container, matrix);
+        this.verifyExistence($container, matrix);
         return;
       }
       disclosureMenu._menuInitialized = true;
@@ -390,7 +389,7 @@
         matrixFieldHandle,
         disclosureMenu,
       );
-      this.verifyExistance($container, matrix);
+      this.verifyExistence($container, matrix);
     },
 
     /**
@@ -872,7 +871,10 @@
 
                   const $headings = $menu.find("h3.h6");
 
-                  if ($headings.length && this.settings.useEntryTypeGroups === true) {
+                  if (
+                    $headings.length &&
+                    this.settings.useEntryTypeGroups === true
+                  ) {
                     $headings.each((idx, heading) => {
                       const groupName = $(heading).text().trim();
                       const $list = $(heading).next("ul");
@@ -1001,7 +1003,10 @@
 
                   const $headings = $menu.find("h3.h6");
 
-                  if ($headings.length && this.settings.useEntryTypeGroups === true) {
+                  if (
+                    $headings.length &&
+                    this.settings.useEntryTypeGroups === true
+                  ) {
                     $headings.each((idx, heading) => {
                       const groupName = $(heading).text().trim();
                       const $list = $(heading).next("ul");
@@ -1160,7 +1165,7 @@
      * @param {jQuery} $container - The jQuery object representing the menu container
      * @param {Object} matrix - The current MatrixInput instance
      */
-    verifyExistance: function ($container, matrix) {
+    verifyExistence: function ($container, matrix) {
       const $addButton = $container.find('button[data-action="add-block"]');
       const $parent = $addButton.parent();
       $parent.attr("title", "");
@@ -1499,7 +1504,10 @@
           },
         );
 
-      if ($groupsWrapper.children().length && this.settings.useEntryTypeGroups === true) {
+      if (
+        $groupsWrapper.children().length &&
+        this.settings.useEntryTypeGroups === true
+      ) {
         $btngroup.append($groupsWrapper.children());
       } else {
         $buttons.each(function () {
@@ -1617,7 +1625,10 @@
             },
           );
 
-        if (!$groupsWrapper.children().length || this.settings.useEntryTypeGroups === false) {
+        if (
+          !$groupsWrapper.children().length ||
+          this.settings.useEntryTypeGroups === false
+        ) {
           $groupsWrapper = $(
             '<div class="blocksmith-btngroup"><div class="btngroup"></div></div>',
           );

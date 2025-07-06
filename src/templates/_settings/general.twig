@@ -53,11 +53,11 @@
 			{% set craftSupportsEntryGroups = craft.app.version >= '5.8.0' %}
 
 			{{ forms.lightswitchField({
-                label: 'Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups'|t('blocksmith'),
+                label: 'Organize Button Group entries using Craft’s native Entry Type Groups'|t('blocksmith'),
                 name: 'useEntryTypeGroups',
                 id: 'useEntryTypeGroups',
                 instructions: craftSupportsEntryGroups
-                ? 'Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups defined in Craft’s Matrix Field settings.'|t('blocksmith')
+                ? 'Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings.'|t('blocksmith')
                 : '<span class="error">' ~ 'This feature requires Craft CMS 5.8 or newer.'|t('blocksmith') ~ '</span>',
                 on: settings.useEntryTypeGroups,
                 disabled: not craftSupportsEntryGroups or readOnly or ('useEntryTypeGroups' in overrides),

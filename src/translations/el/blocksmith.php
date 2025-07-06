@@ -146,8 +146,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Αυτές οι ρυθμίσεις ισχύουν για τη λειτουργία διεπαφής <strong>Παράθυρο προεπισκόπησης</strong>, που είναι διαθέσιμη μόνο στην <strong>Pro Έκδοση</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "Ομαδοποιημένα κουμπιά: Οργανώστε τις εγγραφές ομάδας κουμπιών χρησιμοποιώντας τις Ομάδες Τύπων Καταχωρίσεων του Craft",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Οργάνωση των στοιχείων Button Group χρησιμοποιώντας τις εγγενείς Ομάδες Τύπων Καταχωρήσεων του Craft",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "Ενεργοποιήστε αυτήν την επιλογή για να ομαδοποιήσετε κουμπιά στις Ομάδες Κουμπιών του Blocksmith βάσει των Ομάδων Τύπων Καταχωρήσεων (αν έχουν οριστεί) στις ρυθμίσεις του Matrix πεδίου του Craft.",
     "This feature requires Craft CMS 5.8 or newer." =>
         "Αυτή η δυνατότητα απαιτεί το Craft CMS 5.8 ή νεότερο.",
 ];

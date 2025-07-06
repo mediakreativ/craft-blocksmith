@@ -143,8 +143,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "ההגדרות האלו חלות על מצב הממשק <strong>חלון התצוגה המקדימה</strong>, הזמין רק ב<strong>גרסת ה-Pro</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "כפתורים מקובצים: ארגן את רשומות קבוצת הכפתורים באמצעות קבוצות סוגי הערכים של Craft",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "ארגן את פריטי קבוצת הכפתורים באמצעות קבוצות סוגי התוכן המקוריות של Craft",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "אפשר אפשרות זו כדי לקבץ כפתורים בקבוצות הכפתורים של Blocksmith על פי קבוצות סוגי התוכן (אם הוגדרו) בהגדרות שדה המטריצה של Craft.",
     "This feature requires Craft CMS 5.8 or newer." =>
-        "תכונה זו דורשת את Craft CMS 5.8 או גרסה חדשה יותר.",
+        "פונקציה זו דורשת Craft CMS 5.8 או גרסה חדשה יותר.",
 ];

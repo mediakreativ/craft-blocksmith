@@ -144,8 +144,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "تنطبق هذه الإعدادات على وضع واجهة المستخدم <strong>لنافذة المعاينة</strong>، المتاح فقط في <strong>الإصدار الاحترافي</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "الأزرار المجمعة: تنظيم إدخالات مجموعة الأزرار باستخدام مجموعات نوع الإدخال في Craft",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "تنظيم إدخالات مجموعة الأزرار باستخدام مجموعات أنواع الإدخالات الأصلية في Craft",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "قم بتمكين هذا الخيار لتجميع الأزرار في مجموعات أزرار Blocksmith استنادًا إلى مجموعات أنواع الإدخالات (إن وُجدت) في إعدادات حقل Matrix في Craft.",
     "This feature requires Craft CMS 5.8 or newer." =>
-        "تتطلب هذه الميزة Craft CMS 5.8 أو أحدث.",
+        "هذه الميزة تتطلب Craft CMS 5.8 أو أحدث.",
 ];

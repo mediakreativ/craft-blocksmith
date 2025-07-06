@@ -145,8 +145,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "これらの設定は、<strong>Proエディション</strong>でのみ利用可能な<strong>プレビューモーダル</strong>のUIモードに適用されます。",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "グループ化されたボタン: Craft のエントリータイプグループを使用してボタングループの項目を整理する",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Craftのネイティブなエントリータイプグループを使用してボタングループエントリを整理する",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "このオプションを有効にすると、CraftのMatrixフィールド設定で定義されたエントリータイプグループ（存在する場合）に基づいてBlocksmithのボタングループ内のボタンをグループ化できます。",
     "This feature requires Craft CMS 5.8 or newer." =>
-        "この機能を利用するには Craft CMS 5.8 以上が必要です。",
+        "この機能はCraft CMS 5.8以降が必要です。",
 ];

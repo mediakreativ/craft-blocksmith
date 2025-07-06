@@ -145,8 +145,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Tato nastavení se vztahují na režim rozhraní <strong>náhledového modálního okna</strong>, který je dostupný pouze v <strong>Pro edici</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "Seskupená tlačítka: Uspořádejte položky skupiny tlačítek pomocí skupin typů záznamů v Craftu",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Uspořádat položky skupiny tlačítek pomocí nativních skupin typů záznamů Craftu",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "Povolte tuto možnost pro seskupení tlačítek ve skupinách tlačítek Blocksmith podle skupin typů záznamů (pokud jsou definovány) v nastavení pole Matrix v Craftu.",
     "This feature requires Craft CMS 5.8 or newer." =>
         "Tato funkce vyžaduje Craft CMS 5.8 nebo novější.",
 ];

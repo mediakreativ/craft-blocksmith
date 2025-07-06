@@ -140,8 +140,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "这些设置适用于<strong>预览模态框</strong>界面模式，该模式仅在<strong>专业版</strong>中提供。",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "分组按钮：使用 Craft 的条目类型组组织按钮组条目",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "使用 Craft 的原生条目类型分组来组织按钮组中的条目",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "启用此选项，以根据 Craft 的 Matrix 字段设置中定义的条目类型分组（如果已定义）在 Blocksmith 的按钮组中对按钮进行分组。",
     "This feature requires Craft CMS 5.8 or newer." =>
         "此功能需要 Craft CMS 5.8 或更高版本。",
 ];

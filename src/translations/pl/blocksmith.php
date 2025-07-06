@@ -145,8 +145,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Te ustawienia dotyczą trybu UI <strong>okna podglądu</strong>, który jest dostępny tylko w <strong>wersji Pro</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "Pogrupowane przyciski: Organizuj wpisy grupy przycisków za pomocą grup typów wpisów Craft",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Organizuj elementy grupy przycisków za pomocą natywnych Grup Typów Wpisów Crafta",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "Włącz tę opcję, aby grupować przyciski w grupach przycisków Blocksmith na podstawie Grup Typów Wpisów (jeśli są zdefiniowane) w ustawieniach pola Matrix w Craft.",
     "This feature requires Craft CMS 5.8 or newer." =>
         "Ta funkcja wymaga Craft CMS 5.8 lub nowszego.",
 ];

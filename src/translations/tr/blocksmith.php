@@ -145,8 +145,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Bu ayarlar yalnızca <strong>Pro Sürüm</strong>’de kullanılabilen <strong>önizleme modali</strong> kullanıcı arayüzü moduna uygulanır.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "Gruplanmış Düğmeler: Düğme grubu girişlerini Craft'ın Girdi Türü Gruplarını kullanarak düzenleyin",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Craft’in yerel Girdi Türü Gruplarını kullanarak Düğme Grubu girişlerini düzenleyin",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "Bu seçeneği etkinleştirerek Blocksmith Düğme Gruplarındaki düğmeleri, Craft’ın Matrix Alanı ayarlarında tanımlanan Girdi Türü Gruplarına göre gruplayabilirsiniz (varsa).",
     "This feature requires Craft CMS 5.8 or newer." =>
         "Bu özellik için Craft CMS 5.8 veya daha yeni bir sürüm gereklidir.",
 ];

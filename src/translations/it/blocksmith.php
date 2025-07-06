@@ -145,8 +145,10 @@ return [
     "These settings apply to the <strong>Preview Modal</strong> UI Mode, which is only available in the <strong>Pro Edition</strong>." =>
         "Queste impostazioni si applicano alla modalità UI della <strong>finestra di anteprima</strong>, disponibile solo nell'<strong>edizione Pro</strong>.",
 
-    "Grouped Buttons: Organize button group entries using Craft’s Entry Type Groups" =>
-        "Pulsanti raggruppati: Organizza le voci del gruppo di pulsanti utilizzando i gruppi di tipi di contenuto di Craft",
+    "Organize Button Group entries using Craft’s native Entry Type Groups" =>
+        "Organizza le voci del gruppo di pulsanti utilizzando i Gruppi di Tipi di Voce nativi di Craft",
+    "Enable this option to group buttons in Blocksmith’s Button Groups based on the Entry Type Groups (if defined) in Craft’s Matrix Field settings." =>
+        "Abilita questa opzione per raggruppare i pulsanti nei gruppi di pulsanti di Blocksmith in base ai Gruppi di Tipi di Voce (se definiti) nelle impostazioni del campo Matrix di Craft.",
     "This feature requires Craft CMS 5.8 or newer." =>
-        "Questa funzione richiede Craft CMS 5.8 o versioni successive.",
+        "Questa funzionalità richiede Craft CMS 5.8 o versioni successive.",
 ];
