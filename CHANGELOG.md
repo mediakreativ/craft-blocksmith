@@ -1,3 +1,12 @@
+## [1.6.5] - 2025-07-06
+
+### Improved
+- Refactored matrix field settings loading to use async/await with the Fetch API instead of deprecated synchronous AJAX requests.
+
+### Added
+- Added missing translation string.
+
+
 ## [1.6.4] – 2025-07-05
 
 ### Added
