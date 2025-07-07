@@ -1,3 +1,9 @@
+## [1.6.6] - 2025-07-07
+
+### Fixed
+- Fixed wrong block positioning when using "Add block above" in Cards view.
+- Fixed missing "Add new block" button and Button Group in Inline editable blocks view.
+
 ## [1.6.5] - 2025-07-06
 
 ### Improved
