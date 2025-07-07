@@ -291,7 +291,7 @@
                       debugLog("Matching button: ", $matchingButton);
                       $matchingButton[0].click();
 
-                      window.BlocksmithUtils.observeInsertedCard(
+                      window.BlocksmithCardsSupportUtils.observeInsertedCard(
                         $fieldContainer,
                         this.insertAboveEntryId,
                       );

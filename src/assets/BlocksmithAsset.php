@@ -174,7 +174,7 @@ class BlocksmithAsset extends AssetBundle
         );
 
         $js = <<<JS
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
     if (window.Craft && window.Craft.Blocksmith) {
         new window.Craft.Blocksmith($config);
     } else {
