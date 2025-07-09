@@ -77,49 +77,51 @@
    * Utility to build grouped button dropdowns from a Disclosure Menu.
    */
   function buildGroupedButtonDropdowns($menu, buttonCallback) {
+    console.log("buildGroupedButtonDropdowns $menu: ", $menu);
     const $groupsWrapper = $(
       '<div class="blocksmith-groups-wrapper flex flex-inline"></div>',
     );
     const $headings = $menu.find("h3.h6");
 
-    if ($headings.length) {
-      $headings.each((idx, heading) => {
-        const groupName = $(heading).text().trim();
-        const $list = $(heading).next("ul");
-        if (!$list.length) return;
+    $headings.each((idx, heading) => {
+      const groupName = $(heading).text().trim();
+      const $list = $(heading).next("ul");
+      if (!$list.length) return;
 
-        const groupMenuId = `bs-group-${idx}`;
+      const groupMenuId = `bs-group-${idx}`;
+      const disclosureMenuId = $menu.attr("id");
 
-        const $dropdown = $(`
-        <div class="blocksmith-group-dropdown">
-          <button type="button" class="btn menubtn dashed add icon blocksmith-group-toggle"
-            aria-controls="${groupMenuId}" data-disclosure-trigger="true">${groupName}</button>
-          <div id="${groupMenuId}" class="menu menu--disclosure"><ul></ul></div>
+      const $dropdown = $(`
+      <div class="blocksmith-group-dropdown">
+        <button type="button" class="btn menubtn dashed add icon blocksmith-group-toggle"
+          aria-controls="${groupMenuId}-${disclosureMenuId}" aria-expanded="false">${groupName}</button>
+        <div id="${groupMenuId}-${disclosureMenuId}" class="menu menu--disclosure" aria-controls="${disclosureMenuId}">
+          <ul></ul>
         </div>
+      </div>
+    `);
+      const $dropMenu = $dropdown.find("ul");
+
+      $list.find("button").each((_, btn) => {
+        const $btn = $(btn);
+        const label = $btn.find(".menu-item-label").text().trim();
+
+        const $li = $(`
+        <li>
+          <button type="button" class="menu-item">
+            <span class="menu-item-label">${label}</span>
+          </button>
+        </li>
       `);
-        const $dropMenu = $dropdown.find("ul");
 
-        $list.find("button").each((_, btn) => {
-          const $btn = $(btn);
-          const handle = $btn.data("type");
-          const label = $btn.find(".menu-item-label").text().trim();
-
-          const $li = $(`
-          <li>
-            <button type="button" class="menu-item" data-type="${handle}">
-              <span class="menu-item-label">${label}</span>
-            </button>
-          </li>
-        `);
-
-          buttonCallback(handle, label, $li.find("button"));
-          $dropMenu.append($li);
-        });
-
-        new Garnish.DisclosureMenu($dropdown.find("button")[0]);
-        $groupsWrapper.append($dropdown);
+        buttonCallback(label, $li.find("button"));
+        $dropMenu.append($li);
       });
-    }
+
+      new Garnish.DisclosureMenu($dropdown.find("button")[0]);
+        $groupsWrapper.append($dropdown);
+
+    });
 
     return $groupsWrapper;
   }
