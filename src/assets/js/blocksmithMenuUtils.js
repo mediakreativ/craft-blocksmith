@@ -77,7 +77,6 @@
    * Utility to build grouped button dropdowns from a Disclosure Menu.
    */
   function buildGroupedButtonDropdowns($menu, buttonCallback) {
-    console.log("buildGroupedButtonDropdowns $menu: ", $menu);
     const $groupsWrapper = $(
       '<div class="blocksmith-groups-wrapper flex flex-inline"></div>',
     );

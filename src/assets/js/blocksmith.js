@@ -1570,7 +1570,6 @@
 
         const menuId = $triggerButton.attr("aria-controls");
         const $menu = $(`#${menuId}`);
-        console.log("$menu: ", $menu);
         if (!$menu.length) {
           console.warn("Blocksmith: Disclosure menu not found in DOM.");
           return;
@@ -1602,12 +1601,7 @@
 
                 $button.on("click", (e) => {
                   e.preventDefault();
-                  console.log("Grouped Button Group clicked");
-                  console.log("$menu (Grouped button group): ", $menu);
-                  console.log(
-                    "matrixContainer (Grouped Button group): ",
-                    matrixContainer,
-                  );
+
                   if ($button.prop("disabled")) return;
 
                   window.BlocksmithRuntime = window.BlocksmithRuntime || {};
@@ -1619,8 +1613,6 @@
                       (_, el) =>
                         $(el).find(".menu-item-label").text().trim() === label,
                     );
-
-                  console.log("$matching: ", $matching);
 
                   if ($matching.length) {
                     $matching.trigger("activate");
@@ -1666,12 +1658,7 @@
 
             $button.on("click", (e) => {
               e.preventDefault();
-              console.log("Ungrouped Button Group clicked");
-              console.log("$menu (Ungrouped Button Group): ", $menu);
-              console.log(
-                "matrixContainer (Ungrouped Button Group): ",
-                matrixContainer,
-              );
+
               if ($button.prop("disabled")) return;
 
               window.BlocksmithRuntime = window.BlocksmithRuntime || {};

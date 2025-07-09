@@ -1,3 +1,9 @@
+## [1.6.7] - 2025-07-09
+
+### Fixed
+- Resolved DisclosureMenu conflicts in Live Preview by ensuring that all grouped button dropdowns now have unique IDs for proper menu handling.
+
+
 ## [1.6.6] - 2025-07-07
 
 ### Fixed
