@@ -136,7 +136,10 @@ class BlocksmithModalController extends Controller
             }
         }
 
-        return $this->asJson($blockTypes);
+        return $this->asJson([
+            "blockTypes" => $blockTypes,
+            "placeholderImageUrl" => $placeholderImageUrl,
+        ]);
     }
 
     /**

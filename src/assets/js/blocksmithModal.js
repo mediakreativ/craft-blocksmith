@@ -29,14 +29,6 @@
       this.onBlockSelected = onBlockSelected;
       this.config = config;
       this.mode = config.mode || "inline";
-
-      /**
-       * Placeholder image for block previews.
-       */
-      this.placeholderImage =
-        config?.settings?.placeholderImage ||
-        "/blocksmith/blocksmith-assets/placeholder.png";
-
       this.translations = window.BlocksmithTranslations || {};
     }
 
@@ -422,7 +414,9 @@
       this.$modal.addClass("open");
 
       this.loadBlockTypes(matrixFieldHandle)
-        .done((blockTypes) => {
+        .done((response) => {
+          const { blockTypes, placeholderImageUrl } = response;
+
           debugLog("Loaded blockTypes:", blockTypes);
           debugLog("Filtering for matrixFieldHandle:", matrixFieldHandle);
 
@@ -441,6 +435,8 @@
             }
             return matches;
           });
+
+          this.placeholderImage = placeholderImageUrl || this.placeholderImage;
 
           this.loadCategories()
             .done((categories) => {
