@@ -737,7 +737,9 @@
         "button.btn.icon.dashed.wrap",
       );
 
-      this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+      this.loadBlockTypes(matrixFieldHandle).done((response) => {
+        const { blockTypes } = response;
+
         const isDisabled = !this.canAddMoreEntries(null, nativeAddButton);
 
         if (blockTypes.length === 1) {
@@ -839,7 +841,9 @@
                 )
                 .remove();
 
-              this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+              this.loadBlockTypes(matrixFieldHandle).done((response) => {
+                const { blockTypes } = response;
+
                 const $targetCard = matrixContainer.find(
                   `.element[data-id="${insertAboveEntryId}"]`,
                 );
@@ -1557,7 +1561,9 @@
         existing.remove();
       }
 
-      this.loadBlockTypes(matrixFieldHandle).done((blockTypes) => {
+      this.loadBlockTypes(matrixFieldHandle).done((response) => {
+        const { blockTypes } = response;
+
         if (!blockTypes?.length) return;
 
         const $triggerButton = $(matrixContainer).find(
