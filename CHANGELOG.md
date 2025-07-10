@@ -1,3 +1,8 @@
+## [1.6.8] - 2025-07-10
+
+### Fixed
+- Placeholder image in the Preview Modal now loads correctly on Craft installations running in a subfolder or with custom site URLs.
+
 ## [1.6.7] - 2025-07-09
 
 ### Fixed
