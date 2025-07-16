@@ -1705,9 +1705,12 @@
         };
         syncState();
         const observer = new MutationObserver(() => setTimeout(syncState, 100));
-        observer.observe(matrixContainer.querySelector("ul.elements"), {
-          childList: true,
-        });
+        const target = matrixContainer.querySelector("ul.elements");
+        if (target instanceof Node) {
+          observer.observe(target, {
+            childList: true,
+          });
+        }
       });
     },
   });

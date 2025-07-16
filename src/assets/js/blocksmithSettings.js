@@ -52,10 +52,10 @@ document.addEventListener("click", function (event) {
 
             const asset = assets[0];
             const url = asset.url ?? "";
-            $pathInput.val(url); // vollständige URL speichern
+            $pathInput.val(url);
 
             if ($previewContainer.length) {
-              $previewContainer.attr("src", url); // URL direkt verwenden
+              $previewContainer.attr("src", url);
             }
 
             if ($removeBtn.length) {
