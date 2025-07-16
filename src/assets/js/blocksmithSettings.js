@@ -35,7 +35,6 @@ document.addEventListener("click", function (event) {
   }
 });
 
-
 (function ($) {
   Garnish.$doc.ready(function () {
     const $pickerBtn = $("#previewImage-picker");
@@ -53,12 +52,10 @@ document.addEventListener("click", function (event) {
 
             const asset = assets[0];
             const url = asset.url ?? "";
-            const relativePath = url.replace(/^[^/]*\/\/[^/]+\/?/, "");
-
-            $pathInput.val(relativePath);
+            $pathInput.val(url); // vollständige URL speichern
 
             if ($previewContainer.length) {
-              $previewContainer.attr("src", "/" + relativePath);
+              $previewContainer.attr("src", url); // URL direkt verwenden
             }
 
             if ($removeBtn.length) {

@@ -157,7 +157,14 @@ class BlocksmithService
         $placeholder = $this->getPlaceholderImageUrl();
 
         if ($previewImagePath) {
-            return "/" . ltrim($previewImagePath, "/");
+            if (
+                strpos($previewImagePath, '://') !== false ||
+                str_starts_with($previewImagePath, '//')
+            ) {
+                return $previewImagePath;
+            }
+
+            return '/' . ltrim($previewImagePath, '/');
         }
 
         $settings = Blocksmith::getInstance()->getSettings();
