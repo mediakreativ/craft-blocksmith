@@ -1,3 +1,10 @@
+## [1.6.9] - 2025-07-16
+
+### Fixed
+
+- Fixed an issue where the domain was stripped from selected asset URLs, causing broken preview images when using external asset domains (e.g. Servd CDN or S3).
+- Resolved a JavaScript error (`MutationObserver.observe: Argument 1 must be an instance of Node`) that could occur if expected DOM elements were not yet rendered.
+
 ## [1.6.8] - 2025-07-10
 
 ### Fixed
