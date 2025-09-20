@@ -1,3 +1,7 @@
+## [1.7.0] - 2025-09-20
+
+### Added site-level translations for block types, categories, and field names
+
 ## [1.6.9] - 2025-07-16
 
 ### Fixed
