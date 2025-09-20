@@ -116,7 +116,7 @@ class BlocksmithModalController extends Controller
                     foreach ($potentialField->getEntryTypes() as $et) {
                         if ($et->handle === $entryTypeHandle) {
                             $matrixFields[] = [
-                                "name" => $potentialField->name,
+                                "name" => Craft::t('site', $potentialField->name) ?: $potentialField->name,
                                 "handle" => $potentialField->handle,
                             ];
                             break;
@@ -125,9 +125,9 @@ class BlocksmithModalController extends Controller
                 }
 
                 $blockTypes[] = [
-                    "name" => $entryType->name,
+                    "name" => Craft::t('site', $entryType->name),
                     "handle" => $entryTypeHandle,
-                    "description" => $description,
+                    "description" => $description ? (Craft::t('site', $description) ?: $description) : null,
                     "categories" => $categories,
                     "previewImage" => $previewImage,
                     "matrixFields" => $matrixFields,
@@ -150,6 +150,11 @@ class BlocksmithModalController extends Controller
     public function actionGetCategories(): Response
     {
         $categories = Blocksmith::getInstance()->service->getAllCategories();
+        
+        // Translate category names for Content Editors
+        foreach ($categories as &$category) {
+            $category['name'] = Craft::t('site', $category['name']) ?: $category['name'];
+        }
 
         return $this->asJson($categories);
     }

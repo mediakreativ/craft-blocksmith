@@ -53,7 +53,7 @@
 {% for category in categories %}
 	{% set tableData = tableData|merge([{
         id: category.uid,
-        title: category.name,
+                    title: category.name,
         url: url('blocksmith/settings/categories/edit/' ~ category.uid),
     }]) %}
 {% endfor %}
