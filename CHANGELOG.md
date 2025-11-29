@@ -1,3 +1,9 @@
+## [1.7.1] - 2025-11-29
+
+### Fixed
+
+- Prevent 403 error on login page by checking auth state before AJAX request
+
 ## [1.7.0] - 2025-09-20
 
 ### Added site-level translations for block types, categories, and field names

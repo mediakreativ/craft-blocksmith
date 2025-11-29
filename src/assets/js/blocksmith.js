@@ -43,6 +43,12 @@
         return;
       }
 
+      // Check if we're in the CP and logged in before making the request
+      if (!Craft.cp || !Craft.username) {
+        debugLog("Blocksmith: Not in CP or not logged in, skipping initialization.");
+        return;
+      }
+
       // Fetch matrix field settings asynchronously
       const matrixFieldSettings = {};
       $.ajax({
