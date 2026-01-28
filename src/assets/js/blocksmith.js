@@ -25,6 +25,12 @@
    * @license https://craftcms.github.io/license/ Craft License
    *
    * @see https://github.com/craftcms/cms/blob/5.x/src/web/assets/matrix/src/MatrixInput.js
+   *
+   * Craft 5.9+ Compatibility Notes:
+   * - Craft 5.9 introduced native entry type grouping for Matrix fields with responsive
+   *   button groups (.expandable-button--collapsed / .expandable-button--expanded)
+   * - Blocksmith detects these containers and hides them to display its own UI instead
+   * - The useEntryTypeGroups setting is maintained for backward compatibility with Craft < 5.9
    */
 
   Craft.Blocksmith = Garnish.Base.extend({
@@ -273,6 +279,110 @@
       }
 
       const self = this;
+
+      // Craft 5.9+ with grouped entry types: Handle expandable button containers
+      // The buttons container may have .expandable-button--collapsed and .expandable-button--expanded
+      const $buttonsContainer = matrixInput.$addEntryMenuBtn.closest(".buttons");
+      const $collapsedContainer = $buttonsContainer.find(
+        ".expandable-button--collapsed",
+      );
+      const $expandedContainer = $buttonsContainer.find(
+        ".expandable-button--expanded",
+      );
+
+      // Check if we already processed this container (avoid duplicate buttons)
+      if ($buttonsContainer.data("blocksmith-processed")) {
+        return;
+      }
+
+      // If we have grouped entry types (Craft 5.9+ expandable containers exist)
+      if ($collapsedContainer.length && $expandedContainer.length) {
+        debugLog(
+          "Detected Craft 5.9+ grouped entry types in Blocks view - hiding expandable containers",
+        );
+
+        // Mark as processed to avoid duplicate processing
+        $buttonsContainer.data("blocksmith-processed", true);
+
+        // Hide both expandable containers
+        $collapsedContainer.hide();
+        $expandedContainer.hide();
+
+        // Remove any existing Blocksmith buttons in the container
+        $buttonsContainer.find(".blocksmith-add-btn").remove();
+
+        // Get label from the collapsed button (main "New block" button)
+        const newBlockLabel =
+          $collapsedContainer.find(".label").first().text().trim() ||
+          Craft.t("blocksmith", "New Entry");
+
+        const $newAddButton = $(
+          `<button class="blocksmith-add-btn btn add icon dashed">${newBlockLabel}</button>`,
+        );
+
+        // Append to buttons container (outside expandable containers)
+        $buttonsContainer.append($newAddButton);
+
+        if (!Craft.Blocksmith.prototype.canAddMoreEntries(matrixInput, null)) {
+          $newAddButton.prop("disabled", true).addClass("disabled");
+          $newAddButton.attr(
+            "title",
+            Craft.t("blocksmith", "Maximum number of blocks reached."),
+          );
+        }
+
+        $newAddButton.on("click", (event) => {
+          event.preventDefault();
+
+          if (
+            !Craft.Blocksmith.prototype.canAddMoreEntries(matrixInput, null)
+          ) {
+            console.warn("Cannot add more blocks, limit reached.");
+            return;
+          }
+
+          // Load block types via API for grouped entry types
+          self.loadBlockTypes(matrixFieldHandle).done((response) => {
+            const { blockTypes } = response;
+
+            if (!blockTypes?.length) {
+              console.warn("No block types found for field:", matrixFieldHandle);
+              return;
+            }
+
+            const modal = new BlocksmithModal(
+              blockTypes,
+              async (selectedBlock) => {
+                try {
+                  // Find the correct button in the disclosure menu
+                  const $button = matrixInput.$addEntryMenuBtn
+                    .data("disclosureMenu")
+                    .$container.find("button")
+                    .filter(
+                      (_, el) => $(el).data("type") === selectedBlock.handle,
+                    );
+
+                  if (!$button.length) {
+                    throw new Error(
+                      `No button found for block type: ${selectedBlock.handle}`,
+                    );
+                  }
+
+                  $button.trigger("activate");
+                } catch (error) {
+                  console.error("Error adding block:", error);
+                }
+              },
+            );
+
+            modal.show(matrixFieldHandle);
+          });
+        });
+
+        return;
+      }
+
+      // Original behavior for non-grouped entry types (Craft < 5.9 or no grouping)
       matrixInput.$addEntryMenuBtn.siblings(".blocksmith-add-btn").remove();
 
       const newBlockLabel =
@@ -484,6 +594,10 @@
 
             const $groups = $menu.find(".menu-group");
 
+            // NOTE: Entry type grouping via useEntryTypeGroups is maintained for backward
+            // compatibility with Craft < 5.9. Starting with Craft 5.9, Matrix fields support
+            // native entry type grouping. For Craft 5.9+, this Blocksmith grouping feature
+            // is redundant but still works. Consider deprecating in a future major version.
             if ($groups.length && this.settings.useEntryTypeGroups === true) {
               $groups.each((idx, group) => {
                 const $group = $(group);
@@ -1233,6 +1347,27 @@
         nativeBtn.classList.add("blocksmith-replaced");
         nativeBtn.style.display = "none";
 
+        // Craft 5.9+ with grouped entry types: Handle expandable button containers
+        // The native button may be inside .expandable-button--collapsed (hidden on wide viewports)
+        // while .expandable-button--expanded contains the visible group buttons
+        const collapsedContainer = nativeBtn.closest(
+          ".expandable-button--collapsed",
+        );
+        const flexInlineContainer = nativeBtn.closest(".flex.flex-inline");
+        const expandedContainer = flexInlineContainer?.querySelector(
+          ".expandable-button--expanded",
+        );
+
+        // If we have grouped entry types (expandable containers exist)
+        if (collapsedContainer && expandedContainer) {
+          debugLog(
+            "Detected Craft 5.9+ grouped entry types - hiding both expandable containers",
+          );
+          // Hide both containers
+          collapsedContainer.style.display = "none";
+          expandedContainer.style.display = "none";
+        }
+
         const uiMode = this.matrixFieldSettings[fieldHandle]?.uiMode;
         if (uiMode === "btngroup") {
           this.injectButtonGroupForCards(matrixContainer, fieldHandle);
@@ -1247,7 +1382,14 @@
         customBtn.className = "btn add icon dashed blocksmith-add-btn";
         customBtn.textContent = newBlockLabel;
 
-        nativeBtn.after(customBtn);
+        // Insert the Blocksmith button in the right place:
+        // - If grouped entry types: after the expandable containers (in .flex.flex-inline)
+        // - Otherwise: after the native button (original behavior)
+        if (expandedContainer && flexInlineContainer) {
+          flexInlineContainer.appendChild(customBtn);
+        } else {
+          nativeBtn.after(customBtn);
+        }
 
         // Synchronize disabled state between the native and custom "Add block" buttons
         // Ensures the custom button is disabled if the native one would be (e.g. max blocks reached)
@@ -1689,7 +1831,19 @@
           });
         }
 
-        $triggerButton.after($groupsWrapper);
+        // Craft 5.9+ with grouped entry types: Insert outside expandable containers
+        const $collapsedContainer = $triggerButton.closest(
+          ".expandable-button--collapsed",
+        );
+        const $flexInlineContainer = $triggerButton.closest(".flex.flex-inline");
+
+        if ($collapsedContainer.length && $flexInlineContainer.length) {
+          // Insert at the end of .flex.flex-inline, outside the expandable containers
+          $flexInlineContainer.append($groupsWrapper);
+        } else {
+          // Original behavior for non-grouped entry types
+          $triggerButton.after($groupsWrapper);
+        }
 
         const $allButtons = $groupsWrapper.find("button");
         const syncState = () => {
