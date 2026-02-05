@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.3 - 2026-02-05
+
+### Improved
+- Preview Modal: Search field is now automatically focused when the modal opens, allowing users to immediately start typing
+
 ## 1.7.2 - 2026-01-28
 
 ### Added

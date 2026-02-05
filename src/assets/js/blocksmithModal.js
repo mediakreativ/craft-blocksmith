@@ -413,6 +413,14 @@
       this.$overlay.addClass("open");
       this.$modal.addClass("open");
 
+      // Focus the search field when modal opens
+      setTimeout(() => {
+        const $searchInput = this.$modal.find("#matrixSearch");
+        if ($searchInput.length) {
+          $searchInput.focus();
+        }
+      }, 100);
+
       this.loadBlockTypes(matrixFieldHandle)
         .done((response) => {
           const { blockTypes, placeholderImageUrl } = response;
