@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.4 - 2026-02-08
+
+### Fixed
+- Fixed an issue where Matrix fields with a custom handle override in the field layout were not recognized by Blocksmith
+
 ## 1.7.3 - 2026-02-05
 
 ### Improved

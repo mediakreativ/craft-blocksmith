@@ -683,11 +683,49 @@ class BlocksmithController extends \craft\web\Controller
             }
         }
 
+        // Also map handle overrides from field layouts to the same settings,
+        // so that fields with custom handles in entry type layouts are recognized.
+        $this->addHandleOverrideMappings($result);
+
         return $this->asJson(
             array_merge($result, [
                 "edition" => Blocksmith::getInstance()->edition,
             ])
         );
+    }
+
+    /**
+     * Scans all entry type field layouts for Matrix fields with handle overrides
+     * and adds them to the result array, mapping the override handle to the
+     * same settings as the original handle.
+     *
+     * This ensures that fields rendered with a custom handle in the CP
+     * (via field layout handle override) are still recognized by Blocksmith.
+     *
+     * @param array &$result The settings array keyed by field handle
+     */
+    private function addHandleOverrideMappings(array &$result): void
+    {
+        foreach (Craft::$app->entries->getAllEntryTypes() as $entryType) {
+            $fieldLayout = $entryType->getFieldLayout();
+            if (!$fieldLayout) {
+                continue;
+            }
+
+            foreach ($fieldLayout->getCustomFieldElements() as $layoutElement) {
+                $field = $layoutElement->getField();
+                // Note: getField() returns a clone with the overridden handle,
+                // so we must use getOriginalHandle() to get the real field handle.
+                $originalHandle = $layoutElement->getOriginalHandle();
+                if (
+                    $field instanceof \craft\fields\Matrix &&
+                    $field->handle !== $originalHandle &&
+                    isset($result[$originalHandle])
+                ) {
+                    $result[$field->handle] = $result[$originalHandle];
+                }
+            }
+        }
     }
 
     /**

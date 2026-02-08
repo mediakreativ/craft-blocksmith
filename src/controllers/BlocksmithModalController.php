@@ -66,13 +66,43 @@ class BlocksmithModalController extends Controller
             fn($field) => $field instanceof \craft\fields\Matrix
         );
 
+        // Build a mapping of handle overrides to original field handles,
+        // so that fields with custom handles in entry type layouts are matched.
+        $handleOverrideMap = [];
+        if ($requestedHandle) {
+            foreach (Craft::$app->entries->getAllEntryTypes() as $entryType) {
+                $fieldLayout = $entryType->getFieldLayout();
+                if (!$fieldLayout) {
+                    continue;
+                }
+                foreach ($fieldLayout->getCustomFieldElements() as $layoutElement) {
+                    $field = $layoutElement->getField();
+                    // Note: getField() returns a clone with the overridden handle,
+                    // so we must use getOriginalHandle() to get the real field handle.
+                    $originalHandle = $layoutElement->getOriginalHandle();
+                    if (
+                        $field instanceof \craft\fields\Matrix &&
+                        $field->handle !== $originalHandle
+                    ) {
+                        $handleOverrideMap[$field->handle] = $originalHandle;
+                    }
+                }
+            }
+        }
+
+        // Resolve the requested handle to the original field handle if it's an override
+        $resolvedHandle = $requestedHandle;
+        if ($requestedHandle && isset($handleOverrideMap[$requestedHandle])) {
+            $resolvedHandle = $handleOverrideMap[$requestedHandle];
+        }
+
         $enabledFields = array_filter($fields, function ($field) use (
             $matrixConfig,
-            $requestedHandle
+            $resolvedHandle
         ) {
             return isset($matrixConfig[$field->uid]) &&
                 ($matrixConfig[$field->uid]["enablePreview"] ?? true) &&
-                (!$requestedHandle || $field->handle === $requestedHandle);
+                (!$resolvedHandle || $field->handle === $resolvedHandle);
         });
 
         $blockTypes = [];
@@ -115,10 +145,25 @@ class BlocksmithModalController extends Controller
                 foreach ($fields as $potentialField) {
                     foreach ($potentialField->getEntryTypes() as $et) {
                         if ($et->handle === $entryTypeHandle) {
+                            $fieldHandle = $potentialField->handle;
                             $matrixFields[] = [
                                 "name" => Craft::t('site', $potentialField->name) ?: $potentialField->name,
-                                "handle" => $potentialField->handle,
+                                "handle" => $fieldHandle,
                             ];
+                            // If the requested handle is an override of this field,
+                            // also add an entry with the override handle so the
+                            // frontend filter matches correctly.
+                            if (
+                                $requestedHandle &&
+                                $requestedHandle !== $fieldHandle &&
+                                isset($handleOverrideMap[$requestedHandle]) &&
+                                $handleOverrideMap[$requestedHandle] === $fieldHandle
+                            ) {
+                                $matrixFields[] = [
+                                    "name" => Craft::t('site', $potentialField->name) ?: $potentialField->name,
+                                    "handle" => $requestedHandle,
+                                ];
+                            }
                             break;
                         }
                     }
