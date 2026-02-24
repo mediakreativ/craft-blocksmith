@@ -1056,6 +1056,7 @@
                             $matching[0].click();
                           }
 
+                          $wrapper.find(".menu.visible").removeClass("visible");
                           $wrapper.addClass("btns-removed");
                         });
 
@@ -1094,6 +1095,7 @@
                           $matchingButton[0].click();
                         }
 
+                        $wrapper.find(".menu.visible").removeClass("visible");
                         $wrapper.addClass("btns-removed");
                       });
 
@@ -1192,7 +1194,7 @@
                                 `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
                               );
                               $toggleButton.attr("aria-expanded", "false");
-                              $disclosureMenu.hide();
+                              $disclosureMenu.removeClass("visible").hide();
                             }
                           }
 
@@ -1653,7 +1655,7 @@
                     `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
                   );
                   $toggleButton.attr("aria-expanded", "false");
-                  $disclosureMenu.hide();
+                  $disclosureMenu.removeClass("visible").hide();
                 }
               });
             },
@@ -1779,7 +1781,7 @@
                       `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
                     );
                     $toggleButton.attr("aria-expanded", "false");
-                    $disclosureMenu.hide();
+                    $disclosureMenu.removeClass("visible").hide();
                   }
                 });
               },

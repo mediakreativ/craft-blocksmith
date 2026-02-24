@@ -57,14 +57,16 @@
       if ($wrapper) $wrapper.remove();
       $matching[0].click();
 
-      const $disclosureMenu = $button.closest(".menu--disclosure");
-      if ($disclosureMenu.length) {
-        const menuId = $disclosureMenu.attr("id");
-        const $toggleButton = $(
-          `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
-        );
-        $toggleButton.attr("aria-expanded", "false");
-        $disclosureMenu.hide();
+      if ($button) {
+        const $disclosureMenu = $button.closest(".menu--disclosure");
+        if ($disclosureMenu.length) {
+          const menuId = $disclosureMenu.attr("id");
+          const $toggleButton = $(
+            `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
+          );
+          $toggleButton.attr("aria-expanded", "false");
+          $disclosureMenu.removeClass("visible").hide();
+        }
       }
     } else {
       console.warn(
