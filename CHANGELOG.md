@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.5 - 2026-02-24
+
+### Fixed
+- Fixed body scrollbar being permanently disabled after selecting a block from a grouped button-group dropdown in Craft 5.9+ ([#14](https://github.com/mediakreativ/craft-blocksmith/issues/14)) – Thanks to [@croxton](https://github.com/croxton) for reporting!
+
 ## 1.7.4 - 2026-02-08
 
 ### Fixed
