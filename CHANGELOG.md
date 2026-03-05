@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.6 - 2026-03-05
+
+### Updated
+- Updated `craftcms/cms` dependency to 5.9.14
+
 ## 1.7.5 - 2026-02-24
 
 ### Fixed
