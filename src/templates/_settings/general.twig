@@ -50,7 +50,7 @@
 				</div>
 			{% endif %}
 
-			{% set craftSupportsEntryGroups = craft.app.version >= '5.8.0' %}
+			{% set craftSupportsEntryGroups = craftSupportsEntryGroups ?? false %}
 
 			{{ forms.lightswitchField({
                 label: 'Organize Button Group entries using Craft’s native Entry Type Groups'|t('blocksmith'),

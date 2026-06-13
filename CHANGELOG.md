@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.7 - 2026-06-13
+
+### Fixed
+- Fixed the "Organize Button Group entries using Craft's native Entry Type Groups" setting incorrectly showing "This feature requires Craft CMS 5.8 or newer" on Craft 5.10+. The version check now uses a proper semantic comparison instead of a string comparison.
+
 ## 1.7.6 - 2026-03-05
 
 ### Updated

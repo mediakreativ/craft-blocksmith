@@ -73,6 +73,11 @@ class BlocksmithController extends \craft\web\Controller
             "defaultVolumeUid" => $defaultVolumeUid,
             "defaultVolumeName" => $defaultVolumeName,
             "useEntryTypeGroups" => $settings->useEntryTypeGroups,
+            "craftSupportsEntryGroups" => version_compare(
+                Craft::$app->getVersion(),
+                "5.8.0",
+                ">="
+            ),
         ]);
     }
 
