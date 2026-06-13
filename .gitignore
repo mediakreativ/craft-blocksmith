@@ -4,6 +4,11 @@ node_modules/
 # Composer vendor folder
 vendor/
 
+# Composer lock file – not committed for plugins/libraries.
+# The lockfile only affects this plugin's own dev environment; consumers
+# resolve dependencies against their own project's composer.lock.
+composer.lock
+
 # macOS system files
 .DS_Store
 
