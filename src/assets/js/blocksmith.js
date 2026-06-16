@@ -1056,7 +1056,9 @@
                             $matching[0].click();
                           }
 
-                          $wrapper.find(".menu.visible").removeClass("visible");
+                          window.BlocksmithMenuUtils.closeContainingGroupDropdown(
+                            $(e.currentTarget),
+                          );
                           $wrapper.addClass("btns-removed");
                         });
 
@@ -1185,17 +1187,9 @@
                             );
                             $matching[0].click();
 
-                            const $disclosureMenu = $li
-                              .find("button")
-                              .closest(".menu--disclosure");
-                            if ($disclosureMenu.length) {
-                              const menuId = $disclosureMenu.attr("id");
-                              const $toggleButton = $(
-                                `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
-                              );
-                              $toggleButton.attr("aria-expanded", "false");
-                              $disclosureMenu.removeClass("visible").hide();
-                            }
+                            window.BlocksmithMenuUtils.closeContainingGroupDropdown(
+                              $li.find("button"),
+                            );
                           }
 
                           $wrapper.remove();
@@ -1648,15 +1642,9 @@
                   $matching[0].click();
                 }
 
-                const $disclosureMenu = $button.closest(".menu--disclosure");
-                if ($disclosureMenu.length) {
-                  const menuId = $disclosureMenu.attr("id");
-                  const $toggleButton = $(
-                    `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
-                  );
-                  $toggleButton.attr("aria-expanded", "false");
-                  $disclosureMenu.removeClass("visible").hide();
-                }
+                window.BlocksmithMenuUtils.closeContainingGroupDropdown(
+                  $button,
+                );
               });
             },
           );
@@ -1774,15 +1762,9 @@
                     $matching.trigger("activate");
                   }
 
-                  const $disclosureMenu = $button.closest(".menu--disclosure");
-                  if ($disclosureMenu.length) {
-                    const menuId = $disclosureMenu.attr("id");
-                    const $toggleButton = $(
-                      `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
-                    );
-                    $toggleButton.attr("aria-expanded", "false");
-                    $disclosureMenu.removeClass("visible").hide();
-                  }
+                  window.BlocksmithMenuUtils.closeContainingGroupDropdown(
+                    $button,
+                  );
                 });
               },
             );

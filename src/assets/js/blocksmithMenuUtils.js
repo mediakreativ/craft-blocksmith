@@ -2,6 +2,41 @@
 
 (function (window) {
   /**
+   * Properly closes the Blocksmith group dropdown that contains the given element.
+   *
+   * Garnish's DisclosureMenu registers a UI layer (Garnish.uiLayerManager) when it
+   * opens. That layer has to be removed again on close, otherwise it stays on top
+   * of the layer stack and intercepts keyboard shortcuts such as Cmd/Ctrl+S – the
+   * browser then shows its native "Save page" dialog instead of Craft saving the
+   * entry. Hiding the menu manually via jQuery skips this cleanup, so we go through
+   * Garnish's own hide() whenever possible and only fall back to a manual cleanup
+   * (which also drops the leaked layer explicitly).
+   *
+   * @param {jQuery|HTMLElement} el An element inside the open disclosure menu.
+   */
+  function closeContainingGroupDropdown(el) {
+    const $menu = $(el).closest(".menu--disclosure");
+    if (!$menu.length) return;
+
+    const disclosure = $menu.data("disclosureMenu");
+    if (disclosure && typeof disclosure.hide === "function") {
+      disclosure.hide();
+      return;
+    }
+
+    const menuId = $menu.attr("id");
+    $(`.blocksmith-group-toggle[aria-controls="${menuId}"]`).attr(
+      "aria-expanded",
+      "false",
+    );
+    $menu.removeClass("visible").css("display", "");
+
+    if (window.Garnish && Garnish.uiLayerManager) {
+      Garnish.uiLayerManager.removeLayer($menu);
+    }
+  }
+
+  /**
    * Enable/disable the "Add block above" button based on the native button state.
    */
   function syncAddBlockState($container, nativeBtn) {
@@ -58,15 +93,7 @@
       $matching[0].click();
 
       if ($button) {
-        const $disclosureMenu = $button.closest(".menu--disclosure");
-        if ($disclosureMenu.length) {
-          const menuId = $disclosureMenu.attr("id");
-          const $toggleButton = $(
-            `.blocksmith-group-toggle[aria-controls="${menuId}"]`,
-          );
-          $toggleButton.attr("aria-expanded", "false");
-          $disclosureMenu.removeClass("visible").hide();
-        }
+        closeContainingGroupDropdown($button);
       }
     } else {
       console.warn(
@@ -128,6 +155,7 @@
   }
 
   window.BlocksmithMenuUtils = {
+    closeContainingGroupDropdown,
     syncAddBlockState,
     triggerInlineContextButtonClick,
     buildGroupedButtonDropdowns,

@@ -2,6 +2,11 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.8 - 2026-06-16
+
+### Fixed
+- Fixed the Craft-native Cmd/Ctrl+S save shortcut breaking (the browser's "Save page" dialog appeared instead of the entry being saved) after selecting a block from a grouped Button Group with "Organize Button Group entries using Craft's native Entry Type Groups" enabled. Blocksmith now closes its group dropdowns through Garnish's DisclosureMenu API, so the UI layer registered when the dropdown opens is properly removed again ([#15](https://github.com/mediakreativ/craft-blocksmith/issues/15)) – Thanks to [@redburn](https://github.com/redburn) for reporting!
+
 ## 1.7.7 - 2026-06-13
 
 ### Fixed
