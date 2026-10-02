@@ -2,6 +2,12 @@
 
 All notable changes to Blocksmith will be documented in this file.
 
+## 1.7.9 - 2026-10-02
+
+### Fixed
+- Fixed an unscoped CSS selector that applied Blocksmith's settings table padding to all `table.data` header cells across the control panel – Thanks to Andy Harris for reporting!
+- Removed unused global `.notice` and `.tab-container` styles that unintentionally restyled Craft's field tips across the control panel
+
 ## 1.7.8 - 2026-06-16
 
 ### Fixed

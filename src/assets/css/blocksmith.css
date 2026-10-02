@@ -306,7 +306,7 @@
 }
 
 .blocksmith-settings-wrapper table.data td,
-table.data th {
+.blocksmith-settings-wrapper table.data th {
   box-sizing: border-box;
   padding-inline: 25px;
   position: relative;
@@ -347,25 +347,6 @@ body .blocksmith-modal {
   display: block;
 }
 
-.notice {
-  position: relative;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.notice .close-notice {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
 .blocksmith-modal-content {
   text-align: center;
   height: calc(100% - 60px);
@@ -381,15 +362,6 @@ body .blocksmith-modal {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-}
-
-.tab-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
 }
 
 .blocksmith-tab {
